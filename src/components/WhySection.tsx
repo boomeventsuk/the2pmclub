@@ -5,19 +5,19 @@ const WhySection = () => {
   const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation();
   const reasons = [
     {
-      title: "Everyone Can Actually Make It",
+      title: "🎉 EVERYONE CAN ACTUALLY MAKE IT",
       body: "How impossible has it become to get everyone together? THE 2PM CLUB solves the eternal adult friendship coordination puzzle - 2pm start means no childcare dramas, no work worries, no 'I'm too tired' excuses."
     },
     {
-      title: "Home by 7-ish, No Sunday Regrets",
+      title: "🕖 HOME BY 7-ISH, NO SUNDAY REGRETS",
       body: "Dance your heart out, home at a decent time, full night's sleep, feel great on Sunday. We're done with 2am taxis and writing off entire Sundays. Sometimes the revolution is just common sense."
     },
     {
-      title: "Party On Your Terms",
+      title: "💃 PARTY ON YOUR TERMS",
       body: "It's a real night out in the afternoon. Let yourself go, be yourself, enjoy time with your friends and be on the sofa watching Strictly before you know it."
     },
     {
-      title: "Know Every Single Song",
+      title: "🎶 YOU'LL KNOW EVERY SONG",
       body: "Four hours of pure anthems that you love. When was the last time you went somewhere and knew EVERY SINGLE WORD? That's what we do."
     }
   ];
