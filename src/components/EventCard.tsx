@@ -4,6 +4,7 @@ import { ExternalLink, Calendar, MapPin, Clock, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface EventCardProps {
+  id?: number;
   title: string;
   date: string;
   venue: string;
@@ -13,9 +14,10 @@ interface EventCardProps {
   bookUrl: string;
   infoUrl?: string;
   dateIso: string;
+  start?: string;
 }
 
-const EventCard = ({ title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso }: EventCardProps) => {
+const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start }: EventCardProps) => {
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
   const { toast } = useToast();
 
@@ -23,12 +25,12 @@ const EventCard = ({ title, date, venue, city, time, poster, bookUrl, infoUrl, d
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
       event: 'ticket_click',
-      eventId: slug,
-      eventName: title,
-      venue: venue,
-      price: "TICKET_PRICE"
+      eventId: id || '',
+      eventName: title || '',
+      eventVenue: `${venue}, ${city}` || '',
+      eventStart: start || ''
     });
-    window.open(bookUrl, '_blank', 'noopener');
+    window.open(bookUrl, '_blank', 'noopener noreferrer nofollow');
   };
 
   const handleEventInfo = () => {
@@ -39,7 +41,7 @@ const EventCard = ({ title, date, venue, city, time, poster, bookUrl, infoUrl, d
       eventName: title
     });
     if (infoUrl) {
-      window.open(infoUrl, '_blank', 'noopener');
+      window.open(infoUrl, '_blank', 'noopener noreferrer nofollow');
     }
   };
 
@@ -190,7 +192,7 @@ const EventCard = ({ title, date, venue, city, time, poster, bookUrl, infoUrl, d
             aria-label="Share with friends on WhatsApp" 
             type="button"
           >
-            <img src="/lovable-uploads/bb7f178c-1cf5-4ce2-a752-a39c92c097f7.png" alt="Share on WhatsApp" width="22" height="22" loading="lazy" decoding="async" />
+            <img src="https://www.the2pmclub.co.uk/lovable-uploads/bb7f178c-1cf5-4ce2-a752-a39c92c097f7.png" alt="Share on WhatsApp" width="22" height="22" loading="lazy" decoding="async" />
           </button>
 
           <button 

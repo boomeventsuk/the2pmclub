@@ -33,7 +33,7 @@ const Header = () => {
           {/* Logo */}
           <a href="/" className="site-logo">
             <img 
-              src="/lovable-uploads/9681c1c5-9af2-40fa-9e7f-0af6361274fc.png" 
+              src="https://www.the2pmclub.co.uk/lovable-uploads/9681c1c5-9af2-40fa-9e7f-0af6361274fc.png" 
               alt="The 2PM Club™ Logo" 
               className="h-10 w-auto"
             />
@@ -70,11 +70,11 @@ const Header = () => {
           {/* Social Icons */}
           <div className="header-icons">
             {/* Instagram */}
-            <a href="https://instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener">
+            <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Boombastic Events on Instagram" target="_blank" rel="noopener noreferrer nofollow">
               <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
             </a>
             {/* Facebook */}
-            <a href="https://facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener">
+            <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Boombastic Events on Facebook" target="_blank" rel="noopener noreferrer nofollow">
               <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
             </a>
             {/* Email */}
@@ -118,7 +118,7 @@ const Header = () => {
             Music
           </button>
           <hr style={{borderColor: "rgba(255,255,255,.08)"}} className="my-4" />
-          <a href="https://facebook.com/boombastic.eventsuk" target="_blank" rel="noopener" className="text-white hover:text-primary text-lg py-3 block transition-colors">
+          <a href="https://www.facebook.com/boombastic.eventsuk" target="_blank" rel="noopener noreferrer nofollow" className="text-white hover:text-primary text-lg py-3 block transition-colors">
             Facebook
           </a>
           <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" className="text-white hover:text-primary text-lg py-3 block transition-colors">

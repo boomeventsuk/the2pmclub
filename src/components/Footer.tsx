@@ -8,7 +8,7 @@ const Footer = () => {
           {/* Logo */}
           <div className="mb-6 flex justify-center">
             <img 
-              src="/lovable-uploads/57926c83-5a73-43e4-b501-9f9c758534fd.png" 
+              src="https://www.the2pmclub.co.uk/lovable-uploads/57926c83-5a73-43e4-b501-9f9c758534fd.png" 
               alt="Boombastic Events Logo" 
               className="h-16 w-auto"
               loading="lazy"
@@ -32,18 +32,18 @@ const Footer = () => {
             <a 
               href="https://www.facebook.com/boombastic.eventsuk"
               className="text-muted-foreground hover:text-primary transition-colors"
-              aria-label="Facebook"
+              aria-label="Boombastic Events on Facebook"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
             >
               <Facebook className="w-6 h-6" />
             </a>
             <a 
               href="https://www.instagram.com/boombastic.eventsuk"
               className="text-muted-foreground hover:text-primary transition-colors"
-              aria-label="Instagram"
+              aria-label="Boombastic Events on Instagram"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
             >
               <Instagram className="w-6 h-6" />
             </a>
