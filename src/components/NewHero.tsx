@@ -24,28 +24,29 @@ const NewHero = () => {
       
       
       {/* Content */}
-      <div className="relative z-10 text-center max-w-5xl px-4 py-20">
-        <h1 className="font-bebas text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight uppercase"
+      <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
+        <h1 className="font-bebas text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight uppercase"
             style={{
-              textShadow: '0 0 0 2px #FF1493, 0 0 10px rgba(0,0,0,0.8)',
-              WebkitTextStroke: '2px #FF1493'
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
             }}>
           Your Best Night Out Is Now In The Afternoon
         </h1>
         
-        <p className="font-poppins text-base md:text-lg text-white mb-8 leading-relaxed max-w-4xl mx-auto drop-shadow-lg">
+        <p className="font-poppins text-sm sm:text-base md:text-lg text-white mb-6 md:mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0"
+           style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
           Introducing THE 2PM CLUB Daytime Disco - big night out energy with smarter afternoon timing. Get all your friends together and dance and sing to the biggest 80s, 90s & 00s anthems at selling out venues across the Midlands. The beauty of it? Wake up fresh on Sunday. No regrets.
         </p>
         
         <Button 
           onClick={() => scrollToSection('tickets')}
           size="lg"
-          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all uppercase tracking-wide mb-6"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base md:text-lg px-6 md:px-8 py-3 md:py-4 shadow-lg hover:shadow-xl transition-all uppercase tracking-wide mb-4 md:mb-6"
         >
           Book Your Next Daytime Disco
         </Button>
         
-        <p className="font-poppins text-sm md:text-base text-primary font-semibold uppercase tracking-wide drop-shadow-lg">
+        <p className="font-poppins text-xs sm:text-sm md:text-base text-primary font-semibold uppercase tracking-wide"
+           style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
           The Midlands' Most Popular Day Party
         </p>
       </div>
