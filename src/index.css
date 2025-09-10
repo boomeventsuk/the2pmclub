@@ -4,12 +4,20 @@
 
 /* Paste into Lovable custom CSS */
 #parties { padding-top: 0 !important; }
-#hero .absolute.inset-0 { background-color: rgba(0,0,0,0.78) !important; }
 
 /* Mobile adjustments */
 @media (max-width: 640px) {
-  #hero h1 { font-size: 2.6rem !important; line-height: 1.08 !important; }
-  #hero h2 { font-size: 2.0rem !important; line-height: 1.08 !important; }
+  #hero h1 { 
+    font-size: 2.25rem !important; 
+    line-height: 1.1 !important; 
+    margin-bottom: 1.5rem !important;
+    -webkit-text-stroke: 1px #FF1493 !important;
+  }
+  #hero p { 
+    font-size: 0.9rem !important; 
+    line-height: 1.4 !important; 
+    margin-bottom: 1.5rem !important;
+  }
 }
 
 /* Make CTAs keyboard-focus visible */

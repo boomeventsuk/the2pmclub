@@ -25,11 +25,15 @@ const NewHero = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-4 py-20">
-        <h1 className="font-bebas text-4xl md:text-6xl lg:text-7xl font-bold text-primary mb-6 leading-tight uppercase">
+        <h1 className="font-bebas text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight uppercase"
+            style={{
+              textShadow: '0 0 0 2px #FF1493, 0 0 10px rgba(0,0,0,0.8)',
+              WebkitTextStroke: '2px #FF1493'
+            }}>
           Your Best Night Out Is Now In The Afternoon
         </h1>
         
-        <p className="font-poppins text-base md:text-lg text-white mb-8 leading-relaxed max-w-4xl mx-auto">
+        <p className="font-poppins text-base md:text-lg text-white mb-8 leading-relaxed max-w-4xl mx-auto drop-shadow-lg">
           Introducing THE 2PM CLUB Daytime Disco - big night out energy with smarter afternoon timing. Get all your friends together and dance and sing to the biggest 80s, 90s & 00s anthems at selling out venues across the Midlands. The beauty of it? Wake up fresh on Sunday. No regrets.
         </p>
         
@@ -41,7 +45,7 @@ const NewHero = () => {
           Book Your Next Daytime Disco
         </Button>
         
-        <p className="font-poppins text-sm md:text-base text-primary font-semibold uppercase tracking-wide">
+        <p className="font-poppins text-sm md:text-base text-primary font-semibold uppercase tracking-wide drop-shadow-lg">
           The Midlands' Most Popular Day Party
         </p>
       </div>
