@@ -4,14 +4,15 @@ const About = () => {
       <div className="container mx-auto px-4">
         <div className="about max-w-4xl mx-auto text-center">
           <h2 id="about-title" className="about-title font-bebas text-5xl md:text-6xl font-bold text-center mb-lg text-foreground">
-            About Boombastic Events
+            About THE 2PM CLUB™
           </h2>
           <p className="lead font-poppins text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Boombastic Events produces quality, inclusive sing-along parties across the Midlands —
-            from <strong className="text-primary">The 2PM Club™ Daytime Disco</strong> to <strong className="text-primary">Family Silent Disco</strong>,
-            after-dark <strong className="text-primary">Silent Disco</strong> and <strong className="text-primary">Decades</strong> nights.
-            Established in 2014, we've delivered 250+ shows with a 95% sell-out rate across trusted venues
-            in Northampton, Bedford, Milton Keynes, Coventry and Luton.
+            <strong className="text-primary">THE 2PM CLUB™</strong> is the Midlands' most popular daytime disco for over-25s, 
+            delivering big night out energy with smarter afternoon timing. Created by Boombastic Events in 2014, 
+            we've perfected the art of the <strong className="text-primary">daytime party</strong> - featuring wall-to-wall 
+            80s, 90s and 00s anthems from 2PM-6PM. With 95% sell-out rate across Northampton, Birmingham, Bedford, 
+            Milton Keynes, Coventry and Luton, our concept is simple: dance, sing along, and 
+            <strong className="text-primary">wake up fresh</strong> the next day. No regrets, just a glow!
           </p>
         </div>
       </div>
