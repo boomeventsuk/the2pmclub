@@ -88,8 +88,8 @@ const events = [
     <section id="tickets" className="py-lg bg-muted/20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-lg">
-          <h2 className="font-bebas text-5xl md:text-6xl font-bold text-foreground mb-4">
-            Upcoming Dates
+          <h2 className="font-bebas text-5xl md:text-6xl font-bold text-primary mb-4">
+            Upcoming Parties
           </h2>
           <p className="font-poppins text-xl text-muted-foreground max-w-2xl mx-auto">
             Book your tickets now for the next epic party experience across the Midlands

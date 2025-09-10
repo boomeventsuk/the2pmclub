@@ -33,12 +33,12 @@ a.button:focus, button:focus {
     --card: 240 12% 8%; /* #13131A */
     --card-foreground: 0 0% 100%;
     
-    /* Primary brand - Electric blue */
-    --primary: 207 100% 60%; /* #35A7FF */
+    /* Primary brand - Cerise Pink */
+    --primary: 328 100% 54%; /* #FF1493 */
     --primary-foreground: 0 0% 100%;
     
-    /* Secondary brand - Pink accent */
-    --secondary: 324 96% 62%; /* #FF3CAC */
+    /* Secondary brand - Dark Blue accent */
+    --secondary: 207 100% 60%; /* #35A7FF */
     --secondary-foreground: 0 0% 100%;
     
     /* Muted elements */
@@ -46,8 +46,11 @@ a.button:focus, button:focus {
     --muted-foreground: 0 0% 70%;
     
     /* Accent for highlights */
-    --accent: 324 96% 62%; /* Use pink accent */
+    --accent: 328 100% 54%; /* Use cerise accent */
     --accent-foreground: 0 0% 100%;
+    
+    /* Text colors */
+    --text-dark: 220 13% 18%; /* Charcoal grey for body text */
     
     /* Destructive states */
     --destructive: 0 84% 60%;

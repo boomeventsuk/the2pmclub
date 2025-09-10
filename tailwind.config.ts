@@ -51,7 +51,8 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
-				}
+				},
+				'text-dark': 'hsl(var(--text-dark))'
 			},
 			spacing: {
 				'xl': 'var(--spacing-xl)',

@@ -42,10 +42,10 @@ const Header = () => {
           {/* Navigation */}
           <nav className="primary-nav">
             <button 
-              onClick={() => scrollToSection('parties')}
+              onClick={() => scrollToSection('why')}
               className="font-poppins text-muted-foreground hover:text-primary transition-colors"
             >
-              Our Parties
+              Why 2PM Club
             </button>
             <button 
               onClick={() => scrollToSection('tickets')}
@@ -54,7 +54,7 @@ const Header = () => {
               Tickets
             </button>
             <button 
-              onClick={() => scrollToSection('reviews')}
+              onClick={() => scrollToSection('social-proof')}
               className="font-poppins text-muted-foreground hover:text-primary transition-colors"
             >
               Reviews
@@ -105,13 +105,13 @@ const Header = () => {
         
         {/* Mobile Menu */}
         <div id="mobile-menu" className="mobile-menu" role="dialog" aria-modal="false">
-          <button onClick={() => handleMobileNavClick('parties')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
-            Our Parties
+          <button onClick={() => handleMobileNavClick('why')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
+            Why 2PM Club
           </button>
           <button onClick={() => handleMobileNavClick('tickets')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
             Tickets
           </button>
-          <button onClick={() => handleMobileNavClick('reviews')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
+          <button onClick={() => handleMobileNavClick('social-proof')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
             Reviews
           </button>
           <button onClick={() => handleMobileNavClick('about')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">

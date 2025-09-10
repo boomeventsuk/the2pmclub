@@ -1,0 +1,48 @@
+const WhySection = () => {
+  const reasons = [
+    {
+      title: "Everyone Can Actually Make It",
+      body: "How impossible has it become to get everyone together? THE 2PM CLUB solves the eternal adult friendship coordination puzzle - 2pm start means no childcare dramas, no work worries, no 'I'm too tired' excuses."
+    },
+    {
+      title: "Home by 7-ish, No Sunday Regrets",
+      body: "Dance your heart out, home at a decent time, full night's sleep, feel great on Sunday. We're done with 2am taxis and writing off entire Sundays. Sometimes the revolution is just common sense."
+    },
+    {
+      title: "Party On Your Terms",
+      body: "It's a real night out in the afternoon. Let yourself go, be yourself, enjoy time with your friends and be on the sofa watching Strictly before you know it."
+    },
+    {
+      title: "Know Every Single Song",
+      body: "Four hours of pure anthems that you love. When was the last time you went somewhere and knew EVERY SINGLE WORD? That's what we do."
+    }
+  ];
+
+  return (
+    <section id="why" className="py-20 px-4 bg-card">
+      <div className="container mx-auto max-w-6xl">
+        <h2 className="font-bebas text-3xl md:text-5xl font-bold text-primary text-center mb-16 uppercase">
+          Reasons Why THE 2PM CLUB Is A Going Out Game Changer
+        </h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {reasons.map((reason, index) => (
+            <div 
+              key={index}
+              className="bg-background p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+            >
+              <h3 className="font-bebas text-xl md:text-2xl font-bold text-primary mb-4 uppercase">
+                {reason.title}
+              </h3>
+              <p className="font-poppins text-text-dark leading-relaxed">
+                {reason.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default WhySection;
