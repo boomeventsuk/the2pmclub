@@ -41,7 +41,7 @@ const WhySection = () => {
           {reasons.map((reason, index) => (
             <div 
               key={index}
-              className={`bg-background p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-700 ${
+              className={`bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-700 ${
                 cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
@@ -49,7 +49,7 @@ const WhySection = () => {
               <h3 className="font-bebas text-xl md:text-2xl font-bold text-primary mb-4 uppercase">
                 {reason.title}
               </h3>
-              <p className="font-poppins text-white leading-relaxed">
+              <p className="font-poppins text-black leading-relaxed">
                 {reason.body}
               </p>
             </div>

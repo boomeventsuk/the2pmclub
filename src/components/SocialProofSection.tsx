@@ -37,7 +37,7 @@ const SocialProofSection = () => {
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className={`bg-card p-6 rounded-lg border border-border hover:border-primary/20 transition-all duration-700 ${
+              className={`bg-white p-6 rounded-lg border border-border hover:border-primary/20 transition-all duration-700 ${
                 cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
@@ -55,7 +55,7 @@ const SocialProofSection = () => {
                 ))}
               </div>
               
-              <blockquote className="font-poppins text-foreground mb-4 leading-relaxed">
+              <blockquote className="font-poppins text-black mb-4 leading-relaxed">
                 "{testimonial.quote}"
               </blockquote>
               

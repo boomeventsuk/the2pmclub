@@ -25,7 +25,7 @@ const NewHero = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
-        <h1 className="font-bebas text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight uppercase"
+        <h1 className="font-bebas text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight uppercase"
             style={{
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
             }}>
