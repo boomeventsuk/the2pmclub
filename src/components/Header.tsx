@@ -33,7 +33,7 @@ const Header = () => {
           {/* Logo */}
           <a href="/" className="site-logo">
         <img 
-          src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519785/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" 
+          src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519826/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" 
           alt="The 2PM Club™ Logo" 
           className="h-10 w-auto"
         />
