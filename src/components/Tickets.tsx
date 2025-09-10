@@ -23,36 +23,6 @@ const Tickets = () => {
 
 const events = [
   {
-    title: "FOOTLOOSE 80s NORTHAMPTON — A MOST EXCELLENT 80s PARTY",
-    date: "Sat 13 Sep 2025",
-    venue: "The Picturedrome",
-    city: "Northampton",
-    time: "20:00–00:00",
-    poster: "/lovable-uploads/f6aab5c2-3327-4e12-bf99-a277d0cf0493.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/footloose-80s-northampton-a-most-excellent-80s-party-tickets-1428897423659?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/1466091197726110"
-  },
-  {
-    title: "FOOTLOOSE 80s DAY PARTY BEDFORD",
-    date: "Sat 20 Sep 2025",
-    venue: "Bedford Esquires",
-    city: "Bedford",
-    time: "14:00–18:00",
-    poster: "/lovable-uploads/a32f61d1-6a62-444b-89c1-55e491ccb034.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/footloose-80s-day-party-bedford-tickets-1424442368469?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/1238442701296733"
-  },
-  {
-    title: "SILENT DISCO NORTHAMPTON: POP VS INDIE VS DANCE",
-    date: "Sat 27 Sep 2025",
-    venue: "The Picturedrome",
-    city: "Northampton",
-    time: "20:30–00:30",
-    poster: "/lovable-uploads/3151f4c2-caa9-4718-9327-33c7a7fc882f.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/greatest-hits-silent-disco-northampton-tickets-1345076533119?WEBLINK=",
-    infoUrl: "https://www.facebook.com/events/1747332309299706"
-  },
-  {
     title: "THE 2PM CLUB™ COVENTRY - 80s 90s 00s Daytime Disco",
     date: "Sat 4 Oct 2025",
     venue: "hmv Empire",
@@ -83,16 +53,6 @@ const events = [
     infoUrl: "https://www.facebook.com/events/1099596238372820"
   },
   {
-    title: "FAMILY SILENT DISCO Halloween Party Bedford",
-    date: "Sat 25 Oct 2025",
-    venue: "Bedford Esquires",
-    city: "Bedford",
-    time: "13:00–15:00",
-    poster: "/lovable-uploads/15e70509-2c93-4134-8e92-0880a757aa84.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/family-silent-disco-bedford-tickets-1561886166569?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/3683417485127436"
-  },
-  {
     title: "THE 2PM CLUB™ BIRMINGHAM - 80s 90s 00s Daytime Disco",
     date: "Sat 25 Oct 2025",
     venue: "The Castle & Falcon",
@@ -101,26 +61,6 @@ const events = [
     poster: "/lovable-uploads/d2abf972-b1eb-4f69-bdd9-65e845683772.png",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-birmingham-80s-90s-00s-daytime-disco-tickets-1559435135469?aff=BOOMWEB",
     infoUrl: "https://www.facebook.com/events/1252072186162573"
-  },
-  {
-    title: "FAMILY SILENT DISCO Halloween Party Northampton",
-    date: "Sun 26 Oct 2025",
-    venue: "The Picturedrome",
-    city: "Northampton",
-    time: "13:00–15:00",
-    poster: "/lovable-uploads/5ee3c1f9-2ad1-49b1-aab3-9dafc2b3eac4.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/family-silent-disco-halloween-edition-northampton-tickets-1656258296149?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/772814442110884"
-  },
-  {
-    title: "FAMILY SILENT DISCO Halloween Party Milton Keynes",
-    date: "Sun 26 Oct 2025",
-    venue: "MK11 Music Venue",
-    city: "Milton Keynes",
-    time: "13:00–15:00",
-    poster: "/lovable-uploads/9a7b1850-8db1-493a-8753-349e07bf3f92.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/family-silent-disco-halloween-edition-milton-keynes-tickets-1663986531509?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/801356105664017"
   },
   {
     title: "THE 2PM CLUB™ LUTON - 80s 90s 00s Daytime Disco",
@@ -133,26 +73,6 @@ const events = [
     infoUrl: "https://www.facebook.com/events/1277593650522747"
   },
   {
-    title: "FAMILY SILENT DISCO Luton",
-    date: "Sun 16 Nov 2025",
-    venue: "Hat Factory",
-    city: "Luton",
-    time: "13:00–15:00",
-    poster: "/lovable-uploads/3fb7402c-ca9a-4f5b-95a7-8fb8082aea29.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/family-silent-disco-luton-tickets-1567321212939?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/23962803433390828"
-  },
-  {
-    title: "CHRISTMAS SILENT DISCO NORTHAMPTON",
-    date: "Fri 5 Dec 2025",
-    venue: "The Picturedrome",
-    city: "Northampton",
-    time: "20:30–00:30",
-    poster: "/lovable-uploads/3e769069-d77c-4bba-ac7f-829c863f7dc9.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/boombastics-christmas-silent-disco-2025-tickets-1544387427369?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/600708973096782"
-  },
-  {
     title: "THE 2PM CLUB™ Northampton - Christmas Daytime Disco",
     date: "Sat 6 Dec 2025",
     venue: "The Picturedrome",
@@ -161,26 +81,6 @@ const events = [
     poster: "/lovable-uploads/af4aa581-f143-4788-8e18-bb07123f3146.png",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2-pm-clubtm-northampton-christmas-daytime-disco-tickets-1544458540069?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/928404249476093"
-  },
-  {
-    title: "Boombastic's Christmas Decades Party NORTHAMPTON",
-    date: "Sat 6 Dec 2025",
-    venue: "The Picturedrome",
-    city: "Northampton",
-    time: "20:30–00:30",
-    poster: "/lovable-uploads/c5cdfb1e-c90b-4c4a-9d48-04b62f074fed.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/boombastics-christmas-decades-party-tickets-1544512260749?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/726210763537267"
-  },
-  {
-    title: "Christmas FAMILY SILENT DISCO Northampton",
-    date: "Sun 7 Dec 2025",
-    venue: "The Picturedrome",
-    city: "Northampton",
-    time: "13:00–15:00",
-    poster: "/lovable-uploads/354b835e-503b-455a-aab9-bcbfd0ec0d22.png",
-    bookUrl: "https://www.eventbrite.co.uk/e/christmas-family-silent-disco-northampton-tickets-1656839334049?aff=FBLink",
-    infoUrl: "https://www.facebook.com/events/768151506076732"
   }
 ];
 
