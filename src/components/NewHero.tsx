@@ -17,7 +17,7 @@ const NewHero = () => {
     <section id="hero" className="relative h-[75vh] md:h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <img
-        src="https://www.the2pmclub.co.uk/lovable-uploads/28aa6d32-e3e7-4056-a5ca-26471fab5532.png"
+        src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg"
         alt="THE 2PM CLUB crowd at a daytime disco party"
         className="absolute inset-0 w-full h-full object-cover"
       />

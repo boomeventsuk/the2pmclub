@@ -28,7 +28,7 @@ const events = [
     venue: "hmv Empire",
     city: "Coventry",
     time: "14:00–18:00",
-    poster: "https://www.the2pmclub.co.uk/lovable-uploads/403f8f88-dc3f-4950-867a-99ab147c40ee.png",
+    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757520205/041025_2PM_COV_ANNSQ_i62sjk.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/daytime-disco-presents-the-2pm-club-coventry-80s-90s-00s-anthems-tickets-1443614914069?aff=BOOMWEB",
     infoUrl: "https://www.facebook.com/events/1412104320029705"
   },
@@ -38,7 +38,7 @@ const events = [
     venue: "MK11 Music Venue",
     city: "Milton Keynes",
     time: "14:00–18:00",
-    poster: "https://www.the2pmclub.co.uk/lovable-uploads/c12630b8-2043-47ca-aaa1-23d7480e9096.png",
+    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522739/111025_2PM_MK_ANNSQv2_tttdip.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/daytime-disco-presents-the-2pm-clubtm-milton-keynes-80s-90s-00s-anthems-tickets-1403881610689",
     infoUrl: "https://www.facebook.com/events/710462968194939"
   },
@@ -48,7 +48,7 @@ const events = [
     venue: "cinch Stadium at Franklin's Gardens",
     city: "Northampton",
     time: "14:00–18:00",
-    poster: "https://www.the2pmclub.co.uk/lovable-uploads/cad5cf88-2d0c-4843-b872-e2f6b932bcba.png",
+    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522765/181025_2PM_NPTON_ANNSQ_guiuq7.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-northampton-80s-90s-00s-daytime-disco-tickets-1557588823099?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/1099596238372820"
   },
@@ -58,7 +58,7 @@ const events = [
     venue: "The Castle & Falcon",
     city: "Birmingham",
     time: "14:00–18:00",
-    poster: "https://www.the2pmclub.co.uk/lovable-uploads/d2abf972-b1eb-4f69-bdd9-65e845683772.png",
+    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522785/251025_2PM_BHAM_ANNSQ_exjo6v.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-birmingham-80s-90s-00s-daytime-disco-tickets-1559435135469?aff=BOOMWEB",
     infoUrl: "https://www.facebook.com/events/1252072186162573"
   },
@@ -68,7 +68,7 @@ const events = [
     venue: "Hat Factory",
     city: "Luton",
     time: "14:00–18:00",
-    poster: "https://www.the2pmclub.co.uk/lovable-uploads/b5e9b224-0e38-4b36-957b-56d1d1b23a7b.png",
+    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522804/011125_2PM_LUT_ANNSQ_ecaqla.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-luton-80s-90s-00s-daytime-disco-tickets-1645025849599?aff=BOOMWEB",
     infoUrl: "https://www.facebook.com/events/1277593650522747"
   },
@@ -78,7 +78,7 @@ const events = [
     venue: "The Picturedrome",
     city: "Northampton",
     time: "14:00–17:30",
-    poster: "https://www.the2pmclub.co.uk/lovable-uploads/af4aa581-f143-4788-8e18-bb07123f3146.png",
+    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522817/061225_2PM_NPTON_ANNSQ_pcnhtp.png",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2-pm-clubtm-northampton-christmas-daytime-disco-tickets-1544458540069?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/928404249476093"
   }

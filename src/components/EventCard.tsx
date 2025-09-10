@@ -192,7 +192,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
             aria-label="Share with friends on WhatsApp" 
             type="button"
           >
-            <img src="https://www.the2pmclub.co.uk/lovable-uploads/bb7f178c-1cf5-4ce2-a752-a39c92c097f7.png" alt="Share on WhatsApp" width="22" height="22" loading="lazy" decoding="async" />
+            <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="Share on WhatsApp" width="22" height="22" loading="lazy" decoding="async" />
           </button>
 
           <button 

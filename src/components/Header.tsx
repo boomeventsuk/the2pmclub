@@ -32,11 +32,11 @@ const Header = () => {
         <div className="container mx-auto px-4 py-4 header-inner">
           {/* Logo */}
           <a href="/" className="site-logo">
-            <img 
-              src="https://www.the2pmclub.co.uk/lovable-uploads/9681c1c5-9af2-40fa-9e7f-0af6361274fc.png" 
-              alt="The 2PM Club™ Logo" 
-              className="h-10 w-auto"
-            />
+        <img 
+          src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519785/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" 
+          alt="The 2PM Club™ Logo" 
+          className="h-10 w-auto"
+        />
           </a>
           
           {/* Navigation */}
