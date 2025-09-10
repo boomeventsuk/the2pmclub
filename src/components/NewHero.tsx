@@ -14,7 +14,7 @@ const NewHero = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative h-[85vh] md:h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <img
         src="/lovable-uploads/28aa6d32-e3e7-4056-a5ca-26471fab5532.png"
@@ -34,7 +34,7 @@ const NewHero = () => {
         
         <p className="font-poppins text-sm sm:text-base md:text-lg text-white mb-6 md:mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0"
            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
-          Introducing THE 2PM CLUB Daytime Disco - big night out energy with smarter afternoon timing. Get all your friends together and dance and sing to the biggest 80s, 90s & 00s anthems at selling out venues across the Midlands. The beauty of it? Wake up fresh on Sunday. No regrets.
+          Introducing THE 2PM CLUB™ Daytime Disco - big night out energy with smarter afternoon timing. Get all your friends together and dance and sing to the biggest 80s, 90s & 00s anthems. The beauty of it? Wake up fresh on Sunday. No regrets... just a glow!
         </p>
         
         <Button 

@@ -1,4 +1,8 @@
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+
 const WhySection = () => {
+  const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation();
   const reasons = [
     {
       title: "Everyone Can Actually Make It",
@@ -19,17 +23,28 @@ const WhySection = () => {
   ];
 
   return (
-    <section id="why" className="py-20 px-4 bg-card">
+    <section id="why" className="py-12 md:py-16 px-4 bg-card">
       <div className="container mx-auto max-w-6xl">
-        <h2 className="font-bebas text-3xl md:text-5xl font-bold text-primary text-center mb-16 uppercase">
+        <h2 
+          ref={titleRef}
+          className={`font-bebas text-3xl md:text-5xl font-bold text-primary text-center mb-16 uppercase transition-all duration-700 ${
+            titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           Reasons Why THE 2PM CLUB Is A Going Out Game Changer
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div 
+          ref={cardsRef}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+        >
           {reasons.map((reason, index) => (
             <div 
               key={index}
-              className="bg-background p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className={`bg-background p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-700 ${
+                cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <h3 className="font-bebas text-xl md:text-2xl font-bold text-primary mb-4 uppercase">
                 {reason.title}

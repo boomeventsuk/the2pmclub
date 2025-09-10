@@ -1,4 +1,8 @@
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+
 const SocialProofSection = () => {
+  const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation();
   const testimonials = [
     {
       quote: "Brilliant music, not just clubbing anthems the whole time (just the right mix) loved the big singalong moments",
@@ -15,17 +19,28 @@ const SocialProofSection = () => {
   ];
 
   return (
-    <section id="social-proof" className="py-20 px-4 bg-background">
+    <section id="social-proof" className="py-12 md:py-16 px-4 bg-background">
       <div className="container mx-auto max-w-6xl">
-        <h2 className="font-bebas text-3xl md:text-5xl font-bold text-primary text-center mb-16 uppercase">
+        <h2 
+          ref={titleRef}
+          className={`font-bebas text-3xl md:text-5xl font-bold text-primary text-center mb-16 uppercase transition-all duration-700 ${
+            titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           Don't Just Take Our Word For It
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div 
+          ref={cardsRef}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="bg-card p-6 rounded-lg border border-border hover:border-primary/20 transition-colors duration-300"
+              className={`bg-card p-6 rounded-lg border border-border hover:border-primary/20 transition-all duration-700 ${
+                cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               {/* Star rating */}
               <div className="flex mb-4">
