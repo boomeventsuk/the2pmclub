@@ -34,7 +34,7 @@ const WhySection = () => {
               <h3 className="font-bebas text-xl md:text-2xl font-bold text-primary mb-4 uppercase">
                 {reason.title}
               </h3>
-              <p className="font-poppins text-text-dark leading-relaxed">
+              <p className="font-poppins text-white leading-relaxed">
                 {reason.body}
               </p>
             </div>

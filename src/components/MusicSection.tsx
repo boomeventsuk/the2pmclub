@@ -6,7 +6,7 @@ const MusicSection = () => {
           Your New Favourite Soundtrack
         </h2>
         
-        <p className="font-poppins text-text-dark mb-8 text-lg">
+        <p className="font-poppins text-white mb-8 text-lg">
           Listen to our Spotify playlist
         </p>
         

@@ -22,8 +22,6 @@ const NewHero = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
       
-      {/* Background overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/50"></div>
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-4 py-20">

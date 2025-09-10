@@ -91,7 +91,7 @@ const events = [
           <h2 className="font-bebas text-5xl md:text-6xl font-bold text-primary mb-4">
             Upcoming Parties
           </h2>
-          <p className="font-poppins text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="font-poppins text-xl text-white max-w-2xl mx-auto">
             Book your tickets now for the next epic party experience across the Midlands
           </p>
         </div>

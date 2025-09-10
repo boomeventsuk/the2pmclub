@@ -45,7 +45,7 @@ const Header = () => {
               onClick={() => scrollToSection('why')}
               className="font-poppins text-muted-foreground hover:text-primary transition-colors"
             >
-              Why 2PM Club
+              Why 2PM Works
             </button>
             <button 
               onClick={() => scrollToSection('tickets')}
@@ -60,10 +60,10 @@ const Header = () => {
               Reviews
             </button>
             <button 
-              onClick={() => scrollToSection('about')}
+              onClick={() => scrollToSection('music')}
               className="font-poppins text-muted-foreground hover:text-primary transition-colors"
             >
-              About
+              Music
             </button>
           </nav>
           
@@ -106,7 +106,7 @@ const Header = () => {
         {/* Mobile Menu */}
         <div id="mobile-menu" className="mobile-menu" role="dialog" aria-modal="false">
           <button onClick={() => handleMobileNavClick('why')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
-            Why 2PM Club
+            Why 2PM Works
           </button>
           <button onClick={() => handleMobileNavClick('tickets')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
             Tickets
@@ -114,8 +114,8 @@ const Header = () => {
           <button onClick={() => handleMobileNavClick('social-proof')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
             Reviews
           </button>
-          <button onClick={() => handleMobileNavClick('about')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
-            About
+          <button onClick={() => handleMobileNavClick('music')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
+            Music
           </button>
           <hr style={{borderColor: "rgba(255,255,255,.08)"}} className="my-4" />
           <a href="https://facebook.com/boombastic.eventsuk" target="_blank" rel="noopener" className="text-white hover:text-primary text-lg py-3 block transition-colors">
