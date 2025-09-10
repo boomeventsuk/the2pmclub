@@ -14,9 +14,16 @@ const NewHero = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <img
+        src="/lovable-uploads/28aa6d32-e3e7-4056-a5ca-26471fab5532.png"
+        alt="THE 2PM CLUB crowd at a daytime disco party"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      
       {/* Background overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-card"></div>
+      <div className="absolute inset-0 bg-black/50"></div>
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-4 py-20">
@@ -24,7 +31,7 @@ const NewHero = () => {
           Your Best Night Out Is Now In The Afternoon
         </h1>
         
-        <p className="font-poppins text-base md:text-lg text-text-dark mb-8 leading-relaxed max-w-4xl mx-auto">
+        <p className="font-poppins text-base md:text-lg text-white mb-8 leading-relaxed max-w-4xl mx-auto">
           Introducing THE 2PM CLUB Daytime Disco - big night out energy with smarter afternoon timing. Get all your friends together and dance and sing to the biggest 80s, 90s & 00s anthems at selling out venues across the Midlands. The beauty of it? Wake up fresh on Sunday. No regrets.
         </p>
         

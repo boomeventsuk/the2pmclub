@@ -5,7 +5,7 @@ const SocialProofSection = () => {
       author: "Josie L, Northampton"
     },
     {
-      quote: "Finally, everyone's actually able to get all my friends together. When's the next one?",
+      quote: "Finally able to get all my friends together, when's the next one?",
       author: "Marie T, Coventry"
     },
     {
