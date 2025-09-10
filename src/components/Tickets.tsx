@@ -37,7 +37,7 @@ const events = [
     date: "Sat 11 Oct 2025",
     venue: "MK11 Music Venue",
     city: "Milton Keynes",
-    time: "14:00–16:00",
+    time: "14:00–18:00",
     poster: "https://www.the2pmclub.co.uk/lovable-uploads/c12630b8-2043-47ca-aaa1-23d7480e9096.png",
     bookUrl: "https://www.eventbrite.co.uk/e/daytime-disco-presents-the-2pm-clubtm-milton-keynes-80s-90s-00s-anthems-tickets-1403881610689",
     infoUrl: "https://www.facebook.com/events/710462968194939"
