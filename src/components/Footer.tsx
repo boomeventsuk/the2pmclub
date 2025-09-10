@@ -19,7 +19,7 @@ const Footer = () => {
           {/* Contact Info */}
           <div className="flex items-center justify-center mb-8">
             <a 
-              href="mailto:hello@boomevents.co.uk"
+              href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query"
               className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
             >
               <Mail className="w-5 h-5" />

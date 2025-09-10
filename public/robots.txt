@@ -15,4 +15,4 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
-Sitemap: https://boomevents.co.uk/sitemap.xml
+Sitemap: https://www.the2pmclub.co.uk/sitemap.xml
