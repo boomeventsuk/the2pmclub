@@ -30,7 +30,7 @@ const events = [
     time: "14:00–18:00",
     poster: "/lovable-uploads/403f8f88-dc3f-4950-867a-99ab147c40ee.png",
     bookUrl: "https://www.eventbrite.co.uk/e/daytime-disco-presents-the-2pm-club-coventry-80s-90s-00s-anthems-tickets-1443614914069?aff=BOOMWEB",
-    infoUrl: ""
+    infoUrl: "https://www.facebook.com/events/1412104320029705"
   },
   {
     title: "THE 2PM CLUB™ MK - 80s 90s 00s Daytime Disco",

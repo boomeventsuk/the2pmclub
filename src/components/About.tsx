@@ -8,11 +8,11 @@ const About = () => {
           </h2>
           <p className="lead font-poppins text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             <strong className="text-primary">THE 2PM CLUB™</strong> is the Midlands' most popular daytime disco for over-25s, 
-            delivering big night out energy with smarter afternoon timing. Created by Boombastic Events in 2014, 
+            delivering big night out energy with smarter afternoon timing. Created by Boombastic Events, 
             we've perfected the art of the <strong className="text-primary">daytime party</strong> - featuring wall-to-wall 
-            80s, 90s and 00s anthems from 2PM-6PM. With 95% sell-out rate across Northampton, Birmingham, Bedford, 
+            80s, 90s and 00s anthems from 2PM-6PM. With sell-out parties across Northampton, Birmingham, Bedford, 
             Milton Keynes, Coventry and Luton, our concept is simple: dance, sing along, and 
-            <strong className="text-primary">wake up fresh</strong> the next day. No regrets, just a glow!
+            <strong className="text-primary">wake up fresh</strong> the next day. No regrets, just a glow that'll last for days!
           </p>
         </div>
       </div>
