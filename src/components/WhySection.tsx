@@ -31,7 +31,7 @@ const WhySection = () => {
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          Reasons Why THE 2PM CLUB Is A Going Out Game Changer
+          Reasons Why THE 2PM CLUB Is A Social Game-Changer
         </h2>
         
         <div 
