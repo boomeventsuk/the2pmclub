@@ -1,6 +1,18 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+interface EventJson {
+  id: number;
+  title: string;
+  location: string;
+  start: string;
+  end: string;
+  bookUrl: string;
+  infoUrl: string;
+  image: string;
+  description: string;
+}
+
 interface EventData {
   city: string;
   date: string;
@@ -9,31 +21,117 @@ interface EventData {
   startIso: string;
   endIso: string;
   eventbriteUrl: string;
+  infoUrl: string;
   squareImg: string;
   slug: string;
+  title: string;
 }
 
-// Sample event data - in a real app, this would come from an API or database
-const eventData: Record<string, EventData> = {
-  'coventry-oct-2025': {
-    city: 'Coventry',
-    date: 'Sat 4th Oct 2025',
-    venue: 'hmv Empire',
-    postcode: 'CV1 1GX',
-    startIso: '2025-10-04T14:00:00+01:00',
-    endIso: '2025-10-04T18:00:00+01:00',
-    eventbriteUrl: 'https://www.eventbrite.co.uk/e/daytime-disco-presents-the-2pm-club-coventry-80s-90s-00s-anthems-tickets-1443614914069?aff=BOOMWEB',
-    squareImg: '/lovable-uploads/041025_2PM_COV_ANNSQ_i62sjk.jpg',
-    slug: 'coventry-oct-2025'
-  },
-  // Add more events as needed
+// Generate slug from event data
+const generateSlug = (city: string, startDate: string, title: string): string => {
+  const date = new Date(startDate);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  
+  const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+  const isChristmas = title.toLowerCase().includes('christmas');
+  
+  return isChristmas ? `${citySlug}-christmas-${year}-${month}-${day}` : `${citySlug}-${year}-${month}-${day}`;
+};
+
+// Parse venue and city from location string
+const parseLocation = (location: string): { venue: string; city: string; postcode: string } => {
+  const parts = location.split(', ');
+  const venue = parts[0] || location;
+  const city = parts[1] || '';
+  
+  // Sample postcodes - in production, these would come from your data
+  const postcodes: Record<string, string> = {
+    'Coventry': 'CV1 1GX',
+    'Milton Keynes': 'MK9 3PU',
+    'Northampton': 'NN1 5BD',
+    'Birmingham': 'B1 1AA',
+    'Luton': 'LU1 2AA'
+  };
+  
+  return {
+    venue,
+    city,
+    postcode: postcodes[city] || ''
+  };
+};
+
+// Format date for display
+const formatEventDate = (isoDate: string): string => {
+  const date = new Date(isoDate);
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
+  const dayName = days[date.getDay()];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  
+  const suffix = day === 1 || day === 21 || day === 31 ? 'st' : 
+                day === 2 || day === 22 ? 'nd' : 
+                day === 3 || day === 23 ? 'rd' : 'th';
+  
+  return `${dayName} ${day}${suffix} ${month} ${year}`;
+};
+
+// Load and process events from JSON
+const loadEventData = async (): Promise<Record<string, EventData>> => {
+  try {
+    const response = await fetch('/events.json');
+    const events: EventJson[] = await response.json();
+    
+    const eventData: Record<string, EventData> = {};
+    
+    events.forEach(event => {
+      const { venue, city, postcode } = parseLocation(event.location);
+      const slug = generateSlug(city, event.start, event.title);
+      const formattedDate = formatEventDate(event.start);
+      
+      eventData[slug] = {
+        city,
+        date: formattedDate,
+        venue,
+        postcode,
+        startIso: event.start,
+        endIso: event.end,
+        eventbriteUrl: event.bookUrl,
+        infoUrl: event.infoUrl,
+        squareImg: event.image,
+        slug,
+        title: event.title
+      };
+    });
+    
+    return eventData;
+  } catch (error) {
+    console.error('Failed to load events:', error);
+    return {};
+  }
 };
 
 const EventPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [copyText, setCopyText] = useState('');
-  
-  const event = slug ? eventData[slug] : null;
+  const [event, setEvent] = useState<EventData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadEvent = async () => {
+      setLoading(true);
+      const eventData = await loadEventData();
+      const currentEvent = slug ? eventData[slug] : null;
+      setEvent(currentEvent);
+      setLoading(false);
+    };
+    
+    loadEvent();
+  }, [slug]);
 
   useEffect(() => {
     if (!event) return;
@@ -53,7 +151,7 @@ const EventPage = () => {
     ];
 
     // Check if it's a Christmas event
-    const isChristmas = slug?.toLowerCase().includes('christmas') || event.date.toLowerCase().includes('christmas');
+    const isChristmas = slug?.toLowerCase().includes('christmas') || event.title.toLowerCase().includes('christmas');
     const variants = isChristmas ? CHRISTMAS : REGULAR;
     const selectedCopy = variants[Math.floor(Math.random() * variants.length)];
     
@@ -83,7 +181,7 @@ const EventPage = () => {
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "description": "Daytime disco 2–5pm with iconic anthems from the 80s, 90s and 00s.",
-      "image": [`https://www.the2pmclub.co.uk${event.squareImg}`],
+      "image": [event.squareImg],
       "location": {
         "@type": "Place",
         "name": event.venue,
@@ -116,6 +214,38 @@ const EventPage = () => {
       document.head.appendChild(script);
     }
     script.textContent = JSON.stringify(jsonLd);
+
+    // Add Open Graph and Twitter meta tags
+    const updateMeta = (property: string, content: string) => {
+      let meta = document.querySelector(`meta[property="${property}"], meta[name="${property}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        if (property.startsWith('og:') || property === 'twitter:card') {
+          (meta as HTMLMetaElement).setAttribute('property', property);
+        } else {
+          (meta as HTMLMetaElement).setAttribute('name', property);
+        }
+        document.head.appendChild(meta);
+      }
+      (meta as HTMLMetaElement).setAttribute('content', content);
+    };
+
+    // SEO Meta tags
+    updateMeta('description', `Daytime disco 2–5pm with 80s/90s/00s anthems. ${event.city}, ${event.date} at ${event.venue}.`);
+    
+    // Open Graph
+    updateMeta('og:type', 'website');
+    updateMeta('og:site_name', 'The 2 PM Club');
+    updateMeta('og:title', `The 2 PM Club — ${event.city} — ${event.date}`);
+    updateMeta('og:description', 'Daytime disco 2–5pm with 80s/90s/00s anthems.');
+    updateMeta('og:url', `https://www.the2pmclub.co.uk/events/${event.slug}/`);
+    updateMeta('og:image', event.squareImg);
+    
+    // Twitter
+    updateMeta('twitter:card', 'summary');
+    updateMeta('twitter:title', `The 2 PM Club — ${event.city} — ${event.date}`);
+    updateMeta('twitter:description', 'Daytime disco 2–5pm with 80s/90s/00s anthems.');
+    updateMeta('twitter:image', event.squareImg);
 
   }, [event, slug]);
 
@@ -159,6 +289,14 @@ const EventPage = () => {
       window.location.href = url;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white text-black max-w-[72ch] mx-auto p-6">
+        <div className="animate-pulse">Loading event...</div>
+      </div>
+    );
+  }
 
   if (!event) {
     return (
@@ -247,9 +385,16 @@ const EventPage = () => {
           >
             🎟️ Book tickets
           </a>
-          <a className="btn secondary" href="#info">
-            ℹ️ Event info
-          </a>
+          {event.infoUrl && (
+            <a 
+              className="btn secondary" 
+              href={event.infoUrl}
+              target="_blank"
+              rel="noopener"
+            >
+              ℹ️ Event info
+            </a>
+          )}
         </div>
         
         <div className="share-list" aria-label="Share this event">
