@@ -25,6 +25,8 @@ interface EventData {
   squareImg: string;
   slug: string;
   title: string;
+  timeRange: string; // e.g., "2–6pm" or "2–5:30pm"
+  timeDisplay: string; // e.g., "2:00–6:00 pm" or "2:00–5:30 pm"
 }
 
 // Generate slug from event data
@@ -93,6 +95,23 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
       const slug = generateSlug(city, event.start, event.title);
       const formattedDate = formatEventDate(event.start);
       
+      // Calculate time display strings
+      const startTime = new Date(event.start);
+      const endTime = new Date(event.end);
+      const startHour = startTime.getHours();
+      const endHour = endTime.getHours();
+      const endMinutes = endTime.getMinutes();
+      
+      // Format display times
+      const timeDisplay = endMinutes === 0 
+        ? `${startHour}:00–${endHour}:00 pm`
+        : `${startHour}:00–${endHour}:${endMinutes.toString().padStart(2, '0')} pm`;
+      
+      // Format range for meta descriptions (compact format)
+      const timeRange = endMinutes === 0 
+        ? `${startHour}–${endHour}pm`
+        : `${startHour}–${endHour}:${endMinutes.toString().padStart(2, '0')}pm`;
+      
       eventData[slug] = {
         city,
         date: formattedDate,
@@ -104,7 +123,9 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         infoUrl: event.infoUrl,
         squareImg: event.image,
         slug,
-        title: event.title
+        title: event.title,
+        timeRange,
+        timeDisplay
       };
     });
     
@@ -180,7 +201,7 @@ const EventPage = () => {
       "endDate": event.endIso,
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
-      "description": "Daytime disco 2–5pm with iconic anthems from the 80s, 90s and 00s.",
+      "description": `Daytime disco ${event.timeRange} with iconic anthems from the 80s, 90s and 00s.`,
       "image": [event.squareImg],
       "location": {
         "@type": "Place",
@@ -231,20 +252,20 @@ const EventPage = () => {
     };
 
     // SEO Meta tags
-    updateMeta('description', `Daytime disco 2–5pm with 80s/90s/00s anthems. ${event.city}, ${event.date} at ${event.venue}.`);
+    updateMeta('description', `Daytime disco ${event.timeRange} with 80s/90s/00s anthems. ${event.city}, ${event.date} at ${event.venue}.`);
     
     // Open Graph
     updateMeta('og:type', 'website');
     updateMeta('og:site_name', 'The 2 PM Club');
     updateMeta('og:title', `The 2 PM Club — ${event.city} — ${event.date}`);
-    updateMeta('og:description', 'Daytime disco 2–5pm with 80s/90s/00s anthems.');
+    updateMeta('og:description', `Daytime disco ${event.timeRange} with 80s/90s/00s anthems.`);
     updateMeta('og:url', `https://www.the2pmclub.co.uk/events/${event.slug}/`);
     updateMeta('og:image', event.squareImg);
     
     // Twitter
     updateMeta('twitter:card', 'summary');
     updateMeta('twitter:title', `The 2 PM Club — ${event.city} — ${event.date}`);
-    updateMeta('twitter:description', 'Daytime disco 2–5pm with 80s/90s/00s anthems.');
+    updateMeta('twitter:description', `Daytime disco ${event.timeRange} with 80s/90s/00s anthems.`);
     updateMeta('twitter:image', event.squareImg);
 
   }, [event, slug]);
@@ -359,7 +380,7 @@ const EventPage = () => {
       </h1>
       
       <p className="small mb-1">
-        <strong>When:</strong> 2:00–5:00 pm
+        <strong>When:</strong> {event.timeDisplay}
       </p>
       <p className="small mb-4">
         <strong>Where:</strong> {event.venue}, {event.city} {event.postcode}
