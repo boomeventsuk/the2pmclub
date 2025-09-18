@@ -35,7 +35,8 @@ export const parseLocation = (location: string): { venue: string; city: string; 
     'Milton Keynes': 'MK9 3PU',
     'Northampton': 'NN1 5BD',
     'Birmingham': 'B1 1AA',
-    'Luton': 'LU1 2AA'
+    'Luton': 'LU1 2AA',
+    'Bedford': 'MK40 2TH'
   };
   
   return {
