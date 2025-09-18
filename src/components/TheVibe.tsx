@@ -11,14 +11,14 @@ const TheVibe = () => {
       event: "Boombastic 90s"
     },
     {
-      text: "Totally the best night in the area. We never miss one. Love taking my headphones off just to soak in the beautiful chaos!",
+      text: "Totally the best night in the area. We never miss one. Love soaking in the beautiful chaos!",
       author: "Fern G",
-      event: "Greatest Hits Silent Disco"
+      event: "Greatest Hits"
     },
     {
       text: "My teenager actually smiled (and danced!) No one was glued to their phones, apart from taking photos of each other. A proper family game-changer.",
       author: "Sarah P",
-      event: "Family Silent Disco"
+      event: "Greatest Hits"
     }
   ];
 

@@ -419,12 +419,25 @@ const EventPage = () => {
         </div>
         
         <div className="share-list" aria-label="Share this event">
-          <a onClick={(e) => handleShare('whatsapp', e)}>WhatsApp</a>
-          <a onClick={(e) => handleShare('facebook', e)}>Facebook</a>
-          <a onClick={(e) => handleShare('twitter', e)}>X / Twitter</a>
-          <a onClick={(e) => handleShare('email', e)}>Email</a>
-          <a onClick={(e) => handleShare('sms', e)}>SMS</a>
-          <a onClick={(e) => handleShare('copy', e)}>Copy link</a>
+          {(() => {
+            const pageUrl = encodeURIComponent(`https://www.the2pmclub.co.uk/events/${event.slug}/`);
+            const text = encodeURIComponent(`The 2 PM Club — ${event.city} (${event.date})`);
+            const wa  = `https://wa.me/?text=${text}%20${pageUrl}`;
+            const fb  = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+            const tw  = `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
+            const mail= `mailto:?subject=${text}&body=${text}%0A${pageUrl}`;
+            const sms = `sms:?&body=${text}%20${pageUrl}`;
+            return (
+              <>
+                <a href={wa}  target="_blank" rel="noopener" onClick={(e)=>handleShare('whatsapp',e)}>WhatsApp</a>
+                <a href={fb}  target="_blank" rel="noopener" onClick={(e)=>handleShare('facebook',e)}>Facebook</a>
+                <a href={tw}  target="_blank" rel="noopener" onClick={(e)=>handleShare('twitter',e)}>X / Twitter</a>
+                <a href={mail}                           onClick={(e)=>handleShare('email',e)}>Email</a>
+                <a href={sms}                            onClick={(e)=>handleShare('sms',e)}>SMS</a>
+                <a href="#"                              onClick={(e)=>handleShare('copy',e)}>Copy link</a>
+              </>
+            );
+          })()}
         </div>
       </section>
 

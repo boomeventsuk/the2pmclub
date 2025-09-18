@@ -9,11 +9,12 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen">
       <Header />
       <NewHero />
       <WhySection />
-      <Tickets />
+      {/* Product rule: no event links on the homepage UI */}
+      {/* <Tickets /> */}
       <SocialProofSection />
       <MusicSection />
       <About />

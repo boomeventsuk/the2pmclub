@@ -19,7 +19,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/events/:slug" element={<EventPage />} />
+            <Route path="/events/:slug/*" element={<EventPage />} />
             {/* Dev-only QA route */}
             {import.meta.env.DEV && <Route path="/__events" element={<DevEventsIndex />} />}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

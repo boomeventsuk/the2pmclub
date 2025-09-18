@@ -4,11 +4,11 @@
     <!-- ===== Core document meta ===== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>THE 2PM CLUB™ Daytime Disco | Over-25s Afternoon Parties Across the Midlands</title>
+    <title>THE 2PM CLUB™ — Daytime Disco | 80s 90s 00s Afternoon Parties</title>
 
 <!-- START: SEO + JSON-LD block -->
 <link rel="canonical" href="https://www.the2pmclub.co.uk/">
-<meta name="description" content="THE 2PM CLUB™ — 80s/90s/00s daytime disco. Big-night energy with smarter afternoon timing. Upcoming dates across the Midlands. Book tickets.">
+<meta name="description" content="THE 2PM CLUB™ — 80s/90s/00s daytime disco. Big-night energy, smarter timing. Book tickets.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -30,13 +30,25 @@
   "@type":"Organization",
   "name":"Boombastic Events — THE 2PM CLUB™",
   "url":"https://www.the2pmclub.co.uk/",
-  "logo":"https://res.cloudinary.com/dteowuv7o/image/upload/v1757519785/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png",
+  "logo":"https://res.cloudinary.com/dteowuv7o/image/upload/v1757519785/57926c83-5a73-43e4-b501-9f9c758534fd.png",
   "sameAs":[
     "https://www.facebook.com/boombastic.eventsuk",
     "https://www.instagram.com/boombastic.eventsuk",
-    "https://www.tiktok.com/@boombastic.eventsuk"
+    "https://www.tiktok.com/@boombastic.eventsuk",
+    "https://www.eventbrite.co.uk/o/boombastic-events-ltd",
+    "https://www.boomevents.co.uk/"
   ]
 }
+</script>
+
+<!-- FAQPage JSON-LD -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"What time does it run?","acceptedAnswer":{"@type":"Answer","text":"Typically 2:00–5:00 pm; some festive dates run to 5:30 pm."}},
+  {"@type":"Question","name":"What music do you play?","acceptedAnswer":{"@type":"Answer","text":"80s, 90s and 00s crowd-pleasers — big sing-along anthems."}},
+  {"@type":"Question","name":"Is there an age limit?","acceptedAnswer":{"@type":"Answer","text":"18+ recommended unless stated otherwise."}},
+  {"@type":"Question","name":"Is it accessible?","acceptedAnswer":{"@type":"Answer","text":"Venues vary — check each venue's access page or contact organisers."}}
+]}
 </script>
 
 <!-- Events JSON-LD (ItemList) — times include timezone offsets (BST +01:00 / GMT +00:00) -->
@@ -130,6 +142,14 @@
     <meta name="theme-color" content="#0B0B0F">
 
     <!-- ===== GTM scaffold (safe placeholder until you have a real ID) ===== -->
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    <!-- End Google Tag Manager -->
+    <meta name="twitter:card" content="summary">
     <script>window.dataLayer = window.dataLayer || [];</script>
     <!-- (When you have your GTM ID, you may replace the line above with the standard GTM head snippet.) -->
 
@@ -153,10 +173,16 @@
 </head>
 
   <body>
-    <!-- Google Tag Manager (noscript) placeholder -->
+    <!-- Google Tag Manager (noscript) -->
     <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
+    
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 bg-primary text-primary-foreground px-4 py-2 z-50">
+      Skip to content
+    </a>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     

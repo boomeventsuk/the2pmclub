@@ -1,0 +1,34 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), autoplay=(), camera=(), clipboard-read=(self), clipboard-write=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = """
+      default-src 'self';
+      img-src 'self' data: https://res.cloudinary.com https://storage.googleapis.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src https://fonts.gstatic.com;
+      script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com;
+      connect-src 'self' https://www.google-analytics.com;
+      frame-src https://www.googletagmanager.com https://www.facebook.com;
+    """
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/lovable-uploads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
