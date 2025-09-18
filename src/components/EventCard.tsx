@@ -30,7 +30,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
       eventVenue: `${venue}, ${city}` || '',
       eventStart: start || ''
     });
-    window.open(bookUrl, '_blank', 'noopener noreferrer nofollow');
+    window.open(bookUrl, '_blank');
   };
 
   const handleEventInfo = () => {
@@ -41,7 +41,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
       eventName: title
     });
     if (infoUrl) {
-      window.open(infoUrl, '_blank', 'noopener noreferrer nofollow');
+      window.open(infoUrl, '_blank');
     }
   };
 
