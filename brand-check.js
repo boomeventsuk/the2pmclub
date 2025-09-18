@@ -1,24 +1,21 @@
-#!/usr/bin/env node
-// Brand compliance check - prevents forbidden terms from being committed
-// Run with: node brand-check.js
-
+// brand-check.js
 const { execSync } = require('child_process');
-const FORBIDDEN_TERM = 'silent disco'; // Replace locally during checks
 
 try {
-  const result = execSync(`grep -Rni --exclude-dir=node_modules --exclude=brand-check.js "${FORBIDDEN_TERM}" .`, { encoding: 'utf8' });
-  if (result.trim()) {
-    console.error(`❌ BRAND VIOLATION: Found forbidden term "${FORBIDDEN_TERM}" in:`);
-    console.error(result);
+  // Match "silent disco" with any whitespace between words, case-insensitive
+  const cmd = `grep -Rni -E "silent[[:space:]]*disco" --exclude-dir=node_modules --exclude=brand-check.js .`;
+  const res = execSync(cmd, { encoding: 'utf8' });
+  if (res && res.trim()) {
+    console.error("❌ Forbidden term found:\n" + res);
     process.exit(1);
   }
-} catch (error) {
-  // grep returns non-zero when no matches found, which is what we want
-  if (error.status === 1) {
-    console.log('✅ Brand compliance check passed - no forbidden terms found');
+  console.log("✅ Brand check passed: forbidden term not found.");
+} catch (e) {
+  // grep exits 1 when no matches — that's success for us
+  if (e.status === 1) {
+    console.log("✅ Brand check passed: forbidden term not found.");
     process.exit(0);
-  } else {
-    console.error('❌ Brand check failed with error:', error.message);
-    process.exit(1);
   }
+  console.error("❌ Brand check error:\n" + e.message);
+  process.exit(2);
 }
