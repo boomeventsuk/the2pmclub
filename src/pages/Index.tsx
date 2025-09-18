@@ -13,8 +13,7 @@ const Index = () => {
       <Header />
       <NewHero />
       <WhySection />
-      {/* Product rule: no event links on the homepage UI */}
-      {/* <Tickets /> */}
+      <Tickets />
       <SocialProofSection />
       <MusicSection />
       <About />
