@@ -36,6 +36,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.the2pmclub.co.uk/events/bedford-2025-11-08/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.the2pmclub.co.uk/events/northampton-christmas-2025-12-06/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
