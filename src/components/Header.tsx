@@ -34,7 +34,7 @@ const Header = () => {
           <a href="/" className="site-logo">
         <img 
           src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519826/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" 
-          alt="The 2 PM Club logo" 
+          alt="The 2 PM Club logo"
           className="h-10 w-auto"
         />
           </a>
