@@ -25,28 +25,28 @@ const NewHero = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
-        <h1 className="font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white mb-4 md:mb-6 leading-tight uppercase"
+        <h1 className="font-inter text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-4 md:mb-6 leading-tight uppercase tracking-wide"
             style={{
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
             }}>
           THE 2PM CLUB™ — The Midlands' Most Popular Daytime Party
         </h1>
         
-        <h2 className="font-bebas text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 uppercase"
+        <h2 className="font-inter text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4 uppercase tracking-wide"
             style={{
               textShadow: '1px 1px 3px rgba(0,0,0,0.8)',
             }}>
           Party on Your Terms
         </h2>
         
-        <h3 className="font-bebas text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 uppercase"
+        <h3 className="font-inter text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6 md:mb-8 uppercase tracking-wide"
             style={{
               textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
             }}>
           — Home by 7 (ish)
         </h3>
         
-        <p className="font-poppins text-lg sm:text-xl md:text-xl text-white mb-6 md:mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0"
+        <p className="font-inter text-base sm:text-lg md:text-xl text-white mb-6 md:mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0 font-medium"
            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
           The biggest 80s, 90s &amp; 00s anthems. Full club atmosphere, perfect timing.
           From Coventry to Northampton, Milton Keynes to Birmingham, every event is packed.
