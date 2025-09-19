@@ -2,7 +2,7 @@ const MusicSection = () => {
   return (
     <section id="music" className="py-20 px-4 bg-card">
       <div className="container mx-auto max-w-4xl text-center">
-        <h2 className="font-bebas text-3xl md:text-5xl font-bold text-primary mb-6 uppercase">
+        <h2 className="font-poppins text-3xl md:text-5xl font-bold text-primary mb-6 uppercase">
           Nothing but the biggest anthems
         </h2>
         

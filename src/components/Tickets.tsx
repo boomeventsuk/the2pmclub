@@ -98,7 +98,7 @@ const events = [
     <section id="tickets" className="py-lg bg-muted/20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-lg">
-          <h2 className="font-bebas text-5xl md:text-6xl font-bold text-primary mb-4">
+          <h2 className="font-poppins text-5xl md:text-6xl font-bold text-primary mb-4">
             Book early — it sells out
           </h2>
           <p className="font-poppins text-lg text-white max-w-3xl mx-auto leading-relaxed">

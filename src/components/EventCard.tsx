@@ -141,7 +141,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
       </div>
       
       <div className="meta">
-        <h3 className="font-bebas text-2xl font-bold text-foreground mb-3 leading-tight">
+        <h3 className="font-poppins text-2xl font-bold text-foreground mb-3 leading-tight">
           {title}
         </h3>
         

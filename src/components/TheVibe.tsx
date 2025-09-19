@@ -25,19 +25,16 @@ const TheVibe = () => {
   return (
     <section id="reviews" className="py-xl bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="font-bebas text-5xl md:text-6xl font-bold text-center mb-6 text-foreground">
+        <h2 className="font-poppins text-5xl md:text-6xl font-bold text-center mb-6 text-foreground">
           It feels like a proper night out — just smarter
         </h2>
         
-        <p className="font-poppins text-lg text-foreground text-center mb-lg max-w-4xl mx-auto leading-relaxed">
-          Walk in and it's unmistakable: the lights, the sound, the energy. Drinks in hand,
-          confetti in the air, friends arm-in-arm on the dancefloor. 
-          The same atmosphere you loved in the 90s and 00s, with timing that works for real life in 2025. 
-          You arrive singing, you leave singing, and you're still home in time for Strictly or a takeaway 
+        <p className="font-poppins text-xl text-muted-foreground text-center mb-xl max-w-3xl mx-auto leading-relaxed">
+          Pure positive vibes, incredible music, and you're home by 7 (ish) —
           <span className="italic">(or carry on — your choice. Party on your terms.)</span>
         </p>
         
-        <h3 className="font-bebas text-4xl md:text-5xl font-bold text-center mb-lg text-foreground">
+        <h3 className="font-poppins text-4xl md:text-5xl font-bold text-center mb-lg text-foreground">
           What People Say
         </h3>
         
@@ -46,14 +43,14 @@ const TheVibe = () => {
             <div key={index} className="review-card bg-card p-8 rounded-lg border border-border relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-50"></div>
               <div className="relative z-10">
-                <h4 className="review-event font-bebas text-xl font-bold text-primary mb-2">
+                <h4 className="review-event font-poppins text-xl font-bold text-primary mb-2">
                   {quote.event}
                 </h4>
                 <div className="stars" aria-label="5 out of 5">★★★★★</div>
                 <blockquote className="quote font-poppins text-lg text-foreground mb-6 leading-relaxed italic">
                   "{quote.text}"
                 </blockquote>
-                <div className="reviewer font-bebas text-xl font-bold text-primary">
+                <div className="reviewer font-poppins text-xl font-bold text-primary">
                   {quote.author}
                 </div>
                 <div className="context font-poppins text-sm text-muted-foreground">
