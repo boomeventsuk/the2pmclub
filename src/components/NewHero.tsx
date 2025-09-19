@@ -25,11 +25,11 @@ const NewHero = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
-        <h1 className="font-poppins text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white mb-2 leading-tight uppercase tracking-wide">
+        <h1 className="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-2 leading-tight uppercase tracking-wide">
           THE 2PM CLUB™ — THE MIDLANDS' MOST POPULAR DAYTIME PARTY
         </h1>
         
-        <h2 className="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-primary mb-6 leading-tight uppercase tracking-wide">
+        <h2 className="font-poppins text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-primary mb-6 leading-tight uppercase tracking-wide">
           PARTY ON YOUR TERMS — HOME BY 7 (ISH)
         </h2>
         
