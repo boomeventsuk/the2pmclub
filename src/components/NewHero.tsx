@@ -29,12 +29,13 @@ const NewHero = () => {
             style={{
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
             }}>
-          Your Best Night Out Is Now In The Afternoon
+          THE 2PM CLUB™ — The Midlands' Most Popular Daytime Party
         </h1>
         
         <p className="font-poppins text-lg sm:text-xl md:text-xl text-white mb-6 md:mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0"
            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
-          Introducing THE 2PM CLUB™ Daytime Disco - big night out energy with smarter afternoon timing. Get all your friends together and dance and sing to the biggest 80s, 90s & 00s anthems. The beauty of it? Wake up fresh on Sunday. No regrets... just a glow!
+          The biggest 80s, 90s &amp; 00s anthems. Full club atmosphere, perfect timing.
+          From Coventry to Northampton, Milton Keynes to Birmingham, every event is packed.
         </p>
         
         <Button 

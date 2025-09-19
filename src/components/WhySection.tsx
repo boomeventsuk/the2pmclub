@@ -31,8 +31,15 @@ const WhySection = () => {
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          Reasons Why THE 2PM CLUB Is A Social Game-Changer
+          Why it works at 2pm
         </h2>
+        
+        <p className="font-poppins text-lg text-foreground text-center mb-16 max-w-4xl mx-auto leading-relaxed">
+          Because everyone can actually be there. No diary clashes, no late-night regrets,
+          no half-empty WhatsApp chats. Just the perfect timing — 2–6pm on a Saturday —
+          when real life pauses and your friends get the floor to yourselves. 
+          That's why people book 12 weeks ahead: they know this is the one that delivers.
+        </p>
         
         <div 
           ref={cardsRef}

@@ -25,9 +25,21 @@ const TheVibe = () => {
   return (
     <section id="reviews" className="py-xl bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="font-bebas text-5xl md:text-6xl font-bold text-center mb-lg text-foreground">
-          What People Say
+        <h2 className="font-bebas text-5xl md:text-6xl font-bold text-center mb-6 text-foreground">
+          It feels like a proper night out — just smarter
         </h2>
+        
+        <p className="font-poppins text-lg text-foreground text-center mb-lg max-w-4xl mx-auto leading-relaxed">
+          Walk in and it's unmistakable: the lights, the sound, the energy. Drinks in hand,
+          confetti in the air, friends arm-in-arm on the dancefloor. 
+          The same atmosphere you loved in the 90s and 00s, with timing that works for real life in 2025. 
+          You arrive singing, you leave singing, and you're still home in time for Strictly or a takeaway 
+          <span className="italic">(or carry on — your choice. Party on your terms.)</span>
+        </p>
+        
+        <h3 className="font-bebas text-4xl md:text-5xl font-bold text-center mb-lg text-foreground">
+          What People Say
+        </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {quotes.map((quote, index) => (

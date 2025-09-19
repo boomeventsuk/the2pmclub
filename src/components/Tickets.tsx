@@ -99,10 +99,13 @@ const events = [
       <div className="container mx-auto px-4">
         <div className="text-center mb-lg">
           <h2 className="font-bebas text-5xl md:text-6xl font-bold text-primary mb-4">
-            Upcoming Parties
+            Book early — it sells out
           </h2>
-          <p className="font-poppins text-xl text-white max-w-2xl mx-auto">
-            Book your tickets now for the next epic party experience across the Midlands
+          <p className="font-poppins text-lg text-white max-w-3xl mx-auto leading-relaxed">
+            Tickets usually start from £10–£15 + fees. Most dates sell out weeks ahead, 
+            because people know what they're getting: the Midlands' best daytime party. 
+            Group of 4 offers are available at many shows — perfect for sorting the chat. 
+            On the door? Only if it hasn't sold out (and it usually has).
           </p>
         </div>
 
