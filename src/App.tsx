@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import EventPage from "./pages/EventPage";
 import NotFound from "./pages/NotFound";
 import DevEventsIndex from "./pages/DevEventsIndex";
+import BirminghamHub from "./pages/hubs/Birmingham";
+import SiteFaqs from "./pages/SiteFaqs";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +22,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/events/:slug/*" element={<EventPage />} />
+            <Route path="/hubs/birmingham/" element={<BirminghamHub />} />
+            <Route path="/faqs/" element={<SiteFaqs />} />
             {/* Dev-only QA route */}
             {import.meta.env.DEV && <Route path="/__events" element={<DevEventsIndex />} />}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

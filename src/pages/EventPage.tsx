@@ -193,19 +193,45 @@ const EventPage = () => {
     }
 
     // Add JSON-LD structured data
+    const extraFacts = [
+      "Doors open at the stated start time; no scheduled breaks.",
+      "Flashing lights used; no strobe. Confetti at many events.",
+      "Accessibility varies by venue; limited seating areas—speak to the team on arrival."
+    ].join(" ");
+
+    const description = [
+      "Over-25s daytime party with 80s/90s/00s anthems.",
+      extraFacts
+    ].join(" ");
+
+    // Special case for Northampton events
+    let venueName = event.venue;
+    let endDate = event.endIso;
+    
+    // Northampton 18 Oct special venue name
+    if (event.city === 'Northampton' && event.slug.includes('2025-10-18')) {
+      venueName = "Robber Suite, cinch Stadium at Franklin's Gardens";
+    }
+    
+    // Northampton Christmas 6 Dec special end time
+    if (event.city === 'Northampton' && event.slug.includes('christmas-2025-12-06')) {
+      const startDate = new Date(event.startIso);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 17, 30).toISOString();
+    }
+
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "Event",
       "name": `The 2 PM Club — ${event.city}`,
       "startDate": event.startIso,
-      "endDate": event.endIso,
+      "endDate": endDate,
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
-      "description": `Daytime disco ${event.timeRange} with iconic anthems from the 80s, 90s and 00s.`,
+      "description": description,
       "image": [event.squareImg],
       "location": {
         "@type": "Place",
-        "name": event.venue,
+        "name": venueName,
         "address": {
           "@type": "PostalAddress",
           "addressLocality": event.city,
