@@ -20,7 +20,7 @@
       font-src https://fonts.gstatic.com;
       script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com;
       connect-src 'self' https://www.google-analytics.com;
-      frame-src https://www.googletagmanager.com https://www.facebook.com;
+      frame-src https://www.googletagmanager.com https://www.facebook.com https://open.spotify.com;
     """
 
 [[headers]]
