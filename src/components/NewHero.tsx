@@ -25,33 +25,15 @@ const NewHero = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
-        <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2 leading-tight uppercase"
-            style={{
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-              fontSize: '2.6rem',
-              lineHeight: '1.08'
-            }}>
-          THE 2PM CLUB™ — The Midlands' Most Popular Daytime Party
+        <h1 className="font-poppins text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white mb-2 leading-tight uppercase tracking-wide">
+          THE 2PM CLUB™ — THE MIDLANDS' MOST POPULAR DAYTIME PARTY
         </h1>
         
-        <h2 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-bold text-primary mb-6 leading-tight uppercase"
-            style={{
-              textShadow: '1px 1px 3px rgba(0,0,0,0.8)',
-              fontSize: '2.0rem',
-              lineHeight: '1.08'
-            }}>
-          Party on Your Terms
+        <h2 className="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-primary mb-6 leading-tight uppercase tracking-wide">
+          PARTY ON YOUR TERMS — HOME BY 7 (ISH)
         </h2>
         
-        <h3 className="font-poppins text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4 leading-tight uppercase"
-            style={{
-              textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
-            }}>
-          — Home by 7 (ish)
-        </h3>
-        
-        <p className="font-poppins text-base md:text-lg text-white/70 mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0"
-           style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+        <p className="font-poppins text-base md:text-lg text-white/70 mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0">
           The biggest 80s, 90s &amp; 00s anthems. Full club atmosphere, perfect timing.
           From Coventry to Northampton, Milton Keynes to Birmingham, every event is packed.
         </p>
