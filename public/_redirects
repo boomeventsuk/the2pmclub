@@ -1,5 +1,4 @@
 https://the2pmclub.co.uk/*   https://www.the2pmclub.co.uk/:splat  301!
-/blog/why-daytime-discos-are-popular/ /blog/why-daytime-discos-are-popular/index.html 200
 /index.html                  /                                   301!
 /:path/index.html            /:path/                              301!
 /:page                       /:page/                              301!
