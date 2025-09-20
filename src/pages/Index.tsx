@@ -5,7 +5,6 @@ import Tickets from "@/components/Tickets";
 import SocialProofSection from "@/components/SocialProofSection";
 import MusicSection from "@/components/MusicSection";
 import About from "@/components/About";
-import HomeFaq from "@/components/HomeFaq";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -18,7 +17,6 @@ const Index = () => {
       <SocialProofSection />
       <MusicSection />
       <About />
-      <HomeFaq />
       <Footer />
     </main>
   );

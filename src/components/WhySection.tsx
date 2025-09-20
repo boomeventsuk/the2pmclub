@@ -62,6 +62,18 @@ const WhySection = () => {
             </div>
           ))}
         </div>
+        
+        <div className="text-center mt-16">
+          <p className="font-poppins text-lg text-foreground mb-6">
+            For more insight into why this timing works so well...
+          </p>
+          <a 
+            href="/blog/why-daytime-discos-are-popular/"
+            className="inline-flex items-center gap-2 font-poppins text-primary hover:text-primary/80 transition-colors font-semibold text-lg underline underline-offset-4"
+          >
+            Read our blog: Why 2PM is the New 2AM →
+          </a>
+        </div>
       </div>
     </section>
   );
