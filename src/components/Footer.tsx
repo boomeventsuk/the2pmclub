@@ -27,6 +27,19 @@ const Footer = () => {
             </a>
           </div>
           
+          {/* Navigation Links */}
+          <div className="flex items-center justify-center gap-8 mb-6">
+            <a href="/faqs/" className="text-muted-foreground hover:text-primary transition-colors font-poppins">
+              FAQs
+            </a>
+            <a href="/blog/why-daytime-discos-are-popular/" className="text-muted-foreground hover:text-primary transition-colors font-poppins">
+              Blog
+            </a>
+            <a href="/why-2pm/" className="text-muted-foreground hover:text-primary transition-colors font-poppins">
+              Why 2PM
+            </a>
+          </div>
+
           {/* Social Icons */}
           <div className="flex items-center justify-center gap-6 mb-8">
             <a 
