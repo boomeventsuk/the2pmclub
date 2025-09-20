@@ -29,7 +29,7 @@ const NewHero = () => {
           THE 2PM CLUB™ - THE MIDLANDS' MOST POPULAR DAYTIME PARTY!
         </h1>
         
-        <h2 className="font-poppins text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-primary mb-6 leading-tight uppercase tracking-wide">
+        <h2 className="font-poppins text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-primary mb-6 leading-tight uppercase tracking-wide">
           PARTY ON YOUR TERMS — HOME BY 7 (ISH)
         </h2>
         
