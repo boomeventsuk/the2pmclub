@@ -40,22 +40,29 @@
 <body class="bg-background text-foreground font-poppins min-h-screen">
 
 <!-- Navigation -->
-<nav class="bg-card shadow-md border-b-4 border-primary">
-  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-    <a href="/" class="text-2xl font-bebas text-primary">THE 2PM CLUB™</a>
-    <div class="flex gap-4">
-      <a href="/" class="bg-primary text-primary-foreground px-6 py-2 rounded-full font-semibold hover:bg-primary/90 transition-colors">
-        Back to Main Page
+<nav class="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border z-50">
+  <div class="container mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center">
+        <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519826/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="THE 2PM CLUB" class="h-8">
       </a>
-      <a href="/#tickets" class="bg-secondary text-secondary-foreground px-6 py-2 rounded-full font-semibold hover:bg-secondary/90 transition-colors">
-        Book Tickets
-      </a>
+      
+      <!-- Navigation Links -->
+      <div class="flex items-center space-x-6">
+        <a href="/" class="text-foreground hover:text-primary transition-colors">
+          Back to Main
+        </a>
+        <a href="/#tickets" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+          Book Tickets
+        </a>
+      </div>
     </div>
   </div>
 </nav>
 
 <!-- Main Content -->
-<main class="container mx-auto max-w-4xl px-4 py-12">
+<main class="container mx-auto max-w-4xl px-4 py-12 pt-24">
   <!-- Hero Card -->
   <div class="bg-card rounded-2xl shadow-xl p-8 md:p-12 mb-8 border-l-8 border-primary">
     <h1 class="font-bebas text-4xl md:text-5xl text-card-foreground mb-4">
@@ -147,25 +154,59 @@
   <div class="bg-card rounded-xl shadow-lg p-6 text-center">
     <h3 class="font-bebas text-lg mb-4 text-card-foreground">Share this article</h3>
     <div class="share-icons">
-      <button class="icon-btn facebook" 
-              onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), 'facebook-share', 'width=580,height=296'); return false;">
-        Facebook
+      <button class="icon-btn whatsapp" onclick="handleWhatsAppShare()">
+        <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="WhatsApp" width="24" height="24">
       </button>
-      <button class="icon-btn whatsapp" 
-              onclick="window.open('https://wa.me/?text=' + encodeURIComponent(document.title + ' ' + window.location.href), '_blank'); return false;">
-        WhatsApp
+      <button class="icon-btn facebook" onclick="handleFacebookShare()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
       </button>
-      <button class="icon-btn copy" 
-              onclick="navigator.clipboard.writeText(window.location.href).then(() => { 
-                const toast = document.querySelector('.__share-toast');
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
-              })">
-        Copy Link
+      <button class="icon-btn copy" onclick="handleCopyLink()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
       </button>
     </div>
     <div class="__share-toast">Link copied to clipboard! 🎉</div>
   </div>
+
+  <script>
+    function handleWhatsAppShare() {
+      const url = window.location.href;
+      const text = document.title;
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function handleFacebookShare() {
+      const url = window.location.href;
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      window.open(facebookUrl, 'facebook-share', 'width=580,height=296');
+    }
+
+    function handleCopyLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const toast = document.querySelector('.__share-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        const toast = document.querySelector('.__share-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      });
+    }
+  </script>
 
 </main>
 
