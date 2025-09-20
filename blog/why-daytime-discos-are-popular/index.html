@@ -5,27 +5,14 @@
 <meta name="description" content="We cracked the code on perfect party timing. Discover why afternoon events sell out while evening ones struggle - it's all about timing, availability, and feeling amazing tomorrow.">
 <link rel="canonical" href="https://www.the2pmclub.co.uk/blog/why-daytime-discos-are-popular/">
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          'poppins': ['Poppins', 'sans-serif']
-        },
-        colors: {
-          primary: '#FF6B35',
-          secondary: '#4ECDC4',
-          accent: '#FFE066'
-        }
-      }
-    }
-  }
-</script>
+<!-- Vite/React Build CSS -->
+<link rel="stylesheet" href="/src/index.css">
+<script type="module" crossorigin src="/src/main.tsx"></script>
+
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <!-- Social Meta -->
 <meta property="og:title" content="Why 2PM is the New 2AM">
@@ -50,17 +37,17 @@
 }
 </script>
 </head>
-<body class="bg-gray-50 font-poppins">
+<body class="bg-background text-foreground font-poppins min-h-screen">
 
 <!-- Navigation -->
-<nav class="bg-white shadow-md border-b-4 border-primary">
+<nav class="bg-card shadow-md border-b-4 border-primary">
   <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-    <a href="/" class="text-2xl font-bold text-primary">THE 2PM CLUB™</a>
+    <a href="/" class="text-2xl font-bebas text-primary">THE 2PM CLUB™</a>
     <div class="flex gap-4">
-      <a href="/" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-primary/90 transition-colors">
+      <a href="/" class="bg-primary text-primary-foreground px-6 py-2 rounded-full font-semibold hover:bg-primary/90 transition-colors">
         Back to Main Page
       </a>
-      <a href="/#tickets" class="bg-secondary text-white px-6 py-2 rounded-full font-semibold hover:bg-secondary/90 transition-colors">
+      <a href="/#tickets" class="bg-secondary text-secondary-foreground px-6 py-2 rounded-full font-semibold hover:bg-secondary/90 transition-colors">
         Book Tickets
       </a>
     </div>
@@ -70,18 +57,18 @@
 <!-- Main Content -->
 <main class="container mx-auto max-w-4xl px-4 py-12">
   <!-- Hero Card -->
-  <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-8 border-l-8 border-primary">
-    <h1 class="font-bold text-4xl md:text-5xl text-gray-900 mb-4">
+  <div class="bg-card rounded-2xl shadow-xl p-8 md:p-12 mb-8 border-l-8 border-primary">
+    <h1 class="font-bebas text-4xl md:text-5xl text-card-foreground mb-4">
       Why 2PM is the New 2AM
     </h1>
-    <p class="text-xl text-gray-600 font-medium">
+    <p class="text-xl text-muted-foreground font-medium">
       We cracked the code on perfect party timing
     </p>
   </div>
 
   <!-- Introduction -->
-  <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
-    <p class="text-lg leading-relaxed text-gray-700">
+  <div class="bg-card rounded-xl shadow-lg p-8 mb-8">
+    <p class="text-lg leading-relaxed text-card-foreground">
       Here's something interesting: while everyone else was trying to reinvent nightlife, we discovered something hiding in plain sight. <strong>The best time to party isn't when you think it is.</strong>
     </p>
   </div>
@@ -90,52 +77,52 @@
   <div class="space-y-8">
     
     <!-- Sweet Spot Card -->
-    <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bold text-2xl text-gray-900 mb-4">The Sweet Spot Nobody Saw Coming</h2>
-      <p class="text-gray-700 leading-relaxed mb-4">
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">The Sweet Spot Nobody Saw Coming</h2>
+      <p class="text-card-foreground leading-relaxed mb-4">
         The afternoon events selling out consistently? They start between 2-4PM. The ones struggling to fill venues? They start at 5PM or later. Across England, afternoon events starting in that sweet spot achieve near-perfect attendance while later starts hover around 70% capacity.
       </p>
-      <p class="text-gray-700 leading-relaxed">
+      <p class="text-card-foreground leading-relaxed">
         And here's the really clever bit: UK women aged 30-50 have their peak free time exactly when we're throwing the party. Saturday afternoons between 2-6PM show the lowest domestic obligations and highest leisure availability of the entire weekend. <strong>It's like the universe designed this window specifically for celebration.</strong>
       </p>
     </div>
 
     <!-- Science Card -->
-    <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-accent">
-      <h2 class="font-bold text-2xl text-gray-900 mb-4">The Science of Feeling Amazing Tomorrow</h2>
-      <p class="text-gray-700 leading-relaxed mb-4">
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">The Science of Feeling Amazing Tomorrow</h2>
+      <p class="text-card-foreground leading-relaxed mb-4">
         Finishing by 6PM means you genuinely wake up Sunday feeling human. Not because we're being sensible, but because sleep science shows alcohol stops affecting your sleep quality about 3-4 hours after your last drink. So "home by teatime, great sleep by bedtime" isn't just catchy - it's biology.
       </p>
-      <p class="text-gray-700 leading-relaxed font-medium">
+      <p class="text-card-foreground leading-relaxed font-medium">
         Your Sunday morning self will thank you for choosing smart timing over traditional stupidity.
       </p>
     </div>
 
     <!-- Real People Card -->
-    <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-primary">
-      <h2 class="font-bold text-2xl text-gray-900 mb-4">Real People, Real Reactions</h2>
-      <p class="text-gray-700 leading-relaxed mb-4">
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Real People, Real Reactions</h2>
+      <p class="text-card-foreground leading-relaxed mb-4">
         The proof? People don't just attend - they arrive singing and leave still singing. When we analyzed social media posts from actual attendees, the most common phrase was "so much fun" (mentioned 30 times), followed by "had a blast" and "best time ever."
       </p>
-      <p class="text-gray-700 leading-relaxed">
+      <p class="text-card-foreground leading-relaxed">
         These aren't polite reviews. <strong>This is genuine enthusiasm from people who discovered that afternoon euphoria hits completely different.</strong>
       </p>
     </div>
 
     <!-- Everyone Can Make It Card -->
-    <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bold text-2xl text-gray-900 mb-4">Why Everyone Can Finally Make It</h2>
-      <p class="text-gray-700 leading-relaxed mb-4">
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Why Everyone Can Finally Make It</h2>
+      <p class="text-card-foreground leading-relaxed mb-4">
         No babysitter negotiations. No work-night anxiety. No choosing between having fun and having a life. The 2-6PM window naturally solves every coordination problem that's been killing your group chat plans for years.
       </p>
-      <p class="text-gray-700 leading-relaxed font-medium">
+      <p class="text-card-foreground leading-relaxed font-medium">
         Finally, timing that works for humans with actual responsibilities who still want to have proper fun.
       </p>
     </div>
 
     <!-- Bottom Line Card -->
-    <div class="bg-gradient-to-r from-primary to-secondary text-white rounded-xl shadow-lg p-8">
-      <h2 class="font-bold text-2xl mb-4">The Bottom Line</h2>
+    <div class="bg-gradient-to-r from-primary to-secondary text-primary-foreground rounded-xl shadow-lg p-8">
+      <h2 class="font-bebas text-2xl mb-4">The Bottom Line</h2>
       <p class="leading-relaxed mb-4">
         We're not reinventing celebration - we're just doing it when it makes perfect sense. Same energy, better timing. Same euphoria, zero regret.
       </p>
@@ -151,49 +138,54 @@
 
   <!-- CTA Section -->
   <div class="text-center mt-12 mb-8">
-    <a href="/#tickets" class="inline-block bg-primary text-white px-8 py-4 rounded-full text-xl font-bold hover:bg-primary/90 transition-colors shadow-lg">
+    <a href="/#tickets" class="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full text-xl font-bold hover:bg-primary/90 transition-colors shadow-lg">
       Find Your Event →
     </a>
   </div>
 
   <!-- Social Share -->
-  <div class="bg-white rounded-xl shadow-lg p-6 text-center">
-    <h3 class="font-semibold text-lg mb-4 text-gray-900">Share this article</h3>
-    <div class="flex justify-center gap-4">
-      <a href="#" 
-         onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), 'facebook-share', 'width=580,height=296'); return false;"
-         class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2">
-        📘 Facebook
-      </a>
-      <a href="#" 
-         onclick="window.open('https://wa.me/?text=' + encodeURIComponent(document.title + ' ' + window.location.href), '_blank'); return false;"
-         class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center gap-2">
-        💬 WhatsApp
-      </a>
-      <button onclick="navigator.clipboard.writeText(window.location.href).then(() => { alert('Link copied!'); })"
-              class="bg-gray-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-700 transition-colors flex items-center gap-2">
-        🔗 Copy Link
+  <div class="bg-card rounded-xl shadow-lg p-6 text-center">
+    <h3 class="font-bebas text-lg mb-4 text-card-foreground">Share this article</h3>
+    <div class="share-icons">
+      <button class="icon-btn facebook" 
+              onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), 'facebook-share', 'width=580,height=296'); return false;">
+        Facebook
+      </button>
+      <button class="icon-btn whatsapp" 
+              onclick="window.open('https://wa.me/?text=' + encodeURIComponent(document.title + ' ' + window.location.href), '_blank'); return false;">
+        WhatsApp
+      </button>
+      <button class="icon-btn copy" 
+              onclick="navigator.clipboard.writeText(window.location.href).then(() => { 
+                const toast = document.querySelector('.__share-toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+              })">
+        Copy Link
       </button>
     </div>
+    <div class="__share-toast">Link copied to clipboard! 🎉</div>
   </div>
 
 </main>
 
 <!-- Footer -->
-<footer class="bg-gray-900 text-white py-8 mt-16">
+<footer class="bg-background border-t py-8 mt-16">
   <div class="container mx-auto px-4 text-center">
     <div class="mb-4">
       <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519785/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" 
            alt="THE 2PM CLUB Logo" 
            class="h-12 mx-auto mb-4">
     </div>
-    <p class="text-gray-400">
+    <p class="text-muted-foreground">
       © 2025 Boombastic Events Ltd. All rights reserved.
     </p>
-    <div class="mt-4">
-      <a href="/" class="text-gray-400 hover:text-white mx-2">Home</a>
-      <a href="/#tickets" class="text-gray-400 hover:text-white mx-2">Events</a>
-      <a href="/faqs/" class="text-gray-400 hover:text-white mx-2">FAQs</a>
+    <div class="mt-4 space-x-4">
+      <a href="/" class="text-muted-foreground hover:text-foreground">Home</a>
+      <a href="/#tickets" class="text-muted-foreground hover:text-foreground">Events</a>
+      <a href="/faqs/" class="text-muted-foreground hover:text-foreground">FAQs</a>
+      <a href="/blog/why-daytime-discos-are-popular/" class="text-muted-foreground hover:text-foreground">Blog</a>
+      <a href="/why-2pm/" class="text-muted-foreground hover:text-foreground">Why 2PM</a>
     </div>
   </div>
 </footer>
