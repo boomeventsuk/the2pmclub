@@ -15,9 +15,10 @@ interface EventCardProps {
   infoUrl?: string;
   dateIso: string;
   start?: string;
+  soldOut?: boolean;
 }
 
-const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start }: EventCardProps) => {
+const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut }: EventCardProps) => {
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
   const { toast } = useToast();
 
@@ -142,6 +143,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
       
       <div className="meta">
         <h3 className="font-poppins text-2xl font-bold text-foreground mb-3 leading-tight">
+          {soldOut && <span className="text-destructive font-bold">Sold Out - </span>}
           {title}
         </h3>
         
@@ -167,7 +169,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn"
         >
           <ExternalLink className="w-4 h-4" />
-          Book Now
+          {soldOut ? 'Waiting List' : 'Book Now'}
         </Button>
         {infoUrl && (
           <Button 
