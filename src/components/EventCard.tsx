@@ -16,9 +16,10 @@ interface EventCardProps {
   dateIso: string;
   start?: string;
   soldOut?: boolean;
+  urgencyText?: string;
 }
 
-const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut }: EventCardProps) => {
+const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText }: EventCardProps) => {
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
   const { toast } = useToast();
 
@@ -128,7 +129,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
 
   return (
     <article className="ticket-card" data-ticket-card data-date-iso={dateIso}>
-      <div className="poster">
+      <div className="poster relative">
         <img 
           src={poster}
           alt={`${title} event poster`}
@@ -139,6 +140,11 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
           height="1200"
           style={{ aspectRatio: '2 / 3', objectFit: 'cover' }}
         />
+        {urgencyText && (
+          <div className="urgency-strip">
+            <span>{urgencyText}</span>
+          </div>
+        )}
       </div>
       
       <div className="meta">

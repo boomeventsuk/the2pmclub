@@ -41,7 +41,8 @@ const events = [
     time: "14:00–18:00",
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522739/111025_2PM_MK_ANNSQv2_tttdip.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/daytime-disco-presents-the-2pm-clubtm-milton-keynes-80s-90s-00s-anthems-tickets-1403881610689",
-    infoUrl: "https://www.facebook.com/events/710462968194939"
+    infoUrl: "https://www.facebook.com/events/710462968194939",
+    urgencyText: "Selling Fast"
   },
   {
     title: "THE 2PM CLUB™ NORTHAMPTON - 80s 90s 00s Daytime Disco",
@@ -51,7 +52,8 @@ const events = [
     time: "14:00–18:00",
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522765/181025_2PM_NPTON_ANNSQ_guiuq7.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-northampton-80s-90s-00s-daytime-disco-tickets-1557588823099?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/1099596238372820"
+    infoUrl: "https://www.facebook.com/events/1099596238372820",
+    urgencyText: "Final Release Tickets"
   },
   {
     title: "THE 2PM CLUB™ BIRMINGHAM - 80s 90s 00s Daytime Disco",
@@ -91,7 +93,8 @@ const events = [
     time: "14:00–17:30",
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522817/061225_2PM_NPTON_ANNSQ_pcnhtp.png",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2-pm-clubtm-northampton-christmas-daytime-disco-tickets-1544458540069?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/928404249476093"
+    infoUrl: "https://www.facebook.com/events/928404249476093",
+    urgencyText: "Selling Fast"
   }
 ];
 

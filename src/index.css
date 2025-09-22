@@ -142,6 +142,38 @@ a.button:focus, button:focus {
 }
 .__share-toast.show{ opacity:1; transform:translateX(-50%) translateY(-6px); }
 
+/* Urgency strips for event cards */
+.urgency-strip {
+  position: absolute;
+  top: 12px;
+  right: -8px;
+  background: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 72% 51%));
+  color: white;
+  padding: 4px 12px 4px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transform: skew(-8deg);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+  z-index: 10;
+  animation: urgency-pulse 2s ease-in-out infinite;
+}
+
+.urgency-strip span {
+  transform: skew(8deg);
+  display: block;
+}
+
+@keyframes urgency-pulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+  }
+  50% {
+    box-shadow: 0 2px 12px rgba(220, 38, 38, 0.6);
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
