@@ -63,7 +63,8 @@ const events = [
     time: "14:00–18:00",
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522785/251025_2PM_BHAM_ANNSQ_exjo6v.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-birmingham-80s-90s-00s-daytime-disco-tickets-1559435135469?aff=BOOMWEB",
-    infoUrl: "https://www.facebook.com/events/1252072186162573"
+    infoUrl: "https://www.facebook.com/events/1252072186162573",
+    urgencyText: "Just Announced"
   },
   {
     title: "THE 2PM CLUB™ LUTON - 80s 90s 00s Daytime Disco",
@@ -73,7 +74,8 @@ const events = [
     time: "14:00–18:00",
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522804/011125_2PM_LUT_ANNSQ_ecaqla.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-luton-80s-90s-00s-daytime-disco-tickets-1645025849599?aff=BOOMWEB",
-    infoUrl: "https://www.facebook.com/events/1277593650522747"
+    infoUrl: "https://www.facebook.com/events/1277593650522747",
+    urgencyText: "Just Announced"
   },
   {
     title: "THE 2PM CLUB™ BEDFORD - 80s 90s 00s Daytime Disco",
@@ -83,7 +85,8 @@ const events = [
     time: "14:00–18:00",
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1758211686/081125_2PM_BED_ANNSQ_rsmka5.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-daytime-disco-bedford-80s-90s-00s-anthems-tickets-1715938079989?aff=BOOMWEB",
-    infoUrl: "https://www.facebook.com/events/24674072798946570"
+    infoUrl: "https://www.facebook.com/events/24674072798946570",
+    urgencyText: "Just Announced"
   },
   {
     title: "THE 2PM CLUB™ Northampton - Christmas Daytime Disco",
