@@ -98,6 +98,17 @@ const events = [
     bookUrl: "https://www.eventbrite.co.uk/e/the-2-pm-clubtm-northampton-christmas-daytime-disco-tickets-1544458540069?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/928404249476093",
     urgencyText: "Selling Fast"
+  },
+  {
+    title: "THE 2PM CLUB™ Milton Keynes - Christmas Daytime Disco",
+    date: "Sat 13 Dec 2025",
+    venue: "MK11 Music Venue",
+    city: "Milton Keynes",
+    time: "14:00–18:00",
+    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1759239645/131225_2PM_MK_ANNSQ_vpluvo.jpg",
+    bookUrl: "https://www.eventbrite.co.uk/e/the-2-pm-club-milton-keynes-christmas-daytime-disco-tickets-1757042494399?aff=BoomWeb",
+    infoUrl: "https://www.facebook.com/events/1263771188835863",
+    urgencyText: "Just Announced"
   }
 ];
 

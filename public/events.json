@@ -75,5 +75,16 @@
     "infoUrl": "https://www.facebook.com/events/928404249476093",
     "image": "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522817/061225_2PM_NPTON_ANNSQ_pcnhtp.png",
     "description": "Festive 2PM CLUB™ — daytime dancefloor, home in time for tree lights."
+  },
+  {
+    "id": 108,
+    "title": "THE 2PM CLUB™ Milton Keynes — Christmas Daytime Disco",
+    "location": "MK11 Music Venue, Milton Keynes",
+    "start": "2025-12-13T14:00:00+00:00",
+    "end": "2025-12-13T18:00:00+00:00",
+    "bookUrl": "https://www.eventbrite.co.uk/e/the-2-pm-club-milton-keynes-christmas-daytime-disco-tickets-1757042494399?aff=BoomWeb",
+    "infoUrl": "https://www.facebook.com/events/1263771188835863",
+    "image": "https://res.cloudinary.com/dteowuv7o/image/upload/v1759239645/131225_2PM_MK_ANNSQ_vpluvo.jpg",
+    "description": "Festive 2PM CLUB™ — daytime dancefloor, home in time for tree lights."
   }
 ]
