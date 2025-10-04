@@ -109,6 +109,17 @@ const events = [
     bookUrl: "https://www.eventbrite.co.uk/e/the-2-pm-club-milton-keynes-christmas-daytime-disco-tickets-1757042494399?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/1263771188835863",
     urgencyText: "Just Announced"
+  },
+  {
+    title: "THE 2PM CLUB™ Bedford - Christmas Daytime Disco",
+    date: "Sat 20 Dec 2025",
+    venue: "Bedford Esquires",
+    city: "Bedford",
+    time: "14:00–18:00",
+    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1759604893/201225_2PM_BED_ANNSQ_mfxfvg.jpg",
+    bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-club-bedford-christmas-daytime-disco-tickets-1758345602029?aff=BoomWeb",
+    infoUrl: "https://www.facebook.com/events/1927014331198078",
+    urgencyText: "Just Announced"
   }
 ];
 
