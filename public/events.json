@@ -1,16 +1,5 @@
 [
   {
-    "id": 102,
-    "title": "THE 2PM CLUB™ Milton Keynes — 80s 90s 00s Daytime Disco",
-    "location": "MK11 Music Venue, Milton Keynes",
-    "start": "2025-10-11T14:00:00+01:00",
-    "end": "2025-10-11T18:00:00+01:00",
-    "bookUrl": "https://www.eventbrite.co.uk/e/daytime-disco-presents-the-2pm-clubtm-milton-keynes-80s-90s-00s-anthems-tickets-1403881610689",
-    "infoUrl": "https://www.facebook.com/events/710462968194939",
-    "image": "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522739/111025_2PM_MK_ANNSQv2_tttdip.jpg",
-    "description": "Over-25s afternoon party at MK11 with the biggest 80s/90s/00s hits."
-  },
-  {
     "id": 103,
     "title": "THE 2PM CLUB™ Northampton — 80s 90s 00s Daytime Disco",
     "location": "cinch Stadium at Franklin's Gardens, Northampton",
@@ -20,17 +9,6 @@
     "infoUrl": "https://www.facebook.com/events/1099596238372820",
     "image": "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522765/181025_2PM_NPTON_ANNSQ_guiuq7.jpg",
     "description": "Northampton's daytime disco for over-25s — wall-to-wall floor-fillers."
-  },
-  {
-    "id": 104,
-    "title": "THE 2PM CLUB™ Birmingham — 80s 90s 00s Daytime Disco",
-    "location": "The Castle & Falcon, Birmingham",
-    "start": "2025-10-25T14:00:00+01:00",
-    "end": "2025-10-25T18:00:00+01:00",
-    "bookUrl": "https://www.eventbrite.co.uk/e/the-2pm-clubtm-birmingham-80s-90s-00s-daytime-disco-tickets-1559435135469?aff=BOOMWEB",
-    "infoUrl": "https://www.facebook.com/events/1252072186162573",
-    "image": "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522785/251025_2PM_BHAM_ANNSQ_exjo6v.jpg",
-    "description": "Birmingham's over-25s afternoon bash — every song a singalong."
   },
   {
     "id": 105,

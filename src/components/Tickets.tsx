@@ -23,17 +23,6 @@ const Tickets = () => {
 
 const events = [
   {
-    title: "THE 2PM CLUB™ MK - 80s 90s 00s Daytime Disco",
-    date: "Sat 11 Oct 2025",
-    venue: "MK11 Music Venue",
-    city: "Milton Keynes",
-    time: "14:00–18:00",
-    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522739/111025_2PM_MK_ANNSQv2_tttdip.jpg",
-    bookUrl: "https://www.eventbrite.co.uk/e/daytime-disco-presents-the-2pm-clubtm-milton-keynes-80s-90s-00s-anthems-tickets-1403881610689",
-    infoUrl: "https://www.facebook.com/events/710462968194939",
-    urgencyText: "Selling Fast"
-  },
-  {
     title: "THE 2PM CLUB™ NORTHAMPTON - 80s 90s 00s Daytime Disco",
     date: "Sat 18 Oct 2025",
     venue: "cinch Stadium at Franklin's Gardens",
@@ -43,17 +32,6 @@ const events = [
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-northampton-80s-90s-00s-daytime-disco-tickets-1557588823099?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/1099596238372820",
     urgencyText: "Final Release Tickets"
-  },
-  {
-    title: "THE 2PM CLUB™ BIRMINGHAM - 80s 90s 00s Daytime Disco",
-    date: "Sat 25 Oct 2025",
-    venue: "The Castle & Falcon",
-    city: "Birmingham",
-    time: "14:00–18:00",
-    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522785/251025_2PM_BHAM_ANNSQ_exjo6v.jpg",
-    bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-birmingham-80s-90s-00s-daytime-disco-tickets-1559435135469?aff=BOOMWEB",
-    infoUrl: "https://www.facebook.com/events/1252072186162573",
-    urgencyText: "Just Announced"
   },
   {
     title: "THE 2PM CLUB™ LUTON - 80s 90s 00s Daytime Disco",
