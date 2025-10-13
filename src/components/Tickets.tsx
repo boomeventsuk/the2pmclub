@@ -31,7 +31,7 @@ const events = [
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522765/181025_2PM_NPTON_ANNSQ_guiuq7.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-northampton-80s-90s-00s-daytime-disco-tickets-1557588823099?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/1099596238372820",
-    urgencyText: "Final Release Tickets"
+    urgencyText: "Final 25 Tickets"
   },
   {
     title: "THE 2PM CLUB™ LUTON - 80s 90s 00s Daytime Disco",
@@ -53,7 +53,7 @@ const events = [
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1758211686/081125_2PM_BED_ANNSQ_rsmka5.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-daytime-disco-bedford-80s-90s-00s-anthems-tickets-1715938079989?aff=BOOMWEB",
     infoUrl: "https://www.facebook.com/events/24674072798946570",
-    urgencyText: "Just Announced"
+    urgencyText: "Selling Fast"
   },
   {
     title: "THE 2PM CLUB™ Northampton - Christmas Daytime Disco",
