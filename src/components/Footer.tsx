@@ -35,9 +35,6 @@ const Footer = () => {
             <a href="/blog/why-daytime-discos-are-popular/" className="text-muted-foreground hover:text-primary transition-colors font-poppins">
               Blog
             </a>
-            <a href="/why-2pm/" className="text-muted-foreground hover:text-primary transition-colors font-poppins">
-              Why 2PM
-            </a>
           </div>
 
           {/* Social Icons */}
