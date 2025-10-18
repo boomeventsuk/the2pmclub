@@ -36,14 +36,15 @@ const events = [
   },
   {
     title: "THE 2PM CLUB™ LUTON - 80s 90s 00s Daytime Disco",
-    date: "Sat 1 Nov 2025",
+    date: "Sat 7 Feb 2026",
     venue: "Hat Factory",
     city: "Luton",
     time: "14:00–18:00",
-    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522804/011125_2PM_LUT_ANNSQ_ecaqla.jpg",
+    poster: "/lovable-uploads/070226_2PM_LUT_ANNSQ.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-luton-80s-90s-00s-daytime-disco-tickets-1645025849599?aff=BOOMWEB",
     infoUrl: "https://www.facebook.com/events/1277593650522747",
-    urgencyText: "Just Announced"
+    urgencyText: "New Date",
+    urgencyColor: "green"
   },
   {
     title: "THE 2PM CLUB™ BEDFORD - 80s 90s 00s Daytime Disco",

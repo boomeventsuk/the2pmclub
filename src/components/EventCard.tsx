@@ -17,9 +17,10 @@ interface EventCardProps {
   start?: string;
   soldOut?: boolean;
   urgencyText?: string;
+  urgencyColor?: string;
 }
 
-const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText }: EventCardProps) => {
+const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
   const { toast } = useToast();
 
@@ -141,7 +142,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
           style={{ aspectRatio: '2 / 3', objectFit: 'cover' }}
         />
         {urgencyText && (
-          <div className="urgency-strip">
+          <div className={`urgency-strip ${urgencyColor === 'green' ? 'urgency-strip-green' : ''}`}>
             <span>{urgencyText}</span>
           </div>
         )}
