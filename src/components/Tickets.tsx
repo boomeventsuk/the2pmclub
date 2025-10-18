@@ -31,7 +31,8 @@ const events = [
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522765/181025_2PM_NPTON_ANNSQ_guiuq7.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-northampton-80s-90s-00s-daytime-disco-tickets-1557588823099?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/1099596238372820",
-    urgencyText: "Final 25 Tickets"
+    urgencyText: "SOLD OUT",
+    soldOut: true
   },
   {
     title: "THE 2PM CLUB™ LUTON - 80s 90s 00s Daytime Disco",
