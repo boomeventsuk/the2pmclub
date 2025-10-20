@@ -23,18 +23,6 @@ const Tickets = () => {
 
 const events = [
   {
-    title: "THE 2PM CLUB™ NORTHAMPTON - 80s 90s 00s Daytime Disco",
-    date: "Sat 18 Oct 2025",
-    venue: "cinch Stadium at Franklin's Gardens",
-    city: "Northampton",
-    time: "14:00–18:00",
-    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522765/181025_2PM_NPTON_ANNSQ_guiuq7.jpg",
-    bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-northampton-80s-90s-00s-daytime-disco-tickets-1557588823099?aff=BoomWeb",
-    infoUrl: "https://www.facebook.com/events/1099596238372820",
-    urgencyText: "SOLD OUT",
-    soldOut: true
-  },
-  {
     title: "THE 2PM CLUB™ BEDFORD - 80s 90s 00s Daytime Disco",
     date: "Sat 8 Nov 2025",
     venue: "Bedford Esquires",
