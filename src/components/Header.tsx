@@ -4,7 +4,7 @@ const Header = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerHeight = 80; // Account for fixed header
+      const headerHeight = 116; // Account for fixed header + community banner
       const elementPosition = element.offsetTop - headerHeight;
       window.scrollTo({
         top: elementPosition,
@@ -126,6 +126,18 @@ const Header = () => {
           </a>
         </div>
       </header>
+      
+      {/* Community Banner */}
+      <div className="community-banner">
+        <a 
+          href="https://www.facebook.com/groups/daytimediscorevolution" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="community-banner-link"
+        >
+          JOIN THE 2PM CLUB COMMUNITY! CLICK HERE TO JOIN OUR OFFICIAL FACEBOOK GROUP
+        </a>
+      </div>
     </>
   );
 };
