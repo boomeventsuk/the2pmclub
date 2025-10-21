@@ -31,7 +31,7 @@ const events = [
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1758211686/081125_2PM_BED_ANNSQ_rsmka5.jpg",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-daytime-disco-bedford-80s-90s-00s-anthems-tickets-1715938079989?aff=BOOMWEB",
     infoUrl: "https://www.facebook.com/events/24674072798946570",
-    urgencyText: "Selling Fast"
+    urgencyText: "Final 50 Tickets"
   },
   {
     title: "THE 2PM CLUB™ Northampton - Christmas Daytime Disco",
@@ -42,7 +42,7 @@ const events = [
     poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1757522817/061225_2PM_NPTON_ANNSQ_pcnhtp.png",
     bookUrl: "https://www.eventbrite.co.uk/e/the-2-pm-clubtm-northampton-christmas-daytime-disco-tickets-1544458540069?aff=BoomWeb",
     infoUrl: "https://www.facebook.com/events/928404249476093",
-    urgencyText: "Selling Fast"
+    urgencyText: "Last 10 Tickets"
   },
   {
     title: "THE 2PM CLUB™ Milton Keynes - Christmas Daytime Disco",
