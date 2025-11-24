@@ -176,7 +176,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn"
         >
           <ExternalLink className="w-4 h-4" />
-          {soldOut ? 'Join Waiting List' : 'Book Now'}
+          {soldOut ? 'Waiting List' : 'Book Now'}
         </Button>
         {infoUrl && (
           <Button 
