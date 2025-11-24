@@ -23,17 +23,6 @@ const Tickets = () => {
 
 const events = [
   {
-    title: "THE 2PM CLUB™ BEDFORD - 80s 90s 00s Daytime Disco",
-    date: "Sat 8 Nov 2025",
-    venue: "Bedford Esquires",
-    city: "Bedford",
-    time: "14:00–18:00",
-    poster: "https://res.cloudinary.com/dteowuv7o/image/upload/v1758211686/081125_2PM_BED_ANNSQ_rsmka5.jpg",
-    bookUrl: "https://www.eventbrite.co.uk/e/the-2pm-clubtm-daytime-disco-bedford-80s-90s-00s-anthems-tickets-1715938079989?aff=BOOMWEB",
-    infoUrl: "https://www.facebook.com/events/24674072798946570",
-    urgencyText: "FINAL 50 TICKETS"
-  },
-  {
     title: "THE 2PM CLUB™ Northampton - Christmas Daytime Disco",
     date: "Sat 6 Dec 2025",
     venue: "The Picturedrome",
