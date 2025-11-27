@@ -498,7 +498,7 @@ const EventPage = () => {
                     
                     {/* Heading - Bold White */}
                     <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight uppercase mb-4">
-                      Let Your Hair Down. Properly
+                      party with your mates at a time that suits you.
                     </h2>
                     
                     {/* Pull Quote - Pink Border, White Text */}
