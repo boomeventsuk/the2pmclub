@@ -386,14 +386,12 @@ const EventPage = () => {
                   {/* Right: Event Details - Wrapped in Card */}
                   <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-4 md:p-6 space-y-4 flex flex-col justify-between">
                     <div>
-                      <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-2">
-                        {event.title}
+                      <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
+                        THE 2PM CLUB™ {event.city}
                       </h1>
-                      {event.subtitle && (
-                        <p className="font-poppins text-sm md:text-base text-foreground/70 leading-relaxed">
-                          {event.subtitle}
-                        </p>
-                      )}
+                      <p className="font-poppins text-lg md:text-xl text-foreground/80 mb-2">
+                        80s 90s 00s Daytime Disco
+                      </p>
                     </div>
                     
                     <div className="flex flex-col gap-2">
@@ -508,8 +506,11 @@ const EventPage = () => {
                 {event.fullDescription && (
                   <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
                     {/* Intro Text */}
+                    <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-3 tracking-wide">
+                      THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
+                    </p>
                     <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-6 tracking-wide">
-                      THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()} FOR AN AFTERNOON OF ICONIC ANTHEMS FROM THE 80s 90s 00s!
+                      AN AFTERNOON OF ICONIC ANTHEMS FROM THE 80s 90s 00s!
                     </p>
                     
                     {/* Heading - Bold White */}
