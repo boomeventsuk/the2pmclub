@@ -405,7 +405,7 @@ const EventPage = () => {
 
                     <div className="pt-4 border-t border-border/50">
                       <p className="font-poppins text-xs uppercase tracking-wider text-muted-foreground mb-3">
-                        Share This Event
+                        Be the group chat hero — Share this event
                       </p>
                       <div className="share-icons justify-start">
                         <button 
@@ -491,6 +491,11 @@ const EventPage = () => {
               <div className="max-w-3xl mx-auto">
                 {event.fullDescription && (
                   <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
+                    {/* Intro Text */}
+                    <p className="font-poppins text-base md:text-lg text-foreground/90 mb-6">
+                      The 2PM Club Daytime Disco returns to {event.city} for 4 hours of Iconic Anthems and Pop Perfection from the 80s 90s 00s!
+                    </p>
+                    
                     {/* Heading - Bold White */}
                     <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight uppercase mb-4">
                       Let Your Hair Down. Properly
@@ -517,9 +522,9 @@ const EventPage = () => {
 
                 {/* Highlights Section */}
                 {event.highlights.length > 0 && (
-                  <div>
+                  <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
                     <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6 uppercase">
-                      WHY THIS IS YOUR NEW TRADITION
+                      Why daytime discos are a game changer!
                     </h2>
                     <div className="space-y-4">
                       {event.highlights.map((highlight, index) => {
