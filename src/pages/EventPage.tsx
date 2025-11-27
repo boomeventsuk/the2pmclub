@@ -598,6 +598,41 @@ const EventPage = () => {
           </section>
         )}
 
+        {/* Photo Gallery - Auto-scrolling */}
+        {isLutonTrial && (
+          <section className="py-8 md:py-12 overflow-hidden">
+            <div className="relative">
+              <div className="flex gap-4 animate-scroll">
+                {[
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg",
+                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg",
+                ].map((img, index) => (
+                  <div key={index} className="flex-shrink-0 w-64 md:w-80">
+                    <img 
+                      src={img} 
+                      alt="2PM Club event moments"
+                      className="w-full h-48 md:h-56 object-cover rounded-xl shadow-lg"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Social Proof Section - Luton Trial Only */}
         {isLutonTrial && (
           <section className="py-6 md:py-8">
