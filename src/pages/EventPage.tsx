@@ -492,8 +492,8 @@ const EventPage = () => {
                 {event.fullDescription && (
                   <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
                     {/* Intro Text */}
-                    <p className="font-poppins text-base md:text-lg text-foreground/90 mb-6">
-                      The 2PM Club Daytime Disco returns to {event.city} for 4 hours of Iconic Anthems and Pop Perfection from the 80s 90s 00s!
+                    <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-6 tracking-wide">
+                      THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()} FOR AN AFTERNOON OF ICONIC ANTHEMS FROM THE 80s 90s 00s!
                     </p>
                     
                     {/* Heading - Bold White */}
