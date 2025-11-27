@@ -387,10 +387,10 @@ const EventPage = () => {
                   <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-4 md:p-6 space-y-4 flex flex-col justify-between">
                     <div>
                       <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
-                        THE 2PM CLUB™ {event.city}
+                        THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
                       </h1>
                       <p className="font-poppins text-lg md:text-xl text-foreground/80 mb-2">
-                        80s 90s 00s Daytime Disco
+                        Iconic 80s 90s 00s Anthems
                       </p>
                     </div>
                     
