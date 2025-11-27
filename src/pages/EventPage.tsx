@@ -476,6 +476,27 @@ const EventPage = () => {
                     </div>
                   </div>}
 
+                {/* Video Section */}
+                {isLutonTrial && (
+                  <div className="py-6 md:py-10">
+                    <div className="max-w-4xl mx-auto">
+                      <video
+                        controls
+                        playsInline
+                        preload="none"
+                        poster="https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png"
+                        className="w-full rounded-2xl shadow-lg"
+                      >
+                        <source
+                          src="https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mov"
+                          type="video/quicktime"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  </div>
+                )}
+
                 {/* Highlights Section */}
                 {event.highlights.length > 0 && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
                     <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
