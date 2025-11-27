@@ -486,13 +486,31 @@ const EventPage = () => {
 
         {/* Description Section */}
         {isLutonTrial ? (
-          <section className="py-8 md:py-12">
+          <section className="py-6 md:py-10">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
                 {event.fullDescription && (
-                  <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-10 mb-12">
-                    <div className="font-poppins text-lg md:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
-                      {event.fullDescription}
+                  <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
+                    {/* Heading - Bold White */}
+                    <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight uppercase mb-4">
+                      Let Your Hair Down. Properly
+                    </h2>
+                    
+                    {/* Pull Quote - Pink Border, White Text */}
+                    <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                      <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                        "Remember when going OUT OUT didn't require a week's recovery?"
+                      </p>
+                    </blockquote>
+                    
+                    {/* Body Paragraphs */}
+                    <div className="space-y-4">
+                      <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                        When you could sing every word, lose your voice, and still feel human the next day?
+                      </p>
+                      <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                        The 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more "maybe next time." Everyone says yes to this one.
+                      </p>
                     </div>
                   </div>
                 )}
@@ -559,26 +577,88 @@ const EventPage = () => {
           </section>
         )}
 
+        {/* Social Proof Section - Luton Trial Only */}
+        {isLutonTrial && (
+          <section className="py-6 md:py-8">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <p className="font-poppins text-sm uppercase tracking-wider text-muted-foreground text-center mb-6">
+                  Why Women Love The 2PM Club
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {[
+                    {
+                      quote: "Brilliant music, not just clubbing anthems the whole time",
+                      author: "Josie L, Northampton"
+                    },
+                    {
+                      quote: "Finally able to get all my friends together, when's the next one?",
+                      author: "Marie T, Coventry"
+                    },
+                    {
+                      quote: "Don't think I've danced and laughed so much in a long time. Thank you!",
+                      author: "Tracey M, Bedford"
+                    }
+                  ].map((testimonial, index) => (
+                    <div key={index} className="bg-primary/5 border border-border/30 rounded-xl p-4">
+                      <div className="flex mb-2 text-yellow-400 text-sm">★★★★★</div>
+                      <p className="font-poppins text-sm text-foreground/90 mb-3 italic">
+                        "{testimonial.quote}"
+                      </p>
+                      <p className="font-poppins text-xs text-muted-foreground font-medium uppercase">
+                        — {testimonial.author}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Embedded Checkout Section */}
-        <section id="checkout-section" className="py-16 md:py-20 bg-muted/10">
+        <section id="checkout-section" className="py-10 md:py-14 bg-gradient-to-b from-muted/20 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="font-poppins text-2xl md:text-3xl font-bold text-center text-foreground tracking-tight mb-8">
-                Book Your Tickets
-              </h2>
-              <div className="bg-card border border-border rounded-lg p-6">
+              {/* Unified Header with Icon */}
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/15 rounded-full mb-3">
+                  <span className="text-2xl">🎟️</span>
+                </div>
+                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-1">
+                  Book Your Tickets
+                </h2>
+                <p className="font-poppins text-sm text-muted-foreground">
+                  Secure your spot — these always sell out
+                </p>
+              </div>
+              
+              {/* Widget Card with Subtle Glow */}
+              <div className="bg-card border border-border/50 rounded-xl p-4 md:p-6 shadow-lg shadow-primary/5">
                 <EventbriteEmbed 
                   eventbriteId={event.eventbriteId}
                   containerId={`eventbrite-widget-${event.eventCode}`}
                   height={425}
                 />
               </div>
+              
+              {/* Second CTA for Scrolled Visitors */}
+              <div className="text-center mt-6">
+                <Button 
+                  onClick={scrollToCheckout}
+                  size="lg"
+                  className="font-poppins bg-primary hover:bg-primary/90 text-primary-foreground"
+                >
+                  SECURE MY TICKETS
+                </Button>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Additional Info Section */}
-        <section className="py-16 md:py-20">
+        <section className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
