@@ -29,7 +29,7 @@ const BlogPost = () => {
   return (
     <>
       <Helmet>
-        <title>Why 2PM is the New 2AM | THE 2PM CLUB™</title>
+        <title>Why 2PM is the New 2AM | THE 2PM CLUB</title>
         <meta name="description" content="We cracked the code on perfect party timing. Discover why afternoon events sell out while evening ones struggle - it's all about timing, availability, and feeling amazing tomorrow." />
         <link rel="canonical" href="https://www.the2pmclub.co.uk/blog/why-daytime-discos-are-popular/" />
         
@@ -48,8 +48,8 @@ const BlogPost = () => {
             "@type":"Article",
             "headline":"Why 2PM is the New 2AM",
             "mainEntityOfPage":"https://www.the2pmclub.co.uk/blog/why-daytime-discos-are-popular/",
-            "author":{"@type":"Organization","name":"THE 2PM CLUB™"},
-            "publisher":{"@type":"Organization","name":"THE 2PM CLUB™","logo":{"@type":"ImageObject","url":"https://www.the2pmclub.co.uk/icon.png"}},
+            "author":{"@type":"Organization","name":"THE 2PM CLUB"},
+            "publisher":{"@type":"Organization","name":"THE 2PM CLUB","logo":{"@type":"ImageObject","url":"https://www.the2pmclub.co.uk/icon.png"}},
             "datePublished":"2025-09-20",
             "about":["Daytime disco","Party timing","Afternoon events"],
             "articleSection":["Party Science","Timing","Social Events"]

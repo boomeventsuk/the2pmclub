@@ -26,7 +26,7 @@ const events = [
   {
     eventCode: "061225-2PM-NPTON",
     eventbriteId: "1544458540069",
-    title: "THE 2PM CLUB™ Northampton - Christmas Daytime Disco",
+    title: "THE 2PM CLUB Northampton - Christmas Daytime Disco",
     date: "Sat 6 Dec 2025",
     venue: "The Picturedrome",
     city: "Northampton",
@@ -40,7 +40,7 @@ const events = [
   {
     eventCode: "131225-2PM-MK",
     eventbriteId: "1757042494399",
-    title: "THE 2PM CLUB™ Milton Keynes - Christmas Daytime Disco",
+    title: "THE 2PM CLUB Milton Keynes - Christmas Daytime Disco",
     date: "Sat 13 Dec 2025",
     venue: "MK11 Music Venue",
     city: "Milton Keynes",
@@ -53,7 +53,7 @@ const events = [
   {
     eventCode: "201225-2PM-BED",
     eventbriteId: "1758345602029",
-    title: "THE 2PM CLUB™ Bedford - Christmas Daytime Disco",
+    title: "THE 2PM CLUB Bedford - Christmas Daytime Disco",
     date: "Sat 20 Dec 2025",
     venue: "Bedford Esquires",
     city: "Bedford",
@@ -66,7 +66,7 @@ const events = [
   {
     eventCode: "070226-2PM-LUT",
     eventbriteId: "1645025849599",
-    title: "THE 2PM CLUB™ LUTON - 80s 90s 00s Daytime Disco",
+    title: "THE 2PM CLUB LUTON - 80s 90s 00s Daytime Disco",
     date: "Sat 7 Feb 2026",
     venue: "Hat Factory",
     city: "Luton",
@@ -80,7 +80,7 @@ const events = [
   {
     eventCode: "140226-2PM-BED",
     eventbriteId: "1975982183904",
-    title: "THE 2PM CLUB™ BEDFORD - 80s 90s 00s Daytime Disco",
+    title: "THE 2PM CLUB BEDFORD - 80s 90s 00s Daytime Disco",
     date: "Sat 14 Feb 2026",
     venue: "Bedford Esquires",
     city: "Bedford",
@@ -94,7 +94,7 @@ const events = [
   {
     eventCode: "140226-2PM-MK",
     eventbriteId: "1975983454705",
-    title: "THE 2PM CLUB™ MILTON KEYNES - 80s 90s 00s Daytime Disco",
+    title: "THE 2PM CLUB MILTON KEYNES - 80s 90s 00s Daytime Disco",
     date: "Sat 14 Feb 2026",
     venue: "MK11 Music Venue",
     city: "Milton Keynes",
@@ -108,7 +108,7 @@ const events = [
   {
     eventCode: "280226-2PM-NPTON",
     eventbriteId: "1975984047478",
-    title: "THE 2PM CLUB™ NORTHAMPTON - 80s 90s 00s Daytime Disco",
+    title: "THE 2PM CLUB NORTHAMPTON - 80s 90s 00s Daytime Disco",
     date: "Sat 28 Feb 2026",
     venue: "The Picturedrome",
     city: "Northampton",
@@ -122,7 +122,7 @@ const events = [
   {
     eventCode: "070326-2PM-COV",
     eventbriteId: "1975984192913",
-    title: "THE 2PM CLUB™ COVENTRY - 80s 90s 00s Daytime Disco",
+    title: "THE 2PM CLUB COVENTRY - 80s 90s 00s Daytime Disco",
     date: "Sat 7 Mar 2026",
     venue: "hmv Empire",
     city: "Coventry",

@@ -4,10 +4,10 @@ const About = () => {
       <div className="container mx-auto px-4">
         <div className="about max-w-4xl mx-auto text-center">
           <h2 id="about-title" className="about-title font-poppins text-5xl md:text-6xl font-bold text-center mb-lg text-foreground">
-            About THE 2PM CLUB™
+            About THE 2PM CLUB
           </h2>
           <p className="lead font-poppins text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            <strong className="text-primary">THE 2PM CLUB™</strong> is the Midlands' most popular daytime disco for over-25s, 
+            <strong className="text-primary">THE 2PM CLUB</strong> is the Midlands' most popular daytime disco for over-25s,
             delivering big night out energy with smarter afternoon timing. <strong className="text-primary">Created by Boombastic Events</strong>, 
             we've perfected the art of the daytime party - featuring wall-to-wall 
             <strong className="text-primary">80s, 90s and 00s anthems</strong> from <strong className="text-primary">2PM-6PM</strong>. With sell-out parties across <strong className="text-primary">Northampton, Birmingham, Bedford, 

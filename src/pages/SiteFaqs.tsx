@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function SiteFaqs() {
   useEffect(() => {
-    document.title = "THE 2PM CLUB™ — FAQs";
+    document.title = "THE 2PM CLUB — FAQs";
     let c = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (!c) { c = document.createElement('link'); c.setAttribute('rel', 'canonical'); document.head.appendChild(c); }
     c.setAttribute('href', 'https://www.the2pmclub.co.uk/faqs/');
