@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import EventbriteEmbed from '@/components/EventbriteEmbed';
-import { Calendar, MapPin, Clock, Share2 } from 'lucide-react';
+import { Calendar, MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
@@ -354,7 +354,7 @@ const EventPage = () => {
         
         {/* Hero Section */}
         {isLutonTrial ? (
-          <section className="pt-32 pb-12 bg-gradient-to-b from-background to-muted/20">
+          <section className="pt-40 md:pt-44 pb-16 bg-gradient-to-b from-background via-background to-muted/10">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-8 items-start">
@@ -363,35 +363,35 @@ const EventPage = () => {
                     <img
                       src={event.squareImg}
                       alt={`${event.title} event poster`}
-                      className="w-full max-w-md rounded-xl shadow-2xl"
+                      className="w-full max-w-md rounded-xl shadow-2xl shadow-primary/20"
                     />
                   </div>
                   
-                  {/* Right: Event Details */}
-                  <div className="space-y-6">
+                  {/* Right: Event Details - Wrapped in Card */}
+                  <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-6 md:p-8 space-y-6">
                     <div>
-                      <h1 className="font-poppins text-4xl md:text-5xl font-bold text-foreground mb-4">
+                      <h1 className="font-poppins text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-4">
                         {event.title}
                       </h1>
                       {event.subtitle && (
-                        <p className="font-poppins text-xl text-muted-foreground mb-6 leading-relaxed">
+                        <p className="font-poppins text-lg md:text-xl text-foreground/80 leading-relaxed">
                           {event.subtitle}
                         </p>
                       )}
                     </div>
                     
-                    <div className="flex flex-col gap-4 text-lg">
+                    <div className="flex flex-col gap-4">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-primary" />
-                        <span className="font-poppins">{event.date}</span>
+                        <span className="font-poppins font-medium text-lg">{event.date}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Clock className="w-5 h-5 text-primary" />
-                        <span className="font-poppins">{event.timeDisplay}</span>
+                        <span className="font-poppins font-medium text-lg">{event.timeDisplay}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-5 h-5 text-primary" />
-                        <span className="font-poppins">{event.venue}, {event.city}</span>
+                        <span className="font-poppins font-medium text-lg">{event.venue}, {event.city}</span>
                       </div>
                     </div>
 
@@ -403,36 +403,37 @@ const EventPage = () => {
                       BOOK TICKETS
                     </Button>
 
-                    <div className="pt-4 border-t border-border">
-                      <p className="font-poppins text-sm text-muted-foreground mb-3 flex items-center gap-2">
-                        <Share2 className="w-4 h-4" />
+                    <div className="pt-4 border-t border-border/50">
+                      <p className="font-poppins text-xs uppercase tracking-wider text-muted-foreground mb-3">
                         Share This Event
                       </p>
-                      <div className="flex gap-3">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleWhatsAppShare(event)}
-                          className="flex-1 font-poppins"
+                      <div className="share-icons justify-start">
+                        <button 
+                          className="icon-btn icon-whatsapp" 
+                          onClick={() => handleWhatsAppShare(event)} 
+                          aria-label="Share on WhatsApp"
                         >
-                          WhatsApp
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleFacebookShare(event)}
-                          className="flex-1 font-poppins"
+                          <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="" />
+                        </button>
+                        <button 
+                          className="icon-btn icon-facebook" 
+                          onClick={() => handleFacebookShare(event)} 
+                          aria-label="Share on Facebook"
                         >
-                          Facebook
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleCopyLink(event)}
-                          className="flex-1 font-poppins"
+                          <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                          </svg>
+                        </button>
+                        <button 
+                          className="icon-btn icon-copy" 
+                          onClick={() => handleCopyLink(event)} 
+                          aria-label="Copy link"
                         >
-                          Copy Link
-                        </Button>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                          </svg>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -484,29 +485,31 @@ const EventPage = () => {
         )}
 
         {/* Description Section */}
-        <section className="py-12 bg-muted/20">
+        <section className="py-16 md:py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               {event.fullDescription && (
-                <div className="font-poppins text-lg text-foreground leading-relaxed mb-8 whitespace-pre-line">
-                  {event.fullDescription}
+                <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-10 mb-12">
+                  <div className="font-poppins text-lg md:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
+                    {event.fullDescription}
+                  </div>
                 </div>
               )}
 
               {/* Highlights Section */}
               {event.highlights.length > 0 && (
-                <div className="mt-12">
-                  <h2 className="font-poppins text-3xl font-bold text-foreground mb-6 text-center">
+                <div>
+                  <h2 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-8 text-center uppercase">
                     WHY THIS IS YOUR NEW TRADITION
                   </h2>
                   <div className="space-y-4">
                     {event.highlights.map((highlight, index) => {
                       const [title, description] = highlight.split(': ');
                       return (
-                        <div key={index} className="bg-card border border-border rounded-lg p-4">
-                          <p className="font-poppins text-foreground">
-                            <strong>{title}</strong>
-                            {description && <span>: {description}</span>}
+                        <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
+                          <p className="font-poppins text-foreground text-base md:text-lg">
+                            <strong className="font-semibold">{title}</strong>
+                            {description && <span className="text-foreground/80">: {description}</span>}
                           </p>
                         </div>
                       );
@@ -519,10 +522,10 @@ const EventPage = () => {
         </section>
 
         {/* Embedded Checkout Section */}
-        <section id="checkout-section" className="py-12 bg-background">
+        <section id="checkout-section" className="py-16 md:py-20 bg-muted/10">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="font-poppins text-3xl font-bold text-center text-foreground mb-8">
+              <h2 className="font-poppins text-2xl md:text-3xl font-bold text-center text-foreground tracking-tight mb-8">
                 Book Your Tickets
               </h2>
               <div className="bg-card border border-border rounded-lg p-6">
@@ -537,32 +540,34 @@ const EventPage = () => {
         </section>
 
         {/* Additional Info Section */}
-        <section className="py-12 bg-muted/20">
+        <section className="py-16 md:py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="font-poppins text-2xl font-bold text-foreground mb-6">
-                Good to Know
-              </h2>
-              <ul className="font-poppins text-foreground space-y-2 mb-8 list-disc list-inside">
-                <li>Four hours of 80s, 90s and 00s anthems</li>
-                <li>Proper "night out" atmosphere — in the afternoon</li>
-                <li>18+ recommended unless stated otherwise</li>
-                <li>Doors open at the stated start time</li>
-              </ul>
+              <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
+                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
+                  Good to Know
+                </h2>
+                <ul className="font-poppins text-foreground/90 space-y-3 list-disc list-inside text-base md:text-lg mb-8">
+                  <li>Four hours of 80s, 90s and 00s anthems</li>
+                  <li>Proper "night out" atmosphere — in the afternoon</li>
+                  <li>18+ recommended unless stated otherwise</li>
+                  <li>Doors open at the stated start time</li>
+                </ul>
 
-              {event.infoUrl && event.infoUrl !== 'https://www.facebook.com/events/TBD' && (
-                <div className="mb-8">
-                  <Button asChild variant="outline" size="lg">
-                    <a href={event.infoUrl} target="_blank" rel="noopener noreferrer">
-                      View Facebook Event →
-                    </a>
-                  </Button>
-                </div>
-              )}
+                {event.infoUrl && event.infoUrl !== 'https://www.facebook.com/events/TBD' && (
+                  <div className="mb-6">
+                    <Button asChild variant="outline" size="lg">
+                      <a href={event.infoUrl} target="_blank" rel="noopener noreferrer">
+                        View Facebook Event →
+                      </a>
+                    </Button>
+                  </div>
+                )}
 
-              <Button asChild variant="outline">
-                <a href="/">← Back to all events</a>
-              </Button>
+                <Button asChild variant="outline">
+                  <a href="/">← Back to all events</a>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
