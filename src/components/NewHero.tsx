@@ -26,7 +26,7 @@ const NewHero = () => {
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
         <h1 className="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-2 leading-tight uppercase tracking-wide">
-          THE 2PM CLUB™ - THE MIDLANDS' MOST POPULAR DAYTIME PARTY!
+          THE 2PM CLUB - THE MIDLANDS' MOST POPULAR DAYTIME PARTY!
         </h1>
         
         <h2 className="font-poppins text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-primary mb-6 leading-tight uppercase tracking-wide">
