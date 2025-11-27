@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { useIsMobile } from '@/hooks/use-mobile';
-
 interface EventJson {
   id: number;
   eventCode: string;
@@ -26,7 +25,6 @@ interface EventJson {
   fullDescription?: string;
   highlights?: string;
 }
-
 interface EventData {
   eventCode: string;
   eventbriteId: string;
@@ -47,11 +45,14 @@ interface EventData {
 }
 
 // Parse venue and city from location string
-const parseLocation = (location: string): { venue: string; city: string; postcode: string } => {
+const parseLocation = (location: string): {
+  venue: string;
+  city: string;
+  postcode: string;
+} => {
   const parts = location.split(', ');
   const venue = parts[0] || location;
   const city = parts[1] || '';
-  
   const postcodes: Record<string, string> = {
     'Coventry': 'CV1 1GX',
     'Milton Keynes': 'MK9 3PU',
@@ -60,7 +61,6 @@ const parseLocation = (location: string): { venue: string; city: string; postcod
     'Luton': 'LU1 2AA',
     'Bedford': 'MK40 2TH'
   };
-  
   return {
     venue,
     city,
@@ -73,16 +73,11 @@ const formatEventDate = (isoDate: string): string => {
   const date = new Date(isoDate);
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  
   const dayName = days[date.getDay()];
   const day = date.getDate();
   const month = months[date.getMonth()];
   const year = date.getFullYear();
-  
-  const suffix = day === 1 || day === 21 || day === 31 ? 'st' : 
-                day === 2 || day === 22 ? 'nd' : 
-                day === 3 || day === 23 ? 'rd' : 'th';
-  
+  const suffix = day === 1 || day === 21 || day === 31 ? 'st' : day === 2 || day === 22 ? 'nd' : day === 3 || day === 23 ? 'rd' : 'th';
   return `${dayName} ${day}${suffix} ${month} ${year}`;
 };
 
@@ -91,38 +86,34 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
   try {
     const response = await fetch('/events.json');
     const events: EventJson[] = await response.json();
-    
     const eventData: Record<string, EventData> = {};
-    
     events.forEach(event => {
-      const { venue, city, postcode } = parseLocation(event.location);
+      const {
+        venue,
+        city,
+        postcode
+      } = parseLocation(event.location);
       const formattedDate = formatEventDate(event.start);
-      
+
       // Calculate time display strings
       const startTime = new Date(event.start);
       const endTime = new Date(event.end);
       const startHour = startTime.getHours();
       const endHour = endTime.getHours();
       const endMinutes = endTime.getMinutes();
-      
+
       // Format display times (12-hour format)
       const startAmPm = startHour >= 12 ? 'pm' : 'am';
       const endAmPm = endHour >= 12 ? 'pm' : 'am';
       const start12Hour = startHour > 12 ? startHour - 12 : startHour === 0 ? 12 : startHour;
       const end12Hour = endHour > 12 ? endHour - 12 : endHour === 0 ? 12 : endHour;
-      
-      const timeDisplay = endMinutes === 0 
-        ? `${start12Hour}${startAmPm}–${end12Hour}${endAmPm}`
-        : `${start12Hour}${startAmPm}–${end12Hour}:${endMinutes.toString().padStart(2, '0')}${endAmPm}`;
-      
+      const timeDisplay = endMinutes === 0 ? `${start12Hour}${startAmPm}–${end12Hour}${endAmPm}` : `${start12Hour}${startAmPm}–${end12Hour}:${endMinutes.toString().padStart(2, '0')}${endAmPm}`;
+
       // Format range for meta descriptions
-      const timeRange = endMinutes === 0 
-        ? `${startHour}–${endHour}pm`
-        : `${startHour}–${endHour}:${endMinutes.toString().padStart(2, '0')}pm`;
-      
+      const timeRange = endMinutes === 0 ? `${startHour}–${endHour}pm` : `${startHour}–${endHour}:${endMinutes.toString().padStart(2, '0')}pm`;
+
       // Parse highlights
       const highlights = event.highlights ? event.highlights.split('|') : [];
-      
       eventData[event.eventCode] = {
         eventCode: event.eventCode,
         eventbriteId: event.eventbriteId,
@@ -142,54 +133,50 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         highlights
       };
     });
-    
     return eventData;
   } catch (error) {
     console.error('Failed to load events:', error);
     return {};
   }
 };
-
 const EventPage = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const {
+    slug
+  } = useParams<{
+    slug: string;
+  }>();
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
   const [showStickyBookTickets, setShowStickyBookTickets] = useState(false);
   const heroBookButtonRef = useRef<HTMLButtonElement>(null);
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const isMobile = useIsMobile();
 
   // FAQs data
-  const faqs = [
-    {
-      question: "Why do you start at 2pm?",
-      answer: "Because it actually works with real life. You can have lunch with friends, run errands, whatever. You're done by 6pm, home by 7pm. You get a proper night out without sacrificing your Sunday or disrupting your week. That's the whole point."
-    },
-    {
-      question: "Is it really like a night out clubbing in the afternoon?",
-      answer: "Yes. Club-level production, proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing."
-    },
-    {
-      question: "What music will be played?",
-      answer: "80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. The DJ builds the energy across the afternoon—starting with solid, accessible tracks and building toward peak moments. Think Whitney, Wham!, Spice Girls, Beyoncé, Take That, The Killers, Oasis."
-    },
-    {
-      question: "Do you offer group tickets?",
-      answer: "Yes. We offer group tickets for groups of four or more. People come to celebrate all sorts—birthdays, hen dos, work dos. But honestly, you don't need an excuse. The biggest thing is getting your friends together for a proper afternoon out. That's what this is for."
-    },
-    {
-      question: "What's the crowd like?",
-      answer: "Predominantly female, predominantly over 30. Everyone's welcome. Everyone's here for the same reason—to have a proper afternoon out with good music and good people. The atmosphere is genuinely welcoming."
-    },
-    {
-      question: "What should I wear?",
-      answer: "Whatever makes you feel good. Smart casual works perfectly – think the outfit you'd wear out for a nice afternoon. If you're planning to dance a lot, comfy shoes are your friend. Dress code is just to feel good."
-    },
-    {
-      question: "What time do doors open and when does it finish?",
-      answer: "Doors open at 2pm. Event runs until 6pm. You can arrive anytime after 2pm."
-    }
-  ];
+  const faqs = [{
+    question: "Why do you start at 2pm?",
+    answer: "Because it actually works with real life. You can have lunch with friends, run errands, whatever. You're done by 6pm, home by 7pm. You get a proper night out without sacrificing your Sunday or disrupting your week. That's the whole point."
+  }, {
+    question: "Is it really like a night out clubbing in the afternoon?",
+    answer: "Yes. Club-level production, proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing."
+  }, {
+    question: "What music will be played?",
+    answer: "80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. The DJ builds the energy across the afternoon—starting with solid, accessible tracks and building toward peak moments. Think Whitney, Wham!, Spice Girls, Beyoncé, Take That, The Killers, Oasis."
+  }, {
+    question: "Do you offer group tickets?",
+    answer: "Yes. We offer group tickets for groups of four or more. People come to celebrate all sorts—birthdays, hen dos, work dos. But honestly, you don't need an excuse. The biggest thing is getting your friends together for a proper afternoon out. That's what this is for."
+  }, {
+    question: "What's the crowd like?",
+    answer: "Predominantly female, predominantly over 30. Everyone's welcome. Everyone's here for the same reason—to have a proper afternoon out with good music and good people. The atmosphere is genuinely welcoming."
+  }, {
+    question: "What should I wear?",
+    answer: "Whatever makes you feel good. Smart casual works perfectly – think the outfit you'd wear out for a nice afternoon. If you're planning to dance a lot, comfy shoes are your friend. Dress code is just to feel good."
+  }, {
+    question: "What time do doors open and when does it finish?",
+    answer: "Doors open at 2pm. Event runs until 6pm. You can arrive anytime after 2pm."
+  }];
 
   // Share functionality
   const buildUtmUrl = (eventUrl: string, medium: string) => {
@@ -199,26 +186,22 @@ const EventPage = () => {
     url.searchParams.set('utm_campaign', 'event-share');
     return url.toString();
   };
-
   const handleWhatsAppShare = (eventData: EventData) => {
     const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.eventCode}/`, 'whatsapp');
     const message = `Check out this event: ${eventData.title} on ${eventData.date}! ${eventUrl}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
-    
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'share_event',
         event_category: 'Social Share',
         event_label: 'WhatsApp',
-        event_name: eventData.title,
+        event_name: eventData.title
       });
     }
   };
-
   const handleFacebookShare = (eventData: EventData) => {
     const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.eventCode}/`, isMobile ? 'messenger' : 'facebook');
-    
     if (isMobile) {
       // Open Messenger app directly
       window.location.href = `fb-messenger://share/?link=${encodeURIComponent(eventUrl)}`;
@@ -227,24 +210,23 @@ const EventPage = () => {
       const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(eventUrl)}`;
       window.open(facebookUrl, '_blank', 'width=600,height=400');
     }
-    
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'share_event',
         event_category: 'Social Share',
         event_label: isMobile ? 'Messenger' : 'Facebook',
-        event_name: eventData.title,
+        event_name: eventData.title
       });
     }
   };
-
   const scrollToCheckout = () => {
     const checkoutSection = document.getElementById('checkout-section');
     if (checkoutSection) {
-      checkoutSection.scrollIntoView({ behavior: 'smooth' });
+      checkoutSection.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
   useEffect(() => {
     const loadEvent = async () => {
       setLoading(true);
@@ -253,7 +235,6 @@ const EventPage = () => {
       setEvent(currentEvent);
       setLoading(false);
     };
-    
     loadEvent();
   }, [slug]);
 
@@ -264,34 +245,25 @@ const EventPage = () => {
       setShowStickyBookTickets(true);
       return;
     }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowStickyBookTickets(!entry.isIntersecting);
-      },
-      { threshold: 0 }
-    );
-    
+    const observer = new IntersectionObserver(([entry]) => {
+      setShowStickyBookTickets(!entry.isIntersecting);
+    }, {
+      threshold: 0
+    });
     observer.observe(heroBookButtonRef.current);
-    
     return () => observer.disconnect();
   }, [event]);
-
   if (loading) {
-    return (
-      <div className="min-h-screen bg-background">
+    return <div className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 py-20">
           <div className="animate-pulse text-center">Loading event...</div>
         </div>
         <Footer />
-      </div>
-    );
+      </div>;
   }
-
   if (!event) {
-    return (
-      <div className="min-h-screen bg-background">
+    return <div className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 py-20">
           <h1 className="text-4xl font-bold mb-4">Event Not Found</h1>
@@ -301,14 +273,10 @@ const EventPage = () => {
           </Button>
         </div>
         <Footer />
-      </div>
-    );
+      </div>;
   }
-
   const isLutonTrial = event.eventCode === '070226-2PM-LUT';
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>The 2 PM Club — {event.city} — {event.date} | {event.venue}</title>
         <meta name="description" content={`Daytime disco ${event.timeRange} with 80s/90s/00s anthems. ${event.city}, ${event.date} at ${event.venue}.`} />
@@ -331,37 +299,37 @@ const EventPage = () => {
         {/* JSON-LD Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Event",
-            "name": event.title,
-            "startDate": event.startIso,
-            "endDate": event.endIso,
-            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "eventStatus": "https://schema.org/EventScheduled",
-            "description": event.fullDescription,
-            "image": [event.squareImg],
-            "location": {
-              "@type": "Place",
-              "name": event.venue,
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": event.city,
-                "postalCode": event.postcode,
-                "addressCountry": "GB"
-              }
-            },
-            "organizer": {
-              "@type": "Organization",
-              "name": "Boombastic Events Ltd",
-              "url": "https://www.the2pmclub.co.uk/"
-            },
-            "offers": {
-              "@type": "Offer",
-              "priceCurrency": "GBP",
-              "url": `https://www.eventbrite.co.uk/e/${event.eventbriteId}`,
-              "availability": "https://schema.org/InStock"
+          "@context": "https://schema.org",
+          "@type": "Event",
+          "name": event.title,
+          "startDate": event.startIso,
+          "endDate": event.endIso,
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "description": event.fullDescription,
+          "image": [event.squareImg],
+          "location": {
+            "@type": "Place",
+            "name": event.venue,
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": event.city,
+              "postalCode": event.postcode,
+              "addressCountry": "GB"
             }
-          })}
+          },
+          "organizer": {
+            "@type": "Organization",
+            "name": "Boombastic Events Ltd",
+            "url": "https://www.the2pmclub.co.uk/"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "GBP",
+            "url": `https://www.eventbrite.co.uk/e/${event.eventbriteId}`,
+            "availability": "https://schema.org/InStock"
+          }
+        })}
         </script>
       </Helmet>
 
@@ -369,18 +337,13 @@ const EventPage = () => {
         <Header hideCommunityBanner={true} />
         
         {/* Hero Section */}
-        {isLutonTrial ? (
-          <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
+        {isLutonTrial ? <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-6 items-stretch">
                   {/* Left: Event Poster */}
                   <div className="flex justify-center md:justify-start">
-                    <img
-                      src={event.squareImg}
-                      alt={`${event.title} event poster`}
-                      className="w-full max-w-md rounded-xl shadow-2xl shadow-primary/20"
-                    />
+                    <img src={event.squareImg} alt={`${event.title} event poster`} className="w-full max-w-md rounded-xl shadow-2xl shadow-primary/20" />
                   </div>
                   
                   {/* Right: Event Details - Wrapped in Card */}
@@ -409,12 +372,7 @@ const EventPage = () => {
                       </div>
                     </div>
 
-                    <Button 
-                      ref={heroBookButtonRef}
-                      onClick={scrollToCheckout}
-                      size="lg"
-                      className="w-full md:w-auto font-poppins"
-                    >
+                    <Button ref={heroBookButtonRef} onClick={scrollToCheckout} size="lg" className="w-full md:w-auto font-poppins">
                       BOOK TICKETS
                     </Button>
 
@@ -423,30 +381,19 @@ const EventPage = () => {
                         Be the group chat hero — Share this event
                       </p>
                       <div className="share-icons justify-start">
-                        <button 
-                          className="icon-btn icon-whatsapp" 
-                          onClick={() => handleWhatsAppShare(event)} 
-                          aria-label="Share on WhatsApp"
-                        >
+                        <button className="icon-btn icon-whatsapp" onClick={() => handleWhatsAppShare(event)} aria-label="Share on WhatsApp">
                           <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="" />
                         </button>
-                        <button 
-                          className="icon-btn icon-facebook" 
-                          onClick={() => handleFacebookShare(event)} 
-                          title={isMobile ? "Share on Messenger" : "Share on Facebook"}
-                          aria-label={isMobile ? "Share on Messenger" : "Share on Facebook"}
-                        >
-                          {isMobile ? (
-                            // Messenger icon
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.37.26.61l.05 1.9c.02.52.49.88.98.76l2.12-.53c.19-.05.39-.02.56.05 1.01.35 2.12.54 3.29.54 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.04 13.02L10.5 12.3l-4.28 2.8 4.7-5.02 2.62 2.72 4.2-2.8-4.7 5.02z"/>
-                            </svg>
-                          ) : (
-                            // Facebook icon
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                          )}
+                        <button className="icon-btn icon-facebook" onClick={() => handleFacebookShare(event)} title={isMobile ? "Share on Messenger" : "Share on Facebook"} aria-label={isMobile ? "Share on Messenger" : "Share on Facebook"}>
+                          {isMobile ?
+                      // Messenger icon
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.37.26.61l.05 1.9c.02.52.49.88.98.76l2.12-.53c.19-.05.39-.02.56.05 1.01.35 2.12.54 3.29.54 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.04 13.02L10.5 12.3l-4.28 2.8 4.7-5.02 2.62 2.72 4.2-2.8-4.7 5.02z" />
+                            </svg> :
+                      // Facebook icon
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>}
                         </button>
                       </div>
                     </div>
@@ -454,17 +401,11 @@ const EventPage = () => {
                 </div>
               </div>
             </div>
-          </section>
-        ) : (
-          <section className="pt-32 pb-12 bg-gradient-to-b from-background to-muted/20">
+          </section> : <section className="pt-32 pb-12 bg-gradient-to-b from-background to-muted/20">
             <div className="container mx-auto px-4">
               {/* Event Image */}
               <div className="max-w-2xl mx-auto mb-8">
-                <img 
-                  src={event.squareImg} 
-                  alt={`${event.title} event poster`}
-                  className="w-full h-auto rounded-xl shadow-2xl"
-                />
+                <img src={event.squareImg} alt={`${event.title} event poster`} className="w-full h-auto rounded-xl shadow-2xl" />
               </div>
 
               {/* Event Details */}
@@ -473,11 +414,9 @@ const EventPage = () => {
                   {event.title}
                 </h1>
 
-                {event.subtitle && (
-                  <p className="font-poppins text-xl text-muted-foreground mb-8 leading-relaxed">
+                {event.subtitle && <p className="font-poppins text-xl text-muted-foreground mb-8 leading-relaxed">
                     {event.subtitle}
-                  </p>
-                )}
+                  </p>}
 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8 text-lg">
                   <div className="flex items-center gap-2">
@@ -495,16 +434,13 @@ const EventPage = () => {
                 </div>
               </div>
             </div>
-          </section>
-        )}
+          </section>}
 
         {/* Description Section */}
-        {isLutonTrial ? (
-          <section className="py-6 md:py-10">
+        {isLutonTrial ? <section className="py-6 md:py-10">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
-                {event.fullDescription && (
-                  <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
+                {event.fullDescription && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
                     <div className="mx-auto md:max-w-2xl">
                       {/* Intro Text */}
                       <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-3 tracking-wide">
@@ -531,117 +467,76 @@ const EventPage = () => {
                         <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
                           When you could sing every word, lose your voice, and still feel human the next day?
                         </p>
-                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                          We've created the perfect solution! Welcome to the 2PM Club!
-                        </p>
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">We've created the perfect solution! Welcome to THE 2PM CLUB!</p>
                         <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
                           4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
                         </p>
                       </div>
                     </div>
-                  </div>
-                )}
+                  </div>}
 
                 {/* Highlights Section */}
-                {event.highlights.length > 0 && (
-                  <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
+                {event.highlights.length > 0 && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
                     <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
                       Why Daytime Discos Are a Game Changer!
                     </h2>
                     <div className="space-y-4">
                       {event.highlights.map((highlight, index) => {
-                        const [title, description] = highlight.split(': ');
-                        return (
-                          <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
+                  const [title, description] = highlight.split(': ');
+                  return <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
                             <p className="font-poppins text-foreground text-base md:text-lg">
                               <strong className="font-semibold">{title}</strong>
                               {description && <span className="text-foreground/80">: {description}</span>}
                             </p>
-                          </div>
-                        );
-                      })}
+                          </div>;
+                })}
                     </div>
-                  </div>
-                )}
+                  </div>}
               </div>
             </div>
-          </section>
-        ) : (
-          <section className="py-16 md:py-20">
+          </section> : <section className="py-16 md:py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
-                {event.fullDescription && (
-                  <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-10 mb-12">
+                {event.fullDescription && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-10 mb-12">
                     <div className="font-poppins text-lg md:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
                       {event.fullDescription}
                     </div>
-                  </div>
-                )}
+                  </div>}
 
                 {/* Highlights Section */}
-                {event.highlights.length > 0 && (
-                  <div>
+                {event.highlights.length > 0 && <div>
                     <h2 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-8 text-center uppercase">
                       WHY THIS IS YOUR NEW TRADITION
                     </h2>
                     <div className="space-y-4">
                       {event.highlights.map((highlight, index) => {
-                        const [title, description] = highlight.split(': ');
-                        return (
-                          <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
+                  const [title, description] = highlight.split(': ');
+                  return <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
                             <p className="font-poppins text-foreground text-base md:text-lg">
                               <strong className="font-semibold">{title}</strong>
                               {description && <span className="text-foreground/80">: {description}</span>}
                             </p>
-                          </div>
-                        );
-                      })}
+                          </div>;
+                })}
                     </div>
-                  </div>
-                )}
+                  </div>}
               </div>
             </div>
-          </section>
-        )}
+          </section>}
 
         {/* Photo Gallery - Auto-scrolling */}
-        {isLutonTrial && (
-          <section className="py-8 md:py-12 overflow-hidden">
+        {isLutonTrial && <section className="py-8 md:py-12 overflow-hidden">
             <div className="relative">
               <div className="flex gap-4 animate-scroll">
-                {[
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg",
-                  "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg",
-                ].map((img, index) => (
-                  <div key={index} className="flex-shrink-0 w-64 md:w-80">
-                    <img 
-                      src={img} 
-                      alt="2PM Club event moments"
-                      className="w-full h-48 md:h-56 object-cover rounded-xl shadow-lg"
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
+                {["https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg"].map((img, index) => <div key={index} className="flex-shrink-0 w-64 md:w-80">
+                    <img src={img} alt="2PM Club event moments" className="w-full h-48 md:h-56 object-cover rounded-xl shadow-lg" loading="lazy" />
+                  </div>)}
               </div>
             </div>
-          </section>
-        )}
+          </section>}
 
         {/* Social Proof Section - Luton Trial Only */}
-        {isLutonTrial && (
-          <section className="py-6 md:py-8">
+        {isLutonTrial && <section className="py-6 md:py-8">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight text-center mb-6">
@@ -649,21 +544,16 @@ const EventPage = () => {
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {[
-                    {
-                      quote: "Brilliant music, not just clubbing anthems the whole time",
-                      author: "Josie L, Northampton"
-                    },
-                    {
-                      quote: "Finally able to get all my friends together, when's the next one?",
-                      author: "Marie T, Coventry"
-                    },
-                    {
-                      quote: "Don't think I've danced and laughed so much in a long time. Thank you!",
-                      author: "Tracey M, Bedford"
-                    }
-                  ].map((testimonial, index) => (
-                    <div key={index} className="bg-primary/5 border border-border/30 rounded-xl p-4">
+                  {[{
+                quote: "Brilliant music, not just clubbing anthems the whole time",
+                author: "Josie L, Northampton"
+              }, {
+                quote: "Finally able to get all my friends together, when's the next one?",
+                author: "Marie T, Coventry"
+              }, {
+                quote: "Don't think I've danced and laughed so much in a long time. Thank you!",
+                author: "Tracey M, Bedford"
+              }].map((testimonial, index) => <div key={index} className="bg-primary/5 border border-border/30 rounded-xl p-4">
                       <div className="flex mb-2 text-yellow-400 text-sm">★★★★★</div>
                       <p className="font-poppins text-sm text-foreground/90 mb-3 italic">
                         "{testimonial.quote}"
@@ -671,13 +561,11 @@ const EventPage = () => {
                       <p className="font-poppins text-xs text-muted-foreground font-medium uppercase">
                         — {testimonial.author}
                       </p>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </div>
             </div>
-          </section>
-        )}
+          </section>}
 
         {/* Embedded Checkout Section */}
         <section id="checkout-section" className="py-10 md:py-14">
@@ -700,11 +588,7 @@ const EventPage = () => {
                 
                 {/* Eventbrite embed inside the pink block */}
                 <div className="bg-card/50 rounded-xl overflow-hidden">
-                  <EventbriteEmbed 
-                    eventbriteId={event.eventbriteId}
-                    containerId={`eventbrite-widget-${event.eventCode}`}
-                    height={425}
-                  />
+                  <EventbriteEmbed eventbriteId={event.eventbriteId} containerId={`eventbrite-widget-${event.eventCode}`} height={425} />
                 </div>
               </div>
             </div>
@@ -722,31 +606,27 @@ const EventPage = () => {
                   </h2>
                   
                   <Accordion type="single" collapsible className="w-full">
-                    {faqs.map((faq, index) => (
-                      <AccordionItem key={index} value={`item-${index}`} className="border-border/30">
+                    {faqs.map((faq, index) => <AccordionItem key={index} value={`item-${index}`} className="border-border/30">
                         <AccordionTrigger className="text-left font-poppins font-medium text-foreground hover:no-underline text-base md:text-lg uppercase">
                           {faq.question}
                         </AccordionTrigger>
                         <AccordionContent className="text-foreground/85 font-poppins pt-2">
                           {faq.answer}
                         </AccordionContent>
-                      </AccordionItem>
-                    ))}
+                      </AccordionItem>)}
                   </Accordion>
                   
                   <p className="text-sm text-muted-foreground mt-6">
                     This event is 18+ recommended unless stated otherwise.
                   </p>
                   
-                  {event.infoUrl && event.infoUrl !== 'https://www.facebook.com/events/TBD' && (
-                    <div className="mt-6">
+                  {event.infoUrl && event.infoUrl !== 'https://www.facebook.com/events/TBD' && <div className="mt-6">
                       <Button asChild variant="outline" size="lg">
                         <a href={event.infoUrl} target="_blank" rel="noopener noreferrer">
                           View Facebook Event →
                         </a>
                       </Button>
-                    </div>
-                  )}
+                    </div>}
                   
                   <div className="mt-4">
                     <Button asChild variant="outline">
@@ -762,19 +642,12 @@ const EventPage = () => {
         <Footer />
         
         {/* Sticky Book Tickets Button - Top Right */}
-        {showStickyBookTickets && (
-          <div className="fixed top-20 right-4 z-50 animate-fade-in">
-            <Button 
-              onClick={scrollToCheckout}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg"
-            >
+        {showStickyBookTickets && <div className="fixed top-20 right-4 z-50 animate-fade-in">
+            <Button onClick={scrollToCheckout} className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg">
               🎟️ Book Tickets
             </Button>
-          </div>
-        )}
+          </div>}
       </div>
-    </>
-  );
+    </>;
 };
-
 export default EventPage;
