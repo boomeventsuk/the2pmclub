@@ -567,7 +567,8 @@ const EventPage = () => {
                   Why You Love The 2PM Club
                 </h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="md:max-w-2xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {[{
                 quote: "Brilliant music, not just clubbing anthems the whole time",
                 author: "Josie L, Northampton"
@@ -579,13 +580,14 @@ const EventPage = () => {
                 author: "Tracey M, Bedford"
               }].map((testimonial, index) => <div key={index} className="bg-primary/5 border border-border/30 rounded-xl p-4">
                       <div className="flex mb-2 text-yellow-400 text-sm">★★★★★</div>
-                      <p className="font-poppins text-sm text-foreground/90 mb-3 italic">
+                      <p className="font-poppins text-lg md:text-xl font-semibold text-foreground/90 mb-3">
                         "{testimonial.quote}"
                       </p>
                       <p className="font-poppins text-xs text-muted-foreground font-medium uppercase">
                         — {testimonial.author}
                       </p>
                     </div>)}
+                </div>
                 </div>
               </div>
             </div>
@@ -620,7 +622,7 @@ const EventPage = () => {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-10 md:py-14">
+        <section className="py-10 md:py-14 mb-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
@@ -666,7 +668,7 @@ const EventPage = () => {
         <Footer />
         
         {/* Sticky Book Tickets Button - Top Right */}
-        {showStickyBookTickets && <div className="fixed top-20 right-4 z-50 animate-fade-in">
+        {showStickyBookTickets && <div className="fixed top-24 right-4 z-50 animate-fade-in">
             <Button onClick={scrollToCheckout} className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg">
               🎟️ Book Tickets
             </Button>

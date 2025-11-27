@@ -302,8 +302,15 @@
         }
         
         .testimonial-text {
-            font-style: italic;
+            font-size: 1.125rem;
+            font-weight: 600;
             margin-bottom: 0.75rem;
+        }
+        
+        @media (min-width: 768px) {
+            .testimonial-text {
+                font-size: 1.25rem;
+            }
         }
         
         .testimonial-author {
@@ -540,7 +547,8 @@
         <div class="container">
             <h2 class="section-heading">Why You Love The 2PM Club</h2>
             
-            <div class="testimonials-grid">
+            <div style="max-width: 42rem; margin: 0 auto;">
+                <div class="testimonials-grid">
                 <div class="testimonial">
                     <div class="stars">★★★★★</div>
                     <p class="testimonial-text">"Best afternoon I've had in years! All the energy of a night out but home in time for dinner. Genius idea."</p>
@@ -578,11 +586,12 @@
                 
                 <div id="eventbrite-widget-container"></div>
             </div>
+            </div>
         </div>
     </section>
     
     <!-- FAQ Section -->
-    <section>
+    <section style="margin-bottom: 4rem;">
         <div class="container max-w-3xl">
             <h2 class="section-heading text-center">Questions People Ask Before They Book</h2>
             
