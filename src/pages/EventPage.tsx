@@ -488,8 +488,8 @@ const EventPage = () => {
                         className="w-full rounded-2xl shadow-lg"
                       >
                         <source
-                          src="https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mov"
-                          type="video/quicktime"
+                          src="https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4"
+                          type="video/mp4"
                         />
                         Your browser does not support the video tag.
                       </video>
