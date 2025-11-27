@@ -200,7 +200,7 @@
         
         .intro-text {
             font-size: 1.25rem;
-            font-weight: bold;
+            font-weight: normal;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 1.5rem;
@@ -453,25 +453,33 @@
                 
                 <p><strong>We've created the perfect solution! Welcome to THE 2PM CLUB!</strong></p>
                 
-                <p>4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday.</p>
+                <p style="margin-bottom: 1.5rem;">4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday.</p>
             </div>
         </div>
     </section>
     
     <!-- Video Section -->
-    <section>
+    <section style="padding: 2.5rem 0;">
         <div class="container video-container">
-            <video controls playsInline preload="none" poster="https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png">
-                <source src="https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <div style="border-radius: 1rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); overflow: hidden; max-width: 48rem; margin: 0 auto;">
+                <video controls playsInline preload="none" poster="https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png">
+                    <source src="https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
         </div>
     </section>
+    
+    @media (min-width: 768px) {
+        section.video-section {
+            padding: 3.5rem 0;
+        }
+    }
     
     <!-- Highlights Section -->
     <section>
         <div class="container max-w-3xl">
-            <h2 class="section-heading text-center">Why Daytime Discos Are a Game Changer!</h2>
+            <h2 class="section-heading">Why Daytime Discos Are a Game Changer!</h2>
             
             <div class="highlights">
                 <div class="highlight-item">
