@@ -646,14 +646,6 @@ const EventPage = () => {
                     This event is 18+ recommended unless stated otherwise.
                   </p>
                   
-                  {event.infoUrl && event.infoUrl !== 'https://www.facebook.com/events/TBD' && <div className="mt-6">
-                      <Button asChild variant="outline" size="lg">
-                        <a href={event.infoUrl} target="_blank" rel="noopener noreferrer">
-                          View Facebook Event →
-                        </a>
-                      </Button>
-                    </div>}
-                  
                   <div className="mt-4">
                     <Button asChild variant="outline">
                       <a href="/">← Back to all events</a>
@@ -670,7 +662,7 @@ const EventPage = () => {
         {/* Sticky Book Tickets Button - Top Right */}
         {showStickyBookTickets && <div className="fixed top-24 right-4 z-50 animate-fade-in">
             <Button onClick={scrollToCheckout} className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg">
-              🎟️ Book Tickets
+              Book Tickets
             </Button>
           </div>}
       </div>
