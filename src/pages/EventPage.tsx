@@ -4,8 +4,9 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import EventbriteEmbed from '@/components/EventbriteEmbed';
-import { Calendar, MapPin, Clock } from 'lucide-react';
+import { Calendar, MapPin, Clock, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface EventJson {
   id: number;
@@ -102,10 +103,15 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
       const endHour = endTime.getHours();
       const endMinutes = endTime.getMinutes();
       
-      // Format display times
+      // Format display times (12-hour format)
+      const startAmPm = startHour >= 12 ? 'pm' : 'am';
+      const endAmPm = endHour >= 12 ? 'pm' : 'am';
+      const start12Hour = startHour > 12 ? startHour - 12 : startHour === 0 ? 12 : startHour;
+      const end12Hour = endHour > 12 ? endHour - 12 : endHour === 0 ? 12 : endHour;
+      
       const timeDisplay = endMinutes === 0 
-        ? `${startHour}:00–${endHour}:00 pm`
-        : `${startHour}:00–${endHour}:${endMinutes.toString().padStart(2, '0')} pm`;
+        ? `${start12Hour}${startAmPm}–${end12Hour}${endAmPm}`
+        : `${start12Hour}${startAmPm}–${end12Hour}:${endMinutes.toString().padStart(2, '0')}${endAmPm}`;
       
       // Format range for meta descriptions
       const timeRange = endMinutes === 0 
@@ -146,6 +152,102 @@ const EventPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  // Share functionality
+  const buildUtmUrl = (eventUrl: string, medium: string) => {
+    const url = new URL(eventUrl);
+    url.searchParams.set('utm_source', 'website');
+    url.searchParams.set('utm_medium', medium);
+    url.searchParams.set('utm_campaign', 'event-share');
+    return url.toString();
+  };
+
+  const copyText = (text: string): Promise<void> => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    } else {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        textArea.remove();
+        return Promise.resolve();
+      } catch (err) {
+        textArea.remove();
+        return Promise.reject(err);
+      }
+    }
+  };
+
+  const handleWhatsAppShare = (eventData: EventData) => {
+    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.eventCode}/`, 'whatsapp');
+    const message = `Check out this event: ${eventData.title} on ${eventData.date}! ${eventUrl}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'share_event',
+        event_category: 'Social Share',
+        event_label: 'WhatsApp',
+        event_name: eventData.title,
+      });
+    }
+  };
+
+  const handleFacebookShare = (eventData: EventData) => {
+    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.eventCode}/`, 'facebook');
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(eventUrl)}`;
+    window.open(facebookUrl, '_blank', 'width=600,height=400');
+    
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'share_event',
+        event_category: 'Social Share',
+        event_label: 'Facebook',
+        event_name: eventData.title,
+      });
+    }
+  };
+
+  const handleCopyLink = async (eventData: EventData) => {
+    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.eventCode}/`, 'copy-link');
+    try {
+      await copyText(eventUrl);
+      toast({
+        title: "Link copied!",
+        description: "Event link copied to clipboard",
+      });
+      
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        (window as any).dataLayer.push({
+          event: 'share_event',
+          event_category: 'Social Share',
+          event_label: 'Copy Link',
+          event_name: eventData.title,
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Failed to copy",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const scrollToCheckout = () => {
+    const checkoutSection = document.getElementById('checkout-section');
+    if (checkoutSection) {
+      checkoutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const loadEvent = async () => {
@@ -186,6 +288,8 @@ const EventPage = () => {
       </div>
     );
   }
+
+  const isLutonTrial = event.eventCode === '070226-2PM-LUT';
 
   return (
     <>
@@ -249,46 +353,135 @@ const EventPage = () => {
         <Header />
         
         {/* Hero Section */}
-        <section className="pt-32 pb-12 bg-gradient-to-b from-background to-muted/20">
-          <div className="container mx-auto px-4">
-            {/* Event Image */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <img 
-                src={event.squareImg} 
-                alt={`${event.title} event poster`}
-                className="w-full h-auto rounded-xl shadow-2xl"
-              />
-            </div>
+        {isLutonTrial ? (
+          <section className="pt-32 pb-12 bg-gradient-to-b from-background to-muted/20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-8 items-start">
+                  {/* Left: Event Poster */}
+                  <div className="flex justify-center md:justify-start">
+                    <img
+                      src={event.squareImg}
+                      alt={`${event.title} event poster`}
+                      className="w-full max-w-md rounded-xl shadow-2xl"
+                    />
+                  </div>
+                  
+                  {/* Right: Event Details */}
+                  <div className="space-y-6">
+                    <div>
+                      <h1 className="font-poppins text-4xl md:text-5xl font-bold text-foreground mb-4">
+                        {event.title}
+                      </h1>
+                      {event.subtitle && (
+                        <p className="font-poppins text-xl text-muted-foreground mb-6 leading-relaxed">
+                          {event.subtitle}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-col gap-4 text-lg">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-5 h-5 text-primary" />
+                        <span className="font-poppins">{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-5 h-5 text-primary" />
+                        <span className="font-poppins">{event.timeDisplay}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-5 h-5 text-primary" />
+                        <span className="font-poppins">{event.venue}, {event.city}</span>
+                      </div>
+                    </div>
 
-            {/* Event Details */}
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-poppins text-4xl md:text-5xl font-bold text-foreground mb-6">
-                {event.title}
-              </h1>
+                    <Button 
+                      onClick={scrollToCheckout}
+                      size="lg"
+                      className="w-full md:w-auto font-poppins"
+                    >
+                      BOOK TICKETS
+                    </Button>
 
-              {event.subtitle && (
-                <p className="font-poppins text-xl text-muted-foreground mb-8 leading-relaxed">
-                  {event.subtitle}
-                </p>
-              )}
-
-              <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8 text-lg">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-primary" />
-                  <span className="font-poppins">{event.date}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-primary" />
-                  <span className="font-poppins">{event.timeDisplay}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <span className="font-poppins">{event.venue}, {event.city}</span>
+                    <div className="pt-4 border-t border-border">
+                      <p className="font-poppins text-sm text-muted-foreground mb-3 flex items-center gap-2">
+                        <Share2 className="w-4 h-4" />
+                        Share This Event
+                      </p>
+                      <div className="flex gap-3">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleWhatsAppShare(event)}
+                          className="flex-1 font-poppins"
+                        >
+                          WhatsApp
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleFacebookShare(event)}
+                          className="flex-1 font-poppins"
+                        >
+                          Facebook
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleCopyLink(event)}
+                          className="flex-1 font-poppins"
+                        >
+                          Copy Link
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <section className="pt-32 pb-12 bg-gradient-to-b from-background to-muted/20">
+            <div className="container mx-auto px-4">
+              {/* Event Image */}
+              <div className="max-w-2xl mx-auto mb-8">
+                <img 
+                  src={event.squareImg} 
+                  alt={`${event.title} event poster`}
+                  className="w-full h-auto rounded-xl shadow-2xl"
+                />
+              </div>
+
+              {/* Event Details */}
+              <div className="max-w-3xl mx-auto text-center">
+                <h1 className="font-poppins text-4xl md:text-5xl font-bold text-foreground mb-6">
+                  {event.title}
+                </h1>
+
+                {event.subtitle && (
+                  <p className="font-poppins text-xl text-muted-foreground mb-8 leading-relaxed">
+                    {event.subtitle}
+                  </p>
+                )}
+
+                <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8 text-lg">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-primary" />
+                    <span className="font-poppins">{event.date}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-primary" />
+                    <span className="font-poppins">{event.timeDisplay}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-5 h-5 text-primary" />
+                    <span className="font-poppins">{event.venue}, {event.city}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Description Section */}
         <section className="py-12 bg-muted/20">
@@ -303,7 +496,7 @@ const EventPage = () => {
               {/* Highlights Section */}
               {event.highlights.length > 0 && (
                 <div className="mt-12">
-                  <h2 className="font-poppins text-3xl font-bold text-primary mb-6 text-center">
+                  <h2 className="font-poppins text-3xl font-bold text-foreground mb-6 text-center">
                     WHY THIS IS YOUR NEW TRADITION
                   </h2>
                   <div className="space-y-4">
@@ -312,7 +505,7 @@ const EventPage = () => {
                       return (
                         <div key={index} className="bg-card border border-border rounded-lg p-4">
                           <p className="font-poppins text-foreground">
-                            <strong className="text-primary">{title}</strong>
+                            <strong>{title}</strong>
                             {description && <span>: {description}</span>}
                           </p>
                         </div>
@@ -326,10 +519,10 @@ const EventPage = () => {
         </section>
 
         {/* Embedded Checkout Section */}
-        <section className="py-12 bg-background">
+        <section id="checkout-section" className="py-12 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="font-poppins text-3xl font-bold text-center text-primary mb-8">
+              <h2 className="font-poppins text-3xl font-bold text-center text-foreground mb-8">
                 Book Your Tickets
               </h2>
               <div className="bg-card border border-border rounded-lg p-6">
