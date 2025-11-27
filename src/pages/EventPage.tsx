@@ -451,9 +451,7 @@ const EventPage = () => {
                       </p>
                       
                       {/* Heading - Bold White */}
-                      <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-4">
-                        Party With Your Mates at a Time That Suits You.
-                      </h2>
+                      
                       
                       {/* Pull Quote - Pink Border, White Text */}
                       <blockquote className="border-l-4 border-primary pl-4 mb-6">
@@ -467,7 +465,7 @@ const EventPage = () => {
                         <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
                           When you could sing every word, lose your voice, and still feel human the next day?
                         </p>
-                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed font-bold">We've created the perfect solution! Welcome to THE 2PM CLUB!</p>
+                        <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">We've created the perfect solution! Welcome to THE 2PM CLUB!</p>
                         <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
                           4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
                         </p>
