@@ -510,12 +510,12 @@ const EventPage = () => {
                       THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
                     </p>
                     <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-6 tracking-wide">
-                      AN AFTERNOON OF ICONIC ANTHEMS FROM THE 80s 90s 00s!
+                      An Afternoon of Iconic Anthems from the 80s 90s 00s!
                     </p>
                     
                     {/* Heading - Bold White */}
-                    <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight uppercase mb-4">
-                      party with your mates at a time that suits you.
+                    <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-4">
+                      Party With Your Mates at a Time That Suits You.
                     </h2>
                     
                     {/* Pull Quote - Pink Border, White Text */}
