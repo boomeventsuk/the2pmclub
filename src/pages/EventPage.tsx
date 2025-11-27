@@ -588,7 +588,7 @@ const EventPage = () => {
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground uppercase tracking-tight text-center mb-6">
-                  Why Women Love The 2PM Club
+                  Why You Love The 2PM Club
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
