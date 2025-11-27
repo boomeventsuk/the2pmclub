@@ -467,7 +467,7 @@ const EventPage = () => {
                         <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
                           When you could sing every word, lose your voice, and still feel human the next day?
                         </p>
-                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">We've created the perfect solution! Welcome to THE 2PM CLUB!</p>
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed font-bold">We've created the perfect solution! Welcome to THE 2PM CLUB!</p>
                         <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
                           4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
                         </p>
