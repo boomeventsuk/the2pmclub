@@ -518,7 +518,7 @@ const EventPage = () => {
                 {/* Highlights Section */}
                 {event.highlights.length > 0 && (
                   <div>
-                    <h2 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-8 text-center uppercase">
+                    <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6 uppercase">
                       WHY THIS IS YOUR NEW TRADITION
                     </h2>
                     <div className="space-y-4">
@@ -582,9 +582,9 @@ const EventPage = () => {
           <section className="py-6 md:py-8">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
-                <p className="font-poppins text-sm uppercase tracking-wider text-muted-foreground text-center mb-6">
+                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground uppercase tracking-tight text-center mb-6">
                   Why Women Love The 2PM Club
-                </p>
+                </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {[
@@ -618,40 +618,32 @@ const EventPage = () => {
         )}
 
         {/* Embedded Checkout Section */}
-        <section id="checkout-section" className="py-10 md:py-14 bg-gradient-to-b from-muted/20 to-background">
+        <section id="checkout-section" className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              {/* Unified Header with Icon */}
-              <div className="text-center mb-6">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/15 rounded-full mb-3">
-                  <span className="text-2xl">🎟️</span>
+              {/* Pink Block containing everything */}
+              <div className="bg-primary/10 border border-primary/30 rounded-2xl p-6 md:p-8">
+                {/* Unified Header with Icon */}
+                <div className="text-center mb-6">
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 rounded-full mb-3">
+                    <span className="text-2xl">🎟️</span>
+                  </div>
+                  <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-1">
+                    Book Your Tickets
+                  </h2>
+                  <p className="font-poppins text-sm text-foreground/70">
+                    Don't miss out! The most popular day party in the Midlands
+                  </p>
                 </div>
-                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-1">
-                  Book Your Tickets
-                </h2>
-                <p className="font-poppins text-sm text-muted-foreground">
-                  Secure your spot — these always sell out
-                </p>
-              </div>
-              
-              {/* Widget Card with Subtle Glow */}
-              <div className="bg-card border border-border/50 rounded-xl p-4 md:p-6 shadow-lg shadow-primary/5">
-                <EventbriteEmbed 
-                  eventbriteId={event.eventbriteId}
-                  containerId={`eventbrite-widget-${event.eventCode}`}
-                  height={425}
-                />
-              </div>
-              
-              {/* Second CTA for Scrolled Visitors */}
-              <div className="text-center mt-6">
-                <Button 
-                  onClick={scrollToCheckout}
-                  size="lg"
-                  className="font-poppins bg-primary hover:bg-primary/90 text-primary-foreground"
-                >
-                  SECURE MY TICKETS
-                </Button>
+                
+                {/* Eventbrite embed inside the pink block */}
+                <div className="bg-card/50 rounded-xl overflow-hidden">
+                  <EventbriteEmbed 
+                    eventbriteId={event.eventbriteId}
+                    containerId={`eventbrite-widget-${event.eventCode}`}
+                    height={425}
+                  />
+                </div>
               </div>
             </div>
           </div>
