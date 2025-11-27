@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink, Calendar, MapPin, Clock, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface EventCardProps {
   id?: number;
@@ -24,6 +25,7 @@ interface EventCardProps {
 
 const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const modalTriggerId = `eb-modal-trigger-${eventCode}`;
 
   const handleBookNow = () => {
@@ -65,30 +67,9 @@ const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time
       + '&utm_campaign=event_share';
   };
 
-  const copyText = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.left = '-9999px';
-      document.body.appendChild(ta);
-      ta.select();
-      try {
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        return true;
-      } catch {
-        document.body.removeChild(ta);
-        return false;
-      }
-    }
-  };
-
   const handleWhatsAppShare = () => {
-    const utmUrl = buildUtmUrl(bookUrl, 'whatsapp');
+    const eventPageUrl = `https://www.the2pmclub.co.uk/events/${eventCode}/`;
+    const utmUrl = buildUtmUrl(eventPageUrl, 'whatsapp');
     const text = `This event looks great - who's in? ✨\n${title} • ${date} • ${time}\nTickets: ${utmUrl}`;
     const wa = 'https://wa.me/?text=' + encodeURIComponent(text);
     window.open(wa, '_blank');
@@ -102,34 +83,20 @@ const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time
   };
 
   const handleFacebookShare = () => {
-    const utmUrl = buildUtmUrl(bookUrl, 'facebook');
-    const fb = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(utmUrl);
-    window.open(fb, '_blank', 'noopener');
+    const eventPageUrl = `https://www.the2pmclub.co.uk/events/${eventCode}/`;
+    const utmUrl = buildUtmUrl(eventPageUrl, isMobile ? 'messenger' : 'facebook');
     
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
-      event: 'facebook_share',
-      eventId: eventCode,
-      eventName: title
-    });
-  };
-
-  const handleCopyLink = async () => {
-    const utmUrl = buildUtmUrl(bookUrl, 'copy');
-    const success = await copyText(utmUrl);
-    
-    if (success) {
-      toast({
-        title: "Link copied",
-        description: "Paste into WhatsApp, Instagram or SMS.",
-      });
+    if (isMobile) {
+      // Open Messenger app directly
+      window.location.href = `fb-messenger://share/?link=${encodeURIComponent(utmUrl)}`;
     } else {
-      window.open(utmUrl, '_blank');
+      // Open Facebook share dialog
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(utmUrl)}`, '_blank', 'noopener');
     }
     
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
-      event: 'copy_link_share',
+      event: isMobile ? 'messenger_share' : 'facebook_share',
       eventId: eventCode,
       eventName: title
     });
@@ -218,26 +185,21 @@ const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time
           <button 
             className="icon-btn icon-facebook" 
             onClick={handleFacebookShare}
-            title="Share this event to Facebook" 
-            aria-label="Share this event to Facebook" 
+            title={isMobile ? "Share on Messenger" : "Share on Facebook"}
+            aria-label={isMobile ? "Share on Messenger" : "Share on Facebook"}
             type="button"
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="28" height="28">
-              <path fill="currentColor" d="M22 12a10 10 0 1 0-11.5 9.9v-7H8.5v-3h2V9.2c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0 0 22 12z"/>
-            </svg>
-          </button>
-
-          <button 
-            className="icon-btn icon-copy" 
-            onClick={handleCopyLink}
-            title="Copy event link" 
-            aria-label="Copy event link" 
-            type="button"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path fill="none" stroke="currentColor" strokeWidth="1.5" d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-              <path fill="none" stroke="currentColor" strokeWidth="1.5" d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-            </svg>
+            {isMobile ? (
+              // Messenger icon
+              <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" aria-hidden="true" focusable="false">
+                <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.37.26.61l.05 1.9c.02.52.49.88.98.76l2.12-.53c.19-.05.39-.02.56.05 1.01.35 2.12.54 3.29.54 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.04 13.02L10.5 12.3l-4.28 2.8 4.7-5.02 2.62 2.72 4.2-2.8-4.7 5.02z"/>
+              </svg>
+            ) : (
+              // Facebook icon
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="28" height="28">
+                <path fill="currentColor" d="M22 12a10 10 0 1 0-11.5 9.9v-7H8.5v-3h2V9.2c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0 0 22 12z"/>
+              </svg>
+            )}
           </button>
         </div>
       </div>
