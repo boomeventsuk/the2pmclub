@@ -354,10 +354,10 @@ const EventPage = () => {
         
         {/* Hero Section */}
         {isLutonTrial ? (
-          <section className="pt-40 md:pt-44 pb-16 bg-gradient-to-b from-background via-background to-muted/10">
+          <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-8 items-start">
+                <div className="grid md:grid-cols-2 gap-6 items-stretch">
                   {/* Left: Event Poster */}
                   <div className="flex justify-center md:justify-start">
                     <img
@@ -368,30 +368,30 @@ const EventPage = () => {
                   </div>
                   
                   {/* Right: Event Details - Wrapped in Card */}
-                  <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-6 md:p-8 space-y-6">
+                  <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-4 md:p-6 space-y-4 flex flex-col justify-between">
                     <div>
-                      <h1 className="font-poppins text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-4">
+                      <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-2">
                         {event.title}
                       </h1>
                       {event.subtitle && (
-                        <p className="font-poppins text-lg md:text-xl text-foreground/80 leading-relaxed">
+                        <p className="font-poppins text-sm md:text-base text-foreground/70 leading-relaxed">
                           {event.subtitle}
                         </p>
                       )}
                     </div>
                     
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-primary" />
-                        <span className="font-poppins font-medium text-lg">{event.date}</span>
+                        <span className="font-poppins font-medium text-base">{event.date}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Clock className="w-5 h-5 text-primary" />
-                        <span className="font-poppins font-medium text-lg">{event.timeDisplay}</span>
+                        <span className="font-poppins font-medium text-base">{event.timeDisplay}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-5 h-5 text-primary" />
-                        <span className="font-poppins font-medium text-lg">{event.venue}, {event.city}</span>
+                        <span className="font-poppins font-medium text-base">{event.venue}, {event.city}</span>
                       </div>
                     </div>
 
@@ -485,41 +485,79 @@ const EventPage = () => {
         )}
 
         {/* Description Section */}
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              {event.fullDescription && (
-                <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-10 mb-12">
-                  <div className="font-poppins text-lg md:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
-                    {event.fullDescription}
+        {isLutonTrial ? (
+          <section className="py-8 md:py-12">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                {event.fullDescription && (
+                  <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-10 mb-12">
+                    <div className="font-poppins text-lg md:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
+                      {event.fullDescription}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Highlights Section */}
-              {event.highlights.length > 0 && (
-                <div>
-                  <h2 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-8 text-center uppercase">
-                    WHY THIS IS YOUR NEW TRADITION
-                  </h2>
-                  <div className="space-y-4">
-                    {event.highlights.map((highlight, index) => {
-                      const [title, description] = highlight.split(': ');
-                      return (
-                        <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
-                          <p className="font-poppins text-foreground text-base md:text-lg">
-                            <strong className="font-semibold">{title}</strong>
-                            {description && <span className="text-foreground/80">: {description}</span>}
-                          </p>
-                        </div>
-                      );
-                    })}
+                {/* Highlights Section */}
+                {event.highlights.length > 0 && (
+                  <div>
+                    <h2 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-8 text-center uppercase">
+                      WHY THIS IS YOUR NEW TRADITION
+                    </h2>
+                    <div className="space-y-4">
+                      {event.highlights.map((highlight, index) => {
+                        const [title, description] = highlight.split(': ');
+                        return (
+                          <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
+                            <p className="font-poppins text-foreground text-base md:text-lg">
+                              <strong className="font-semibold">{title}</strong>
+                              {description && <span className="text-foreground/80">: {description}</span>}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <section className="py-16 md:py-20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                {event.fullDescription && (
+                  <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-10 mb-12">
+                    <div className="font-poppins text-lg md:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
+                      {event.fullDescription}
+                    </div>
+                  </div>
+                )}
+
+                {/* Highlights Section */}
+                {event.highlights.length > 0 && (
+                  <div>
+                    <h2 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-8 text-center uppercase">
+                      WHY THIS IS YOUR NEW TRADITION
+                    </h2>
+                    <div className="space-y-4">
+                      {event.highlights.map((highlight, index) => {
+                        const [title, description] = highlight.split(': ');
+                        return (
+                          <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
+                            <p className="font-poppins text-foreground text-base md:text-lg">
+                              <strong className="font-semibold">{title}</strong>
+                              {description && <span className="text-foreground/80">: {description}</span>}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Embedded Checkout Section */}
         <section id="checkout-section" className="py-16 md:py-20 bg-muted/10">
