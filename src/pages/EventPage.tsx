@@ -241,7 +241,6 @@ const EventPage = () => {
   // Track hero button visibility for sticky button
   useEffect(() => {
     if (!heroBookButtonRef.current) {
-      // If there's no hero button (non-trial layout), always show sticky
       setShowStickyBookTickets(true);
       return;
     }
@@ -253,6 +252,7 @@ const EventPage = () => {
     observer.observe(heroBookButtonRef.current);
     return () => observer.disconnect();
   }, [event]);
+  
   if (loading) {
     return <div className="min-h-screen bg-background">
         <Header />
@@ -275,7 +275,7 @@ const EventPage = () => {
         <Footer />
       </div>;
   }
-  const isLutonTrial = event.eventCode === '070226-2PM-LUT';
+
   return <>
       <Helmet>
         <title>The 2 PM Club — {event.city} — {event.date} | {event.venue}</title>
@@ -337,7 +337,7 @@ const EventPage = () => {
         <Header hideCommunityBanner={true} />
         
         {/* Hero Section */}
-        {isLutonTrial ? <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
+        <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-6 items-stretch">
@@ -401,43 +401,10 @@ const EventPage = () => {
                 </div>
               </div>
             </div>
-          </section> : <section className="pt-32 pb-12 bg-gradient-to-b from-background to-muted/20">
-            <div className="container mx-auto px-4">
-              {/* Event Image */}
-              <div className="max-w-2xl mx-auto mb-8">
-                <img src={event.squareImg} alt={`${event.title} event poster`} className="w-full h-auto rounded-xl shadow-2xl" />
-              </div>
-
-              {/* Event Details */}
-              <div className="max-w-3xl mx-auto text-center">
-                <h1 className="font-poppins text-4xl md:text-5xl font-bold text-foreground mb-6">
-                  {event.title}
-                </h1>
-
-                {event.subtitle && <p className="font-poppins text-xl text-muted-foreground mb-8 leading-relaxed">
-                    {event.subtitle}
-                  </p>}
-
-                <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8 text-lg">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-primary" />
-                    <span className="font-poppins">{event.date}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-primary" />
-                    <span className="font-poppins">{event.timeDisplay}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-primary" />
-                    <span className="font-poppins">{event.venue}, {event.city}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>}
+          </section>
 
         {/* Description Section */}
-        {isLutonTrial ? <section className="py-6 md:py-10">
+        <section className="py-6 md:py-10">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
                 {event.fullDescription && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
@@ -449,9 +416,6 @@ const EventPage = () => {
                       <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
                         An Afternoon of Iconic Anthems from the 80s 90s 00s!
                       </p>
-                      
-                      {/* Heading - Bold White */}
-                      
                       
                       {/* Pull Quote - Pink Border, White Text */}
                       <blockquote className="border-l-4 border-primary pl-4 mb-6">
@@ -477,27 +441,25 @@ const EventPage = () => {
                   </div>}
 
                 {/* Video Section */}
-                {isLutonTrial && (
-                  <div className="py-10 md:py-14">
-                    <div className="max-w-4xl mx-auto">
-                      <div className="rounded-2xl shadow-lg overflow-hidden max-w-3xl mx-auto">
-                        <video
-                          controls
-                          playsInline
-                          preload="none"
-                          poster="https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png"
-                          className="w-full"
-                        >
-                          <source
-                            src="https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4"
-                            type="video/mp4"
-                          />
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
+                <div className="py-10 md:py-14">
+                  <div className="max-w-4xl mx-auto">
+                    <div className="rounded-2xl shadow-lg overflow-hidden max-w-3xl mx-auto">
+                      <video
+                        controls
+                        playsInline
+                        preload="none"
+                        poster="https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png"
+                        className="w-full"
+                      >
+                        <source
+                          src="https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4"
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
                     </div>
                   </div>
-                )}
+                </div>
 
                 {/* Highlights Section */}
                 {event.highlights.length > 0 && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
@@ -518,38 +480,10 @@ const EventPage = () => {
                   </div>}
               </div>
             </div>
-          </section> : <section className="py-16 md:py-20">
-            <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto">
-                {event.fullDescription && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-10 mb-12">
-                    <div className="font-poppins text-lg md:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
-                      {event.fullDescription}
-                    </div>
-                  </div>}
-
-                {/* Highlights Section */}
-                {event.highlights.length > 0 && <div>
-                    <h2 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-8 text-center uppercase">
-                      WHY THIS IS YOUR NEW TRADITION
-                    </h2>
-                    <div className="space-y-4">
-                      {event.highlights.map((highlight, index) => {
-                  const [title, description] = highlight.split(': ');
-                  return <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
-                            <p className="font-poppins text-foreground text-base md:text-lg">
-                              <strong className="font-semibold">{title}</strong>
-                              {description && <span className="text-foreground/80">: {description}</span>}
-                            </p>
-                          </div>;
-                })}
-                    </div>
-                  </div>}
-              </div>
-            </div>
-          </section>}
+          </section>
 
         {/* Photo Gallery - Auto-scrolling */}
-        {isLutonTrial && <section className="py-8 md:py-12 overflow-hidden">
+        <section className="py-8 md:py-12 overflow-hidden">
             <div className="relative">
               <div className="flex gap-4 animate-scroll">
                 {["https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg", "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg"].map((img, index) => <div key={index} className="flex-shrink-0 w-64 md:w-80">
@@ -557,10 +491,10 @@ const EventPage = () => {
                   </div>)}
               </div>
             </div>
-          </section>}
+          </section>
 
-        {/* Social Proof Section - Luton Trial Only */}
-        {isLutonTrial && <section className="py-6 md:py-8">
+        {/* Social Proof Section */}
+        <section className="py-6 md:py-8">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
@@ -591,7 +525,7 @@ const EventPage = () => {
                 </div>
               </div>
             </div>
-          </section>}
+          </section>
 
         {/* Embedded Checkout Section */}
         <section id="checkout-section" className="py-10 md:py-14">
