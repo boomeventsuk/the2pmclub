@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-const Header = () => {
+const Header = ({ hideCommunityBanner = false }: { hideCommunityBanner?: boolean }) => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -120,16 +120,18 @@ const Header = () => {
       </header>
       
       {/* Community Banner */}
-      <div className="community-banner">
-        <a 
-          href="https://www.facebook.com/groups/daytimediscorevolution" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="community-banner-link"
-        >
-          JOIN THE 2PM CLUB COMMUNITY! CLICK HERE TO JOIN OUR OFFICIAL FACEBOOK GROUP
-        </a>
-      </div>
+      {!hideCommunityBanner && (
+        <div className="community-banner">
+          <a 
+            href="https://www.facebook.com/groups/daytimediscorevolution" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="community-banner-link"
+          >
+            JOIN THE 2PM CLUB COMMUNITY! CLICK HERE TO JOIN OUR OFFICIAL FACEBOOK GROUP
+          </a>
+        </div>
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -153,6 +153,8 @@ const EventPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showStickyBookTickets, setShowStickyBookTickets] = useState(false);
+  const heroBookButtonRef = useRef<HTMLButtonElement>(null);
   const { toast } = useToast();
 
   // FAQs data
@@ -294,6 +296,26 @@ const EventPage = () => {
     loadEvent();
   }, [slug]);
 
+  // Track hero button visibility for sticky button
+  useEffect(() => {
+    if (!heroBookButtonRef.current) {
+      // If there's no hero button (non-trial layout), always show sticky
+      setShowStickyBookTickets(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStickyBookTickets(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    
+    observer.observe(heroBookButtonRef.current);
+    
+    return () => observer.disconnect();
+  }, [event]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
@@ -383,7 +405,7 @@ const EventPage = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
-        <Header />
+        <Header hideCommunityBanner={true} />
         
         {/* Hero Section */}
         {isLutonTrial ? (
@@ -429,6 +451,7 @@ const EventPage = () => {
                     </div>
 
                     <Button 
+                      ref={heroBookButtonRef}
                       onClick={scrollToCheckout}
                       size="lg"
                       className="w-full md:w-auto font-poppins"
@@ -692,17 +715,17 @@ const EventPage = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
-                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
+                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6 uppercase">
                   Questions People Ask Before They Book
                 </h2>
                 
                 <Accordion type="single" collapsible className="w-full">
                   {faqs.map((faq, index) => (
                     <AccordionItem key={index} value={`item-${index}`} className="border-border/30">
-                      <AccordionTrigger className="text-left font-poppins font-medium text-foreground hover:no-underline">
+                      <AccordionTrigger className="text-left font-poppins font-medium text-foreground hover:no-underline text-base md:text-lg uppercase">
                         {faq.question}
                       </AccordionTrigger>
-                      <AccordionContent className="text-foreground/85 font-poppins">
+                      <AccordionContent className="text-foreground/85 font-poppins pt-2">
                         {faq.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -735,15 +758,17 @@ const EventPage = () => {
 
         <Footer />
         
-        {/* Sticky Book Tickets Button */}
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
-          <Button 
-            onClick={scrollToCheckout}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-8 py-3 rounded-full shadow-lg shadow-primary/25"
-          >
-            🎟️ Book Tickets
-          </Button>
-        </div>
+        {/* Sticky Book Tickets Button - Top Right */}
+        {showStickyBookTickets && (
+          <div className="fixed top-20 right-4 z-50 animate-fade-in">
+            <Button 
+              onClick={scrollToCheckout}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg"
+            >
+              🎟️ Book Tickets
+            </Button>
+          </div>
+        )}
       </div>
     </>
   );
