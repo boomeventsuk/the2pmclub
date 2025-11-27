@@ -73,6 +73,53 @@
             padding: 0 1rem;
         }
         
+        /* Header/Navbar */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .site-logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ff1493;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+        
+        .site-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .site-nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+        
+        .site-nav a:hover {
+            color: #ff1493;
+        }
+        
         /* Hero Section */
         .hero {
             padding: 8rem 0 2rem;
@@ -416,6 +463,17 @@
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="/" class="site-logo">THE 2PM CLUB</a>
+            <nav class="site-nav">
+                <a href="/">Home</a>
+                <a href="/#tickets">Events</a>
+            </nav>
+        </div>
+    </header>
+    
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
