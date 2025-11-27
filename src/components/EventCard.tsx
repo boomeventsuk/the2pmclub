@@ -5,6 +5,8 @@ import { useToast } from "@/hooks/use-toast";
 
 interface EventCardProps {
   id?: number;
+  eventCode: string;
+  eventbriteId: string;
   title: string;
   date: string;
   venue: string;
@@ -20,32 +22,37 @@ interface EventCardProps {
   urgencyColor?: string;
 }
 
-const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
-  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
   const { toast } = useToast();
+  const modalTriggerId = `eb-modal-trigger-${eventCode}`;
 
   const handleBookNow = () => {
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
       event: 'ticket_click',
-      eventId: id || '',
-      eventName: title || '',
-      eventVenue: `${venue}, ${city}` || '',
+      eventId: eventCode,
+      eventName: title,
+      eventVenue: `${venue}, ${city}`,
       eventStart: start || ''
     });
-    window.open(bookUrl, '_blank');
+    
+    // Trigger Eventbrite modal
+    const triggerBtn = document.getElementById(modalTriggerId);
+    if (triggerBtn) {
+      triggerBtn.click();
+    }
   };
 
   const handleEventInfo = () => {
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
       event: 'view_event',
-      eventId: slug,
+      eventId: eventCode,
       eventName: title
     });
-    if (infoUrl) {
-      window.open(infoUrl, '_blank');
-    }
+    
+    // Navigate to internal event page
+    window.location.href = `/events/${eventCode}`;
   };
 
   // Sharing functions
@@ -89,7 +96,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
       event: 'whatsapp_share',
-      eventId: slug,
+      eventId: eventCode,
       eventName: title
     });
   };
@@ -102,7 +109,7 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
       event: 'facebook_share',
-      eventId: slug,
+      eventId: eventCode,
       eventName: title
     });
   };
@@ -123,14 +130,18 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
       event: 'copy_link_share',
-      eventId: slug,
+      eventId: eventCode,
       eventName: title
     });
   };
 
   return (
-    <article className="ticket-card" data-ticket-card data-date-iso={dateIso}>
-      <div className="poster relative">
+    <>
+      {/* Hidden trigger button for Eventbrite modal */}
+      <button id={modalTriggerId} style={{ display: 'none' }} />
+      
+      <article className="ticket-card" data-ticket-card data-date-iso={dateIso}>
+        <div className="poster relative">
         <img 
           src={poster}
           alt={`${title} event poster`}
@@ -230,7 +241,8 @@ const EventCard = ({ id, title, date, venue, city, time, poster, bookUrl, infoUr
           </button>
         </div>
       </div>
-    </article>
+      </article>
+    </>
   );
 };
 
