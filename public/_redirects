@@ -1,7 +1,5 @@
 https://the2pmclub.co.uk/*   https://www.the2pmclub.co.uk/:splat  301!
 /index.html                  /                                   301!
 /:path/index.html            /:path/                              301!
-/events/:slug/               /events/:slug/index.html             200
-/events/:slug                /events/:slug/                       301!
 /:page                       /:page/                              301!
 /*                           /index.html                          200
