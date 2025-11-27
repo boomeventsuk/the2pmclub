@@ -83,14 +83,6 @@ const Header = () => {
             </a>
           </div>
           
-          {/* CTA Button */}
-          <Button 
-            onClick={() => scrollToSection('tickets')}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold book-cta"
-          >
-            Book Tickets
-          </Button>
-          
           {/* Mobile Menu Toggle */}
           <button 
             onClick={toggleMobileMenu}
