@@ -540,8 +540,8 @@ const EventPage = () => {
                 {/* Highlights Section */}
                 {event.highlights.length > 0 && (
                   <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
-                    <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6 uppercase">
-                      Why daytime discos are a game changer!
+                    <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
+                      Why Daytime Discos Are a Game Changer!
                     </h2>
                     <div className="space-y-4">
                       {event.highlights.map((highlight, index) => {
@@ -639,7 +639,7 @@ const EventPage = () => {
           <section className="py-6 md:py-8">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
-                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground uppercase tracking-tight text-center mb-6">
+                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight text-center mb-6">
                   Why You Love The 2PM Club
                 </h2>
                 
@@ -711,7 +711,7 @@ const EventPage = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
-                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6 uppercase">
+                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
                   Questions People Ask Before They Book
                 </h2>
                 
