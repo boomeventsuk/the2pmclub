@@ -505,34 +505,36 @@ const EventPage = () => {
               <div className="max-w-3xl mx-auto">
                 {event.fullDescription && (
                   <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
-                    {/* Intro Text */}
-                    <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-3 tracking-wide">
-                      THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
-                    </p>
-                    <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-6 tracking-wide">
-                      An Afternoon of Iconic Anthems from the 80s 90s 00s!
-                    </p>
-                    
-                    {/* Heading - Bold White */}
-                    <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-4">
-                      Party With Your Mates at a Time That Suits You.
-                    </h2>
-                    
-                    {/* Pull Quote - Pink Border, White Text */}
-                    <blockquote className="border-l-4 border-primary pl-4 mb-6">
-                      <p className="font-poppins text-lg md:text-xl text-foreground italic">
-                        "Remember when going OUT OUT didn't require a week's recovery?"
+                    <div className="mx-auto md:max-w-2xl">
+                      {/* Intro Text */}
+                      <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-3 tracking-wide">
+                        THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
                       </p>
-                    </blockquote>
-                    
-                    {/* Body Paragraphs */}
-                    <div className="space-y-4">
-                      <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                        When you could sing every word, lose your voice, and still feel human the next day?
+                      <p className="font-poppins text-xl md:text-2xl font-bold text-foreground/90 mb-6 tracking-wide">
+                        An Afternoon of Iconic Anthems from the 80s 90s 00s!
                       </p>
-                      <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                        The 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more "maybe next time." Everyone says yes to this one.
-                      </p>
+                      
+                      {/* Heading - Bold White */}
+                      <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-4">
+                        Party With Your Mates at a Time That Suits You.
+                      </h2>
+                      
+                      {/* Pull Quote - Pink Border, White Text */}
+                      <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                        <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                          "Remember when going OUT OUT didn't require a week's recovery?"
+                        </p>
+                      </blockquote>
+                      
+                      {/* Body Paragraphs */}
+                      <div className="space-y-4">
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                          When you could sing every word, lose your voice, and still feel human the next day?
+                        </p>
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                          The 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more "maybe next time." Everyone says yes to this one.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -711,41 +713,43 @@ const EventPage = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
-                <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
-                  Questions People Ask Before They Book
-                </h2>
-                
-                <Accordion type="single" collapsible className="w-full">
-                  {faqs.map((faq, index) => (
-                    <AccordionItem key={index} value={`item-${index}`} className="border-border/30">
-                      <AccordionTrigger className="text-left font-poppins font-medium text-foreground hover:no-underline text-base md:text-lg uppercase">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-foreground/85 font-poppins pt-2">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-                
-                <p className="text-sm text-muted-foreground mt-6">
-                  This event is 18+ recommended unless stated otherwise.
-                </p>
-                
-                {event.infoUrl && event.infoUrl !== 'https://www.facebook.com/events/TBD' && (
-                  <div className="mt-6">
-                    <Button asChild variant="outline" size="lg">
-                      <a href={event.infoUrl} target="_blank" rel="noopener noreferrer">
-                        View Facebook Event →
-                      </a>
+                <div className="mx-auto md:max-w-2xl">
+                  <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
+                    Questions People Ask Before They Book
+                  </h2>
+                  
+                  <Accordion type="single" collapsible className="w-full">
+                    {faqs.map((faq, index) => (
+                      <AccordionItem key={index} value={`item-${index}`} className="border-border/30">
+                        <AccordionTrigger className="text-left font-poppins font-medium text-foreground hover:no-underline text-base md:text-lg uppercase">
+                          {faq.question}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-foreground/85 font-poppins pt-2">
+                          {faq.answer}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                  
+                  <p className="text-sm text-muted-foreground mt-6">
+                    This event is 18+ recommended unless stated otherwise.
+                  </p>
+                  
+                  {event.infoUrl && event.infoUrl !== 'https://www.facebook.com/events/TBD' && (
+                    <div className="mt-6">
+                      <Button asChild variant="outline" size="lg">
+                        <a href={event.infoUrl} target="_blank" rel="noopener noreferrer">
+                          View Facebook Event →
+                        </a>
+                      </Button>
+                    </div>
+                  )}
+                  
+                  <div className="mt-4">
+                    <Button asChild variant="outline">
+                      <a href="/">← Back to all events</a>
                     </Button>
                   </div>
-                )}
-                
-                <div className="mt-4">
-                  <Button asChild variant="outline">
-                    <a href="/">← Back to all events</a>
-                  </Button>
                 </div>
               </div>
             </div>
