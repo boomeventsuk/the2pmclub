@@ -396,6 +396,16 @@
             display: block;
             margin-bottom: 0.25rem;
         }
+        
+        .video-section {
+            padding: 2.5rem 0;
+        }
+        
+        @media (min-width: 768px) {
+            .video-section {
+                padding: 3.5rem 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -459,7 +469,7 @@
     </section>
     
     <!-- Video Section -->
-    <section style="padding: 2.5rem 0;">
+    <section class="video-section">
         <div class="container video-container">
             <div style="border-radius: 1rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); overflow: hidden; max-width: 48rem; margin: 0 auto;">
                 <video controls playsInline preload="none" poster="https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png">
@@ -469,12 +479,6 @@
             </div>
         </div>
     </section>
-    
-    @media (min-width: 768px) {
-        section.video-section {
-            padding: 3.5rem 0;
-        }
-    }
     
     <!-- Highlights Section -->
     <section>
@@ -534,7 +538,7 @@
     <!-- Testimonials Section -->
     <section>
         <div class="container">
-            <h2 class="section-heading text-center">Why You Love The 2PM Club</h2>
+            <h2 class="section-heading">Why You Love The 2PM Club</h2>
             
             <div class="testimonials-grid">
                 <div class="testimonial">
