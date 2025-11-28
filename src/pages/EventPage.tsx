@@ -231,7 +231,9 @@ const EventPage = () => {
     const loadEvent = async () => {
       setLoading(true);
       const eventData = await loadEventData();
-      const currentEvent = slug ? eventData[slug] : null;
+      // Case-insensitive lookup - normalize slug to uppercase to match event codes
+      const normalizedSlug = slug?.toUpperCase();
+      const currentEvent = normalizedSlug ? eventData[normalizedSlug] : null;
       setEvent(currentEvent);
       setLoading(false);
     };

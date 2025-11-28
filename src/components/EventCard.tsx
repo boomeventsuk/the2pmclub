@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink, Calendar, MapPin, Clock, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useNavigate } from "react-router-dom";
 
 interface EventCardProps {
   id?: number;
@@ -26,6 +27,7 @@ interface EventCardProps {
 const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
   const { toast } = useToast();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const modalTriggerId = `eb-modal-trigger-${eventCode}`;
 
   const handleBookNow = () => {
@@ -53,8 +55,8 @@ const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time
       eventName: title
     });
     
-    // Navigate to internal event page
-    window.location.href = `/events/${eventCode}`;
+    // Navigate to internal event page using React Router
+    navigate(`/events/${eventCode}/`);
   };
 
   // Sharing functions
