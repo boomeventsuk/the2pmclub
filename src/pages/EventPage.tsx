@@ -372,10 +372,10 @@ const EventPage = () => {
                           <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
                             THE 2PM CLUB Christmas
                           </h1>
-                          <p className="font-poppins text-lg text-foreground/80 mb-1">
+                          <p className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-2">
                             Daytime Disco {event.city}
                           </p>
-                          <p className="font-poppins text-lg md:text-xl text-foreground/80 mb-2">
+                          <p className="font-poppins text-sm md:text-base text-foreground/70">
                             Iconic 80s 90s 00s Anthems plus Festive Classics
                           </p>
                         </>
