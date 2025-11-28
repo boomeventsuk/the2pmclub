@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 interface EventbriteModalProps {
   eventbriteId: string;
   triggerId: string;
+  promoCode?: string;
   onOrderComplete?: () => void;
 }
 
@@ -14,7 +15,7 @@ declare global {
   }
 }
 
-const EventbriteModal = ({ eventbriteId, triggerId, onOrderComplete }: EventbriteModalProps) => {
+const EventbriteModal = ({ eventbriteId, triggerId, promoCode, onOrderComplete }: EventbriteModalProps) => {
   useEffect(() => {
     // Load Eventbrite widget script if not already loaded
     if (!window.EBWidgets) {
@@ -36,6 +37,7 @@ const EventbriteModal = ({ eventbriteId, triggerId, onOrderComplete }: Eventbrit
           eventId: eventbriteId,
           modal: true,
           modalTriggerElementId: triggerId,
+          ...(promoCode && { promoCode }),
           onOrderComplete: () => {
             // Track order completion
             (window as any).dataLayer = (window as any).dataLayer || [];
