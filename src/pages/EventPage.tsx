@@ -84,8 +84,12 @@ const formatEventDate = (isoDate: string): string => {
 // Load and process events from JSON
 const loadEventData = async (): Promise<Record<string, EventData>> => {
   try {
+    console.log('[EventPage] Fetching /events.json...');
     const response = await fetch('/events.json');
+    console.log('[EventPage] Fetch response status:', response.status);
     const events: EventJson[] = await response.json();
+    console.log('[EventPage] Loaded events count:', events.length);
+    console.log('[EventPage] Event codes:', events.map(e => e.eventCode));
     const eventData: Record<string, EventData> = {};
     events.forEach(event => {
       const {
@@ -230,10 +234,19 @@ const EventPage = () => {
   useEffect(() => {
     const loadEvent = async () => {
       setLoading(true);
+      console.log('[EventPage] Raw slug from URL:', slug);
+      console.log('[EventPage] Slug type:', typeof slug);
+      
       const eventData = await loadEventData();
+      console.log('[EventPage] Event data keys:', Object.keys(eventData));
+      
       // Case-insensitive lookup - normalize slug to uppercase and strip trailing slash
       const normalizedSlug = slug?.toUpperCase().replace(/\/$/, '');
+      console.log('[EventPage] Normalized slug:', normalizedSlug);
+      
       const currentEvent = normalizedSlug ? eventData[normalizedSlug] : null;
+      console.log('[EventPage] Found event?:', currentEvent ? 'YES - ' + currentEvent.title : 'NO');
+      
       setEvent(currentEvent);
       setLoading(false);
     };
