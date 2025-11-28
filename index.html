@@ -182,6 +182,25 @@
     </script>
     <!-- End Meta Pixel Code -->
 
+    <!-- Eventbrite Event Tracking -->
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    window.addEventListener('message', function(event) {
+      if (event.origin && event.origin.indexOf('eventbrite') > -1) {
+        try {
+          var data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+          if (data && data.event) {
+            window.dataLayer.push({
+              event: 'eb_' + data.event,
+              eventbriteData: data
+            });
+          }
+        } catch(e) {}
+      }
+    });
+    </script>
+    <!-- End Eventbrite Event Tracking -->
+
     <!-- Hreflang for UK targeting -->
     <link rel="alternate" hreflang="en-GB" href="https://www.the2pmclub.co.uk/">
     <link rel="alternate" hreflang="x-default" href="https://www.the2pmclub.co.uk/">
