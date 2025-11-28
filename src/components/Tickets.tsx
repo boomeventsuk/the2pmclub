@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import EventCard from "./EventCard";
-import EventbriteModal from "./EventbriteModal";
 
 const Tickets = () => {
   useEffect(() => {
@@ -162,22 +161,13 @@ const events = [
         </div>
         
         <div className="space-y-6" id="tickets-list">
-          {events.map((event, index) => {
-            const modalTriggerId = `eb-modal-trigger-${event.eventCode}`;
-            return (
-              <div key={index}>
-                <EventbriteModal 
-                  eventbriteId={event.eventbriteId}
-                  triggerId={modalTriggerId}
-                  promoCode={(event as any).promoCode}
-                />
-                <EventCard 
-                  {...event} 
-                  dateIso={dateToIso(event.date)} 
-                />
-              </div>
-            );
-          })}
+          {events.map((event, index) => (
+            <EventCard 
+              key={index}
+              {...event} 
+              dateIso={dateToIso(event.date)} 
+            />
+          ))}
         </div>
         
         <div className="text-center mt-lg">
