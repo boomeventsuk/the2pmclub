@@ -24,7 +24,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/events/:slug/*" element={<EventPage />} />
+            <Route path="/events/:slug" element={<EventPage />} />
             <Route path="/hubs/birmingham/" element={<BirminghamHub />} />
             <Route path="/faqs/" element={<SiteFaqs />} />
             <Route path="/blog/why-daytime-discos-are-popular/" element={<BlogPost />} />
