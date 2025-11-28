@@ -4,6 +4,7 @@ interface EventbriteEmbedProps {
   eventbriteId: string;
   containerId: string;
   height?: number;
+  promoCode?: string;
   onOrderComplete?: () => void;
 }
 
@@ -15,7 +16,7 @@ declare global {
   }
 }
 
-const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, onOrderComplete }: EventbriteEmbedProps) => {
+const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, onOrderComplete }: EventbriteEmbedProps) => {
   useEffect(() => {
     // Load Eventbrite widget script if not already loaded
     if (!window.EBWidgets) {
@@ -37,6 +38,7 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, onOrderCompl
           eventId: eventbriteId,
           iframeContainerId: containerId,
           iframeContainerHeight: height,
+          ...(promoCode && { promoCode }),
           onOrderComplete: () => {
             // Track order completion
             (window as any).dataLayer = (window as any).dataLayer || [];

@@ -40,6 +40,7 @@ const events = [
   {
     eventCode: "131225-2PM-MK",
     eventbriteId: "1757042494399",
+    promoCode: "AutomaticDiscount_1764194555103",
     title: "THE 2PM CLUB Milton Keynes - Christmas Daytime Disco",
     date: "Sat 13 Dec 2025",
     venue: "MK11 Music Venue",
@@ -168,6 +169,7 @@ const events = [
                 <EventbriteModal 
                   eventbriteId={event.eventbriteId}
                   triggerId={modalTriggerId}
+                  promoCode={(event as any).promoCode}
                 />
                 <EventCard 
                   {...event} 

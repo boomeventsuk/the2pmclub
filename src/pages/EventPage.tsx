@@ -13,6 +13,7 @@ interface EventJson {
   id: number;
   eventCode: string;
   eventbriteId: string;
+  promoCode?: string;
   title: string;
   location: string;
   start: string;
@@ -28,6 +29,7 @@ interface EventJson {
 interface EventData {
   eventCode: string;
   eventbriteId: string;
+  promoCode?: string;
   city: string;
   date: string;
   venue: string;
@@ -121,6 +123,7 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
       eventData[event.eventCode] = {
         eventCode: event.eventCode,
         eventbriteId: event.eventbriteId,
+        promoCode: event.promoCode,
         city,
         date: formattedDate,
         venue,
@@ -616,7 +619,7 @@ const EventPage = () => {
                 
                 {/* Eventbrite embed inside the pink block */}
                 <div className="bg-card/50 rounded-xl overflow-hidden">
-                  <EventbriteEmbed eventbriteId={event.eventbriteId} containerId={`eventbrite-widget-${event.eventCode}`} height={425} />
+                  <EventbriteEmbed eventbriteId={event.eventbriteId} containerId={`eventbrite-widget-${event.eventCode}`} height={425} promoCode={event.promoCode} />
                 </div>
               </div>
             </div>
