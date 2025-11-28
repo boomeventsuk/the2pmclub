@@ -253,6 +253,9 @@ const EventPage = () => {
     loadEvent();
   }, [slug]);
 
+  // Detect Christmas events
+  const isChristmasEvent = event?.title.toLowerCase().includes('christmas');
+
   // Track hero button visibility for sticky button
   useEffect(() => {
     if (!heroBookButtonRef.current) {
@@ -364,12 +367,28 @@ const EventPage = () => {
                   {/* Right: Event Details - Wrapped in Card */}
                   <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-4 md:p-6 space-y-4 flex flex-col justify-between">
                     <div>
-                      <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
-                        THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
-                      </h1>
-                      <p className="font-poppins text-lg md:text-xl text-foreground/80 mb-2">
-                        Iconic 80s 90s 00s Anthems
-                      </p>
+                      {isChristmasEvent ? (
+                        <>
+                          <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
+                            THE 2PM CLUB Christmas
+                          </h1>
+                          <p className="font-poppins text-lg text-foreground/80 mb-1">
+                            Daytime Disco {event.city}
+                          </p>
+                          <p className="font-poppins text-lg md:text-xl text-foreground/80 mb-2">
+                            Iconic 80s 90s 00s Anthems plus Festive Classics
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
+                            THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
+                          </h1>
+                          <p className="font-poppins text-lg md:text-xl text-foreground/80 mb-2">
+                            Iconic 80s 90s 00s Anthems
+                          </p>
+                        </>
+                      )}
                     </div>
                     
                     <div className="flex flex-col gap-2">
@@ -424,34 +443,68 @@ const EventPage = () => {
               <div className="max-w-3xl mx-auto">
                 {event.fullDescription && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
                     <div className="mx-auto md:max-w-2xl">
-                      {/* Intro Text */}
-                      <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
-                        THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
-                      </p>
-                      <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
-                        An Afternoon of Iconic Anthems from the 80s 90s 00s!
-                      </p>
-                      
-                      {/* Pull Quote - Pink Border, White Text */}
-                      <blockquote className="border-l-4 border-primary pl-4 mb-6">
-                        <p className="font-poppins text-lg md:text-xl text-foreground italic">
-                          "Remember when going OUT OUT didn't require a week's recovery?"
-                        </p>
-                      </blockquote>
-                      
-                      {/* Body Paragraphs */}
-                      <div className="space-y-4">
-                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                          When you could sing every word, lose your voice, and still feel human the next day?
-                        </p>
-                        <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
-                          We've created the perfect solution!<br />
-                          Welcome to THE 2PM CLUB!
-                        </p>
-                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
-                          4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
-                        </p>
-                      </div>
+                      {isChristmasEvent ? (
+                        <>
+                          {/* Christmas Intro Text */}
+                          <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
+                            The 2PM Club Daytime Disco returns to {event.city} for a Christmas special!
+                          </p>
+                          <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
+                            An Afternoon of Iconic 80s 90s 00s Anthems plus Festive Classics!
+                          </p>
+                          
+                          {/* Christmas Pull Quote */}
+                          <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                            <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                              "Your Christmas Party just got upgraded... to the afternoon!"
+                            </p>
+                          </blockquote>
+                          
+                          {/* Christmas Body Paragraphs */}
+                          <div className="space-y-4">
+                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                              No more yawning through midnight office do's. From 2PM sharp, we're upgrading your December with neon fairy lights, and wall‑shaking 80s, 90s & 00s anthems - spiked with the festive bangers you've been miming in the car since November.
+                            </p>
+                            <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
+                              Your best night out is NOW in the afternoon.
+                            </p>
+                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
+                              By 7 PM, you'll be back on the sofa for Strictly, glowing like Rudolph with your voice happily gone. It's all the festive fun with your mates, none of the Sunday regret.
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {/* Regular Intro Text */}
+                          <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
+                            THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
+                          </p>
+                          <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
+                            An Afternoon of Iconic Anthems from the 80s 90s 00s!
+                          </p>
+                          
+                          {/* Regular Pull Quote */}
+                          <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                            <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                              "Remember when going OUT OUT didn't require a week's recovery?"
+                            </p>
+                          </blockquote>
+                          
+                          {/* Regular Body Paragraphs */}
+                          <div className="space-y-4">
+                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                              When you could sing every word, lose your voice, and still feel human the next day?
+                            </p>
+                            <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
+                              We've created the perfect solution!<br />
+                              Welcome to THE 2PM CLUB!
+                            </p>
+                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
+                              4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
+                            </p>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>}
 
