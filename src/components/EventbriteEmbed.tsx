@@ -43,7 +43,7 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, o
             // Track order completion
             (window as any).dataLayer = (window as any).dataLayer || [];
             (window as any).dataLayer.push({
-              event: 'order_complete',
+              event: 'eb_purchase_completed',
               eventbriteId: eventbriteId
             });
             
@@ -55,6 +55,41 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, o
       }
     }
   }, [eventbriteId, containerId, height, onOrderComplete]);
+
+  // Listen for Eventbrite iframe events
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // Only process messages from Eventbrite domains
+      if (!event.origin.includes('eventbrite')) return;
+      
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        
+        // Push relevant events to dataLayer
+        if (data.type === 'ticket_selected' || data.event === 'ticket_selected') {
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({
+            event: 'eb_ticket_selected',
+            eventbriteId: eventbriteId,
+            ticketData: data
+          });
+        }
+        
+        if (data.type === 'checkout_started' || data.event === 'checkout_started') {
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({
+            event: 'eb_checkout_started',
+            eventbriteId: eventbriteId
+          });
+        }
+      } catch (e) {
+        // Silent fail for non-JSON messages
+      }
+    };
+    
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [eventbriteId]);
 
   return (
     <div id={containerId} style={{ minHeight: `${height}px` }} />
