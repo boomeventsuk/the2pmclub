@@ -619,7 +619,7 @@ const EventPage = () => {
                 
                 {/* Eventbrite embed inside the pink block */}
                 <div className="bg-card/50 rounded-xl overflow-hidden">
-                  <EventbriteEmbed eventbriteId={event.eventbriteId} containerId={`eventbrite-widget-${event.eventCode}`} height={425} promoCode={event.promoCode} />
+                  <EventbriteEmbed eventbriteId={event.eventbriteId} containerId={`eventbrite-widget-${event.eventCode}`} height={425} promoCode={event.promoCode} eventTitle={event.title} />
                 </div>
               </div>
             </div>

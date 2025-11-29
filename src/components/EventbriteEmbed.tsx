@@ -5,6 +5,7 @@ interface EventbriteEmbedProps {
   containerId: string;
   height?: number;
   promoCode?: string;
+  eventTitle?: string;
   onOrderComplete?: () => void;
 }
 
@@ -16,7 +17,7 @@ declare global {
   }
 }
 
-const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, onOrderComplete }: EventbriteEmbedProps) => {
+const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, eventTitle, onOrderComplete }: EventbriteEmbedProps) => {
   useEffect(() => {
     // Load Eventbrite widget script if not already loaded
     if (!window.EBWidgets) {
@@ -44,7 +45,8 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, o
             (window as any).dataLayer = (window as any).dataLayer || [];
             (window as any).dataLayer.push({
               event: 'eb_purchase_completed',
-              eventbriteId: eventbriteId
+              eventbriteId: eventbriteId,
+              eventTitle: eventTitle
             });
             
             if (onOrderComplete) {
@@ -71,6 +73,7 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, o
           (window as any).dataLayer.push({
             event: 'eb_ticket_selected',
             eventbriteId: eventbriteId,
+            eventTitle: eventTitle,
             ticketData: data
           });
         }
@@ -79,7 +82,8 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, o
           (window as any).dataLayer = (window as any).dataLayer || [];
           (window as any).dataLayer.push({
             event: 'eb_checkout_started',
-            eventbriteId: eventbriteId
+            eventbriteId: eventbriteId,
+            eventTitle: eventTitle
           });
         }
       } catch (e) {
@@ -89,7 +93,27 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, o
     
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [eventbriteId]);
+  }, [eventbriteId, eventTitle]);
+
+  // Iframe focus tracking for checkout interactions
+  useEffect(() => {
+    const container = document.getElementById(containerId);
+    const iframe = container?.querySelector('iframe');
+    
+    const handleFocus = () => {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'eb_checkout_interaction',
+        eventbriteId: eventbriteId,
+        eventTitle: eventTitle
+      });
+    };
+    
+    if (iframe) {
+      iframe.addEventListener('focus', handleFocus);
+      return () => iframe.removeEventListener('focus', handleFocus);
+    }
+  }, [eventbriteId, eventTitle, containerId]);
 
   return (
     <div id={containerId} style={{ minHeight: `${height}px` }} />
