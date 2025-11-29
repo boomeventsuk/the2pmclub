@@ -23,7 +23,9 @@ const Tickets = () => {
 
 const events = [
   {
-    eventCode: "061225-2PM-NPTON",
+    slug: "061225-2PM-NPTON",
+    eventType: "2PM",
+    cityCode: "NPTON",
     eventbriteId: "1544458540069",
     title: "THE 2PM CLUB Northampton - Christmas Daytime Disco",
     date: "Sat 6 Dec 2025",
@@ -37,7 +39,9 @@ const events = [
     soldOut: true
   },
   {
-    eventCode: "131225-2PM-MK",
+    slug: "131225-2PM-MK",
+    eventType: "2PM",
+    cityCode: "MK",
     eventbriteId: "1757042494399",
     promoCode: "AutomaticDiscount_1764194555103",
     title: "THE 2PM CLUB Milton Keynes - Christmas Daytime Disco",
@@ -51,7 +55,9 @@ const events = [
     urgencyText: "SELLING FAST"
   },
   {
-    eventCode: "201225-2PM-BED",
+    slug: "201225-2PM-BED",
+    eventType: "2PM",
+    cityCode: "BED",
     eventbriteId: "1758345602029",
     title: "THE 2PM CLUB Bedford - Christmas Daytime Disco",
     date: "Sat 20 Dec 2025",
@@ -64,7 +70,9 @@ const events = [
     urgencyText: "SELLING FAST"
   },
   {
-    eventCode: "070226-2PM-LUT",
+    slug: "070226-2PM-LUT",
+    eventType: "2PM",
+    cityCode: "LUT",
     eventbriteId: "1645025849599",
     title: "THE 2PM CLUB LUTON - 80s 90s 00s Daytime Disco",
     date: "Sat 7 Feb 2026",
@@ -78,7 +86,9 @@ const events = [
     urgencyColor: "green"
   },
   {
-    eventCode: "140226-2PM-BED",
+    slug: "140226-2PM-BED",
+    eventType: "2PM",
+    cityCode: "BED",
     eventbriteId: "1975982183904",
     title: "THE 2PM CLUB BEDFORD - 80s 90s 00s Daytime Disco",
     date: "Sat 14 Feb 2026",
@@ -92,7 +102,9 @@ const events = [
     urgencyColor: "green"
   },
   {
-    eventCode: "140226-2PM-MK",
+    slug: "140226-2PM-MK",
+    eventType: "2PM",
+    cityCode: "MK",
     eventbriteId: "1975983454705",
     title: "THE 2PM CLUB MILTON KEYNES - 80s 90s 00s Daytime Disco",
     date: "Sat 14 Feb 2026",
@@ -106,7 +118,9 @@ const events = [
     urgencyColor: "green"
   },
   {
-    eventCode: "280226-2PM-NPTON",
+    slug: "280226-2PM-NPTON",
+    eventType: "2PM",
+    cityCode: "NPTON",
     eventbriteId: "1975984047478",
     title: "THE 2PM CLUB NORTHAMPTON - 80s 90s 00s Daytime Disco",
     date: "Sat 28 Feb 2026",
@@ -120,7 +134,9 @@ const events = [
     urgencyColor: "green"
   },
   {
-    eventCode: "070326-2PM-COV",
+    slug: "070326-2PM-COV",
+    eventType: "2PM",
+    cityCode: "COV",
     eventbriteId: "1975984192913",
     title: "THE 2PM CLUB COVENTRY - 80s 90s 00s Daytime Disco",
     date: "Sat 7 Mar 2026",

@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 interface EventCardProps {
   id?: number;
-  eventCode: string;
+  slug: string;
+  eventType?: string;
+  cityCode?: string;
   eventbriteId: string;
   title: string;
   date: string;
@@ -22,26 +24,25 @@ interface EventCardProps {
   urgencyColor?: string;
 }
 
-const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
+const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
   const navigate = useNavigate();
 
   const handleBookNow = () => {
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
-      event: 'view_event',
-      eventId: eventCode,
-      eventName: title,
-      eventVenue: `${venue}, ${city}`,
-      eventStart: start || ''
+      event: 'home_eventcard_click',
+      event_slug: slug,
+      event_type: '2PM',
+      event_title: title
     });
     
     // Navigate to event page
-    navigate(`/events/${eventCode}/`);
+    navigate(`/events/${slug}/`);
   };
 
 
   return (
-    <article className="ticket-card" data-ticket-card data-date-iso={dateIso}>
+    <article className="ticket-card" data-ticket-card data-date-iso={dateIso} data-event-slug={slug}>
         <div className="poster relative">
         <img 
           src={poster}
@@ -86,6 +87,7 @@ const EventCard = ({ id, eventCode, eventbriteId, title, date, venue, city, time
         <Button 
           onClick={handleBookNow}
           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn"
+          data-event-slug={slug}
         >
           {soldOut ? 'Waiting List' : 'Book Now'}
         </Button>

@@ -11,7 +11,9 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/
 import { useIsMobile } from '@/hooks/use-mobile';
 interface EventJson {
   id: number;
-  eventCode: string;
+  slug: string;
+  eventType: string;
+  cityCode: string;
   eventbriteId: string;
   promoCode?: string;
   title: string;
@@ -27,7 +29,9 @@ interface EventJson {
   highlights?: string;
 }
 interface EventData {
-  eventCode: string;
+  slug: string;
+  eventType: string;
+  cityCode: string;
   eventbriteId: string;
   promoCode?: string;
   city: string;
@@ -91,7 +95,7 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
     console.log('[EventPage] Fetch response status:', response.status);
     const events: EventJson[] = await response.json();
     console.log('[EventPage] Loaded events count:', events.length);
-    console.log('[EventPage] Event codes:', events.map(e => e.eventCode));
+    console.log('[EventPage] Event slugs:', events.map(e => e.slug));
     const eventData: Record<string, EventData> = {};
     events.forEach(event => {
       const {
@@ -120,8 +124,10 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
 
       // Parse highlights
       const highlights = event.highlights ? event.highlights.split('|') : [];
-      eventData[event.eventCode] = {
-        eventCode: event.eventCode,
+      eventData[event.slug] = {
+        slug: event.slug,
+        eventType: event.eventType,
+        cityCode: event.cityCode,
         eventbriteId: event.eventbriteId,
         promoCode: event.promoCode,
         city,
@@ -194,7 +200,7 @@ const EventPage = () => {
     return url.toString();
   };
   const handleWhatsAppShare = (eventData: EventData) => {
-    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.eventCode}/`, 'whatsapp');
+    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.slug}/`, 'whatsapp');
     const message = `Check out this event: ${eventData.title} on ${eventData.date}! ${eventUrl}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
@@ -208,7 +214,7 @@ const EventPage = () => {
     }
   };
   const handleFacebookShare = (eventData: EventData) => {
-    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.eventCode}/`, isMobile ? 'messenger' : 'facebook');
+    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.slug}/`, isMobile ? 'messenger' : 'facebook');
     if (isMobile) {
       // Open Messenger app directly
       window.location.href = `fb-messenger://share/?link=${encodeURIComponent(eventUrl)}`;
@@ -227,6 +233,14 @@ const EventPage = () => {
     }
   };
   const scrollToCheckout = () => {
+    // Track book click
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'eventpage_book_click',
+      event_slug: event?.slug,
+      event_type: '2PM'
+    });
+
     const checkoutSection = document.getElementById('checkout-section');
     if (checkoutSection) {
       checkoutSection.scrollIntoView({
@@ -258,6 +272,18 @@ const EventPage = () => {
 
   // Detect Christmas events
   const isChristmasEvent = event?.title.toLowerCase().includes('christmas');
+
+  // Track page view
+  useEffect(() => {
+    if (!event) return;
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'eventpage_view',
+      event_slug: event.slug,
+      event_type: '2PM',
+      event_title: event.title
+    });
+  }, [event]);
 
   // Track hero button visibility for sticky button
   useEffect(() => {
@@ -301,14 +327,14 @@ const EventPage = () => {
       <Helmet>
         <title>The 2 PM Club — {event.city} — {event.date} | {event.venue}</title>
         <meta name="description" content={`Daytime disco ${event.timeRange} with 80s/90s/00s anthems. ${event.city}, ${event.date} at ${event.venue}.`} />
-        <link rel="canonical" href={`https://www.the2pmclub.co.uk/events/${event.eventCode}/`} />
+        <link rel="canonical" href={`https://www.the2pmclub.co.uk/events/${event.slug}/`} />
         
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="The 2 PM Club" />
         <meta property="og:title" content={`The 2 PM Club — ${event.city} — ${event.date}`} />
         <meta property="og:description" content={`Daytime disco ${event.timeRange} with 80s/90s/00s anthems.`} />
-        <meta property="og:url" content={`https://www.the2pmclub.co.uk/events/${event.eventCode}/`} />
+        <meta property="og:url" content={`https://www.the2pmclub.co.uk/events/${event.slug}/`} />
         <meta property="og:image" content={event.squareImg} />
         
         {/* Twitter */}
@@ -619,7 +645,14 @@ const EventPage = () => {
                 
                 {/* Eventbrite embed inside the pink block */}
                 <div className="bg-card/50 rounded-xl overflow-hidden">
-                  <EventbriteEmbed eventbriteId={event.eventbriteId} containerId={`eventbrite-widget-${event.eventCode}`} height={425} promoCode={event.promoCode} eventTitle={event.title} />
+                  <EventbriteEmbed 
+                    eventbriteId={event.eventbriteId} 
+                    eventSlug={event.slug}
+                    containerId={`eventbrite-widget-${event.slug}`} 
+                    height={425} 
+                    promoCode={event.promoCode} 
+                    eventTitle={event.title} 
+                  />
                 </div>
               </div>
             </div>
