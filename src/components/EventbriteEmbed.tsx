@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 interface EventbriteEmbedProps {
   eventbriteId: string;
+  eventSlug: string;
   containerId: string;
   height?: number;
   promoCode?: string;
@@ -17,7 +18,7 @@ declare global {
   }
 }
 
-const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, eventTitle, onOrderComplete }: EventbriteEmbedProps) => {
+const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, promoCode, eventTitle, onOrderComplete }: EventbriteEmbedProps) => {
   useEffect(() => {
     // Load Eventbrite widget script if not already loaded
     if (!window.EBWidgets) {
@@ -40,13 +41,17 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, e
           iframeContainerId: containerId,
           iframeContainerHeight: height,
           ...(promoCode && { promoCode }),
-          onOrderComplete: () => {
-            // Track order completion
+          onOrderComplete: (order: any) => {
+            // Track order completion with standardized purchase event
             (window as any).dataLayer = (window as any).dataLayer || [];
             (window as any).dataLayer.push({
-              event: 'eb_purchase_completed',
-              eventbriteId: eventbriteId,
-              eventTitle: eventTitle
+              event: 'purchase',
+              event_slug: eventSlug,
+              event_type: '2PM',
+              event_title: eventTitle,
+              transaction_value: order?.gross_total?.value || 0,
+              currency: order?.gross_total?.currency || 'GBP',
+              order_id: order?.id
             });
             
             if (onOrderComplete) {
@@ -72,8 +77,9 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, e
           (window as any).dataLayer = (window as any).dataLayer || [];
           (window as any).dataLayer.push({
             event: 'eb_ticket_selected',
-            eventbriteId: eventbriteId,
-            eventTitle: eventTitle,
+            event_slug: eventSlug,
+            event_type: '2PM',
+            event_title: eventTitle,
             ticketData: data
           });
         }
@@ -82,8 +88,9 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, e
           (window as any).dataLayer = (window as any).dataLayer || [];
           (window as any).dataLayer.push({
             event: 'eb_checkout_started',
-            eventbriteId: eventbriteId,
-            eventTitle: eventTitle
+            event_slug: eventSlug,
+            event_type: '2PM',
+            event_title: eventTitle
           });
         }
       } catch (e) {
@@ -93,7 +100,7 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, e
     
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [eventbriteId, eventTitle]);
+  }, [eventbriteId, eventSlug, eventTitle]);
 
   // Iframe focus tracking for checkout interactions
   useEffect(() => {
@@ -104,8 +111,9 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, e
       (window as any).dataLayer = (window as any).dataLayer || [];
       (window as any).dataLayer.push({
         event: 'eb_checkout_interaction',
-        eventbriteId: eventbriteId,
-        eventTitle: eventTitle
+        event_slug: eventSlug,
+        event_type: '2PM',
+        event_title: eventTitle
       });
     };
     
@@ -113,7 +121,7 @@ const EventbriteEmbed = ({ eventbriteId, containerId, height = 425, promoCode, e
       iframe.addEventListener('focus', handleFocus);
       return () => iframe.removeEventListener('focus', handleFocus);
     }
-  }, [eventbriteId, eventTitle, containerId]);
+  }, [eventbriteId, eventSlug, eventTitle, containerId]);
 
   return (
     <div id={containerId} style={{ minHeight: `${height}px` }} />
