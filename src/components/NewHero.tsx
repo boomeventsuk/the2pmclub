@@ -25,7 +25,7 @@ const NewHero = () => {
         </p>
         
         <Button onClick={() => scrollToSection('tickets')} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all uppercase tracking-wide">
-          Book Your Next Daytime Disco
+          FIND YOUR SATURDAY
         </Button>
       </div>
     </section>;
