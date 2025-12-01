@@ -545,12 +545,18 @@ const EventPage = () => {
                         controls
                         playsInline
                         preload="none"
-                        poster="https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png"
+                        poster={isChristmasEvent 
+                          ? "https://res.cloudinary.com/dteowuv7o/image/upload/v1764581303/CHRISTMAS_2PM_VID_WEB_thumbnail_mzaalk.png"
+                          : "https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png"
+                        }
                         className="w-full"
                       >
                         <source
-                          src="https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4"
-                          type="video/mp4"
+                          src={isChristmasEvent
+                            ? "https://res.cloudinary.com/dteowuv7o/video/upload/v1764581448/CHRISTMAS_2PM_VID_WEB_v2_tnraj9.mov"
+                            : "https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4"
+                          }
+                          type={isChristmasEvent ? "video/quicktime" : "video/mp4"}
                         />
                         Your browser does not support the video tag.
                       </video>
