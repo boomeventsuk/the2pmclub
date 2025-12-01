@@ -25,17 +25,12 @@ const NewHero = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
-        <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2 leading-tight uppercase tracking-wide">
-          THE 2PM CLUB - THE MIDLANDS' MOST POPULAR DAYTIME PARTY!
+        <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight uppercase tracking-wide">
+          THE 2PM CLUB — YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON
         </h1>
         
-        <h2 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-bold text-primary mb-6 leading-tight uppercase tracking-wide">
-          PARTY ON YOUR TERMS — HOME BY 7 (ISH)
-        </h2>
-        
         <p className="font-poppins text-base md:text-lg text-white/70 mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0">
-          The biggest 80s, 90s &amp; 00s anthems. Full club atmosphere, perfect timing.
-          From Coventry to Northampton, Milton Keynes to Birmingham, every event is packed.
+          Iconic 80s 90s 00s Anthems. Perfectly timed so all your crew can make it. Let your hair down, be home by 7ish and no Sunday regrets! Daytime Disco Parties across the Midlands
         </p>
         
         <Button 
