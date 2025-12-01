@@ -21,7 +21,7 @@ const NewHero = () => {
         <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight uppercase tracking-wide">THE 2PM CLUB - YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON</h1>
         
         <p className="font-poppins text-base md:text-lg text-white/70 mb-8 leading-relaxed max-w-3xl mx-auto px-4 md:px-0">
-          Iconic 80s 90s 00s Anthems. Perfectly timed so all your crew can make it. Let your hair down, be home by 7ish and no Sunday regrets! Daytime Disco Parties across the Midlands
+          Iconic 80s 90s 00s Anthems. Perfectly timed so everyone can make it. Let your hair down, be home by 7ish and no Sunday regrets! Daytime Disco Parties across the Midlands
         </p>
         
         <Button onClick={() => scrollToSection('tickets')} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all uppercase tracking-wide">
