@@ -14,7 +14,7 @@ const NewHero = () => {
   };
 
   return (
-    <section id="hero" className="relative h-[75vh] md:h-[85vh] flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative h-[75vh] md:h-[85vh] flex items-center justify-center overflow-hidden pt-16 md:pt-20">
       {/* Background Image */}
       <img
         src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg"
