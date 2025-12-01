@@ -553,10 +553,10 @@ const EventPage = () => {
                       >
                         <source
                           src={isChristmasEvent
-                            ? "https://res.cloudinary.com/dteowuv7o/video/upload/v1764581448/CHRISTMAS_2PM_VID_WEB_v2_tnraj9.mov"
+                            ? "https://res.cloudinary.com/dteowuv7o/video/upload/v1764581448/CHRISTMAS_2PM_VID_WEB_v2_tnraj9.mp4"
                             : "https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4"
                           }
-                          type={isChristmasEvent ? "video/quicktime" : "video/mp4"}
+                          type="video/mp4"
                         />
                         Your browser does not support the video tag.
                       </video>
