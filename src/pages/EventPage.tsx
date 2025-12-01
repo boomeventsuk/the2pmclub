@@ -559,22 +559,59 @@ const EventPage = () => {
                 </div>
 
                 {/* Highlights Section */}
-                {event.highlights.length > 0 && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
-                    <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
-                      Why Daytime Discos Are a Game Changer!
-                    </h2>
-                    <div className="space-y-4">
-                      {event.highlights.map((highlight, index) => {
-                  const [title, description] = highlight.split(': ');
-                  return <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
+                <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
+                  <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
+                    {isChristmasEvent ? "Why This Beats Every Other Christmas Do" : "Why Daytime Discos Are a Game Changer!"}
+                  </h2>
+                  <div className="space-y-4">
+                    {isChristmasEvent ? (
+                      // Christmas-specific pillars
+                      [
+                        {
+                          emoji: "🎄",
+                          title: "Festive Floor-Fillers",
+                          description: "Mariah, Wham!, Slade, Shakin' Stevens — every Christmas banger you've been waiting all year to belt out. No ironic distance. No holding back. Just pure, unfiltered festive joy with a room full of people who get it."
+                        },
+                        {
+                          emoji: "🎤",
+                          title: "Iconic Throwbacks",
+                          description: "Wall-to-wall 80s, 90s & 00s anthems. Every chorus you still know by heart — even the ones you forgot you knew. Whitney to Oasis. Spice Girls to Bon Jovi. Four hours of songs that shaped your Saturday nights, now soundtracking your Saturday afternoon."
+                        },
+                        {
+                          emoji: "🕑",
+                          title: "The 7pm Win",
+                          description: "Full night-out energy — confetti, lights, the lot — but you're home before your takeaway gets cold. No 2am regrets. No lost Sunday. Just that post-party buzz while you're curled up on the sofa, still smiling."
+                        },
+                        {
+                          emoji: "👯‍♀️",
+                          title: "Group-Chat Hero",
+                          description: "You know how group plans usually go: 47 messages, three \"maybes,\" someone bails. Not this time. Afternoon timing means everyone can actually make it. One link, one plan — you just became the legend who sorted Christmas."
+                        }
+                      ].map((pillar, index) => (
+                        <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
+                          <p className="font-poppins text-foreground text-base md:text-lg">
+                            <span className="mr-2">{pillar.emoji}</span>
+                            <strong className="font-semibold">{pillar.title}</strong>
+                            <span className="text-foreground/80 block mt-2">{pillar.description}</span>
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      // Regular event highlights
+                      event.highlights.length > 0 && event.highlights.map((highlight, index) => {
+                        const [title, description] = highlight.split(': ');
+                        return (
+                          <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
                             <p className="font-poppins text-foreground text-base md:text-lg">
                               <strong className="font-semibold">{title}</strong>
                               {description && <span className="text-foreground/80">: {description}</span>}
                             </p>
-                          </div>;
-                })}
-                    </div>
-                  </div>}
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </section>
