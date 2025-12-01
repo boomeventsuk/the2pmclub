@@ -476,29 +476,29 @@ const EventPage = () => {
                         <>
                           {/* Christmas Intro Text */}
                           <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
-                            The 2PM Club Daytime Disco returns to {event.city} for a Christmas special!
+                            THE 2PM CLUB CHRISTMAS DAYTIME DISCO HITS {event.city.toUpperCase()}.
                           </p>
                           <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
-                            An Afternoon of Iconic 80s 90s 00s Anthems plus Festive Classics!
+                            4 Hours of Iconic Anthems & Festive Favourites. Home by 7(ish).
                           </p>
                           
                           {/* Christmas Pull Quote */}
                           <blockquote className="border-l-4 border-primary pl-4 mb-6">
                             <p className="font-poppins text-lg md:text-xl text-foreground italic">
-                              "Your Christmas Party just got upgraded... to the afternoon!"
+                              "Remember when Christmas parties didn't mean losing your entire weekend to regret?"
                             </p>
                           </blockquote>
                           
                           {/* Christmas Body Paragraphs */}
                           <div className="space-y-4">
                             <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                              No more yawning through midnight office do's. From 2PM sharp, we're upgrading your December with neon fairy lights, and wall‑shaking 80s, 90s & 00s anthems - spiked with the festive bangers you've been miming in the car since November.
+                              Welcome to THE 2PM CLUB Christmas Daytime Disco — the festive get-together your group chat can actually agree on. From 2PM sharp, we're upgrading your December with neon fairy lights and wall-shaking 80s, 90s & 00s anthems, spiked with the festive bangers you've been miming in the car since November.
                             </p>
                             <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
                               Your best night out is NOW in the afternoon.
                             </p>
                             <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
-                              By 7 PM, you'll be back on the sofa for Strictly, glowing like Rudolph with your voice happily gone. It's all the festive fun with your mates, none of the Sunday regret.
+                              This isn't your work's half-hearted Secret Santa do. This is full club production — confetti cannons, dazzling lights, and DJs who know exactly when to drop "All I Want For Christmas Is You." By 7pm, you'll be back on the sofa, glowing like Rudolph, still humming Mariah. Whether you're ditching the office party or finally doing something that doesn't involve being polite to Dave from accounts — this is how you do Christmas.
                             </p>
                           </div>
                         </>
