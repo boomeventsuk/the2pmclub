@@ -398,22 +398,22 @@ const EventPage = () => {
                     <div>
                       {isChristmasEvent ? (
                         <>
-                          <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
+                          <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight mb-1 uppercase">
                             THE 2PM CLUB Christmas
                           </h1>
-                          <p className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-2">
+                          <p className="font-poppins text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-2 uppercase">
                             Daytime Disco {event.city}
                           </p>
-                          <p className="font-poppins text-sm md:text-base text-foreground/70">
+                          <p className="font-poppins text-base md:text-lg text-foreground/70">
                             Iconic 80s 90s 00s Anthems plus Festive Classics
                           </p>
                         </>
                       ) : (
                         <>
-                          <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-1">
+                          <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight mb-1 uppercase">
                             THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
                           </h1>
-                          <p className="font-poppins text-lg md:text-xl text-foreground/80 mb-2">
+                          <p className="font-poppins text-3xl md:text-5xl lg:text-6xl font-bold text-foreground/80 mb-2 uppercase">
                             Iconic 80s 90s 00s Anthems
                           </p>
                         </>
