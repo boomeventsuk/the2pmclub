@@ -65,6 +65,12 @@ const Header = ({ hideCommunityBanner = false }: { hideCommunityBanner?: boolean
             >
               Music
             </button>
+            <a 
+              href="/blog/"
+              className="font-poppins text-muted-foreground hover:text-primary transition-colors"
+            >
+              Blog
+            </a>
           </nav>
           
           {/* Social Icons */}
@@ -109,6 +115,9 @@ const Header = ({ hideCommunityBanner = false }: { hideCommunityBanner?: boolean
           <button onClick={() => handleMobileNavClick('music')} className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors">
             Music
           </button>
+          <a href="/blog/" onClick={closeMobileMenu} className="text-white hover:text-primary text-lg py-3 block transition-colors">
+            Blog
+          </a>
           <hr style={{borderColor: "rgba(255,255,255,.08)"}} className="my-4" />
           <a href="https://www.facebook.com/boombastic.eventsuk" target="_blank" rel="noopener noreferrer nofollow" className="text-white hover:text-primary text-lg py-3 block transition-colors">
             Facebook

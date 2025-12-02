@@ -10,7 +10,8 @@ import NotFound from "./pages/NotFound";
 import DevEventsIndex from "./pages/DevEventsIndex";
 import BirminghamHub from "./pages/hubs/Birmingham";
 import SiteFaqs from "./pages/SiteFaqs";
-import BlogPost from "./pages/BlogPost";
+import BlogIndex from "./pages/blog/BlogIndex";
+import WhyDaytimeDiscosArePopular from "./pages/blog/WhyDaytimeDiscosArePopular";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +28,8 @@ const App = () => (
             <Route path="/events/:slug/*" element={<EventPage />} />
             <Route path="/hubs/birmingham/" element={<BirminghamHub />} />
             <Route path="/faqs/" element={<SiteFaqs />} />
-            <Route path="/blog/why-daytime-discos-are-popular/" element={<BlogPost />} />
+            <Route path="/blog/" element={<BlogIndex />} />
+            <Route path="/blog/why-daytime-discos-are-popular/" element={<WhyDaytimeDiscosArePopular />} />
             {/* Dev-only QA route */}
             {import.meta.env.DEV && <Route path="/__events" element={<DevEventsIndex />} />}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
