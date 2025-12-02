@@ -15,6 +15,15 @@ const BlogIndex = () => {
       readTime: "4 min read",
       date: "20 Sep 2024",
       published: true
+    },
+    {
+      slug: "why-2pm-works",
+      title: "Why 2PM Works: The Evidence",
+      excerpt: "The data behind THE 2PM CLUB's daytime format: attendance patterns, availability research, and recovery science.",
+      image: "https://res.cloudinary.com/dteowuv7o/image/upload/c_fill,w_600,h_400,f_jpg,q_auto/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg",
+      readTime: "5 min read",
+      date: "25 Sep 2024",
+      published: true
     }
   ];
 
