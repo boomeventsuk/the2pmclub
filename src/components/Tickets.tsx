@@ -18,6 +18,7 @@ interface EventJson {
   description: string;
   status?: "sold-out" | "selling-fast" | "new-date" | "just-announced";
   promoCode?: string;
+  isHidden?: boolean;
 }
 
 interface MappedEvent {
@@ -103,6 +104,7 @@ const Tickets = () => {
         // Filter future events and sort by date
         const futureEvents = data
           .filter((e) => new Date(e.start) >= now)
+          .filter((e) => !e.isHidden)
           .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
 
         // Map to EventCard props

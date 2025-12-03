@@ -27,6 +27,7 @@ interface EventJson {
   subtitle?: string;
   fullDescription?: string;
   highlights?: string;
+  isHidden?: boolean;
 }
 interface EventData {
   slug: string;
@@ -98,6 +99,7 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
     console.log('[EventPage] Event slugs:', events.map(e => e.slug));
     const eventData: Record<string, EventData> = {};
     events.forEach(event => {
+      if (event.isHidden) return;
       const {
         venue,
         city,
