@@ -392,7 +392,7 @@ const EventPage = () => {
                 <div className="grid md:grid-cols-2 gap-6 items-stretch">
                   {/* Left: Event Poster */}
                   <div className="flex justify-center md:justify-start">
-                    <img src={event.squareImg} alt={`${event.title} event poster`} className="w-full max-w-md aspect-square object-cover rounded-xl shadow-2xl shadow-primary/20" />
+                    <img src={event.squareImg} alt={`${event.title} event poster`} className="w-full max-w-md h-auto rounded-xl shadow-2xl shadow-primary/20" />
                   </div>
                   
                   {/* Right: Event Details - Wrapped in Card */}
