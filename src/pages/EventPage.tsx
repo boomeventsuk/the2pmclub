@@ -389,7 +389,7 @@ const EventPage = () => {
         <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-6 items-stretch">
+                <div className="grid md:grid-cols-2 gap-6 items-start">
                   {/* Left: Event Poster */}
                   <div className="flex justify-center md:justify-start">
                     <img src={event.squareImg} alt={`${event.title} event poster`} className="w-full max-w-md h-auto rounded-xl shadow-2xl shadow-primary/20" />
