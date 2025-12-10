@@ -88,6 +88,30 @@ const formatEventDate = (isoDate: string): string => {
   return `${dayName} ${day}${suffix} ${month} ${year}`;
 };
 
+// Get dynamic urgency wording for Saturday events
+const getUrgencyWording = (eventStartIso: string): { urgencyText: string; showUrgency: boolean } => {
+  const eventDate = new Date(eventStartIso);
+  const now = new Date();
+  
+  // If event has passed, don't show urgency
+  if (now > eventDate) {
+    return { urgencyText: "", showUrgency: false };
+  }
+  
+  // Calculate the Sunday before the event Saturday (6 days before)
+  const sundayBefore = new Date(eventDate);
+  sundayBefore.setDate(eventDate.getDate() - 6);
+  sundayBefore.setHours(0, 0, 0, 0);
+  
+  // If we're in the event week (Sunday onwards), use "this Saturday"
+  if (now >= sundayBefore) {
+    return { urgencyText: "this Saturday", showUrgency: true };
+  }
+  
+  // Otherwise use "next Saturday"
+  return { urgencyText: "next Saturday", showUrgency: true };
+};
+
 // Load and process events from JSON
 const loadEventData = async (): Promise<Record<string, EventData>> => {
   try {
@@ -475,35 +499,71 @@ const EventPage = () => {
                 {event.fullDescription && <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
                     <div className="mx-auto md:max-w-2xl">
                       {isChristmasEvent ? (
-                        <>
-                          {/* Christmas Intro Text */}
-                          <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
-                            THE 2PM CLUB CHRISTMAS DAYTIME DISCO HITS {event.city.toUpperCase()}.
-                          </p>
-                          <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
-                            4 Hours of Iconic Anthems & Festive Favourites. Home by 7(ish).
-                          </p>
-                          
-                          {/* Christmas Pull Quote */}
-                          <blockquote className="border-l-4 border-primary pl-4 mb-6">
-                            <p className="font-poppins text-lg md:text-xl text-foreground italic">
-                              "Remember when Christmas parties didn't mean losing your entire weekend to regret?"
-                            </p>
-                          </blockquote>
-                          
-                          {/* Christmas Body Paragraphs */}
-                          <div className="space-y-4">
-                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                              Welcome to THE 2PM CLUB Christmas Daytime Disco — the festive get-together your group chat can actually agree on. From 2PM sharp, we're upgrading your December with neon fairy lights and wall-shaking 80s, 90s & 00s anthems, spiked with the festive bangers you've been miming in the car since November.
-                            </p>
-                            <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
-                              Your best night out is NOW in the afternoon.
-                            </p>
-                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
-                              This isn't your work's half-hearted Secret Santa do. This is full club production — confetti cannons, dazzling lights, and DJs who know exactly when to drop "All I Want For Christmas Is You." By 7pm, you'll be back on the sofa, glowing like Rudolph, still humming Mariah. Whether you're ditching the office party or finally doing something that doesn't involve being polite to Dave from accounts — this is how you do Christmas.
-                            </p>
-                          </div>
-                        </>
+                        (() => {
+                          const { urgencyText, showUrgency } = getUrgencyWording(event.startIso);
+                          return (
+                            <>
+                              {/* Christmas Intro Text with Dynamic Urgency */}
+                              {showUrgency ? (
+                                <>
+                                  <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
+                                    Christmas is nearly here. 🎄
+                                  </p>
+                                  <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide font-bold">
+                                    {urgencyText.charAt(0).toUpperCase() + urgencyText.slice(1)} is YOUR chance to dance before the family chaos kicks in!
+                                  </p>
+                                </>
+                              ) : (
+                                <>
+                                  <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
+                                    THE 2PM CLUB CHRISTMAS DAYTIME DISCO HITS {event.city.toUpperCase()}.
+                                  </p>
+                                  <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
+                                    4 Hours of Iconic Anthems & Festive Favourites. Home by 7(ish).
+                                  </p>
+                                </>
+                              )}
+                              
+                              {/* Christmas Pull Quote with Dynamic Urgency */}
+                              <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                                <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                                  {showUrgency 
+                                    ? `"Before the family chaos kicks in, before the endless Monopoly and leftover turkey sandwiches — ${urgencyText} is YOUR chance to dance."`
+                                    : `"Remember when Christmas parties didn't mean losing your entire weekend to regret?"`
+                                  }
+                                </p>
+                              </blockquote>
+                              
+                              {/* Pricing Callout Block */}
+                              {showUrgency && (
+                                <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+                                  <p className="font-poppins text-base md:text-lg text-foreground/90 leading-relaxed">
+                                    🎟 Tickets just £10. No fees. No surprises.<br />
+                                    👯‍♀️ 4 for £35 — perfect for the group chat crew.
+                                  </p>
+                                </div>
+                              )}
+                              
+                              {/* Christmas Body Paragraphs with Email Tone */}
+                              <div className="space-y-4">
+                                <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                                  Four hours of iconic 80s, 90s, and 00s anthems — Whitney, Wham!, Bon Jovi, Spice Girls — plus all your favourite Christmas classics thrown in for good measure. 🎤
+                                </p>
+                                <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                                  Full confetti. Full volume. Home by 7 feeling like absolute legends. 🪩
+                                </p>
+                                <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-xl">
+                                  Bring your mates. Bring your workmates. Bring the group chat crew who've been saying "we should do something" since September.<br />
+                                  <span className="text-primary">This is the something.</span> ✨
+                                </p>
+                                <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                                  You DESERVE a proper dance with your mates before Christmas!<br />
+                                  One link. Everyone books. Christmas sorted.
+                                </p>
+                              </div>
+                            </>
+                          );
+                        })()
                       ) : (
                         <>
                           {/* Regular Intro Text */}
