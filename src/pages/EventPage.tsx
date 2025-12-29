@@ -237,7 +237,7 @@ const EventPage = () => {
 
   const handleWhatsAppShare = (eventData: EventData) => {
     const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.slug}/`, 'whatsapp');
-    const message = `Check out this event: ${eventData.title} on ${eventData.date}! ${eventUrl}`;
+    const message = `Just seen this - THE 2PM CLUB Daytime Disco - ${eventData.city}. ${eventData.date} | ${eventData.timeDisplay} | ${eventData.venue}. Up for it? ${eventUrl}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
@@ -252,11 +252,11 @@ const EventPage = () => {
 
   const handleMessengerShare = (eventData: EventData) => {
     const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.slug}/`, 'messenger');
+    const message = `Just seen this - THE 2PM CLUB Daytime Disco - ${eventData.city}. ${eventData.date} | ${eventData.timeDisplay} | ${eventData.venue}. Up for it? ${eventUrl}`;
     if (isMobile) {
-      window.location.href = `fb-messenger://share/?link=${encodeURIComponent(eventUrl)}`;
+      window.location.href = `fb-messenger://share/?link=${encodeURIComponent(eventUrl)}&quote=${encodeURIComponent(message)}`;
     } else {
-      // Desktop: Open Messenger web
-      window.open(`https://www.facebook.com/dialog/send?link=${encodeURIComponent(eventUrl)}&app_id=966242223397117&redirect_uri=${encodeURIComponent('https://www.the2pmclub.co.uk')}`, '_blank', 'width=600,height=500');
+      window.open(`https://www.facebook.com/dialog/send?link=${encodeURIComponent(eventUrl)}&app_id=966242223397117&redirect_uri=${encodeURIComponent('https://www.the2pmclub.co.uk')}&quote=${encodeURIComponent(message)}`, '_blank', 'width=600,height=500');
     }
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
@@ -270,8 +270,8 @@ const EventPage = () => {
 
   const handleEmailShare = (eventData: EventData) => {
     const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.slug}/`, 'email');
-    const subject = encodeURIComponent(`Check this out – ${eventData.title}`);
-    const body = encodeURIComponent(`I thought you'd like this!\n\n${eventData.title}\n${eventData.date} | ${eventData.timeDisplay}\n${eventData.venue}\n\n${eventUrl}`);
+    const subject = encodeURIComponent(`THE 2PM CLUB - ${eventData.city}`);
+    const body = encodeURIComponent(`Just seen this - THE 2PM CLUB Daytime Disco - ${eventData.city}. ${eventData.date} | ${eventData.timeDisplay} | ${eventData.venue}. Up for it? ${eventUrl}`);
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
