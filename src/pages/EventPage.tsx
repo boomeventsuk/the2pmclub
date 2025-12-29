@@ -515,25 +515,28 @@ const EventPage = () => {
           <section className="py-6 md:py-8">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
+                <h2 className="font-poppins text-lg md:text-xl font-semibold text-foreground/90 mb-4 text-center">
+                  Still thinking about it? Here's why people love it:
+                </h2>
                 <div className="grid gap-3 md:grid-cols-2">
                   <div className="bg-card/40 border border-border/30 rounded-xl p-4">
                     <p className="font-poppins text-sm md:text-base text-foreground/90">
-                      A room full of people who know every word. Your kind of crowd.
+                      🎤 A room full of people who know every word. Your kind of crowd.
                     </p>
                   </div>
                   <div className="bg-card/40 border border-border/30 rounded-xl p-4">
                     <p className="font-poppins text-sm md:text-base text-foreground/90">
-                      Four hours with your favourite people, your favourite songs, and zero small talk about kids or work.
+                      🎶 Four hours with your favourite people, your favourite songs, and zero small talk about kids or work.
                     </p>
                   </div>
                   <div className="bg-card/40 border border-border/30 rounded-xl p-4">
                     <p className="font-poppins text-sm md:text-base text-foreground/90">
-                      Nobody's too cool to dance or sing out loud — that's literally why we're all here!
+                      🙌 Nobody's too cool to dance or sing out loud — that's literally why we're all here!
                     </p>
                   </div>
                   <div className="bg-card/40 border border-border/30 rounded-xl p-4">
                     <p className="font-poppins text-sm md:text-base text-foreground/90">
-                      Done by 6pm. Sunday stays yours.
+                      🏡 Done by 6pm. Sunday stays yours.
                     </p>
                   </div>
                 </div>
