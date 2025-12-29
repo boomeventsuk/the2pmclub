@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import EventbriteEmbed from '@/components/EventbriteEmbed';
-import { Calendar, MapPin, Clock, Copy } from 'lucide-react';
+import { Calendar, MapPin, Clock, Copy, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
@@ -250,19 +250,34 @@ const EventPage = () => {
     }
   };
 
-  const handleFacebookShare = (eventData: EventData) => {
-    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.slug}/`, isMobile ? 'messenger' : 'facebook');
+  const handleMessengerShare = (eventData: EventData) => {
+    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.slug}/`, 'messenger');
     if (isMobile) {
       window.location.href = `fb-messenger://share/?link=${encodeURIComponent(eventUrl)}`;
     } else {
-      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(eventUrl)}`;
-      window.open(facebookUrl, '_blank', 'width=600,height=400');
+      // Desktop: Open Messenger web
+      window.open(`https://www.facebook.com/dialog/send?link=${encodeURIComponent(eventUrl)}&app_id=966242223397117&redirect_uri=${encodeURIComponent('https://www.the2pmclub.co.uk')}`, '_blank', 'width=600,height=500');
     }
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'share_event',
         event_category: 'Social Share',
-        event_label: isMobile ? 'Messenger' : 'Facebook',
+        event_label: 'Messenger',
+        event_name: eventData.title
+      });
+    }
+  };
+
+  const handleEmailShare = (eventData: EventData) => {
+    const eventUrl = buildUtmUrl(`https://www.the2pmclub.co.uk/events/${eventData.slug}/`, 'email');
+    const subject = encodeURIComponent(`Check this out – ${eventData.title}`);
+    const body = encodeURIComponent(`I thought you'd like this!\n\n${eventData.title}\n${eventData.date} | ${eventData.timeDisplay}\n${eventData.venue}\n\n${eventUrl}`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'share_event',
+        event_category: 'Social Share',
+        event_label: 'Email',
         event_name: eventData.title
       });
     }
@@ -747,34 +762,41 @@ const EventPage = () => {
                     Send it to the chat
                   </p>
                   <div className="flex flex-wrap gap-3 justify-center">
+                    {/* Messenger - Always available */}
                     <Button 
                       variant="outline"
-                      onClick={() => handleWhatsAppShare(event)}
+                      onClick={() => handleMessengerShare(event)}
                       className="font-poppins"
                     >
-                      <img 
-                        src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" 
-                        alt="WhatsApp" 
-                        className="w-5 h-5 mr-2" 
-                      />
-                      WhatsApp
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2">
+                        <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.37.26.61l.05 1.9c.02.52.49.88.98.76l2.12-.53c.19-.05.39-.02.56.05 1.01.35 2.12.54 3.29.54 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.04 13.02L10.5 12.3l-4.28 2.8 4.7-5.02 2.62 2.72 4.2-2.8-4.7 5.02z" />
+                      </svg>
+                      Messenger
                     </Button>
-                    <Button 
-                      variant="outline"
-                      onClick={() => handleFacebookShare(event)}
-                      className="font-poppins"
-                    >
-                      {isMobile ? (
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2">
-                          <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.37.26.61l.05 1.9c.02.52.49.88.98.76l2.12-.53c.19-.05.39-.02.56.05 1.01.35 2.12.54 3.29.54 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.04 13.02L10.5 12.3l-4.28 2.8 4.7-5.02 2.62 2.72 4.2-2.8-4.7 5.02z" />
-                        </svg>
-                      ) : (
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2">
-                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                        </svg>
-                      )}
-                      {isMobile ? 'Messenger' : 'Facebook'}
-                    </Button>
+                    {/* WhatsApp on mobile, Email on desktop */}
+                    {isMobile ? (
+                      <Button 
+                        variant="outline"
+                        onClick={() => handleWhatsAppShare(event)}
+                        className="font-poppins"
+                      >
+                        <img 
+                          src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" 
+                          alt="WhatsApp" 
+                          className="w-5 h-5 mr-2" 
+                        />
+                        WhatsApp
+                      </Button>
+                    ) : (
+                      <Button 
+                        variant="outline"
+                        onClick={() => handleEmailShare(event)}
+                        className="font-poppins"
+                      >
+                        <Mail className="w-5 h-5 mr-2" />
+                        Email
+                      </Button>
+                    )}
                     <Button 
                       variant="outline"
                       onClick={() => handleCopyLink(event)}
@@ -939,19 +961,19 @@ const EventPage = () => {
                       Be the group chat hero — Share this event
                     </p>
                     <div className="share-icons justify-start">
-                      <button className="icon-btn icon-whatsapp" onClick={() => handleWhatsAppShare(event)} aria-label="Share on WhatsApp">
-                        <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="" />
-                      </button>
-                      <button className="icon-btn icon-facebook" onClick={() => handleFacebookShare(event)} title={isMobile ? "Share on Messenger" : "Share on Facebook"} aria-label={isMobile ? "Share on Messenger" : "Share on Facebook"}>
-                        {isMobile ? (
-                          <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.37.26.61l.05 1.9c.02.52.49.88.98.76l2.12-.53c.19-.05.39-.02.56.05 1.01.35 2.12.54 3.29.54 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.04 13.02L10.5 12.3l-4.28 2.8 4.7-5.02 2.62 2.72 4.2-2.8-4.7 5.02z" />
-                          </svg>
-                        ) : (
-                          <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                          </svg>
-                        )}
+                      {isMobile ? (
+                        <button className="icon-btn icon-whatsapp" onClick={() => handleWhatsAppShare(event)} aria-label="Share on WhatsApp">
+                          <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="" />
+                        </button>
+                      ) : (
+                        <button className="icon-btn" onClick={() => handleEmailShare(event)} aria-label="Share via Email" style={{ backgroundColor: 'hsl(var(--muted))' }}>
+                          <Mail className="w-5 h-5" />
+                        </button>
+                      )}
+                      <button className="icon-btn icon-messenger" onClick={() => handleMessengerShare(event)} title="Share on Messenger" aria-label="Share on Messenger">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.37.26.61l.05 1.9c.02.52.49.88.98.76l2.12-.53c.19-.05.39-.02.56.05 1.01.35 2.12.54 3.29.54 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.04 13.02L10.5 12.3l-4.28 2.8 4.7-5.02 2.62 2.72 4.2-2.8-4.7 5.02z" />
+                        </svg>
                       </button>
                     </div>
                   </div>
