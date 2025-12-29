@@ -193,6 +193,7 @@ const EventPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [searchParams] = useSearchParams();
   const isRetargeting = searchParams.get('rt') === '1';
+  const isEmailLanding = searchParams.has('email');
   
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -298,7 +299,8 @@ const EventPage = () => {
       event: 'eventpage_book_click',
       event_slug: event?.slug,
       event_type: '2PM',
-      is_retargeting: isRetargeting
+      is_retargeting: isRetargeting,
+      is_email_landing: isEmailLanding
     });
 
     const checkoutSection = document.getElementById('checkout-section');
@@ -313,6 +315,7 @@ const EventPage = () => {
       console.log('[EventPage] Raw slug from URL:', slug);
       console.log('[EventPage] Slug type:', typeof slug);
       console.log('[EventPage] Is retargeting mode:', isRetargeting);
+      console.log('[EventPage] Is email landing mode:', isEmailLanding);
       
       const eventData = await loadEventData();
       console.log('[EventPage] Event data keys:', Object.keys(eventData));
@@ -327,7 +330,7 @@ const EventPage = () => {
       setLoading(false);
     };
     loadEvent();
-  }, [slug, isRetargeting]);
+  }, [slug, isRetargeting, isEmailLanding]);
 
   // Detect Christmas events
   const isChristmasEvent = event?.title.toLowerCase().includes('christmas');
@@ -341,13 +344,14 @@ const EventPage = () => {
       event_slug: event.slug,
       event_type: '2PM',
       event_title: event.title,
-      is_retargeting: isRetargeting
+      is_retargeting: isRetargeting,
+      is_email_landing: isEmailLanding
     });
-  }, [event, isRetargeting]);
+  }, [event, isRetargeting, isEmailLanding]);
 
-  // Track hero button visibility for sticky button (only for non-retargeting)
+  // Track hero button visibility for sticky button (only for non-retargeting and non-email)
   useEffect(() => {
-    if (isRetargeting) return; // Retargeting has its own mobile sticky
+    if (isRetargeting || isEmailLanding) return; // These have their own mobile sticky
     if (!heroBookButtonRef.current) {
       setShowStickyBookTickets(true);
       return;
@@ -357,7 +361,7 @@ const EventPage = () => {
     }, { threshold: 0 });
     observer.observe(heroBookButtonRef.current);
     return () => observer.disconnect();
-  }, [event, isRetargeting]);
+  }, [event, isRetargeting, isEmailLanding]);
   
   if (loading) {
     return (
@@ -541,6 +545,253 @@ const EventPage = () => {
           <Footer />
 
           {/* Sticky Mobile CTA - Fixed Bottom Bar (Mobile Only) */}
+          {isMobile && (
+            <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-border/50 p-3 safe-area-inset-bottom">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="font-poppins text-sm font-semibold text-foreground truncate">
+                    {event.city} — {formatShortDate(event.startIso)}
+                  </p>
+                </div>
+                <Button 
+                  onClick={scrollToCheckout}
+                  className="font-poppins font-semibold px-6 shrink-0"
+                >
+                  Book Now
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  }
+
+  // ==========================================
+  // EMAIL LANDING MODE - Reminder page with video
+  // ==========================================
+  if (isEmailLanding) {
+    // Video URLs (same as standard page)
+    const videoUrl = isChristmasEvent 
+      ? 'https://res.cloudinary.com/dteowuv7o/video/upload/v1764538239/2PM_Christmas_Mobile_LOW_RES_ukmblh.mp4'
+      : 'https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4';
+    const videoPoster = isChristmasEvent
+      ? 'https://res.cloudinary.com/dteowuv7o/image/upload/v1764538370/2PM_CHRISTMAS_VID_THUMBNAIL_uyxdtq.png'
+      : 'https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png';
+
+    return (
+      <>
+        <Helmet>
+          <title>The 2 PM Club — {event.city} — {event.date} | {event.venue}</title>
+          <meta name="description" content={`Daytime disco ${event.timeRange} with 80s/90s/00s anthems. ${event.city}, ${event.date} at ${event.venue}.`} />
+          <link rel="canonical" href={`https://www.the2pmclub.co.uk/events/${event.slug}/`} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="The 2 PM Club" />
+          <meta property="og:title" content={`The 2 PM Club — ${event.city} — ${event.date}`} />
+          <meta property="og:description" content={`Daytime disco ${event.timeRange} with 80s/90s/00s anthems.`} />
+          <meta property="og:url" content={`https://www.the2pmclub.co.uk/events/${event.slug}/`} />
+          <meta property="og:image" content={event.squareImg} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`The 2 PM Club — ${event.city} — ${event.date}`} />
+          <meta name="twitter:description" content={`Daytime disco ${event.timeRange} with 80s/90s/00s anthems.`} />
+          <meta name="twitter:image" content={event.squareImg} />
+          <meta name="robots" content="noindex" />
+        </Helmet>
+
+        <div className="min-h-screen bg-background pb-20 md:pb-0">
+          <Header hideCommunityBanner={true} />
+          
+          {/* Hero Section */}
+          <section className="pt-24 md:pt-28 pb-6 bg-gradient-to-b from-background via-background to-muted/10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-6 items-start">
+                  {/* Left: Event Poster */}
+                  <div className="flex justify-center md:justify-start">
+                    <img 
+                      src={event.squareImg} 
+                      alt={`${event.title} event poster`} 
+                      className="w-full max-w-sm h-auto rounded-xl shadow-2xl shadow-primary/20" 
+                    />
+                  </div>
+                  
+                  {/* Right: Details */}
+                  <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-6 space-y-4">
+                    {/* Email Headline */}
+                    <div>
+                      <p className="font-poppins text-lg md:text-xl text-primary font-semibold mb-2">
+                        Ready for another one?
+                      </p>
+                      <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
+                        THE 2PM CLUB Daytime Disco — {event.city}
+                      </h1>
+                    </div>
+                    
+                    {/* Event Details */}
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-foreground/80">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 text-primary" />
+                        <span className="font-poppins text-sm">{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="w-4 h-4 text-primary" />
+                        <span className="font-poppins text-sm">{event.timeDisplay}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 text-primary" />
+                        <span className="font-poppins text-sm">{event.venue}</span>
+                      </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <Button 
+                      onClick={scrollToCheckout} 
+                      size="lg" 
+                      className="w-full font-poppins text-lg"
+                    >
+                      Book Tickets
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Video Section */}
+          <section className="py-6 md:py-10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <video 
+                  className="w-full rounded-2xl shadow-xl"
+                  controls 
+                  muted
+                  playsInline 
+                  preload="metadata"
+                  poster={videoPoster}
+                >
+                  <source src={videoUrl} type="video/mp4" />
+                </video>
+                <p className="font-poppins text-sm text-foreground/60 text-center mt-3">
+                  This is what you're walking into.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Intro + Four Reasons */}
+          <section className="py-6 md:py-10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <p className="font-poppins text-lg md:text-xl text-foreground/90 text-center mb-6">
+                  An afternoon of iconic 80s, 90s, and 00s anthems. Here's why it hits different:
+                </p>
+                <div className="grid gap-4">
+                  <div className="bg-card/50 border border-border/30 rounded-xl p-4 flex gap-3 items-start">
+                    <span className="text-2xl">🎤</span>
+                    <p className="font-poppins text-foreground/90">
+                      A room full of people who know every word. Your kind of crowd.
+                    </p>
+                  </div>
+                  <div className="bg-card/50 border border-border/30 rounded-xl p-4 flex gap-3 items-start">
+                    <span className="text-2xl">👯‍♀️</span>
+                    <p className="font-poppins text-foreground/90">
+                      Four hours with your favourite people, your favourite songs, and zero small talk about kids or work.
+                    </p>
+                  </div>
+                  <div className="bg-card/50 border border-border/30 rounded-xl p-4 flex gap-3 items-start">
+                    <span className="text-2xl">🙌</span>
+                    <p className="font-poppins text-foreground/90">
+                      Nobody's too cool to dance or sing out loud – that's literally why we're all here!
+                    </p>
+                  </div>
+                  <div className="bg-card/50 border border-border/30 rounded-xl p-4 flex gap-3 items-start">
+                    <span className="text-2xl">🏠</span>
+                    <p className="font-poppins text-foreground/90">
+                      Done by 6pm. Sunday stays yours.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Ticket Widget */}
+          <section id="checkout-section" className="py-6 md:py-10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <div className="bg-primary/10 border border-primary/30 rounded-2xl p-4 md:p-6">
+                  <div className="bg-card/50 rounded-xl overflow-hidden">
+                    <EventbriteEmbed 
+                      eventbriteId={event.eventbriteId} 
+                      eventSlug={event.slug}
+                      containerId={`eventbrite-widget-email-${event.slug}`} 
+                      height={400} 
+                      promoCode={event.promoCode} 
+                      eventTitle={event.title} 
+                    />
+                  </div>
+                  <p className="font-poppins text-sm text-foreground/60 text-center mt-4">
+                    Same good idea. Less scrolling this time.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Share Row */}
+          <section className="py-6 md:py-8">
+            <div className="container mx-auto px-4">
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-card/50 border border-border/30 rounded-xl p-5 text-center">
+                  <p className="font-poppins text-base md:text-lg text-foreground/80 mb-4">
+                    Send it to the chat
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleWhatsAppShare(event)}
+                      className="font-poppins"
+                    >
+                      <img 
+                        src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519736/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" 
+                        alt="WhatsApp" 
+                        className="w-5 h-5 mr-2" 
+                      />
+                      WhatsApp
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleFacebookShare(event)}
+                      className="font-poppins"
+                    >
+                      {isMobile ? (
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2">
+                          <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.37.26.61l.05 1.9c.02.52.49.88.98.76l2.12-.53c.19-.05.39-.02.56.05 1.01.35 2.12.54 3.29.54 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.04 13.02L10.5 12.3l-4.28 2.8 4.7-5.02 2.62 2.72 4.2-2.8-4.7 5.02z" />
+                        </svg>
+                      ) : (
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                      )}
+                      {isMobile ? 'Messenger' : 'Facebook'}
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleCopyLink(event)}
+                      className="font-poppins"
+                    >
+                      <Copy className="w-4 h-4 mr-2" />
+                      Copy Link
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <Footer />
+
+          {/* Sticky Mobile CTA */}
           {isMobile && (
             <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-border/50 p-3 safe-area-inset-bottom">
               <div className="flex items-center justify-between gap-3">
