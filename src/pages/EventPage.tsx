@@ -511,6 +511,36 @@ const EventPage = () => {
             </div>
           </section>
 
+          {/* Four Reasons */}
+          <section className="py-6 md:py-8">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="bg-card/40 border border-border/30 rounded-xl p-4">
+                    <p className="font-poppins text-sm md:text-base text-foreground/90">
+                      A room full of people who know every word. Your kind of crowd.
+                    </p>
+                  </div>
+                  <div className="bg-card/40 border border-border/30 rounded-xl p-4">
+                    <p className="font-poppins text-sm md:text-base text-foreground/90">
+                      Four hours with your favourite people, your favourite songs, and zero small talk about kids or work.
+                    </p>
+                  </div>
+                  <div className="bg-card/40 border border-border/30 rounded-xl p-4">
+                    <p className="font-poppins text-sm md:text-base text-foreground/90">
+                      Nobody's too cool to dance or sing out loud — that's literally why we're all here!
+                    </p>
+                  </div>
+                  <div className="bg-card/40 border border-border/30 rounded-xl p-4">
+                    <p className="font-poppins text-sm md:text-base text-foreground/90">
+                      Done by 6pm. Sunday stays yours.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Single Testimonial */}
           <section className="py-6 md:py-8">
             <div className="container mx-auto px-4">
@@ -537,15 +567,7 @@ const EventPage = () => {
                     Share this in the group chat
                   </p>
                   <div className="flex flex-wrap gap-3 justify-center">
-                    <Button 
-                      variant="outline"
-                      onClick={() => handleMessengerShare(event)}
-                      className="font-poppins"
-                    >
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      Messenger
-                    </Button>
-                    {isMobile ? (
+                    {isMobile && (
                       <Button 
                         variant="outline"
                         onClick={() => handleWhatsAppShare(event)}
@@ -554,16 +576,15 @@ const EventPage = () => {
                         <MessageCircle className="w-4 h-4 mr-2" />
                         WhatsApp
                       </Button>
-                    ) : (
-                      <Button 
-                        variant="outline"
-                        onClick={() => handleEmailShare(event)}
-                        className="font-poppins"
-                      >
-                        <Mail className="w-4 h-4 mr-2" />
-                        Email
-                      </Button>
                     )}
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleMessengerShare(event)}
+                      className="font-poppins"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Messenger
+                    </Button>
                     <Button 
                       variant="outline"
                       onClick={() => handleCopyLink(event)}
