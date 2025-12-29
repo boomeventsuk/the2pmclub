@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import EventbriteEmbed from '@/components/EventbriteEmbed';
-import { Calendar, MapPin, Clock, Copy, Mail } from 'lucide-react';
+import { Calendar, MapPin, Clock, Copy, Mail, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
@@ -534,15 +534,36 @@ const EventPage = () => {
               <div className="max-w-2xl mx-auto">
                 <div className="bg-card/50 border border-border/30 rounded-xl p-5 text-center">
                   <p className="font-poppins text-base md:text-lg text-foreground/80 mb-4">
-                    Waiting on the group chat? Book yours, send them the link.
+                    Send it to the chat
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <div className="flex flex-wrap gap-3 justify-center">
                     <Button 
-                      onClick={scrollToCheckout}
+                      variant="outline"
+                      onClick={() => handleMessengerShare(event)}
                       className="font-poppins"
                     >
-                      Book Tickets
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Messenger
                     </Button>
+                    {isMobile ? (
+                      <Button 
+                        variant="outline"
+                        onClick={() => handleWhatsAppShare(event)}
+                        className="font-poppins"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        WhatsApp
+                      </Button>
+                    ) : (
+                      <Button 
+                        variant="outline"
+                        onClick={() => handleEmailShare(event)}
+                        className="font-poppins"
+                      >
+                        <Mail className="w-4 h-4 mr-2" />
+                        Email
+                      </Button>
+                    )}
                     <Button 
                       variant="outline"
                       onClick={() => handleCopyLink(event)}
