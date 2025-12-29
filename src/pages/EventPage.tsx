@@ -534,7 +534,7 @@ const EventPage = () => {
               <div className="max-w-2xl mx-auto">
                 <div className="bg-card/50 border border-border/30 rounded-xl p-5 text-center">
                   <p className="font-poppins text-base md:text-lg text-foreground/80 mb-4">
-                    Share this in the group chat?
+                    Share this in the group chat
                   </p>
                   <div className="flex flex-wrap gap-3 justify-center">
                     <Button 
@@ -780,7 +780,7 @@ const EventPage = () => {
               <div className="max-w-2xl mx-auto">
                 <div className="bg-card/50 border border-border/30 rounded-xl p-5 text-center">
                   <p className="font-poppins text-base md:text-lg text-foreground/80 mb-4">
-                    Share this in the group chat?
+                    Share this in the group chat
                   </p>
                   <div className="flex flex-wrap gap-3 justify-center">
                     {/* Messenger - Always available */}
