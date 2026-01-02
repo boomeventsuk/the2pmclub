@@ -16,8 +16,9 @@ interface EventJson {
   infoUrl: string;
   image: string;
   description: string;
-  status?: "sold-out" | "selling-fast" | "new-date" | "just-announced";
+  status?: "sold-out" | "selling-fast" | "selling-fast-amber" | "last-tickets" | "new-date" | "just-announced";
   promoCode?: string;
+  urgencyLabel?: string;
   isHidden?: boolean;
 }
 
@@ -68,12 +69,16 @@ const formatTime = (start: string, end: string): string => {
 };
 
 // Map status to urgency display props
-const mapStatus = (status?: string): { urgencyText?: string; urgencyColor?: string; soldOut: boolean } => {
+const mapStatus = (status?: string, urgencyLabel?: string): { urgencyText?: string; urgencyColor?: string; soldOut: boolean } => {
   switch (status) {
     case "sold-out":
       return { urgencyText: "SOLD OUT", urgencyColor: undefined, soldOut: true };
     case "selling-fast":
       return { urgencyText: "SELLING FAST", urgencyColor: undefined, soldOut: false };
+    case "selling-fast-amber":
+      return { urgencyText: urgencyLabel || "TICKETS SELLING FAST", urgencyColor: "amber", soldOut: false };
+    case "last-tickets":
+      return { urgencyText: urgencyLabel || "LAST TICKETS", urgencyColor: undefined, soldOut: false };
     case "new-date":
       return { urgencyText: "NEW DATE", urgencyColor: "green", soldOut: false };
     case "just-announced":
@@ -110,7 +115,7 @@ const Tickets = () => {
         // Map to EventCard props
         const mapped: MappedEvent[] = futureEvents.map((e) => {
           const { venue, city } = parseLocation(e.location);
-          const statusProps = mapStatus(e.status);
+          const statusProps = mapStatus(e.status, e.urgencyLabel);
           
           return {
             slug: e.slug,
