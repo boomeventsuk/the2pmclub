@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { isConsentGranted } from '@/lib/cookieConsent';
+import { trackPurchase, trackAddToCart, trackCheckoutInteraction } from '@/lib/dataLayer';
 
 interface EventbriteEmbedProps {
   eventbriteId: string;
@@ -19,6 +21,8 @@ declare global {
 }
 
 const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, promoCode, eventTitle, onOrderComplete }: EventbriteEmbedProps) => {
+  const hasTrackedInteraction = useRef(false);
+
   useEffect(() => {
     // Load Eventbrite widget script if not already loaded
     if (!window.EBWidgets) {
@@ -42,17 +46,11 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
           iframeContainerHeight: height,
           ...(promoCode && { promoCode }),
           onOrderComplete: (order: any) => {
-            // Track order completion with standardized purchase event
-            (window as any).dataLayer = (window as any).dataLayer || [];
-            (window as any).dataLayer.push({
-              event: 'purchase',
-              event_slug: eventSlug,
-              event_type: '2PM',
-              event_title: eventTitle,
-              transaction_value: order?.gross_total?.value || 0,
-              currency: order?.gross_total?.currency || 'GBP',
-              order_id: order?.id
-            });
+            const value = order?.gross_total?.value || 0;
+            const orderId = order?.id;
+            
+            // Track purchase via centralized dataLayer (includes Meta Pixel)
+            trackPurchase(eventSlug, eventTitle || '', value, orderId);
             
             if (onOrderComplete) {
               onOrderComplete();
@@ -63,35 +61,24 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
     }
   }, [eventbriteId, containerId, height, onOrderComplete]);
 
-  // Listen for Eventbrite iframe events
+  // Listen for Eventbrite iframe events (for additional tracking signals)
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      // Only process messages from Eventbrite domains
       if (!event.origin.includes('eventbrite')) return;
       
       try {
         const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
         
-        // Push relevant events to dataLayer
         if (data.type === 'ticket_selected' || data.event === 'ticket_selected') {
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          (window as any).dataLayer.push({
-            event: 'eb_ticket_selected',
-            event_slug: eventSlug,
-            event_type: '2PM',
-            event_title: eventTitle,
-            ticketData: data
-          });
+          // Fire AddToCart on ticket selection if not already tracked
+          if (!hasTrackedInteraction.current) {
+            hasTrackedInteraction.current = true;
+            trackAddToCart(eventSlug, eventTitle || '');
+          }
         }
         
         if (data.type === 'checkout_started' || data.event === 'checkout_started') {
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          (window as any).dataLayer.push({
-            event: 'eb_checkout_started',
-            event_slug: eventSlug,
-            event_type: '2PM',
-            event_title: eventTitle
-          });
+          trackCheckoutInteraction(eventSlug, eventTitle || '');
         }
       } catch (e) {
         // Silent fail for non-JSON messages
@@ -100,28 +87,29 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
     
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [eventbriteId, eventSlug, eventTitle]);
+  }, [eventSlug, eventTitle]);
 
-  // Iframe focus tracking for checkout interactions
+  // Iframe focus tracking for checkout interactions and AddToCart
   useEffect(() => {
-    const container = document.getElementById(containerId);
-    const iframe = container?.querySelector('iframe');
-    
-    const handleFocus = () => {
-      (window as any).dataLayer = (window as any).dataLayer || [];
-      (window as any).dataLayer.push({
-        event: 'eb_checkout_interaction',
-        event_slug: eventSlug,
-        event_type: '2PM',
-        event_title: eventTitle
-      });
+    const handleFocusIn = (e: FocusEvent) => {
+      const container = document.getElementById(containerId);
+      const iframe = container?.querySelector('iframe');
+      
+      if (iframe && document.activeElement === iframe) {
+        // Track checkout interaction
+        trackCheckoutInteraction(eventSlug, eventTitle || '');
+        
+        // Fire AddToCart only once per session
+        if (!hasTrackedInteraction.current) {
+          hasTrackedInteraction.current = true;
+          trackAddToCart(eventSlug, eventTitle || '');
+        }
+      }
     };
     
-    if (iframe) {
-      iframe.addEventListener('focus', handleFocus);
-      return () => iframe.removeEventListener('focus', handleFocus);
-    }
-  }, [eventbriteId, eventSlug, eventTitle, containerId]);
+    document.addEventListener('focusin', handleFocusIn);
+    return () => document.removeEventListener('focusin', handleFocusIn);
+  }, [containerId, eventSlug, eventTitle]);
 
   return (
     <div id={containerId} style={{ minHeight: `${height}px` }} />

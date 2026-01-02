@@ -1,8 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { isConsentGranted } from '@/lib/cookieConsent';
+import { trackPurchase, trackAddToCart, trackCheckoutInteraction } from '@/lib/dataLayer';
 
 interface EventbriteModalProps {
   eventbriteId: string;
   triggerId: string;
+  eventSlug?: string;
+  eventTitle?: string;
   promoCode?: string;
   onOrderComplete?: () => void;
 }
@@ -15,7 +19,9 @@ declare global {
   }
 }
 
-const EventbriteModal = ({ eventbriteId, triggerId, promoCode, onOrderComplete }: EventbriteModalProps) => {
+const EventbriteModal = ({ eventbriteId, triggerId, eventSlug, eventTitle, promoCode, onOrderComplete }: EventbriteModalProps) => {
+  const hasTrackedInteraction = useRef(false);
+
   useEffect(() => {
     // Load Eventbrite widget script if not already loaded
     if (!window.EBWidgets) {
@@ -38,13 +44,14 @@ const EventbriteModal = ({ eventbriteId, triggerId, promoCode, onOrderComplete }
           modal: true,
           modalTriggerElementId: triggerId,
           ...(promoCode && { promoCode }),
-          onOrderComplete: () => {
-            // Track order completion
-            (window as any).dataLayer = (window as any).dataLayer || [];
-            (window as any).dataLayer.push({
-              event: 'eb_purchase_completed',
-              eventbriteId: eventbriteId
-            });
+          onOrderComplete: (order: any) => {
+            const value = order?.gross_total?.value || 0;
+            const orderId = order?.id;
+            
+            // Track purchase via centralized dataLayer (includes Meta Pixel)
+            if (eventSlug) {
+              trackPurchase(eventSlug, eventTitle || '', value, orderId);
+            }
             
             if (onOrderComplete) {
               onOrderComplete();
@@ -53,33 +60,27 @@ const EventbriteModal = ({ eventbriteId, triggerId, promoCode, onOrderComplete }
         });
       }
     }
-  }, [eventbriteId, triggerId, onOrderComplete]);
+  }, [eventbriteId, triggerId, eventSlug, eventTitle, promoCode, onOrderComplete]);
 
   // Listen for Eventbrite iframe events
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      // Only process messages from Eventbrite domains
       if (!event.origin.includes('eventbrite')) return;
       
       try {
         const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
         
-        // Push relevant events to dataLayer
         if (data.type === 'ticket_selected' || data.event === 'ticket_selected') {
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          (window as any).dataLayer.push({
-            event: 'eb_ticket_selected',
-            eventbriteId: eventbriteId,
-            ticketData: data
-          });
+          if (!hasTrackedInteraction.current && eventSlug) {
+            hasTrackedInteraction.current = true;
+            trackAddToCart(eventSlug, eventTitle || '');
+          }
         }
         
         if (data.type === 'checkout_started' || data.event === 'checkout_started') {
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          (window as any).dataLayer.push({
-            event: 'eb_checkout_started',
-            eventbriteId: eventbriteId
-          });
+          if (eventSlug) {
+            trackCheckoutInteraction(eventSlug, eventTitle || '');
+          }
         }
       } catch (e) {
         // Silent fail for non-JSON messages
@@ -88,9 +89,9 @@ const EventbriteModal = ({ eventbriteId, triggerId, promoCode, onOrderComplete }
     
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [eventbriteId, triggerId, onOrderComplete]);
+  }, [eventSlug, eventTitle]);
 
-  return null; // This component doesn't render anything visible
+  return null;
 };
 
 export default EventbriteModal;
