@@ -177,7 +177,7 @@
 
     <meta name="twitter:card" content="summary">
 
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel Code (GDPR Consent Mode) -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -187,8 +187,9 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('consent', 'revoke');
     fbq('init', '2629470400739413');
-    fbq('track', 'PageView');
+    // PageView will be fired by cookieConsent.ts after user grants consent
     </script>
     <!-- End Meta Pixel Code -->
 
