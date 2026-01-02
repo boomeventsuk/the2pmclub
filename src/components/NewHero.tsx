@@ -29,7 +29,7 @@ const NewHero = () => {
       {/* Content */}
       <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
         <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight uppercase tracking-wide drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
-          THE 2PM CLUB — YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON
+          THE 2PM CLUB Daytime Disco — YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON
         </h1>
         
         <p className="font-poppins text-base md:text-lg text-foreground/80 mb-10 leading-relaxed max-w-2xl mx-auto">
@@ -44,7 +44,7 @@ const NewHero = () => {
             size="lg" 
             className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-10 py-6 shadow-[0_0_30px_hsl(328_100%_54%_/_0.4)] hover:shadow-[0_0_40px_hsl(328_100%_54%_/_0.5)] transition-all uppercase tracking-wide"
           >
-            FIND YOUR SATURDAY
+            BOOK YOUR TICKETS
           </Button>
         </div>
       </div>

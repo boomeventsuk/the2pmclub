@@ -151,6 +151,18 @@ const Tickets = () => {
           </h2>
         </div>
         
+        {/* Facebook Group Banner */}
+        <a 
+          href="https://www.facebook.com/groups/the2pmclub" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block mb-8 bg-primary/20 border border-primary/40 rounded-xl px-6 py-4 text-center hover:bg-primary/30 transition-colors"
+        >
+          <p className="font-poppins text-foreground">
+            Join the conversation in our official <span className="text-primary font-semibold">Facebook Group</span>
+          </p>
+        </a>
+        
         <div className="space-y-6" id="tickets-list">
           {loading ? (
             <div className="text-center py-12">
