@@ -143,28 +143,12 @@ const Tickets = () => {
   }, []);
 
   return (
-    <section id="tickets" className="py-lg bg-muted/20">
+    <section id="tickets" className="py-12 md:py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-lg">
-          <h2 className="font-poppins text-5xl md:text-6xl font-bold text-primary mb-4">
-            Book early — it sells out
+        <div className="text-center mb-10">
+          <h2 className="font-poppins text-4xl md:text-5xl font-bold text-foreground uppercase">
+            Upcoming <span className="text-primary">Events</span>
           </h2>
-          <p className="font-poppins text-lg text-white max-w-3xl mx-auto leading-relaxed">
-            Tickets usually start from £10–£15 + fees. Most dates sell out weeks ahead, 
-            because people know what they're getting: the Midlands' best daytime party. 
-            Group of 4 offers are available at many shows — perfect for sorting the chat. 
-            On the door? Only if it hasn't sold out (and it usually has).
-          </p>
-        </div>
-
-        {/* Christmas Banner */}
-        <div 
-          className="bg-gradient-to-r from-red-600/20 to-green-600/20 border border-red-600/30 rounded-lg p-4 mb-8 text-center hidden" 
-          data-banner="christmas"
-        >
-          <p className="font-poppins text-lg font-semibold text-foreground">
-            🎄 Christmas dates now on sale
-          </p>
         </div>
         
         <div className="space-y-6" id="tickets-list">
@@ -186,16 +170,6 @@ const Tickets = () => {
           )}
         </div>
         
-        <div className="text-center mt-lg">
-          <Button 
-            id="view-all-tickets"
-            variant="outline"
-            size="lg"
-            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold"
-          >
-            View All Tickets
-          </Button>
-        </div>
       </div>
     </section>
   );

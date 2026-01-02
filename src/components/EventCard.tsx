@@ -42,8 +42,13 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
 
 
   return (
-    <article className="ticket-card" data-ticket-card data-date-iso={dateIso} data-event-slug={slug}>
-        <div className="poster relative">
+    <article 
+      className="ticket-card bg-card/80 backdrop-blur-md border border-border/50 rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-[0_0_30px_hsl(328_100%_54%_/_0.15)] transition-all duration-300" 
+      data-ticket-card 
+      data-date-iso={dateIso} 
+      data-event-slug={slug}
+    >
+      <div className="poster relative">
         <img 
           src={poster}
           alt={`${title} event poster`}
@@ -86,7 +91,7 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
       <div className="actions">
         <Button 
           onClick={handleBookNow}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn shadow-[0_0_20px_hsl(328_100%_54%_/_0.3)] hover:shadow-[0_0_25px_hsl(328_100%_54%_/_0.4)]"
           data-event-slug={slug}
         >
           {soldOut ? 'Waiting List' : 'Book Now'}
