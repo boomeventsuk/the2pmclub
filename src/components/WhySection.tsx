@@ -1,78 +1,68 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { Clock, Users, Music, Sparkles } from "lucide-react";
 
 const WhySection = () => {
   const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation();
+  
   const reasons = [
     {
-      title: "🎉 EVERYONE CAN ACTUALLY MAKE IT",
-      body: "How impossible has it become to get everyone together? THE 2PM CLUB solves the eternal adult friendship coordination puzzle - 2pm start means no childcare dramas, no work worries, no 'I'm too tired' excuses."
+      icon: Clock,
+      title: "Home by 7ish",
+      body: "Dance your heart out, still catch Strictly"
     },
     {
-      title: "🕖 HOME BY 7-ISH, NO SUNDAY REGRETS",
-      body: "Dance your heart out, home at a decent time, full night's sleep, feel great on Sunday. We're done with 2am taxis and writing off entire Sundays. Sometimes the revolution is just common sense."
+      icon: Users,
+      title: "Everyone Makes It",
+      body: "2pm means no excuses, no diary clashes"
     },
     {
-      title: "💃 PARTY ON YOUR TERMS",
-      body: "It's a real night out in the afternoon. Let yourself go, be yourself, enjoy time with your friends and be on the sofa watching Strictly before you know it."
+      icon: Music,
+      title: "Every Song a Banger",
+      body: "You'll know every single word"
     },
     {
-      title: "🎶 YOU'LL KNOW EVERY SONG",
-      body: "Four hours of pure anthems that you love. When was the last time you went somewhere and knew EVERY SINGLE WORD? That's what we do."
+      icon: Sparkles,
+      title: "No Sunday Regrets",
+      body: "Full night's sleep, fresh next day"
     }
   ];
 
   return (
-    <section id="why" className="py-12 md:py-16 px-4 bg-card">
-      <div className="container mx-auto max-w-6xl">
+    <section id="why" className="py-12 md:py-20 px-4 bg-background">
+      <div className="container mx-auto max-w-5xl">
         <h2 
           ref={titleRef}
-          className={`font-poppins text-3xl md:text-5xl font-bold text-primary text-center mb-16 uppercase transition-all duration-700 ${
+          className={`font-poppins text-3xl md:text-5xl font-bold text-foreground text-center mb-12 uppercase transition-all duration-700 ${
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          Why it works at 2pm
+          Why It Works at <span className="text-primary">2PM</span>
         </h2>
-        
-        <p className="font-poppins text-lg text-foreground text-center mb-16 max-w-4xl mx-auto leading-relaxed">
-          Because everyone can actually be there. No diary clashes, no late-night regrets,
-          no half-empty WhatsApp chats. Just the perfect timing — 2–6pm on a Saturday —
-          when real life pauses and your friends get the floor to yourselves. 
-          That's why people book 12 weeks ahead: they know this is the one that delivers.
-        </p>
         
         <div 
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
         >
           {reasons.map((reason, index) => (
             <div 
               key={index}
-              className={`bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-700 ${
+              className={`bg-card/60 backdrop-blur-sm border border-border/50 p-6 rounded-xl text-center hover:border-primary/30 hover:bg-card/80 transition-all duration-700 group ${
                 cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
-              style={{ transitionDelay: `${index * 150}ms` }}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <h3 className="font-poppins text-xl md:text-2xl font-bold text-primary mb-4 uppercase">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                <reason.icon className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="font-poppins text-base md:text-lg font-bold text-foreground mb-2">
                 {reason.title}
               </h3>
-              <p className="font-poppins text-black leading-relaxed">
+              <p className="font-poppins text-sm text-muted-foreground leading-relaxed">
                 {reason.body}
               </p>
             </div>
           ))}
-        </div>
-        
-        <div className="text-center mt-16">
-          <p className="font-poppins text-lg text-foreground mb-6">
-            For more insight into why this timing works so well...
-          </p>
-          <a 
-            href="/blog/why-daytime-discos-are-popular/"
-            className="inline-flex items-center gap-2 font-poppins text-primary hover:text-primary/80 transition-colors font-semibold text-lg underline underline-offset-4"
-          >
-            Read our blog: Why 2PM is the New 2AM →
-          </a>
         </div>
       </div>
     </section>

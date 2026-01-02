@@ -1,7 +1,9 @@
 import Header from "@/components/Header";
 import NewHero from "@/components/NewHero";
-import WhySection from "@/components/WhySection";
+import TrustStrip from "@/components/TrustStrip";
 import Tickets from "@/components/Tickets";
+import PhotoGallery from "@/components/PhotoGallery";
+import WhySection from "@/components/WhySection";
 import SocialProofSection from "@/components/SocialProofSection";
 import MusicSection from "@/components/MusicSection";
 import About from "@/components/About";
@@ -13,8 +15,10 @@ const Index = () => {
     <main id="main-content" className="min-h-screen">
       <Header />
       <NewHero />
-      <WhySection />
+      <TrustStrip />
       <Tickets />
+      <PhotoGallery />
+      <WhySection />
       <SocialProofSection />
       <MusicSection />
       <About />
