@@ -60,7 +60,10 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
           style={{ aspectRatio: '2 / 3', objectFit: 'cover' }}
         />
         {urgencyText && (
-          <div className={`urgency-strip ${urgencyColor === 'green' ? 'urgency-strip-green' : ''}`}>
+          <div className={`urgency-strip ${
+            urgencyColor === 'green' ? 'urgency-strip-green' : 
+            urgencyColor === 'amber' ? 'urgency-strip-amber' : ''
+          }`}>
             <span>{urgencyText}</span>
           </div>
         )}
