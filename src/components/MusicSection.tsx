@@ -6,10 +6,12 @@ const MusicSection = () => {
       
       <div className="container mx-auto max-w-4xl text-center relative z-10">
         <h2 className="font-poppins text-3xl md:text-4xl font-bold text-foreground mb-4 uppercase">
-          Nothing But The <span className="text-primary">Biggest Anthems</span>
+          Every Song A Banger. <span className="text-primary">Zero Filler.</span>
         </h2>
         
         <p className="font-poppins text-muted-foreground mb-8 text-base leading-relaxed max-w-2xl mx-auto">
+          The songs you've been mouthing along to in Sainsbury's for 20 years. Finally played loud enough.
+          <br /><br />
           <strong className="text-foreground">Spice Girls to Shania, Robbie to Rihanna, Bon Jovi to Beyoncé</strong> — 
           every track a sing-along, every chorus louder than the last.
         </p>

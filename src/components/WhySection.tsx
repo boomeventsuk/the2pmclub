@@ -13,8 +13,8 @@ const WhySection = () => {
     },
     {
       icon: Users,
-      title: "Everyone Makes It",
-      body: "2pm means no excuses, no diary clashes"
+      title: "The Group Chat Finally Agrees",
+      body: "No babysitter battles. No 'I'm too tired' texts. Just a date everyone can actually make."
     },
     {
       icon: Music,
@@ -23,8 +23,8 @@ const WhySection = () => {
     },
     {
       icon: Sparkles,
-      title: "No Sunday Regrets",
-      body: "Full night's sleep, fresh next day"
+      title: "Wake Up Fresh (And Smug)",
+      body: "All the joy of a big night out. None of the next-day fear. You've won at the weekend."
     }
   ];
 

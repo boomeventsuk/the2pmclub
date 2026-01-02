@@ -29,7 +29,7 @@ const SocialProofSection = () => {
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          Don't Just Take <span className="text-primary">Our Word</span> For It
+          What The Group Chat Said <span className="text-primary">Monday Morning</span>
         </h2>
         
         <div 

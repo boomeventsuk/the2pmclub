@@ -6,7 +6,6 @@ import PhotoGallery from "@/components/PhotoGallery";
 import WhySection from "@/components/WhySection";
 import SocialProofSection from "@/components/SocialProofSection";
 import MusicSection from "@/components/MusicSection";
-import About from "@/components/About";
 import HomeFaq from "@/components/HomeFaq";
 import Footer from "@/components/Footer";
 
@@ -21,7 +20,6 @@ const Index = () => {
       <WhySection />
       <SocialProofSection />
       <MusicSection />
-      <About />
       <HomeFaq />
       <Footer />
     </main>

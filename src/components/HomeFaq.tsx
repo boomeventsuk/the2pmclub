@@ -24,7 +24,7 @@ export default function HomeFaq() {
     },
     {
       question: "What should I wear?",
-      answer: "Whatever makes you feel good. Smart casual works perfectly – think the outfit you'd wear out for a nice afternoon. If you're planning to dance a lot, comfy shoes are your friend. Dress code is just to feel good."
+      answer: "Whatever makes you feel fabulous. Sequins? Yes. Trainers? Definitely. Jeans and a nice top? Classic."
     },
     {
       question: "What time do doors open and when does it finish?",
