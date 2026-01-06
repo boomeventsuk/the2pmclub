@@ -63,22 +63,50 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
 
   // Listen for Eventbrite iframe events (for additional tracking signals)
   useEffect(() => {
+    const isDebugMode = () => {
+      if (typeof window === 'undefined') return false;
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('eb_debug') === '1' || localStorage.getItem('eb_debug') === '1';
+    };
+
     const handleMessage = (event: MessageEvent) => {
+      // Debug: log all postMessage events from Eventbrite
+      if (isDebugMode() && event.origin.includes('eventbrite')) {
+        console.log('[EB Debug] PostMessage received:', {
+          origin: event.origin,
+          data: event.data,
+          type: typeof event.data
+        });
+      }
+
       if (!event.origin.includes('eventbrite')) return;
       
       try {
         const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
         
+        if (isDebugMode()) {
+          console.log('[EB Debug] Parsed data:', data);
+        }
+        
         if (data.type === 'ticket_selected' || data.event === 'ticket_selected') {
+          if (isDebugMode()) {
+            console.log('[EB Debug] Ticket selected event detected');
+          }
           // Fire AddToCart on ticket selection if not already tracked
           if (!hasTrackedInteraction.current) {
             hasTrackedInteraction.current = true;
             trackAddToCart(eventSlug, eventTitle || '');
+            if (isDebugMode()) {
+              console.log('[EB Debug] AddToCart tracked via postMessage');
+            }
           }
         }
         
         if (data.type === 'checkout_started' || data.event === 'checkout_started') {
           trackCheckoutInteraction(eventSlug, eventTitle || '');
+          if (isDebugMode()) {
+            console.log('[EB Debug] Checkout interaction tracked via postMessage');
+          }
         }
       } catch (e) {
         // Silent fail for non-JSON messages
@@ -91,11 +119,21 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
 
   // Iframe focus tracking for checkout interactions and AddToCart
   useEffect(() => {
+    const isDebugMode = () => {
+      if (typeof window === 'undefined') return false;
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('eb_debug') === '1' || localStorage.getItem('eb_debug') === '1';
+    };
+
     const handleFocusIn = (e: FocusEvent) => {
       const container = document.getElementById(containerId);
       const iframe = container?.querySelector('iframe');
       
       if (iframe && document.activeElement === iframe) {
+        if (isDebugMode()) {
+          console.log('[EB Debug] Iframe focus detected');
+        }
+        
         // Track checkout interaction
         trackCheckoutInteraction(eventSlug, eventTitle || '');
         
@@ -103,6 +141,9 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
         if (!hasTrackedInteraction.current) {
           hasTrackedInteraction.current = true;
           trackAddToCart(eventSlug, eventTitle || '');
+          if (isDebugMode()) {
+            console.log('[EB Debug] AddToCart tracked via iframe focus');
+          }
         }
       }
     };

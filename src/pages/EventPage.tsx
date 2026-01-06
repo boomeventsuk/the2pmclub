@@ -430,7 +430,7 @@ const EventPage = () => {
         </Helmet>
 
         <div className="min-h-screen bg-background pb-20 md:pb-0">
-          <Header hideCommunityBanner={true} />
+          <Header />
           
           {/* Compact Hero Section */}
           <section className="pt-24 md:pt-28 pb-6 bg-gradient-to-b from-background via-background to-muted/10">
@@ -659,7 +659,7 @@ const EventPage = () => {
         </Helmet>
 
         <div className="min-h-screen bg-background pb-20 md:pb-0">
-          <Header hideCommunityBanner={true} />
+          <Header />
           
           {/* Hero Section */}
           <section className="pt-24 md:pt-28 pb-6 bg-gradient-to-b from-background via-background to-muted/10">
@@ -943,7 +943,7 @@ const EventPage = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
-        <Header hideCommunityBanner={true} />
+        <Header />
         
         {/* Hero Section */}
         <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
@@ -1299,7 +1299,7 @@ const EventPage = () => {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-10 md:py-14 mb-16">
+        <section className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
@@ -1332,6 +1332,24 @@ const EventPage = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Facebook Community CTA */}
+        <section className="py-8 md:py-12 mb-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <a 
+                href="https://www.facebook.com/groups/the2pmclub" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block bg-primary/20 border border-primary/40 rounded-xl px-6 py-5 text-center hover:bg-primary/30 transition-colors"
+              >
+                <p className="font-poppins text-lg text-foreground">
+                  Join the conversation in our official <span className="text-primary font-semibold">Facebook Group</span>
+                </p>
+              </a>
             </div>
           </div>
         </section>
