@@ -1,12 +1,12 @@
 const PhotoGallery = () => {
   const photos = [
-    "https://res.cloudinary.com/dteowuv7o/image/upload/v1749652814/IMG_0131_gihsgl.jpg",
-    "https://res.cloudinary.com/dteowuv7o/image/upload/v1749652814/IMG_0158_usbxxr.jpg",
-    "https://res.cloudinary.com/dteowuv7o/image/upload/v1749652814/IMG_0112_hmjxrl.jpg",
-    "https://res.cloudinary.com/dteowuv7o/image/upload/v1749652814/IMG_0178_vpfxdl.jpg",
-    "https://res.cloudinary.com/dteowuv7o/image/upload/v1749652814/IMG_0143_f3vvqe.jpg",
-    "https://res.cloudinary.com/dteowuv7o/image/upload/v1749652813/IMG_0095_wq8sps.jpg",
-    "https://res.cloudinary.com/dteowuv7o/image/upload/v1749652813/IMG_0080_rqrcvy.jpg",
+    "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_1_ndjab4.jpg",
+    "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_2_qedzzq.jpg",
+    "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268387/2pm_web_3_nuwrvk.jpg",
+    "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_4_j87ixj.jpg",
+    "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_5_eln7gp.jpg",
+    "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268386/2pm_web_6_bjt6h7.jpg",
+    "https://res.cloudinary.com/dteowuv7o/image/upload/v1764268389/2pm_web_7_jl6yvd.jpg",
   ];
 
   // Duplicate for seamless infinite scroll
