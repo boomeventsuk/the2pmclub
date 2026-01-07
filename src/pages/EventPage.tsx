@@ -661,6 +661,15 @@ const EventPage = () => {
         <div className="min-h-screen bg-background pb-20 md:pb-0">
           <Header />
           
+          {/* Northampton Email Urgency Banner */}
+          {event.cityCode === 'NPTON' && (
+            <div className="urgency-banner-npton text-white py-3 text-center">
+              <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
+                ⚠️ NEARLY SOLD OUT — ONLY 50 TICKETS REMAINING
+              </p>
+            </div>
+          )}
+          
           {/* Hero Section */}
           <section className="pt-24 md:pt-28 pb-6 bg-gradient-to-b from-background via-background to-muted/10">
             <div className="container mx-auto px-4">
@@ -677,15 +686,29 @@ const EventPage = () => {
                   
                   {/* Right: Details */}
                   <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-6 space-y-4">
-                    {/* Email Headline */}
-                    <div>
-                      <p className="font-poppins text-lg md:text-xl text-primary font-semibold mb-2">
-                        Ready for another one?
-                      </p>
-                      <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
-                        THE 2PM CLUB Daytime Disco — {event.city}
-                      </h1>
-                    </div>
+                    {/* Email Headline - Northampton urgent version */}
+                    {event.cityCode === 'NPTON' ? (
+                      <div>
+                        <h1 className="font-poppins text-3xl md:text-4xl font-bold text-foreground tracking-tight uppercase mb-2">
+                          LAST CALL NORTHAMPTON
+                        </h1>
+                        <p className="font-poppins text-2xl md:text-3xl font-bold text-destructive mb-2">
+                          50 TICKETS LEFT
+                        </p>
+                        <p className="font-poppins text-sm text-foreground/70 tracking-wider uppercase">
+                          YOUR CREW | ANTHEMS | HOME BY 7 | FINAL TICKETS
+                        </p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="font-poppins text-lg md:text-xl text-primary font-semibold mb-2">
+                          Ready for another one?
+                        </p>
+                        <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
+                          THE 2PM CLUB Daytime Disco — {event.city}
+                        </h1>
+                      </div>
+                    )}
                     
                     {/* Event Details */}
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-foreground/80">
@@ -709,7 +732,7 @@ const EventPage = () => {
                       size="lg" 
                       className="w-full font-poppins text-lg"
                     >
-                      Book Tickets
+                      {event.cityCode === 'NPTON' ? 'Grab Your Tickets — Only 50 Left' : 'Book Tickets'}
                     </Button>
                   </div>
                 </div>
@@ -871,7 +894,7 @@ const EventPage = () => {
                   onClick={scrollToCheckout}
                   className="font-poppins font-semibold px-6 shrink-0"
                 >
-                  Book Now
+                  {event.cityCode === 'NPTON' ? 'Only 50 Left — Book Now' : 'Book Now'}
                 </Button>
               </div>
             </div>
@@ -945,6 +968,15 @@ const EventPage = () => {
       <div className="min-h-screen bg-background">
         <Header />
         
+        {/* Northampton Urgency Banner */}
+        {event.cityCode === 'NPTON' && (
+          <div className="urgency-banner-npton text-white py-3 text-center">
+            <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
+              ⚠️ NEARLY SOLD OUT — ONLY 50 TICKETS REMAINING
+            </p>
+          </div>
+        )}
+        
         {/* Hero Section */}
         <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
           <div className="container mx-auto px-4">
@@ -968,6 +1000,18 @@ const EventPage = () => {
                         </p>
                         <p className="font-poppins text-base md:text-lg text-foreground/70">
                           Iconic 80s 90s 00s Anthems plus Festive Classics
+                        </p>
+                      </>
+                    ) : event.cityCode === 'NPTON' ? (
+                      <>
+                        <div className="inline-block bg-destructive/20 border border-destructive/40 rounded-lg px-3 py-1 mb-2">
+                          <span className="font-poppins text-sm font-bold text-destructive tracking-wider">🔥 FINAL 50 TICKETS</span>
+                        </div>
+                        <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight mb-1 uppercase">
+                          THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
+                        </h1>
+                        <p className="font-poppins text-xl md:text-2xl font-semibold text-destructive mb-2">
+                          Your last chance to join the party
                         </p>
                       </>
                     ) : (
@@ -998,7 +1042,7 @@ const EventPage = () => {
                   </div>
 
                   <Button ref={heroBookButtonRef} onClick={scrollToCheckout} size="lg" className="w-full md:w-auto font-poppins">
-                    BOOK TICKETS
+                    {event.cityCode === 'NPTON' ? 'Grab Your Tickets — Only 50 Left' : 'BOOK TICKETS'}
                   </Button>
 
                   <div className="pt-4 border-t border-border/50">
@@ -1097,6 +1141,44 @@ const EventPage = () => {
                           </>
                         );
                       })()
+                    ) : event.cityCode === 'NPTON' ? (
+                      <>
+                        {/* Northampton Urgency Block */}
+                        <div className="bg-destructive/10 border border-destructive/40 rounded-xl p-4 mb-6">
+                          <p className="font-poppins text-lg md:text-xl font-bold text-foreground">
+                            🔥 This is it. 50 tickets. That's all that's left.
+                          </p>
+                          <p className="font-poppins text-base text-foreground/80 mt-2">
+                            Northampton's biggest afternoon party is nearly sold out. Your last chance to join the group chat crew.
+                          </p>
+                        </div>
+                        
+                        <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
+                          THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
+                        </p>
+                        <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
+                          An Afternoon of Iconic Anthems from the 80s 90s 00s!
+                        </p>
+                        
+                        <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                          <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                            "Remember when going OUT OUT didn't require a week's recovery?"
+                          </p>
+                        </blockquote>
+                        
+                        <div className="space-y-4">
+                          <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                            When you could sing every word, lose your voice, and still feel human the next day?
+                          </p>
+                          <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
+                            We've created the perfect solution!<br />
+                            Welcome to THE 2PM CLUB!
+                          </p>
+                          <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
+                            4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
+                          </p>
+                        </div>
+                      </>
                     ) : (
                       <>
                         <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
@@ -1360,7 +1442,7 @@ const EventPage = () => {
         {showStickyBookTickets && (
           <div className="fixed top-24 right-4 z-50 animate-fade-in">
             <Button onClick={scrollToCheckout} className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg">
-              Book Tickets
+              {event.cityCode === 'NPTON' ? 'Only 50 Left!' : 'Book Tickets'}
             </Button>
           </div>
         )}
