@@ -225,6 +225,17 @@ a.button:focus, button:focus {
   }
 }
 
+/* Northampton urgency banner */
+.urgency-banner-npton {
+  background: linear-gradient(90deg, hsl(0 84% 45%), hsl(0 72% 40%), hsl(0 84% 45%));
+  animation: urgency-pulse-banner 2s ease-in-out infinite;
+}
+
+@keyframes urgency-pulse-banner {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
 @layer base {
   * {
     @apply border-border;
