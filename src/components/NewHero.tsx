@@ -12,7 +12,7 @@ const NewHero = () => {
     }
   };
   return (
-    <section id="hero" className="relative h-[75vh] md:h-[85vh] flex items-center justify-center overflow-hidden pt-16 md:pt-20">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-0">
       {/* Background Image */}
       <img 
         src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" 
@@ -20,22 +20,22 @@ const NewHero = () => {
         className="absolute inset-0 w-full h-full object-cover" 
       />
       
-      {/* Gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+      {/* Gradient overlay - much lighter to show crowd energy */}
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
       
       {/* Subtle radial glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(328_100%_54%_/_0.15)_0%,_transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(328_100%_54%_/_0.2)_0%,_transparent_70%)]" />
       
-      {/* Content */}
-      <div className="relative z-10 text-center max-w-5xl px-4 sm:px-6 py-16 md:py-20">
-        <h1 className="font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-2 leading-[1.1] uppercase tracking-wider drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)]">
+      {/* Content - tighter padding, bigger text */}
+      <div className="relative z-10 text-center w-full px-3 sm:px-6 py-8 md:py-12">
+        <h1 className="font-bebas text-[3.5rem] sm:text-7xl md:text-8xl lg:text-9xl font-bold text-foreground mb-1 leading-[0.95] uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
           THE 2PM CLUB DAYTIME DISCO.
         </h1>
-        <p className="font-bebas text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary mb-6 uppercase tracking-wide drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
+        <p className="font-bebas text-[2rem] sm:text-5xl md:text-6xl lg:text-7xl text-primary mb-4 uppercase tracking-wide leading-[0.95] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
           YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON.
         </p>
         
-        <p className="font-poppins text-base sm:text-lg md:text-xl text-foreground/90 mb-10 leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]">
+        <p className="font-poppins text-lg sm:text-xl md:text-2xl text-foreground mb-6 leading-relaxed max-w-2xl mx-auto drop-shadow-[0_4px_20px_rgba(0,0,0,1)]">
           4 hours of iconic 80s 90s 00s anthems. Home by 7ish. No Sunday regrets.
         </p>
         
