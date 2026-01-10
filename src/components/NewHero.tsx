@@ -27,12 +27,15 @@ const NewHero = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(328_100%_54%_/_0.15)_0%,_transparent_70%)]" />
       
       {/* Content */}
-      <div className="relative z-10 text-center max-w-5xl px-6 py-16 md:py-20">
-        <h1 className="font-poppins text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight uppercase tracking-wide drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]">
-          THE 2PM CLUB Daytime Disco — YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON
+      <div className="relative z-10 text-center max-w-5xl px-4 sm:px-6 py-16 md:py-20">
+        <h1 className="font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-2 leading-[1.1] uppercase tracking-wider drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)]">
+          THE 2PM CLUB DAYTIME DISCO.
         </h1>
+        <p className="font-bebas text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary mb-6 uppercase tracking-wide drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
+          YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON.
+        </p>
         
-        <p className="font-poppins text-lg sm:text-xl md:text-xl text-foreground/90 mb-10 leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
+        <p className="font-poppins text-base sm:text-lg md:text-xl text-foreground/90 mb-10 leading-relaxed max-w-2xl mx-auto drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]">
           4 hours of iconic 80s 90s 00s anthems. Home by 7ish. No Sunday regrets.
         </p>
         
