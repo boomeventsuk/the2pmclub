@@ -3,6 +3,7 @@ import { isConsentGranted } from './cookieConsent';
 declare global {
   interface Window {
     dataLayer: any[];
+    fbq?: (...args: any[]) => void;
   }
 }
 
@@ -19,7 +20,7 @@ const debugLog = (...args: any[]) => {
   }
 };
 
-// Helper to track Meta Pixel events - only fires if consent granted
+// Helper to track Meta Pixel events - only fires if consent granted (for browsing events)
 const trackFbEvent = (eventName: string, params?: Record<string, any>) => {
   if (typeof window !== 'undefined' && window.fbq && isConsentGranted()) {
     window.fbq('track', eventName, params);
@@ -30,6 +31,15 @@ const trackFbEvent = (eventName: string, params?: Record<string, any>) => {
   }
 };
 
+// Conversion tracking - fires regardless of consent (legitimate interest for transactions)
+const trackFbConversion = (eventName: string, params?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('track', eventName, params);
+    console.log(`[Meta Pixel Conversion] ${eventName}`, params);
+    debugLog('Meta Pixel conversion fired:', eventName, params);
+  }
+};
+
 export const pushToDataLayer = (event: Record<string, any>) => {
   if (typeof window === 'undefined') return;
   window.dataLayer = window.dataLayer || [];
@@ -37,6 +47,7 @@ export const pushToDataLayer = (event: Record<string, any>) => {
   debugLog('DataLayer push:', event);
 };
 
+// ViewContent - respects consent (browsing behaviour)
 export const trackEventPageView = (slug: string, title: string) => {
   pushToDataLayer({
     event: 'eventpage_view',
@@ -52,6 +63,7 @@ export const trackEventPageView = (slug: string, title: string) => {
   });
 };
 
+// InitiateCheckout - fires regardless of consent (conversion event)
 export const trackBookClick = (slug: string, title: string) => {
   pushToDataLayer({
     event: 'eventpage_book_click',
@@ -60,12 +72,13 @@ export const trackBookClick = (slug: string, title: string) => {
     event_title: title
   });
   
-  trackFbEvent('InitiateCheckout', {
+  trackFbConversion('InitiateCheckout', {
     content_ids: [slug],
     content_name: title
   });
 };
 
+// AddToCart - fires regardless of consent (conversion event)
 export const trackAddToCart = (slug: string, title: string) => {
   pushToDataLayer({
     event: 'add_to_cart',
@@ -74,12 +87,13 @@ export const trackAddToCart = (slug: string, title: string) => {
     event_title: title
   });
   
-  trackFbEvent('AddToCart', {
+  trackFbConversion('AddToCart', {
     content_name: title,
     content_ids: [slug]
   });
 };
 
+// Purchase - fires regardless of consent (conversion event)
 export const trackPurchase = (slug: string, title: string, value?: number, orderId?: string) => {
   pushToDataLayer({
     event: 'purchase',
@@ -91,7 +105,7 @@ export const trackPurchase = (slug: string, title: string, value?: number, order
     order_id: orderId
   });
   
-  trackFbEvent('Purchase', {
+  trackFbConversion('Purchase', {
     content_name: title,
     content_ids: [slug],
     value: value || 0,

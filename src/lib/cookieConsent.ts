@@ -32,6 +32,12 @@ export const isConsentGranted = (): boolean => {
 export const grantConsent = (): void => {
   setConsentStatus('granted');
   
+  // Track consent decision in dataLayer
+  if (typeof window !== 'undefined') {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'cookie_consent_granted' });
+  }
+  
   if (typeof window !== 'undefined' && window.fbq) {
     window.fbq('consent', 'grant');
     window.fbq('track', 'PageView');
@@ -42,6 +48,13 @@ export const grantConsent = (): void => {
 // Deny consent - pixel remains in revoke mode
 export const denyConsent = (): void => {
   setConsentStatus('denied');
+  
+  // Track consent decision in dataLayer
+  if (typeof window !== 'undefined') {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'cookie_consent_denied' });
+  }
+  
   console.log('[Consent] Denied - tracking disabled');
 };
 
