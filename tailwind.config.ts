@@ -18,8 +18,8 @@ export default {
 			}
 		},
 		extend: {
-			fontFamily: {
-				'bebas': ['"Bebas Neue"', 'cursive'],
+		fontFamily: {
+				'oswald': ['Oswald', 'sans-serif'],
 				'poppins': ['Poppins', 'sans-serif'],
 				'inter': ['Inter', 'sans-serif'],
 			},
