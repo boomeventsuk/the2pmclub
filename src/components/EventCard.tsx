@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { trackBookClick } from "@/lib/dataLayer";
 
 interface EventCardProps {
   id?: number;
@@ -28,13 +29,8 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
   const navigate = useNavigate();
 
   const handleBookNow = () => {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
-      event: 'home_eventcard_click',
-      event_slug: slug,
-      event_type: '2PM',
-      event_title: title
-    });
+    // Fire InitiateCheckout via centralized dataLayer (includes Meta Pixel)
+    trackBookClick(slug, title);
     
     // Navigate to event page
     navigate(`/events/${slug}/`);

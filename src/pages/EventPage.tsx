@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { trackEventPageView, trackBookClick } from '@/lib/dataLayer';
 
 interface EventJson {
   id: number;
@@ -309,14 +310,10 @@ const EventPage = () => {
   };
 
   const scrollToCheckout = () => {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
-      event: 'eventpage_book_click',
-      event_slug: event?.slug,
-      event_type: '2PM',
-      is_retargeting: isRetargeting,
-      is_email_landing: isEmailLanding
-    });
+    // Fire InitiateCheckout via centralized dataLayer (includes Meta Pixel)
+    if (event?.slug) {
+      trackBookClick(event.slug, event.title);
+    }
 
     const checkoutSection = document.getElementById('checkout-section');
     if (checkoutSection) {
@@ -350,19 +347,11 @@ const EventPage = () => {
   // Detect Christmas events
   const isChristmasEvent = event?.title.toLowerCase().includes('christmas');
 
-  // Track page view
+  // Track page view - fires ViewContent via centralized dataLayer (includes Meta Pixel)
   useEffect(() => {
     if (!event) return;
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
-      event: 'eventpage_view',
-      event_slug: event.slug,
-      event_type: '2PM',
-      event_title: event.title,
-      is_retargeting: isRetargeting,
-      is_email_landing: isEmailLanding
-    });
-  }, [event, isRetargeting, isEmailLanding]);
+    trackEventPageView(event.slug, event.title);
+  }, [event]);
 
   // Track hero button visibility for sticky button (only for non-retargeting and non-email)
   useEffect(() => {
