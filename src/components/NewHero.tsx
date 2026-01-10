@@ -31,7 +31,7 @@ const NewHero = () => {
         <h1 className="font-bebas text-[3.5rem] sm:text-7xl md:text-8xl lg:text-9xl font-bold text-foreground mb-1 leading-[0.95] uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
           THE 2PM CLUB DAYTIME DISCO.
         </h1>
-        <p className="font-bebas text-[2rem] sm:text-5xl md:text-6xl lg:text-7xl text-primary mb-4 uppercase tracking-wide leading-[0.95] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+        <p className="font-bebas text-[1.25rem] sm:text-2xl md:text-3xl lg:text-4xl text-primary mb-4 uppercase tracking-wide leading-[0.95] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
           YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON.
         </p>
         
