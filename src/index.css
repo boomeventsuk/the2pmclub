@@ -5,21 +5,11 @@
 /* Paste into Lovable custom CSS */
 #parties { padding-top: 0 !important; }
 
-/* Mobile adjustments */
+/* Mobile adjustments (layout only — don't override hero typography) */
 @media (max-width: 640px) {
   #hero {
-    padding: 2rem 1rem !important;
-  }
-  #hero h1 { 
-    font-size: 2rem !important; 
-    line-height: 1.1 !important; 
-    margin-bottom: 1rem !important;
-    padding: 0 0.5rem !important;
-  }
-  #hero .font-poppins { 
-    font-size: 0.875rem !important; 
-    line-height: 1.4 !important; 
-    margin-bottom: 1.5rem !important;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 }
 
