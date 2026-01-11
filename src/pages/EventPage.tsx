@@ -438,14 +438,25 @@ const EventPage = () => {
                   {/* Right: Compact Details */}
                   <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-6 space-y-4">
                     {/* Retargeting Headline */}
-                    <div>
-                      <p className="font-poppins text-lg md:text-xl text-primary font-semibold mb-2">
-                        You're back. Skip to the good bit.
-                      </p>
-                      <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
-                        THE 2PM CLUB Daytime Disco — {event.city}
-                      </h1>
-                    </div>
+                    {event.cityCode === 'NPTON' ? (
+                      <div>
+                        <p className="font-poppins text-lg md:text-xl text-primary font-semibold mb-2">
+                          🎉 Northampton is Sold Out!
+                        </p>
+                        <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
+                          Join the Waiting List
+                        </h1>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="font-poppins text-lg md:text-xl text-primary font-semibold mb-2">
+                          You're back. Skip to the good bit.
+                        </p>
+                        <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
+                          THE 2PM CLUB Daytime Disco — {event.city}
+                        </h1>
+                      </div>
+                    )}
                     
                     {/* Event Details - Single Line Style */}
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-foreground/80">
@@ -469,7 +480,7 @@ const EventPage = () => {
                       size="lg" 
                       className="w-full font-poppins text-lg"
                     >
-                      Go on then
+                      {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Go on then'}
                     </Button>
                   </div>
                 </div>
@@ -606,7 +617,7 @@ const EventPage = () => {
                   onClick={scrollToCheckout}
                   className="font-poppins font-semibold px-6 shrink-0"
                 >
-                  Book Now
+                  {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Now'}
                 </Button>
               </div>
             </div>
@@ -654,7 +665,7 @@ const EventPage = () => {
           {event.cityCode === 'NPTON' && (
             <div className="urgency-banner-npton text-white py-3 text-center">
               <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
-              ⚠️ NEARLY SOLD OUT — ONLY 20 TICKETS REMAINING
+              🎉 SOLD OUT — Join the Waiting List
               </p>
             </div>
           )}
@@ -679,13 +690,13 @@ const EventPage = () => {
                     {event.cityCode === 'NPTON' ? (
                       <div>
                         <h1 className="font-poppins text-3xl md:text-4xl font-bold text-foreground tracking-tight uppercase mb-2">
-                          LAST CALL NORTHAMPTON
+                          NORTHAMPTON IS SOLD OUT
                         </h1>
-                        <p className="font-poppins text-2xl md:text-3xl font-bold text-destructive mb-2">
-                          20 TICKETS LEFT
+                        <p className="font-poppins text-2xl md:text-3xl font-bold text-primary mb-2">
+                          🎉 Join the Waiting List
                         </p>
                         <p className="font-poppins text-sm text-foreground/70 tracking-wider uppercase">
-                          YOUR CREW | ANTHEMS | HOME BY 7 | FINAL TICKETS
+                          YOUR CREW | ANTHEMS | HOME BY 7
                         </p>
                       </div>
                     ) : (
@@ -721,7 +732,7 @@ const EventPage = () => {
                       size="lg" 
                       className="w-full font-poppins text-lg"
                     >
-                      {event.cityCode === 'NPTON' ? 'Grab Your Tickets — Only 20 Left' : 'Book Tickets'}
+                      {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Tickets'}
                     </Button>
                   </div>
                 </div>
@@ -883,7 +894,7 @@ const EventPage = () => {
                   onClick={scrollToCheckout}
                   className="font-poppins font-semibold px-6 shrink-0"
                 >
-                  {event.cityCode === 'NPTON' ? 'Only 50 Left — Book Now' : 'Book Now'}
+                  {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Now'}
                 </Button>
               </div>
             </div>
