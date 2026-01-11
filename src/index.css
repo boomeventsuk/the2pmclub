@@ -226,6 +226,22 @@ a.button:focus, button:focus {
   50% { opacity: 0.85; }
 }
 
+/* Northampton card enhanced glow - final tickets urgency */
+.ticket-card[data-event-slug="280226-2PM-NPTON"] {
+  border-color: hsl(0 84% 60% / 0.5) !important;
+  box-shadow: 0 0 30px hsl(0 84% 60% / 0.25), 0 0 60px hsl(0 84% 60% / 0.1);
+  animation: card-urgency-glow 2s ease-in-out infinite;
+}
+
+@keyframes card-urgency-glow {
+  0%, 100% {
+    box-shadow: 0 0 30px hsl(0 84% 60% / 0.25), 0 0 60px hsl(0 84% 60% / 0.1);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(0 84% 60% / 0.4), 0 0 80px hsl(0 84% 60% / 0.2);
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
