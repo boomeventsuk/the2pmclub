@@ -957,11 +957,11 @@ const EventPage = () => {
       <div className="min-h-screen bg-background">
         <Header />
         
-        {/* Northampton Urgency Banner */}
+        {/* Northampton Sold Out Banner */}
         {event.cityCode === 'NPTON' && (
           <div className="urgency-banner-npton text-white py-3 text-center">
             <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
-              ⚠️ NEARLY SOLD OUT — ONLY 20 TICKETS REMAINING
+              🎉 SOLD OUT — Join the Waiting List
             </p>
           </div>
         )}
@@ -993,14 +993,14 @@ const EventPage = () => {
                       </>
                     ) : event.cityCode === 'NPTON' ? (
                       <>
-                        <div className="inline-block bg-destructive/20 border border-destructive/40 rounded-lg px-3 py-1 mb-2">
-                          <span className="font-poppins text-sm font-bold text-destructive tracking-wider">🔥 FINAL 20 TICKETS</span>
+                        <div className="inline-block bg-muted border border-muted-foreground/40 rounded-lg px-3 py-1 mb-2">
+                          <span className="font-poppins text-sm font-bold text-foreground tracking-wider">🎉 SOLD OUT</span>
                         </div>
                         <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight mb-1 uppercase">
                           THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
                         </h1>
-                        <p className="font-poppins text-xl md:text-2xl font-semibold text-destructive mb-2">
-                          Your last chance to join the party
+                        <p className="font-poppins text-xl md:text-2xl font-semibold text-foreground/70 mb-2">
+                          Join the waiting list for cancellations
                         </p>
                       </>
                     ) : (
@@ -1031,7 +1031,7 @@ const EventPage = () => {
                   </div>
 
                   <Button ref={heroBookButtonRef} onClick={scrollToCheckout} size="lg" className="w-full md:w-auto font-poppins">
-                    {event.cityCode === 'NPTON' ? 'Grab Your Tickets — Only 20 Left' : 'BOOK TICKETS'}
+                    {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'BOOK TICKETS'}
                   </Button>
 
                   <div className="pt-4 border-t border-border/50">
@@ -1132,13 +1132,13 @@ const EventPage = () => {
                       })()
                     ) : event.cityCode === 'NPTON' ? (
                       <>
-                        {/* Northampton Urgency Block */}
-                        <div className="bg-destructive/10 border border-destructive/40 rounded-xl p-4 mb-6">
+                        {/* Northampton Sold Out Block */}
+                        <div className="bg-muted border border-muted-foreground/40 rounded-xl p-4 mb-6">
                           <p className="font-poppins text-lg md:text-xl font-bold text-foreground">
-                            🔥 This is it. 20 tickets. That's all that's left.
+                            🎉 We did it. Northampton is officially SOLD OUT!
                           </p>
                           <p className="font-poppins text-base text-foreground/80 mt-2">
-                            Northampton's biggest afternoon party is nearly sold out. Your last chance to join the group chat crew.
+                            Join our waiting list and we'll contact you if any tickets become available.
                           </p>
                         </div>
                         
@@ -1431,7 +1431,7 @@ const EventPage = () => {
         {showStickyBookTickets && (
           <div className="fixed top-24 right-4 z-50 animate-fade-in">
             <Button onClick={scrollToCheckout} className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg">
-              {event.cityCode === 'NPTON' ? 'Only 20 Left!' : 'Book Tickets'}
+              {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Tickets'}
             </Button>
           </div>
         )}
