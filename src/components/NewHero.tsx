@@ -28,13 +28,13 @@ const NewHero = () => {
       
       {/* Content - tighter padding, bigger text */}
       <div className="relative z-10 text-center w-full px-3 sm:px-6 py-8 md:py-12">
-        <h1 className="font-oswald text-[3.5rem] sm:text-7xl md:text-8xl lg:text-9xl font-bold text-foreground mb-0 leading-[0.9] uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
+        <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-1 uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
           THE 2PM CLUB
         </h1>
-        <p className="font-oswald text-[3.5rem] sm:text-7xl md:text-8xl lg:text-9xl font-bold text-foreground mb-2 leading-[0.9] uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
+        <p className="font-poppins text-3xl md:text-5xl lg:text-5xl font-bold text-primary mb-4 uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
           DAYTIME DISCO.
         </p>
-        <p className="font-oswald text-[1.25rem] sm:text-2xl md:text-3xl lg:text-4xl text-primary mb-4 uppercase tracking-wide leading-[0.95] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+        <p className="font-poppins text-base md:text-xl lg:text-2xl text-foreground/90 mb-4 uppercase tracking-wide drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
           YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON.
         </p>
         
