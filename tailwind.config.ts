@@ -18,8 +18,7 @@ export default {
 			}
 		},
 		extend: {
-		fontFamily: {
-				'oswald': ['Oswald', 'sans-serif'],
+			fontFamily: {
 				'poppins': ['Poppins', 'sans-serif'],
 				'inter': ['Inter', 'sans-serif'],
 			},
