@@ -654,7 +654,7 @@ const EventPage = () => {
           {event.cityCode === 'NPTON' && (
             <div className="urgency-banner-npton text-white py-3 text-center">
               <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
-                ⚠️ NEARLY SOLD OUT — ONLY 50 TICKETS REMAINING
+              ⚠️ NEARLY SOLD OUT — ONLY 20 TICKETS REMAINING
               </p>
             </div>
           )}
@@ -682,7 +682,7 @@ const EventPage = () => {
                           LAST CALL NORTHAMPTON
                         </h1>
                         <p className="font-poppins text-2xl md:text-3xl font-bold text-destructive mb-2">
-                          50 TICKETS LEFT
+                          20 TICKETS LEFT
                         </p>
                         <p className="font-poppins text-sm text-foreground/70 tracking-wider uppercase">
                           YOUR CREW | ANTHEMS | HOME BY 7 | FINAL TICKETS
@@ -721,7 +721,7 @@ const EventPage = () => {
                       size="lg" 
                       className="w-full font-poppins text-lg"
                     >
-                      {event.cityCode === 'NPTON' ? 'Grab Your Tickets — Only 50 Left' : 'Book Tickets'}
+                      {event.cityCode === 'NPTON' ? 'Grab Your Tickets — Only 20 Left' : 'Book Tickets'}
                     </Button>
                   </div>
                 </div>
@@ -961,7 +961,7 @@ const EventPage = () => {
         {event.cityCode === 'NPTON' && (
           <div className="urgency-banner-npton text-white py-3 text-center">
             <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
-              ⚠️ NEARLY SOLD OUT — ONLY 50 TICKETS REMAINING
+              ⚠️ NEARLY SOLD OUT — ONLY 20 TICKETS REMAINING
             </p>
           </div>
         )}
@@ -994,7 +994,7 @@ const EventPage = () => {
                     ) : event.cityCode === 'NPTON' ? (
                       <>
                         <div className="inline-block bg-destructive/20 border border-destructive/40 rounded-lg px-3 py-1 mb-2">
-                          <span className="font-poppins text-sm font-bold text-destructive tracking-wider">🔥 FINAL 50 TICKETS</span>
+                          <span className="font-poppins text-sm font-bold text-destructive tracking-wider">🔥 FINAL 20 TICKETS</span>
                         </div>
                         <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight mb-1 uppercase">
                           THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
@@ -1031,7 +1031,7 @@ const EventPage = () => {
                   </div>
 
                   <Button ref={heroBookButtonRef} onClick={scrollToCheckout} size="lg" className="w-full md:w-auto font-poppins">
-                    {event.cityCode === 'NPTON' ? 'Grab Your Tickets — Only 50 Left' : 'BOOK TICKETS'}
+                    {event.cityCode === 'NPTON' ? 'Grab Your Tickets — Only 20 Left' : 'BOOK TICKETS'}
                   </Button>
 
                   <div className="pt-4 border-t border-border/50">
@@ -1135,7 +1135,7 @@ const EventPage = () => {
                         {/* Northampton Urgency Block */}
                         <div className="bg-destructive/10 border border-destructive/40 rounded-xl p-4 mb-6">
                           <p className="font-poppins text-lg md:text-xl font-bold text-foreground">
-                            🔥 This is it. 50 tickets. That's all that's left.
+                            🔥 This is it. 20 tickets. That's all that's left.
                           </p>
                           <p className="font-poppins text-base text-foreground/80 mt-2">
                             Northampton's biggest afternoon party is nearly sold out. Your last chance to join the group chat crew.
@@ -1431,7 +1431,7 @@ const EventPage = () => {
         {showStickyBookTickets && (
           <div className="fixed top-24 right-4 z-50 animate-fade-in">
             <Button onClick={scrollToCheckout} className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg">
-              {event.cityCode === 'NPTON' ? 'Only 50 Left!' : 'Book Tickets'}
+              {event.cityCode === 'NPTON' ? 'Only 20 Left!' : 'Book Tickets'}
             </Button>
           </div>
         )}
