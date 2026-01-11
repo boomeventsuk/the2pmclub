@@ -31,10 +31,10 @@ const NewHero = () => {
         <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-2 uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
           THE 2PM CLUB
         </h1>
-        <p className="font-poppins text-3xl md:text-5xl lg:text-5xl font-bold text-primary mb-4 uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
+        <p className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-2 uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
           DAYTIME DISCO.
         </p>
-        <p className="font-poppins text-base md:text-2xl text-foreground/90 mb-6 drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+        <p className="font-poppins text-3xl md:text-5xl lg:text-5xl font-bold text-primary mb-6 uppercase tracking-wide drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
           YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON.
         </p>
         
