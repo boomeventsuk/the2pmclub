@@ -427,6 +427,18 @@ const EventPage = () => {
         <div className="min-h-screen bg-background pb-20 md:pb-0">
           <Header />
           
+          {/* Retargeting Urgency Banner for last-tickets events */}
+          {event.status === 'last-tickets' && (
+            <div className="urgency-banner-last-tickets text-white py-4 md:py-5 text-center sticky top-0 z-50">
+              <p className="font-poppins font-black text-2xl md:text-4xl tracking-tight uppercase">
+                {event.urgencyLabel || 'LAST TICKETS'}
+              </p>
+              <p className="font-poppins text-lg md:text-xl font-bold mt-1">
+                Don't miss out!
+              </p>
+            </div>
+          )}
+          
           {/* Compact Hero Section */}
           <section className="pt-24 md:pt-28 pb-6 bg-gradient-to-b from-background via-background to-muted/10">
             <div className="container mx-auto px-4">
@@ -443,7 +455,7 @@ const EventPage = () => {
                   
                   {/* Right: Compact Details */}
                   <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-6 space-y-4">
-                    {/* Retargeting Headline */}
+                    {/* Retargeting Headline - With urgency override for last-tickets */}
                     {event.cityCode === 'NPTON' ? (
                       <div>
                         <p className="font-poppins text-lg md:text-xl text-primary font-semibold mb-2">
@@ -452,6 +464,20 @@ const EventPage = () => {
                         <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
                           Join the Waiting List
                         </h1>
+                      </div>
+                    ) : event.status === 'last-tickets' ? (
+                      <div>
+                        <div className="bg-primary/30 border-2 border-primary rounded-xl px-4 py-3 mb-3 w-full">
+                          <p className="font-poppins text-xl md:text-3xl font-black text-foreground tracking-tight uppercase text-center">
+                            {event.urgencyLabel || 'LAST TICKETS'}
+                          </p>
+                        </div>
+                        <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
+                          THE 2PM CLUB Daytime Disco — {event.city}
+                        </h1>
+                        <p className="font-poppins text-lg md:text-xl font-semibold text-foreground/80 mt-2">
+                          Don't miss out!
+                        </p>
                       </div>
                     ) : (
                       <div>
@@ -612,16 +638,17 @@ const EventPage = () => {
 
           {/* Sticky Mobile CTA - Fixed Bottom Bar (Mobile Only) */}
           {isMobile && (
-            <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-border/50 p-3 safe-area-inset-bottom">
+            <div className={`fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm border-t p-3 safe-area-inset-bottom ${event.status === 'last-tickets' ? 'bg-primary border-primary/50' : 'bg-background/95 border-border/50'}`}>
               <div className="flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <p className="font-poppins text-sm font-semibold text-foreground truncate">
-                    {event.city} — {formatShortDate(event.startIso)}
+                  <p className={`font-poppins text-sm font-bold truncate ${event.status === 'last-tickets' ? 'text-white' : 'text-foreground'}`}>
+                    {event.status === 'last-tickets' ? (event.urgencyLabel || 'LAST TICKETS') : `${event.city} — ${formatShortDate(event.startIso)}`}
                   </p>
                 </div>
                 <Button 
                   onClick={scrollToCheckout}
-                  className="font-poppins font-semibold px-6 shrink-0"
+                  className={`font-poppins font-bold px-6 shrink-0 ${event.status === 'last-tickets' ? 'bg-white text-primary hover:bg-white/90' : ''}`}
+                  variant={event.status === 'last-tickets' ? 'secondary' : 'default'}
                 >
                   {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Now'}
                 </Button>
@@ -663,8 +690,20 @@ const EventPage = () => {
         <div className="min-h-screen bg-background pb-20 md:pb-0">
           <Header />
           
+          {/* Email Urgency Banner for last-tickets events */}
+          {event.status === 'last-tickets' && (
+            <div className="urgency-banner-last-tickets text-white py-4 md:py-5 text-center sticky top-0 z-50">
+              <p className="font-poppins font-black text-2xl md:text-4xl tracking-tight uppercase">
+                {event.urgencyLabel || 'LAST TICKETS'}
+              </p>
+              <p className="font-poppins text-lg md:text-xl font-bold mt-1">
+                Don't miss out!
+              </p>
+            </div>
+          )}
+          
           {/* Northampton Email Urgency Banner */}
-          {event.cityCode === 'NPTON' && (
+          {event.cityCode === 'NPTON' && !event.status && (
             <div className="urgency-banner-npton text-white py-3 text-center">
               <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
               🎉 SOLD OUT — Join the Waiting List
@@ -699,6 +738,20 @@ const EventPage = () => {
                         </p>
                         <p className="font-poppins text-sm text-foreground/70 tracking-wider uppercase">
                           YOUR CREW | ANTHEMS | HOME BY 7
+                        </p>
+                      </div>
+                    ) : event.status === 'last-tickets' ? (
+                      <div>
+                        <div className="bg-primary/30 border-2 border-primary rounded-xl px-4 py-3 mb-3 w-full">
+                          <p className="font-poppins text-xl md:text-3xl font-black text-foreground tracking-tight uppercase text-center">
+                            {event.urgencyLabel || 'LAST TICKETS'}
+                          </p>
+                        </div>
+                        <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
+                          THE 2PM CLUB Daytime Disco — {event.city}
+                        </h1>
+                        <p className="font-poppins text-lg md:text-xl font-semibold text-foreground/80 mt-2">
+                          Don't miss out!
                         </p>
                       </div>
                     ) : (
@@ -885,16 +938,17 @@ const EventPage = () => {
 
           {/* Sticky Mobile CTA */}
           {isMobile && (
-            <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-border/50 p-3 safe-area-inset-bottom">
+            <div className={`fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm border-t p-3 safe-area-inset-bottom ${event.status === 'last-tickets' ? 'bg-primary border-primary/50' : 'bg-background/95 border-border/50'}`}>
               <div className="flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <p className="font-poppins text-sm font-semibold text-foreground truncate">
-                    {event.city} — {formatShortDate(event.startIso)}
+                  <p className={`font-poppins text-sm font-bold truncate ${event.status === 'last-tickets' ? 'text-white' : 'text-foreground'}`}>
+                    {event.status === 'last-tickets' ? (event.urgencyLabel || 'LAST TICKETS') : `${event.city} — ${formatShortDate(event.startIso)}`}
                   </p>
                 </div>
                 <Button 
                   onClick={scrollToCheckout}
-                  className="font-poppins font-semibold px-6 shrink-0"
+                  className={`font-poppins font-bold px-6 shrink-0 ${event.status === 'last-tickets' ? 'bg-white text-primary hover:bg-white/90' : ''}`}
+                  variant={event.status === 'last-tickets' ? 'secondary' : 'default'}
                 >
                   {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Now'}
                 </Button>
@@ -979,13 +1033,13 @@ const EventPage = () => {
           </div>
         )}
         
-        {/* Last Tickets Urgency Banner - Softer, two-line */}
+        {/* Last Tickets Urgency Banner - MASSIVE, IMPOSSIBLE TO IGNORE */}
         {event.status === 'last-tickets' && (
-          <div className="urgency-banner-last-tickets text-white py-3 text-center sticky top-0 z-50">
-            <p className="font-poppins font-black text-sm md:text-lg tracking-wide uppercase">
+          <div className="urgency-banner-last-tickets text-white py-4 md:py-5 text-center sticky top-0 z-50">
+            <p className="font-poppins font-black text-2xl md:text-4xl tracking-tight uppercase">
               {event.urgencyLabel || 'LAST TICKETS'}
             </p>
-            <p className="font-poppins text-xs md:text-sm font-medium">
+            <p className="font-poppins text-lg md:text-xl font-bold mt-1">
               Don't miss out!
             </p>
           </div>
@@ -1030,15 +1084,15 @@ const EventPage = () => {
                       </>
                     ) : event.status === 'last-tickets' ? (
                       <>
-                        <div className="bg-primary/20 border-2 border-primary rounded-xl px-4 py-3 mb-3">
-                          <p className="font-poppins text-lg md:text-2xl font-bold text-foreground tracking-wide uppercase text-center">
+                        <div className="bg-primary/30 border-2 border-primary rounded-xl px-6 py-4 mb-4 w-full">
+                          <p className="font-poppins text-2xl md:text-4xl font-black text-foreground tracking-tight uppercase text-center">
                             {event.urgencyLabel || 'LAST TICKETS'}
                           </p>
                         </div>
-                        <h1 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-1 uppercase">
+                        <h1 className="font-poppins text-2xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight mb-1 uppercase">
                           THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
                         </h1>
-                        <p className="font-poppins text-lg md:text-xl text-foreground/80 mb-2">
+                        <p className="font-poppins text-xl md:text-2xl font-semibold text-foreground/80 mb-2">
                           Don't miss out!
                         </p>
                       </>

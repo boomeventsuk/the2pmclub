@@ -235,13 +235,18 @@ a.button:focus, button:focus {
   }
 }
 
-/* Last tickets urgency banner - Softened with brand pink */
+/* Last tickets urgency banner - IMPOSSIBLE TO IGNORE */
 .urgency-banner-last-tickets {
-  background: linear-gradient(90deg, hsl(328 100% 40%) 0%, hsl(328 100% 50%) 50%, hsl(328 100% 40%) 100%);
+  background: linear-gradient(90deg, hsl(328 100% 45%) 0%, hsl(328 100% 54%) 50%, hsl(328 100% 45%) 100%);
   background-size: 200% 100%;
-  animation: urgency-banner-scroll 4s linear infinite;
+  animation: urgency-banner-scroll 3s linear infinite;
   position: relative;
   overflow: hidden;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes urgency-banner-scroll {
