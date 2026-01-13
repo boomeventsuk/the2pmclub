@@ -30,6 +30,8 @@ interface EventJson {
   fullDescription?: string;
   highlights?: string;
   isHidden?: boolean;
+  status?: string;
+  urgencyLabel?: string;
 }
 
 interface EventData {
@@ -52,6 +54,8 @@ interface EventData {
   subtitle: string;
   fullDescription: string;
   highlights: string[];
+  status?: string;
+  urgencyLabel?: string;
 }
 
 // Parse venue and city from location string
@@ -180,7 +184,9 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         timeDisplay,
         subtitle: event.subtitle || '',
         fullDescription: event.fullDescription || event.description,
-        highlights
+        highlights,
+        status: event.status,
+        urgencyLabel: event.urgencyLabel
       };
     });
     return eventData;
@@ -973,6 +979,15 @@ const EventPage = () => {
           </div>
         )}
         
+        {/* Last Tickets Urgency Banner */}
+        {event.status === 'last-tickets' && (
+          <div className="urgency-banner-last-tickets text-white py-3 text-center">
+            <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
+              🔥 {event.urgencyLabel || 'LAST TICKETS'} — Book Now Before They're Gone!
+            </p>
+          </div>
+        )}
+        
         {/* Hero Section */}
         <section className="pt-32 md:pt-36 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
           <div className="container mx-auto px-4">
@@ -1008,6 +1023,18 @@ const EventPage = () => {
                         </h1>
                         <p className="font-poppins text-xl md:text-2xl font-semibold text-foreground/70 mb-2">
                           Join the waiting list for cancellations
+                        </p>
+                      </>
+                    ) : event.status === 'last-tickets' ? (
+                      <>
+                        <div className="inline-block bg-red-600 border border-red-500 rounded-lg px-3 py-1 mb-2 animate-pulse">
+                          <span className="font-poppins text-sm font-bold text-white tracking-wider">🔥 {event.urgencyLabel || 'LAST TICKETS'}</span>
+                        </div>
+                        <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight mb-1 uppercase">
+                          THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
+                        </h1>
+                        <p className="font-poppins text-xl md:text-2xl font-semibold text-foreground/70 mb-2">
+                          Don't miss out — grab yours now!
                         </p>
                       </>
                     ) : (

@@ -39,7 +39,7 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
 
   return (
     <article 
-      className="ticket-card bg-card/80 backdrop-blur-md border border-border/50 rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-[0_0_30px_hsl(328_100%_54%_/_0.15)] transition-all duration-300" 
+      className={`ticket-card bg-card/80 backdrop-blur-md border rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-[0_0_30px_hsl(328_100%_54%_/_0.15)] transition-all duration-300 ${urgencyColor === 'red' ? 'card-urgency-glow border-red-500' : 'border-border/50'}`}
       data-ticket-card 
       data-date-iso={dateIso} 
       data-event-slug={slug}
