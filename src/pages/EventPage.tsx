@@ -632,12 +632,8 @@ const EventPage = () => {
   // ==========================================
   if (isEmailLanding) {
     // Video URLs (same as standard page)
-    const videoUrl = isChristmasEvent 
-      ? 'https://res.cloudinary.com/dteowuv7o/video/upload/v1764538239/2PM_Christmas_Mobile_LOW_RES_ukmblh.mp4'
-      : 'https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4';
-    const videoPoster = isChristmasEvent
-      ? 'https://res.cloudinary.com/dteowuv7o/image/upload/v1764538370/2PM_CHRISTMAS_VID_THUMBNAIL_uyxdtq.png'
-      : 'https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png';
+    const videoUrl = 'https://boombastic-events.b-cdn.net/2PM%20web%20videos/2PM%20video%20low%20res.mp4';
+    const videoPoster = 'https://boombastic-events.b-cdn.net/2PM%20web%20videos/2PM%20Web%20Video%20Thumbnail.jpg';
 
     return (
       <>
@@ -1220,17 +1216,11 @@ const EventPage = () => {
                       controls
                       playsInline
                       preload="none"
-                      poster={isChristmasEvent 
-                        ? "https://res.cloudinary.com/dteowuv7o/image/upload/v1764581303/CHRISTMAS_2PM_VID_WEB_thumbnail_mzaalk.png"
-                        : "https://res.cloudinary.com/dteowuv7o/image/upload/v1764280330/WEB_VID_THUMBNAIL_i8cg1s.png"
-                      }
+                      poster="https://boombastic-events.b-cdn.net/2PM%20web%20videos/2PM%20Web%20Video%20Thumbnail.jpg"
                       className="w-full"
                     >
                       <source
-                        src={isChristmasEvent
-                          ? "https://res.cloudinary.com/dteowuv7o/video/upload/v1764581448/CHRISTMAS_2PM_VID_WEB_v2_tnraj9.mp4"
-                          : "https://res.cloudinary.com/dteowuv7o/video/upload/v1764279993/2PM_video_low_res_aihmi0.mp4"
-                        }
+                        src="https://boombastic-events.b-cdn.net/2PM%20web%20videos/2PM%20video%20low%20res.mp4"
                         type="video/mp4"
                       />
                       Your browser does not support the video tag.
