@@ -36,7 +36,7 @@ const WhyTwoPmWorks = () => {
         <meta property="og:title" content="Why 2PM Works: The Evidence" />
         <meta property="og:description" content="The data behind THE 2PM CLUB's daytime format." />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content="https://res.cloudinary.com/dteowuv7o/image/upload/c_fill,w_1200,h_630,f_jpg,q_auto/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" />
+        <meta property="og:image" content="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" />
         <meta property="og:locale" content="en_GB" />
         <meta name="twitter:card" content="summary_large_image" />
 

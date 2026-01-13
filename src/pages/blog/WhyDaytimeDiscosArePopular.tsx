@@ -42,7 +42,7 @@ const WhyDaytimeDiscosArePopular = () => {
         <meta property="og:title" content="Why 2PM is the New 2AM" />
         <meta property="og:description" content="We cracked the code on perfect party timing - discover the science behind why afternoon parties work better." />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content="https://res.cloudinary.com/dteowuv7o/image/upload/c_fill,w_1200,h_630,f_jpg,q_auto/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" />
+        <meta property="og:image" content="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" />
         <meta property="og:locale" content="en_GB" />
         <meta name="twitter:card" content="summary_large_image" />
         
@@ -67,7 +67,7 @@ const WhyDaytimeDiscosArePopular = () => {
         {/* Hero Section */}
         <section className="relative py-24 md:py-32 pt-32 md:pt-40 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10" />
-          <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/dteowuv7o/image/upload/c_fill,w_1920,h_1080,f_jpg,q_auto/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg')] bg-cover bg-center opacity-10" />
+          <div className="absolute inset-0 bg-[url('https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg')] bg-cover bg-center opacity-10" />
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-3 text-sm text-muted-foreground mb-6">

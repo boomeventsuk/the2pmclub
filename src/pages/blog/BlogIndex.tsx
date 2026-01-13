@@ -11,7 +11,7 @@ const BlogIndex = () => {
       slug: "why-daytime-discos-are-popular",
       title: "Why 2PM is the New 2AM",
       excerpt: "We cracked the code on perfect party timing. Discover why afternoon events sell out while evening ones struggle.",
-      image: "https://res.cloudinary.com/dteowuv7o/image/upload/c_fill,w_600,h_400,f_jpg,q_auto/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg",
+      image: "https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg",
       readTime: "4 min read",
       date: "20 Sep 2024",
       published: true
@@ -20,7 +20,7 @@ const BlogIndex = () => {
       slug: "why-2pm-works",
       title: "Why 2PM Works: The Evidence",
       excerpt: "The data behind THE 2PM CLUB's daytime format: attendance patterns, availability research, and recovery science.",
-      image: "https://res.cloudinary.com/dteowuv7o/image/upload/c_fill,w_600,h_400,f_jpg,q_auto/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg",
+      image: "https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg",
       readTime: "5 min read",
       date: "25 Sep 2024",
       published: true
@@ -64,7 +64,7 @@ const BlogIndex = () => {
         <meta property="og:title" content="THE 2PM CLUB Blog" />
         <meta property="og:description" content="Stories, science, and the soundtrack to your Saturday" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://res.cloudinary.com/dteowuv7o/image/upload/c_fill,w_1200,h_630,f_jpg,q_auto/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" />
+        <meta property="og:image" content="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" />
         <meta property="og:locale" content="en_GB" />
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>

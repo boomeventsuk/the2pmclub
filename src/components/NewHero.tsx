@@ -13,7 +13,7 @@ const NewHero = () => {
   };
   return <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-0">
       {/* Background Image */}
-      <img src="https://res.cloudinary.com/dteowuv7o/image/upload/v1757519594/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" alt="THE 2PM CLUB crowd at a daytime disco party" className="absolute inset-0 w-full h-full object-cover" />
+      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg" alt="THE 2PM CLUB crowd at a daytime disco party" className="absolute inset-0 w-full h-full object-cover" />
       
       {/* Gradient overlay - much lighter to show crowd energy */}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
