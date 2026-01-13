@@ -979,11 +979,11 @@ const EventPage = () => {
           </div>
         )}
         
-        {/* Last Tickets Urgency Banner */}
+        {/* Last Tickets Urgency Banner - STICKY */}
         {event.status === 'last-tickets' && (
-          <div className="urgency-banner-last-tickets text-white py-3 text-center">
-            <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
-              🔥 {event.urgencyLabel || 'LAST TICKETS'} — Book Now Before They're Gone!
+          <div className="urgency-banner-last-tickets text-white py-4 text-center sticky top-0 z-50">
+            <p className="font-poppins font-black text-base md:text-xl tracking-wide uppercase">
+              ⚠️ {event.urgencyLabel || 'LAST TICKETS'} ⚠️ Don't Miss Out — Book NOW!
             </p>
           </div>
         )}
@@ -1027,14 +1027,16 @@ const EventPage = () => {
                       </>
                     ) : event.status === 'last-tickets' ? (
                       <>
-                        <div className="inline-block bg-red-600 border border-red-500 rounded-lg px-3 py-1 mb-2 animate-pulse">
-                          <span className="font-poppins text-sm font-bold text-white tracking-wider">🔥 {event.urgencyLabel || 'LAST TICKETS'}</span>
+                        <div className="bg-red-600 border-2 border-red-400 rounded-xl px-4 py-3 mb-3 shadow-[0_0_30px_rgba(239,68,68,0.5)]">
+                          <p className="font-poppins text-lg md:text-2xl font-black text-white tracking-wide uppercase text-center animate-pulse">
+                            🔥 {event.urgencyLabel || 'LAST TICKETS'} 🔥
+                          </p>
                         </div>
-                        <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight mb-1 uppercase">
+                        <h1 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-1 uppercase">
                           THE 2PM CLUB Daytime Disco {event.city.toUpperCase()}
                         </h1>
-                        <p className="font-poppins text-xl md:text-2xl font-semibold text-foreground/70 mb-2">
-                          Don't miss out — grab yours now!
+                        <p className="font-poppins text-lg md:text-2xl font-bold text-red-400 mb-2 uppercase">
+                          These tickets will sell out — don't wait!
                         </p>
                       </>
                     ) : (
@@ -1064,9 +1066,20 @@ const EventPage = () => {
                     </div>
                   </div>
 
-                  <Button ref={heroBookButtonRef} onClick={scrollToCheckout} size="lg" className="w-full md:w-auto font-poppins">
-                    {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'BOOK TICKETS'}
-                  </Button>
+                  {event.status === 'last-tickets' ? (
+                    <Button 
+                      ref={heroBookButtonRef} 
+                      onClick={scrollToCheckout} 
+                      size="lg" 
+                      className="w-full md:w-auto font-poppins bg-red-600 hover:bg-red-700 text-white font-black text-lg uppercase shadow-[0_0_25px_rgba(239,68,68,0.5)] hover:shadow-[0_0_35px_rgba(239,68,68,0.7)] animate-pulse"
+                    >
+                      ⚡ GRAB TICKETS NOW ⚡
+                    </Button>
+                  ) : (
+                    <Button ref={heroBookButtonRef} onClick={scrollToCheckout} size="lg" className="w-full md:w-auto font-poppins">
+                      {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'BOOK TICKETS'}
+                    </Button>
+                  )}
 
                   <div className="pt-4 border-t border-border/50">
                     <p className="font-poppins text-xs uppercase tracking-wider text-muted-foreground mb-3">
@@ -1369,16 +1382,28 @@ const EventPage = () => {
         <section id="checkout-section" className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <div className="bg-primary/10 border border-primary/30 rounded-2xl p-6 md:p-8">
+              {/* Urgency block for last-tickets */}
+              {event.status === 'last-tickets' && (
+                <div className="bg-red-600 border-2 border-red-400 rounded-2xl p-4 md:p-6 mb-6 text-center shadow-[0_0_40px_rgba(239,68,68,0.4)]">
+                  <p className="font-poppins text-xl md:text-3xl font-black text-white uppercase tracking-wide animate-pulse">
+                    ⚠️ {event.urgencyLabel || 'LAST TICKETS'} REMAINING ⚠️
+                  </p>
+                  <p className="font-poppins text-base md:text-lg text-white/90 mt-2">
+                    This event WILL sell out. Secure your spot before it's too late!
+                  </p>
+                </div>
+              )}
+              
+              <div className={`rounded-2xl p-6 md:p-8 ${event.status === 'last-tickets' ? 'bg-red-600/20 border-2 border-red-500/50' : 'bg-primary/10 border border-primary/30'}`}>
                 <div className="text-center mb-6">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 rounded-full mb-3">
-                    <span className="text-2xl">🎟️</span>
+                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 ${event.status === 'last-tickets' ? 'bg-red-600/30' : 'bg-primary/20'}`}>
+                    <span className="text-2xl">{event.status === 'last-tickets' ? '⚡' : '🎟️'}</span>
                   </div>
-                  <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-1">
-                    Book Your Tickets
+                  <h2 className={`font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 ${event.status === 'last-tickets' ? 'text-red-400' : 'text-foreground'}`}>
+                    {event.status === 'last-tickets' ? 'GRAB YOUR TICKETS NOW' : 'Book Your Tickets'}
                   </h2>
-                  <p className="font-poppins text-sm text-foreground/70">
-                    Don't miss out! The most popular day party in the Midlands
+                  <p className={`font-poppins text-sm ${event.status === 'last-tickets' ? 'text-red-300 font-semibold' : 'text-foreground/70'}`}>
+                    {event.status === 'last-tickets' ? 'Only a handful left — don\'t be the one who missed out!' : 'Don\'t miss out! The most popular day party in the Midlands'}
                   </p>
                 </div>
                 
