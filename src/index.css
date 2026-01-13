@@ -220,6 +220,36 @@ a.button:focus, button:focus {
   background: linear-gradient(90deg, hsl(240 12% 25%), hsl(240 12% 20%), hsl(240 12% 25%));
 }
 
+/* Last tickets card urgency glow */
+.card-urgency-glow {
+  animation: card-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4), 0 0 40px rgba(239, 68, 68, 0.2);
+}
+
+@keyframes card-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4), 0 0 40px rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.6), 0 0 60px rgba(239, 68, 68, 0.3);
+  }
+}
+
+/* Last tickets urgency banner */
+.urgency-banner-last-tickets {
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 50%, #dc2626 100%);
+  animation: urgency-banner-pulse 2s ease-in-out infinite;
+}
+
+@keyframes urgency-banner-pulse {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(239, 68, 68, 0.6);
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
