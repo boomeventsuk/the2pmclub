@@ -32,6 +32,7 @@ interface EventJson {
   isHidden?: boolean;
   status?: string;
   urgencyLabel?: string;
+  accentColor?: string;
 }
 
 interface EventData {
@@ -56,6 +57,7 @@ interface EventData {
   highlights: string[];
   status?: string;
   urgencyLabel?: string;
+  accentColor?: string;
 }
 
 // Parse venue and city from location string
@@ -66,8 +68,17 @@ const parseLocation = (location: string): {
 } => {
   const parts = location.split(', ');
   const venue = parts[0] || location;
-  const city = parts[1] || '';
-  const postcodes: Record<string, string> = {
+  const city = parts[parts.length - 1] || '';
+  
+  // Venue-specific postcodes (for cities with multiple venues)
+  const venuePostcodes: Record<string, string> = {
+    "Franklin's Gardens": 'NN5 5BU',
+    "Cinch Stadium": 'NN5 5BU',
+    'The Picturedrome': 'NN1 5BD',
+  };
+  
+  // City-level postcodes (fallback)
+  const cityPostcodes: Record<string, string> = {
     'Coventry': 'CV1 1GX',
     'Milton Keynes': 'MK9 3PU',
     'Northampton': 'NN1 5BD',
@@ -75,10 +86,14 @@ const parseLocation = (location: string): {
     'Luton': 'LU1 2AA',
     'Bedford': 'MK40 2TH'
   };
+  
+  // Check venue-specific first, then fall back to city
+  const postcode = venuePostcodes[venue] || cityPostcodes[city] || '';
+  
   return {
     venue,
     city,
-    postcode: postcodes[city] || ''
+    postcode
   };
 };
 
@@ -186,7 +201,8 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         fullDescription: event.fullDescription || event.description,
         highlights,
         status: event.status,
-        urgencyLabel: event.urgencyLabel
+        urgencyLabel: event.urgencyLabel,
+        accentColor: event.accentColor
       };
     });
     return eventData;
@@ -456,10 +472,10 @@ const EventPage = () => {
                   {/* Right: Compact Details */}
                   <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-6 space-y-4">
                     {/* Retargeting Headline - With urgency override for last-tickets */}
-                    {event.cityCode === 'NPTON' ? (
+                    {event.status === 'sold-out' ? (
                       <div>
                         <p className="font-poppins text-lg md:text-xl text-primary font-semibold mb-2">
-                          🎉 Northampton is Sold Out!
+                          🎉 {event.city} is Sold Out!
                         </p>
                         <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
                           Join the Waiting List
@@ -512,7 +528,7 @@ const EventPage = () => {
                       size="lg" 
                       className="w-full font-poppins text-lg"
                     >
-                      {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Go on then'}
+                      {event.status === 'sold-out' ? 'Join Waiting List' : 'Go on then'}
                     </Button>
                   </div>
                 </div>
@@ -650,7 +666,7 @@ const EventPage = () => {
                   className={`font-poppins font-bold px-6 shrink-0 ${event.status === 'last-tickets' ? 'bg-white text-primary hover:bg-white/90' : ''}`}
                   variant={event.status === 'last-tickets' ? 'secondary' : 'default'}
                 >
-                  {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Now'}
+                  {event.status === 'sold-out' ? 'Join Waiting List' : 'Book Now'}
                 </Button>
               </div>
             </div>
@@ -703,7 +719,7 @@ const EventPage = () => {
           )}
           
           {/* Northampton Email Urgency Banner */}
-          {event.cityCode === 'NPTON' && !event.status && (
+          {event.status === 'sold-out' && (
             <div className="urgency-banner-npton text-white py-3 text-center">
               <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
               🎉 SOLD OUT — Join the Waiting List
@@ -728,7 +744,7 @@ const EventPage = () => {
                   {/* Right: Details */}
                   <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-6 space-y-4">
                     {/* Email Headline - Northampton urgent version */}
-                    {event.cityCode === 'NPTON' ? (
+                    {event.status === 'sold-out' ? (
                       <div>
                         <h1 className="font-poppins text-3xl md:text-4xl font-bold text-foreground tracking-tight uppercase mb-2">
                           NORTHAMPTON IS SOLD OUT
@@ -787,7 +803,7 @@ const EventPage = () => {
                       size="lg" 
                       className="w-full font-poppins text-lg"
                     >
-                      {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Tickets'}
+                      {event.status === 'sold-out' ? 'Join Waiting List' : 'Book Tickets'}
                     </Button>
                   </div>
                 </div>
@@ -950,7 +966,7 @@ const EventPage = () => {
                   className={`font-poppins font-bold px-6 shrink-0 ${event.status === 'last-tickets' ? 'bg-white text-primary hover:bg-white/90' : ''}`}
                   variant={event.status === 'last-tickets' ? 'secondary' : 'default'}
                 >
-                  {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Now'}
+                  {event.status === 'sold-out' ? 'Join Waiting List' : 'Book Now'}
                 </Button>
               </div>
             </div>
@@ -1024,8 +1040,8 @@ const EventPage = () => {
       <div className="min-h-screen bg-background">
         <Header />
         
-        {/* Northampton Sold Out Banner */}
-        {event.cityCode === 'NPTON' && (
+        {/* Sold Out Banner */}
+        {event.status === 'sold-out' && (
           <div className="urgency-banner-npton text-white py-3 text-center">
             <p className="font-poppins font-bold text-sm md:text-base tracking-wide">
               🎉 SOLD OUT — Join the Waiting List
@@ -1052,7 +1068,11 @@ const EventPage = () => {
               <div className="grid md:grid-cols-2 gap-6 items-start">
                 {/* Left: Event Poster */}
                 <div className="flex justify-center md:justify-start">
-                  <img src={event.squareImg} alt={`${event.title} event poster`} className="w-full max-w-md h-auto rounded-xl shadow-2xl shadow-primary/20" />
+                  <img 
+                    src={event.squareImg} 
+                    alt={`${event.title} event poster`} 
+                    className={`w-full max-w-md h-auto rounded-xl shadow-2xl ${event.accentColor === 'coral' ? 'shadow-coral' : 'shadow-primary/20'}`} 
+                  />
                 </div>
                 
                 {/* Right: Event Details - Wrapped in Card */}
@@ -1070,7 +1090,7 @@ const EventPage = () => {
                           Iconic 80s 90s 00s Anthems plus Festive Classics
                         </p>
                       </>
-                    ) : event.cityCode === 'NPTON' ? (
+                    ) : event.status === 'sold-out' ? (
                       <>
                         <div className="inline-block bg-muted border border-muted-foreground/40 rounded-lg px-3 py-1 mb-2">
                           <span className="font-poppins text-sm font-bold text-foreground tracking-wider">🎉 SOLD OUT</span>
@@ -1110,15 +1130,15 @@ const EventPage = () => {
                   
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-5 h-5 text-primary" />
+                      <Calendar className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : 'text-primary'}`} />
                       <span className="font-poppins font-medium text-base">{event.date}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-primary" />
+                      <Clock className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : 'text-primary'}`} />
                       <span className="font-poppins font-medium text-base">{event.timeDisplay}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-primary" />
+                      <MapPin className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : 'text-primary'}`} />
                       <span className="font-poppins font-medium text-base">{event.venue}, {event.city}</span>
                     </div>
                   </div>
@@ -1133,8 +1153,13 @@ const EventPage = () => {
                       Book Now
                     </Button>
                   ) : (
-                    <Button ref={heroBookButtonRef} onClick={scrollToCheckout} size="lg" className="w-full md:w-auto font-poppins">
-                      {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'BOOK TICKETS'}
+                    <Button 
+                      ref={heroBookButtonRef} 
+                      onClick={scrollToCheckout} 
+                      size="lg" 
+                      className={`w-full md:w-auto font-poppins ${event.accentColor === 'coral' ? 'btn-coral' : ''}`}
+                    >
+                      {event.status === 'sold-out' ? 'Join Waiting List' : 'BOOK TICKETS'}
                     </Button>
                   )}
 
@@ -1234,12 +1259,12 @@ const EventPage = () => {
                           </>
                         );
                       })()
-                    ) : event.cityCode === 'NPTON' ? (
+                    ) : event.status === 'sold-out' ? (
                       <>
-                        {/* Northampton Sold Out Block */}
+                        {/* Sold Out Block */}
                         <div className="bg-muted border border-muted-foreground/40 rounded-xl p-4 mb-6">
                           <p className="font-poppins text-lg md:text-xl font-bold text-foreground">
-                            🎉 We did it. Northampton is officially SOLD OUT!
+                            🎉 We did it. {event.city} is officially SOLD OUT!
                           </p>
                           <p className="font-poppins text-base text-foreground/80 mt-2">
                             Join our waiting list and we'll contact you if any tickets become available.
@@ -1541,8 +1566,11 @@ const EventPage = () => {
         {/* Sticky Book Tickets Button - Top Right */}
         {showStickyBookTickets && (
           <div className="fixed top-24 right-4 z-50 animate-fade-in">
-            <Button onClick={scrollToCheckout} className="bg-primary hover:bg-primary/90 text-primary-foreground font-poppins font-semibold px-6 py-2 rounded-full shadow-lg">
-              {event.cityCode === 'NPTON' ? 'Join Waiting List' : 'Book Tickets'}
+            <Button 
+              onClick={scrollToCheckout} 
+              className={`font-poppins font-semibold px-6 py-2 rounded-full shadow-lg ${event.accentColor === 'coral' ? 'btn-coral' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}
+            >
+              {event.status === 'sold-out' ? 'Join Waiting List' : 'Book Tickets'}
             </Button>
           </div>
         )}

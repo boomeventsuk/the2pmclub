@@ -254,6 +254,29 @@ a.button:focus, button:focus {
   100% { background-position: 200% 0%; }
 }
 
+/* Franklin's Gardens coral/tropical accent */
+.btn-coral {
+  background: linear-gradient(135deg, #E88B73 0%, #F4A582 50%, #E88B73 100%) !important;
+  border: 2px solid #F4A582 !important;
+  color: white !important;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.btn-coral:hover {
+  background: linear-gradient(135deg, #D97B63 0%, #E88B73 50%, #D97B63 100%) !important;
+  border-color: #E88B73 !important;
+}
+
+/* Coral icon tint for event page elements */
+.icon-coral {
+  color: #F4A582 !important;
+}
+
+/* Coral glow shadow for poster */
+.shadow-coral {
+  box-shadow: 0 25px 50px -12px rgba(232, 139, 115, 0.25) !important;
+}
+
 @layer base {
   * {
     @apply border-border;
