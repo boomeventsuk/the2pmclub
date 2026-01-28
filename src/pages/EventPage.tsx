@@ -143,7 +143,8 @@ const getUrgencyWording = (eventStartIso: string): { urgencyText: string; showUr
 };
 
 // Load and process events from JSON
-const loadEventData = async (): Promise<Record<string, EventData>> => {
+// Note: isHidden events are still loaded for direct URL access (e.g., pre-sale pages)
+const loadEventData = async (includeHidden = false): Promise<Record<string, EventData>> => {
   try {
     console.log('[EventPage] Fetching /events.json...');
     const response = await fetch('/events.json');
@@ -153,7 +154,8 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
     console.log('[EventPage] Event slugs:', events.map(e => e.slug));
     const eventData: Record<string, EventData> = {};
     events.forEach(event => {
-      if (event.isHidden) return;
+      // Skip hidden events unless explicitly requested (for pre-sale pages)
+      if (event.isHidden && !includeHidden) return;
       const {
         venue,
         city,
@@ -351,7 +353,8 @@ const EventPage = () => {
       console.log('[EventPage] Is retargeting mode:', isRetargeting);
       console.log('[EventPage] Is email landing mode:', isEmailLanding);
       
-      const eventData = await loadEventData();
+      // Include hidden events for direct URL access (pre-sale pages)
+      const eventData = await loadEventData(true);
       console.log('[EventPage] Event data keys:', Object.keys(eventData));
       
       const normalizedSlug = slug?.toUpperCase().replace(/\/$/, '');
@@ -967,6 +970,240 @@ const EventPage = () => {
                   variant={event.status === 'last-tickets' ? 'secondary' : 'default'}
                 >
                   {event.status === 'sold-out' ? 'Join Waiting List' : 'Book Now'}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  }
+
+  // ==========================================
+  // PRE-SALE MODE - Exclusive early access page
+  // ==========================================
+  if (event.status === 'pre-sale') {
+    const isCoralAccent = event.accentColor === 'coral';
+    
+    return (
+      <>
+        <Helmet>
+          <title>Pre-Sale | The 2 PM Club — {event.city} — {event.date}</title>
+          <meta name="description" content={`Exclusive pre-sale access: THE 2PM CLUB Daytime Disco at ${event.venue}, ${event.city}. ${event.date}.`} />
+          <link rel="canonical" href={`https://www.the2pmclub.co.uk/events/${event.slug}/`} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="The 2 PM Club" />
+          <meta property="og:title" content={`Pre-Sale | The 2 PM Club — ${event.city}`} />
+          <meta property="og:description" content={`Exclusive pre-sale access: Daytime disco ${event.timeRange} with 80s/90s/00s anthems.`} />
+          <meta property="og:url" content={`https://www.the2pmclub.co.uk/events/${event.slug}/`} />
+          <meta property="og:image" content={event.squareImg} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="robots" content="noindex" />
+        </Helmet>
+
+        <div className="min-h-screen bg-background pb-20 md:pb-0">
+          <Header />
+          
+          {/* Pre-Sale Hero Section */}
+          <section className="pt-28 md:pt-32 pb-8 md:pb-12 bg-gradient-to-b from-background via-background to-muted/10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                
+                {/* Pre-Sale Badge */}
+                <div className="text-center mb-6">
+                  <span className="pre-sale-badge">🎉 Exclusive Pre-Sale</span>
+                </div>
+                
+                {/* Fun Headline */}
+                <div className="text-center mb-8">
+                  <h1 className="font-poppins text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tight mb-4">
+                    Welcome to the Pre-Sale!
+                  </h1>
+                  <p className="font-poppins text-xl md:text-2xl text-foreground/80 mb-6">
+                    You're part of the group. Let's get this party started! 🎶
+                  </p>
+                  <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-6 max-w-2xl mx-auto">
+                    <p className="font-poppins text-lg md:text-xl text-foreground/90 mb-2">
+                      We're back at <strong>Franklin's Gardens</strong> — the home of <strong>Northampton Saints</strong>.
+                    </p>
+                    <p className="font-poppins text-lg md:text-xl text-primary font-bold">
+                      Last time at Cinch Stadium? SOLD OUT. 🔥
+                    </p>
+                    <p className="font-poppins text-base text-foreground/70 mt-2">
+                      This is your early access.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Event Poster + Details */}
+                <div className="grid md:grid-cols-2 gap-6 items-start">
+                  {/* Left: Event Poster */}
+                  <div className="flex justify-center md:justify-start">
+                    <img 
+                      src={event.squareImg} 
+                      alt={`${event.title} event poster`} 
+                      className={`w-full max-w-sm h-auto rounded-xl shadow-2xl ${isCoralAccent ? 'shadow-coral' : 'shadow-primary/20'}`}
+                    />
+                  </div>
+                  
+                  {/* Right: Details Card */}
+                  <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-6 space-y-4">
+                    <h2 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
+                      THE 2PM CLUB Daytime Disco
+                    </h2>
+                    <p className="font-poppins text-lg text-foreground/80">
+                      {event.venue}, {event.city}
+                    </p>
+                    
+                    {/* Event Details */}
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-foreground/80">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : 'text-primary'}`} />
+                        <span className="font-poppins text-base font-semibold">{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Clock className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : 'text-primary'}`} />
+                        <span className="font-poppins text-base">{event.timeDisplay}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : 'text-primary'}`} />
+                        <span className="font-poppins text-base">{event.venue}</span>
+                      </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <Button 
+                      ref={heroBookButtonRef}
+                      onClick={scrollToCheckout} 
+                      size="lg" 
+                      className={`w-full font-poppins text-lg ${isCoralAccent ? 'btn-coral' : ''}`}
+                    >
+                      Book Your Tickets 🎫
+                    </Button>
+                    
+                    <p className="font-poppins text-sm text-foreground/60 text-center">
+                      Limited tickets available
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Ticket Widget */}
+          <section id="checkout-section" className="py-8 md:py-12">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <div className={`rounded-2xl p-4 md:p-6 ${isCoralAccent ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : 'bg-primary/10 border border-primary/30'}`}>
+                  <div className="bg-card/50 rounded-xl overflow-hidden">
+                    <EventbriteEmbed 
+                      eventbriteId={event.eventbriteId} 
+                      eventSlug={event.slug}
+                      containerId={`eventbrite-widget-presale-${event.slug}`} 
+                      height={400} 
+                      promoCode={event.promoCode} 
+                      eventTitle={event.title} 
+                    />
+                  </div>
+                  <p className="font-poppins text-sm text-foreground/60 text-center mt-4">
+                    Early bird gets the dancefloor. 💃
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Why You'll Love It - Brief version */}
+          <section className="py-8 md:py-12">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="font-poppins text-2xl md:text-3xl font-bold text-center mb-6">
+                  Why You'll Love It
+                </h2>
+                <div className="grid gap-4">
+                  <div className="bg-card/50 border border-border/30 rounded-xl p-4 flex gap-3 items-start">
+                    <span className="text-2xl">🎤</span>
+                    <p className="font-poppins text-foreground/90">
+                      A room full of people who know every word. Wall-to-wall 80s, 90s & 00s anthems.
+                    </p>
+                  </div>
+                  <div className="bg-card/50 border border-border/30 rounded-xl p-4 flex gap-3 items-start">
+                    <span className="text-2xl">👯‍♀️</span>
+                    <p className="font-poppins text-foreground/90">
+                      The night out everyone actually says yes to. Four hours, your favourite people.
+                    </p>
+                  </div>
+                  <div className="bg-card/50 border border-border/30 rounded-xl p-4 flex gap-3 items-start">
+                    <span className="text-2xl">🏟️</span>
+                    <p className="font-poppins text-foreground/90">
+                      Back at Franklin's Gardens — home of the Saints. We sold this place out before!
+                    </p>
+                  </div>
+                  <div className="bg-card/50 border border-border/30 rounded-xl p-4 flex gap-3 items-start">
+                    <span className="text-2xl">🏠</span>
+                    <p className="font-poppins text-foreground/90">
+                      Done by 6pm. Home by 7. Sunday stays yours.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Share Row */}
+          <section className="py-6 md:py-8">
+            <div className="container mx-auto px-4">
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-card/40 border border-border/30 rounded-2xl p-4 md:p-6 text-center">
+                  <p className="font-poppins text-lg font-semibold text-foreground mb-4">
+                    Got mates who need to see this? 👇
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-3">
+                    <Button 
+                      onClick={() => handleWhatsAppShare(event)}
+                      className="font-poppins bg-[#25D366] hover:bg-[#128C7E] text-white"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      WhatsApp
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleEmailShare(event)}
+                      className="font-poppins"
+                    >
+                      <Mail className="w-4 h-4 mr-2" />
+                      Email
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleCopyLink(event)}
+                      className="font-poppins"
+                    >
+                      <Copy className="w-4 h-4 mr-2" />
+                      Copy Link
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <Footer />
+
+          {/* Sticky Mobile CTA */}
+          {isMobile && showStickyBookTickets && (
+            <div className={`fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm border-t p-3 safe-area-inset-bottom ${isCoralAccent ? 'bg-[#E88B73]/95 border-[#E88B73]/50' : 'bg-primary/95 border-primary/50'}`}>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="font-poppins text-sm font-bold text-white truncate">
+                    🎉 Pre-Sale Access
+                  </p>
+                </div>
+                <Button 
+                  onClick={scrollToCheckout}
+                  className="font-poppins font-bold px-6 shrink-0 bg-white text-foreground hover:bg-white/90"
+                >
+                  Book Now
                 </Button>
               </div>
             </div>
