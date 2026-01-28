@@ -277,6 +277,18 @@ a.button:focus, button:focus {
   box-shadow: 0 25px 50px -12px rgba(232, 139, 115, 0.25) !important;
 }
 
+/* Pre-sale exclusive badge */
+.pre-sale-badge {
+  background: linear-gradient(135deg, #E88B73 0%, #F4A582 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 @layer base {
   * {
     @apply border-border;
