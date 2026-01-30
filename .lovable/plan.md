@@ -1,122 +1,78 @@
 
 
-## Pre-Sale Landing Page: Franklin's Gardens Northampton
+## Convert Franklin's Gardens to Standard Event Page
 
-### What You're Getting
+### Summary
 
-A special **pre-sale experience** for your group with:
-- Hidden from the public homepage (not visible to general visitors)
-- Accessible only via direct link: `/events/060626-2PM-NPTON/`
-- Fun, exclusive messaging emphasising they're part of an inner circle
-- Context about Franklin's Gardens being the home of Northampton Saints
-- Reference to the sold-out October event success
-- Streamlined layout focused on booking
+Remove the pre-sale mode from the Franklin's Gardens Northampton event (6th June 2026) and restore it to the full standard event page layout with video, gallery, FAQ, and all sections.
+
+The coral/tropical colour scheme will be preserved on buttons and icons.
 
 ---
 
-### Pre-Sale Messaging Preview
+### What Changes
 
-Your group will see:
-
-> **Welcome to the Pre-Sale!**
->
-> You're part of the group. Let's get this party started!
->
-> We're back at Franklin's Gardens - the home of Northampton Saints.
-> Last time at Cinch Stadium? SOLD OUT. This is your early access.
->
-> Saturday 6th June 2026 | 2pm-6pm | Franklin's Gardens, Northampton
+| Current (Pre-Sale) | After (Standard) |
+|---|---|
+| Hidden from homepage | Visible on homepage |
+| Streamlined layout (no video/gallery/FAQ) | Full layout with all sections |
+| "Welcome to the Pre-Sale!" messaging | Standard "THE 2PM CLUB" branding |
+| Pre-sale badge | No special badge |
+| noindex meta tag | Fully indexed by search engines |
 
 ---
 
-### Implementation Tasks
+### Implementation
 
-#### 1. Update `public/events.json`
+#### Update `public/events.json`
 
-Change the Franklin's Gardens event entry:
+For the Franklin's Gardens event (id: 114), make two changes:
 
-| Field | Current | New Value |
-|-------|---------|-----------|
-| `status` | `"just-announced"` | `"pre-sale"` |
-| `isHidden` | (not set) | `true` |
+| Field | Current Value | New Value |
+|-------|---------------|-----------|
+| `status` | `"pre-sale"` | `"just-announced"` |
+| `isHidden` | `true` | Remove this field entirely |
 
-This hides the event from the homepage while keeping the page accessible via direct URL.
-
----
-
-#### 2. Add Pre-Sale Mode to `src/pages/EventPage.tsx`
-
-Create a new rendering branch for `status === 'pre-sale'` (similar to the retargeting mode):
-
-**Pre-Sale Hero Section:**
-- Large, fun headline: "Welcome to the Pre-Sale!"
-- Subheading: "You're part of the group. Let's get this party started!"
-- Venue context: "We're back at Franklin's Gardens - the home of Northampton Saints"
-- Social proof: "Last time at Cinch Stadium? SOLD OUT. This is your early access."
-- Event poster with coral glow shadow
-- Event details (date, time, venue)
-- Coral-themed CTA button: "Book Your Tickets"
-
-**Pre-Sale Page Sections:**
-1. Hero with exclusive messaging
-2. Eventbrite checkout embed (immediate booking)
-3. Brief "Why You'll Love It" cards (4 reasons)
-4. Share buttons (so they can invite their group)
-5. Footer
-
-**What's NOT shown (to keep it focused):**
-- Full event description
-- Video section
-- Photo gallery
-- FAQ accordion
-- Extended testimonials
+The `accentColor: "coral"` field stays in place, so the event page will still have:
+- Coral gradient "Book Tickets" button
+- Coral-tinted Calendar, Clock, and MapPin icons
+- Coral glow shadow on the event poster
 
 ---
 
-#### 3. Add Pre-Sale CSS to `src/index.css`
+### What the Page Will Include
 
-Subtle styling for the pre-sale banner/badge:
+Once converted to standard mode, the page will display:
 
-```css
-/* Pre-sale exclusive badge */
-.pre-sale-badge {
-  background: linear-gradient(135deg, #E88B73 0%, #F4A582 100%);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-```
+1. Hero with poster + details card (coral accents)
+2. Intro description section
+3. "Why Daytime Discos Are a Game Changer" section
+4. Video section (standard 2PM video)
+5. Photo gallery
+6. "Why You Love The 2PM Club" testimonials
+7. FAQ accordion
+8. Eventbrite checkout embed
+9. Share buttons
+10. Footer
 
----
-
-### Technical Summary
-
-| File | Changes |
-|------|---------|
-| `public/events.json` | Add `isHidden: true`, change status to `"pre-sale"` |
-| `src/pages/EventPage.tsx` | Add pre-sale mode rendering with exclusive messaging |
-| `src/index.css` | Add `.pre-sale-badge` styling |
+All with the Franklin's Gardens content you already have (venue info, Northampton Saints reference, sold-out history in the description).
 
 ---
 
-### Going Public Later
+### Files to Update
 
-When you're ready to open sales to everyone:
+| File | Change |
+|------|--------|
+| `public/events.json` | Change status from `"pre-sale"` to `"just-announced"`, remove `isHidden` |
 
-1. Change `status` from `"pre-sale"` to `"just-announced"` 
-2. Remove `isHidden: true` (or set to `false`)
-
-The full event page layout with video, gallery, FAQ etc will automatically appear, and the event will show on the homepage.
+No code changes required - the standard mode already supports coral accents.
 
 ---
 
-### Pre-Sale URL for Your Group
+### Technical Notes
 
-```
-https://www.the2pmclub.co.uk/events/060626-2PM-NPTON/
-```
+- Event will appear on homepage sorted by date (June 2026)
+- Page URL stays the same: `/events/060626-2PM-NPTON/`
+- All tracking and OG tags work automatically
+- Fully indexed by search engines (no noindex tag)
 
