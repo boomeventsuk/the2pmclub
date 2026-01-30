@@ -1536,30 +1536,46 @@ const EventPage = () => {
                       </>
                     ) : (
                       <>
-                        <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
-                          THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
-                        </p>
-                        <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
-                          An Afternoon of Iconic Anthems from the 80s 90s 00s!
-                        </p>
-                        
-                        <blockquote className="border-l-4 border-primary pl-4 mb-6">
-                          <p className="font-poppins text-lg md:text-xl text-foreground italic">
-                            "Remember when going OUT OUT didn't require a week's recovery?"
-                          </p>
-                        </blockquote>
-                        
+                        {/* Render fullDescription from JSON, split into paragraphs */}
                         <div className="space-y-4">
-                          <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                            When you could sing every word, lose your voice, and still feel human the next day?
-                          </p>
-                          <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
-                            We've created the perfect solution!<br />
-                            Welcome to THE 2PM CLUB!
-                          </p>
-                          <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
-                            4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
-                          </p>
+                          {event.fullDescription.split('\n\n').map((paragraph, index) => {
+                            // Check if paragraph looks like a blockquote (starts with quote or contains key phrases)
+                            const isQuote = paragraph.includes('Remember when going OUT OUT');
+                            const isHeading = paragraph.includes('LET YOUR HAIR DOWN') || paragraph.includes('✨');
+                            const isBold = paragraph.includes('Welcome to THE 2PM CLUB') || paragraph.includes('we\'re back at the home of');
+                            
+                            if (isHeading) {
+                              return (
+                                <p key={index} className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide font-bold">
+                                  {paragraph}
+                                </p>
+                              );
+                            }
+                            
+                            if (isQuote) {
+                              return (
+                                <blockquote key={index} className="border-l-4 border-primary pl-4 my-6">
+                                  <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                                    "{paragraph}"
+                                  </p>
+                                </blockquote>
+                              );
+                            }
+                            
+                            if (isBold) {
+                              return (
+                                <p key={index} className="font-poppins text-base md:text-lg text-foreground/90 leading-relaxed font-bold">
+                                  {paragraph}
+                                </p>
+                              );
+                            }
+                            
+                            return (
+                              <p key={index} className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                                {paragraph}
+                              </p>
+                            );
+                          })}
                         </div>
                       </>
                     )}
