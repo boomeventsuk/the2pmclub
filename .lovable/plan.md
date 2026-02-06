@@ -1,100 +1,72 @@
 
-# Urgency Update Plan for Luton and Bedford Events
+
+# New Event: 2PM Club Luton - 23rd May 2026
 
 ## Summary
-Update the urgency messaging and scarcity wording for two events:
-1. **Luton (this Saturday, 7th Feb)** - Change to "LAST 25 TICKETS" + update fullDescription with "this Saturday" wording
-2. **Bedford (14th Feb)** - Change to "LAST 50 TICKETS" status with urgent messaging
+Add a new event for THE 2PM CLUB Luton at The Hat Factory on Saturday 23rd May 2026, matching the style and coral theme of the Franklin's Gardens Northampton event.
+
+---
+
+## Event Details
+
+| Field | Value |
+|-------|-------|
+| **Date** | Saturday 23rd May 2026 |
+| **Time** | 2pm - 6pm |
+| **Venue** | The Hat Factory, Luton |
+| **Slug** | `230526-2PM-LUT` |
+| **Eventbrite ID** | `1982497843417` |
+| **Theme** | Coral accent (matching Franklin's Gardens) |
+| **Status** | `just-announced` |
 
 ---
 
 ## Changes Required
 
-### 1. Luton Event — `070226-2PM-LUT`
+### File: `public/events.json`
 
-**In `public/events.json`:**
+Add new event object with ID 115:
 
-| Field | Current Value | New Value |
-|-------|---------------|-----------|
-| `urgencyLabel` | `"LAST 50 TICKETS"` | `"LAST 25 TICKETS"` |
-| `fullDescription` | Generic wording | Update to include "this Saturday" throughout |
-
-**Updated fullDescription:**
-```text
-LET YOUR HAIR DOWN. THIS SATURDAY! 🎉
-
-Only 25 tickets left for this Saturday's Daytime Disco in Luton!
-
-Remember when going OUT OUT didn't require a week's recovery? When you could sing every word, lose your voice, and still feel human the next day?
-
-The 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more "maybe next time." Everyone says yes to this one.
-
-This Saturday. 2pm. The Hat Factory, Luton. Don't miss it!
+```json
+{
+  "id": 115,
+  "slug": "230526-2PM-LUT",
+  "eventType": "2PM",
+  "cityCode": "LUT",
+  "eventbriteId": "1982497843417",
+  "title": "THE 2PM CLUB Daytime Disco Luton",
+  "location": "Hat Factory, Luton",
+  "start": "2026-05-23T14:00:00+01:00",
+  "end": "2026-05-23T18:00:00+01:00",
+  "bookUrl": "https://www.eventbrite.co.uk/e/1982497843417?aff=BoomWeb",
+  "infoUrl": "https://www.facebook.com/events/TBD",
+  "image": "https://boombastic-events.b-cdn.net/230526-2PM-LUT/230526-2PM-LUT-060626_2PM_NPTON%20ANNSQ.jpg",
+  "description": "THE 2PM CLUB Luton — 4 hours of iconic 80s, 90s & 00s anthems. All the fun of a proper night out, home by 7-ish.",
+  "subtitle": "Your best night out - right in the middle of the afternoon.",
+  "fullDescription": "LET YOUR HAIR DOWN. WITHOUT THE NEXT-DAY REGRETS ✨\n\nRemember when going OUT OUT didn't require a week's recovery? When you could sing every word, lose your voice, and still feel human the next day?\n\nWe've found the way to make that happen once more!\n\n4 hours of the biggest hairbrush hits and sing-alongs, with night out energy, confetti moments, and a room full of people who know every word too.",
+  "highlights": "🎤 ICONIC ANTHEMS. NONSTOP ENERGY: Wall-to-wall classics from Wham! to Whitney, Bon Jovi to Beyoncé. You WILL do the moves. You WILL lose your voice. You WILL text each other about it for weeks.|🕺 DAYTIME PARTY, NIGHT-OUT VIBES: Same Boombastic team. Club-level production, massive screens, dazzling lights, and confetti explosions - just at people-friendly hours. Dance freely, laugh loudly, and still be home by 7pm.|👯 FINALLY, A PLAN NOBODY BAILS ON: This is the plan that will escape the group chat. Four hours where everyone actually makes it - no babysitter dramas, no late-night worries. Adulting can wait.|😎 ALL THE FUN. STILL BUZZING BY WEDNESDAY: Last time, you walked out saying \"Let's do it again!\" This is the time to do it. This is your plan.|🏆 TRUST THE LEGACY: Created by Boombastic Events - 10+ years of consistent sell-outs across the UK because we know how to create moments that matter.",
+  "status": "just-announced",
+  "accentColor": "coral"
+}
 ```
 
 ---
 
-### 2. Bedford Event — `140226-2PM-BED`
+## What You'll Get
 
-**In `public/events.json`:**
+The coral accent colour applies automatically throughout the event page:
 
-| Field | Current Value | New Value |
-|-------|---------------|-----------|
-| `status` | `"selling-fast-amber"` | `"last-tickets"` |
-| `urgencyLabel` | `"TICKETS SELLING FAST"` | `"LAST 50 TICKETS"` |
-| `fullDescription` | Generic wording | Update with "two weeks to go" urgency |
-
-**Updated fullDescription:**
-```text
-LET YOUR HAIR DOWN. PROPERLY
-
-Only 50 tickets left — just two weeks to go!
-
-Remember when going OUT OUT didn't require a week's recovery? When you could sing every word, lose your voice, and still feel human the next day?
-
-The 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more "maybe next time." Everyone says yes to this one.
-
-Valentine's Day Saturday. 2pm. Bedford Esquires. Your mates are already booking!
-```
+- **Book Tickets button** - coral instead of pink
+- **Icons** (Calendar, Clock, MapPin) - coral colour
+- **Poster glow** - coral shadow effect
+- **Mobile sticky CTA** - coral styling
 
 ---
 
-## How Urgency Messaging Flows
+## Technical Notes
 
-No code changes are needed — the existing system already handles everything:
+- Uses BST timezone (`+01:00`) since May is in British Summer Time
+- Copy matches Franklin's Gardens style but without the venue-specific "home of Northampton Saints" line
+- Same highlights structure as the June Northampton event
+- Event will automatically appear on homepage in date order
 
-```text
-events.json (status + urgencyLabel)
-        ↓
-Homepage Card → Shows urgency strip badge with label
-        ↓
-Event Page → Shows sticky banner + hero badge with label
-        ↓
-Mobile Sticky CTA → Shows urgency label for last-tickets status
-```
-
----
-
-## Files to Edit
-
-| File | Changes |
-|------|---------|
-| `public/events.json` | Update 2 events (Luton: urgencyLabel + fullDescription, Bedford: status + urgencyLabel + fullDescription) |
-
----
-
-## What Will Change on the Website
-
-### Luton Event Page & Card
-- Urgency badge: **"LAST 25 TICKETS"** (was "LAST 50 TICKETS")
-- Pink sticky banner with "LAST 25 TICKETS"
-- Copy emphasises "this Saturday" throughout
-
-### Bedford Event Page & Card
-- Status changes from amber "selling fast" to urgent "last tickets"
-- Urgency badge: **"LAST 50 TICKETS"** (was "TICKETS SELLING FAST")
-- Gets the pink sticky urgency banner (previously didn't have one)
-- Copy emphasises "two weeks to go" urgency
-
-### Coventry & Milton Keynes
-- No changes (remain as "selling-fast-amber" status)
