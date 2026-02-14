@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { trackEventPageView, trackBookClick } from '@/lib/dataLayer';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 interface EventJson {
   id: number;
@@ -212,6 +213,44 @@ const loadEventData = async (includeHidden = false): Promise<Record<string, Even
     console.error('Failed to load events:', error);
     return {};
   }
+};
+
+// Artist List Section Component
+const ARTISTS = [
+  'SPICE GIRLS', 'MADONNA', 'BEYONCÉ', 'WHITNEY HOUSTON', 'KYLIE MINOGUE',
+  'OASIS', 'BON JOVI', 'TAKE THAT', 'QUEEN', 'ROBBIE WILLIAMS',
+  'THE KILLERS', 'ABBA', 'WHAM!', 'BLUR', 'ARCTIC MONKEYS',
+  'RIHANNA', 'CHRISTINA AGUILERA', 'ROBIN S', 'N-TRANCE', 'TLC',
+  'CRAIG DAVID', 'SUGABABES', 'GIRLS ALOUD', 'STEPS', 'FIVE',
+  "B*WITCHED", 'S CLUB 7', 'BACKSTREET BOYS', 'FATBOY SLIM'
+];
+
+const ArtistListSection = ({ accentColor }: { accentColor?: string }) => {
+  const { elementRef, isVisible } = useScrollAnimation(0.1);
+  const isCoralAccent = accentColor === 'coral';
+  
+  return (
+    <section className="py-10 md:py-14">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto">
+          <div 
+            ref={elementRef}
+            className={`bg-muted/30 border border-border/20 rounded-2xl p-8 md:p-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+          >
+            <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-8">
+              🪩 YOUR SOUNDTRACK
+            </h2>
+            <p className={`font-poppins text-lg md:text-xl leading-relaxed tracking-wide ${isCoralAccent ? 'text-[#E88B73]' : 'text-primary/80'}`}>
+              {ARTISTS.join(' · ')}
+            </p>
+            <p className="font-poppins text-sm md:text-base text-foreground/60 italic mt-8">
+              Zero filler. Maximum sing-along. The songs you've been mouthing along to in Sainsbury's for years.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 const EventPage = () => {
@@ -549,7 +588,7 @@ const EventPage = () => {
                       eventbriteId={event.eventbriteId} 
                       eventSlug={event.slug}
                       containerId={`eventbrite-widget-rt-${event.slug}`} 
-                      height={400} 
+                      height={600} 
                       promoCode={event.promoCode} 
                       eventTitle={event.title} 
                     />
@@ -814,6 +853,29 @@ const EventPage = () => {
             </div>
           </section>
 
+          {/* Ticket Widget - Moved up after hero */}
+          <section id="checkout-section" className="py-6 md:py-10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <div className="bg-primary/10 border border-primary/30 rounded-2xl p-4 md:p-6">
+                  <div className="bg-card/50 rounded-xl overflow-hidden">
+                    <EventbriteEmbed 
+                      eventbriteId={event.eventbriteId} 
+                      eventSlug={event.slug}
+                      containerId={`eventbrite-widget-email-${event.slug}`} 
+                      height={600} 
+                      promoCode={event.promoCode} 
+                      eventTitle={event.title} 
+                    />
+                  </div>
+                  <p className="font-poppins text-sm text-foreground/60 text-center mt-4">
+                    Same good idea. Less scrolling this time.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Video Section */}
           <section className="py-6 md:py-10">
             <div className="container mx-auto px-4">
@@ -867,29 +929,6 @@ const EventPage = () => {
                       Done by 6pm. Sunday stays yours.
                     </p>
                   </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Ticket Widget */}
-          <section id="checkout-section" className="py-6 md:py-10">
-            <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto">
-                <div className="bg-primary/10 border border-primary/30 rounded-2xl p-4 md:p-6">
-                  <div className="bg-card/50 rounded-xl overflow-hidden">
-                    <EventbriteEmbed 
-                      eventbriteId={event.eventbriteId} 
-                      eventSlug={event.slug}
-                      containerId={`eventbrite-widget-email-${event.slug}`} 
-                      height={400} 
-                      promoCode={event.promoCode} 
-                      eventTitle={event.title} 
-                    />
-                  </div>
-                  <p className="font-poppins text-sm text-foreground/60 text-center mt-4">
-                    Same good idea. Less scrolling this time.
-                  </p>
                 </div>
               </div>
             </div>
@@ -1100,7 +1139,7 @@ const EventPage = () => {
                       eventbriteId={event.eventbriteId} 
                       eventSlug={event.slug}
                       containerId={`eventbrite-widget-presale-${event.slug}`} 
-                      height={400} 
+                      height={600} 
                       promoCode={event.promoCode} 
                       eventTitle={event.title} 
                     />
@@ -1427,187 +1466,217 @@ const EventPage = () => {
           </div>
         </section>
 
-        {/* Description Section */}
+        {/* Eventbrite Embed - Moved up directly after hero */}
+        <section id="checkout-section" className="py-10 md:py-14">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <div className={`rounded-2xl p-6 md:p-8 ${event.accentColor === 'coral' ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : 'bg-primary/10 border border-primary/30'}`}>
+                <div className="text-center mb-6">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 bg-primary/20">
+                    <span className="text-2xl">🎟️</span>
+                  </div>
+                  {event.status === 'last-tickets' ? (
+                    <>
+                      <h2 className="font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 text-foreground">
+                        {event.urgencyLabel || 'LAST TICKETS'}
+                      </h2>
+                      <p className="font-poppins text-sm text-foreground/70">
+                        Don't miss out!
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 text-foreground">
+                        BOOK YOUR TICKETS
+                      </h2>
+                      <p className="font-poppins text-sm text-foreground/70">
+                        The most popular day party in the Midlands. Choose your tickets below.
+                      </p>
+                    </>
+                  )}
+                </div>
+                
+                <div className="bg-card/50 rounded-xl overflow-hidden">
+                  <EventbriteEmbed 
+                    eventbriteId={event.eventbriteId} 
+                    eventSlug={event.slug}
+                    containerId={`eventbrite-widget-${event.slug}`} 
+                    height={700} 
+                    promoCode={event.promoCode} 
+                    eventTitle={event.title} 
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Description Section - New hardcoded copy */}
         <section className="py-6 md:py-10">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              {event.fullDescription && (
-                <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
-                  <div className="mx-auto md:max-w-2xl">
-                    {isChristmasEvent ? (
-                      (() => {
-                        const { urgencyText, showUrgency } = getUrgencyWording(event.startIso);
-                        return (
-                          <>
-                            {showUrgency ? (
-                              <>
-                                <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
-                                  Christmas is nearly here. 🎄
-                                </p>
-                                <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide font-bold">
-                                  {urgencyText.charAt(0).toUpperCase() + urgencyText.slice(1)} is YOUR chance to dance before the family chaos kicks in!
-                                </p>
-                              </>
-                            ) : (
-                              <>
-                                <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
-                                  THE 2PM CLUB CHRISTMAS DAYTIME DISCO HITS {event.city.toUpperCase()}.
-                                </p>
-                                <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
-                                  4 Hours of Iconic Anthems & Festive Favourites. Home by 7(ish).
-                                </p>
-                              </>
-                            )}
-                            
-                            <blockquote className="border-l-4 border-primary pl-4 mb-6">
-                              <p className="font-poppins text-lg md:text-xl text-foreground italic">
-                                {showUrgency 
-                                  ? `"Before the family chaos kicks in, before the endless Monopoly and leftover turkey sandwiches — ${urgencyText} is YOUR chance to dance."`
-                                  : `"Remember when Christmas parties didn't mean losing your entire weekend to regret?"`
-                                }
+              <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8 mb-8">
+                <div className="mx-auto md:max-w-2xl">
+                  {isChristmasEvent ? (
+                    (() => {
+                      const { urgencyText, showUrgency } = getUrgencyWording(event.startIso);
+                      return (
+                        <>
+                          {showUrgency ? (
+                            <>
+                              <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
+                                Christmas is nearly here. 🎄
                               </p>
-                            </blockquote>
-                            
-                            {showUrgency && (
-                              <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
-                                <p className="font-poppins text-base md:text-lg text-foreground/90 leading-relaxed">
-                                  🎟 Tickets just £10. No fees. No surprises.<br />
-                                  👯‍♀️ 4 for £35 — perfect for the group chat crew.
-                                </p>
-                              </div>
-                            )}
-                            
-                            <div className="space-y-4">
-                              <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                                Four hours of iconic 80s, 90s, and 00s anthems — Whitney, Wham!, Bon Jovi, Spice Girls — plus all your favourite Christmas classics thrown in for good measure. 🎤
+                              <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide font-bold">
+                                {urgencyText.charAt(0).toUpperCase() + urgencyText.slice(1)} is YOUR chance to dance before the family chaos kicks in!
                               </p>
-                              <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                                Full confetti. Full volume. Home by 7 feeling like absolute legends. 🪩
+                            </>
+                          ) : (
+                            <>
+                              <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
+                                THE 2PM CLUB CHRISTMAS DAYTIME DISCO HITS {event.city.toUpperCase()}.
                               </p>
-                              <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-xl">
-                                Bring your mates. Bring your workmates. Bring the group chat crew who've been saying "we should do something" since September.<br />
-                                <span className="text-primary">This is the something.</span> ✨
+                              <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
+                                4 Hours of Iconic Anthems & Festive Favourites. Home by 7(ish).
                               </p>
-                              <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                                You DESERVE a proper dance with your mates before Christmas!<br />
-                                One link. Everyone books. Christmas sorted.
+                            </>
+                          )}
+                          
+                          <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                            <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                              {showUrgency 
+                                ? `"Before the family chaos kicks in, before the endless Monopoly and leftover turkey sandwiches — ${urgencyText} is YOUR chance to dance."`
+                                : `"Remember when Christmas parties didn't mean losing your entire weekend to regret?"`
+                              }
+                            </p>
+                          </blockquote>
+                          
+                          {showUrgency && (
+                            <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+                              <p className="font-poppins text-base md:text-lg text-foreground/90 leading-relaxed">
+                                🎟 Tickets just £10. No fees. No surprises.<br />
+                                👯‍♀️ 4 for £35 — perfect for the group chat crew.
                               </p>
                             </div>
-                          </>
-                        );
-                      })()
-                    ) : event.status === 'sold-out' ? (
-                      <>
-                        {/* Sold Out Block */}
-                        <div className="bg-muted border border-muted-foreground/40 rounded-xl p-4 mb-6">
-                          <p className="font-poppins text-lg md:text-xl font-bold text-foreground">
-                            🎉 We did it. {event.city} is officially SOLD OUT!
-                          </p>
-                          <p className="font-poppins text-base text-foreground/80 mt-2">
-                            Join our waiting list and we'll contact you if any tickets become available.
-                          </p>
-                        </div>
-                        
-                        <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
-                          THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
+                          )}
+                          
+                          <div className="space-y-4">
+                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                              Four hours of iconic 80s, 90s, and 00s anthems — Whitney, Wham!, Bon Jovi, Spice Girls — plus all your favourite Christmas classics thrown in for good measure. 🎤
+                            </p>
+                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                              Full confetti. Full volume. Home by 7 feeling like absolute legends. 🪩
+                            </p>
+                            <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-xl">
+                              Bring your mates. Bring your workmates. Bring the group chat crew who've been saying "we should do something" since September.<br />
+                              <span className="text-primary">This is the something.</span> ✨
+                            </p>
+                            <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                              You DESERVE a proper dance with your mates before Christmas!<br />
+                              One link. Everyone books. Christmas sorted.
+                            </p>
+                          </div>
+                        </>
+                      );
+                    })()
+                  ) : event.status === 'sold-out' ? (
+                    <>
+                      {/* Sold Out Block */}
+                      <div className="bg-muted border border-muted-foreground/40 rounded-xl p-4 mb-6">
+                        <p className="font-poppins text-lg md:text-xl font-bold text-foreground">
+                          🎉 We did it. {event.city} is officially SOLD OUT!
                         </p>
-                        <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
-                          An Afternoon of Iconic Anthems from the 80s 90s 00s!
+                        <p className="font-poppins text-base text-foreground/80 mt-2">
+                          Join our waiting list and we'll contact you if any tickets become available.
                         </p>
-                        
-                        <blockquote className="border-l-4 border-primary pl-4 mb-6">
-                          <p className="font-poppins text-lg md:text-xl text-foreground italic">
-                            "Remember when going OUT OUT didn't require a week's recovery?"
-                          </p>
-                        </blockquote>
-                        
-                        <div className="space-y-4">
-                          <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                            When you could sing every word, lose your voice, and still feel human the next day?
-                          </p>
-                          <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
-                            We've created the perfect solution!<br />
-                            Welcome to THE 2PM CLUB!
-                          </p>
-                          <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
-                            4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
-                          </p>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        {/* Render fullDescription from JSON, split into paragraphs */}
-                        <div className="space-y-4">
-                          {event.fullDescription.split('\n\n').map((paragraph, index) => {
-                            // Check if paragraph looks like a blockquote (starts with quote or contains key phrases)
-                            const isQuote = paragraph.includes('Remember when going OUT OUT');
-                            const isHeading = paragraph.includes('LET YOUR HAIR DOWN') || paragraph.includes('✨');
-                            const isBold = paragraph.includes('Welcome to THE 2PM CLUB') || paragraph.includes('we\'re back at the home of');
-                            
-                            if (isHeading) {
-                              return (
-                                <p key={index} className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide font-bold">
-                                  {paragraph}
-                                </p>
-                              );
-                            }
-                            
-                            if (isQuote) {
-                              return (
-                                <blockquote key={index} className="border-l-4 border-primary pl-4 my-6">
-                                  <p className="font-poppins text-lg md:text-xl text-foreground italic">
-                                    "{paragraph}"
-                                  </p>
-                                </blockquote>
-                              );
-                            }
-                            
-                            if (isBold) {
-                              return (
-                                <p key={index} className="font-poppins text-base md:text-lg text-foreground/90 leading-relaxed font-bold">
-                                  {paragraph}
-                                </p>
-                              );
-                            }
-                            
-                            return (
-                              <p key={index} className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
-                                {paragraph}
-                              </p>
-                            );
-                          })}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Video Section */}
-              <div className="py-10 md:py-14">
-                <div className="max-w-4xl mx-auto">
-                  <div className="rounded-2xl shadow-lg overflow-hidden max-w-3xl mx-auto">
-                    <video
-                      controls
-                      playsInline
-                      preload="none"
-                      poster="https://boombastic-events.b-cdn.net/2PM%20web%20videos/2PM%20Web%20Video%20Thumbnail.jpg"
-                      className="w-full"
-                    >
-                      <source
-                        src="https://boombastic-events.b-cdn.net/2PM%20web%20videos/2PM%20video%20low%20res.mp4"
-                        type="video/mp4"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
+                      </div>
+                      
+                      <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-3 tracking-wide">
+                        THE 2PM CLUB DAYTIME DISCO RETURNS TO {event.city.toUpperCase()}.
+                      </p>
+                      <p className="font-poppins text-xl md:text-2xl text-foreground/90 mb-6 tracking-wide">
+                        An Afternoon of Iconic Anthems from the 80s 90s 00s!
+                      </p>
+                      
+                      <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                        <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                          "Remember when going OUT OUT didn't require a week's recovery?"
+                        </p>
+                      </blockquote>
+                      
+                      <div className="space-y-4">
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                          When you could sing every word, lose your voice, and still feel human the next day?
+                        </p>
+                        <p className="font-poppins text-base text-foreground/85 leading-relaxed font-bold md:text-2xl">
+                          We've created the perfect solution!<br />
+                          Welcome to THE 2PM CLUB!
+                        </p>
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed mb-6">
+                          4 hours from 2pm til 6pm where nothing else matters. Just you, your mates, and every anthem you've ever loved. All the fun of a proper night out – and still home by 7ish to actually enjoy your Sunday
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* New hardcoded description */}
+                      <h2 className="font-poppins text-xl md:text-2xl text-foreground font-bold mb-6 tracking-wide">
+                        THE NIGHT OUT THAT STARTS AT 2PM ✨
+                      </h2>
+                      
+                      <blockquote className="border-l-4 border-primary pl-4 mb-6">
+                        <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                          "You know that feeling. Mr. Brightside kicks in and suddenly you're 22 again, screaming every word with your mates. No responsibility. No overthinking. Just pure, ridiculous joy."
+                        </p>
+                      </blockquote>
+                      
+                      <div className="space-y-4">
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                          That feeling still exists. And it starts at 2pm.
+                        </p>
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                          Four hours of the biggest hairbrush anthems and sing-alongs, with night-out energy, confetti moments, and a room full of people who know every word too.
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
 
-              {/* Highlights Section */}
+        {/* Artist List Section */}
+        <ArtistListSection accentColor={event.accentColor} />
+
+        {/* Video Section */}
+        <div className="py-10 md:py-14">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="rounded-2xl shadow-lg overflow-hidden max-w-3xl mx-auto">
+              <video
+                controls
+                playsInline
+                preload="none"
+                poster="https://boombastic-events.b-cdn.net/2PM%20web%20videos/2PM%20Web%20Video%20Thumbnail.jpg"
+                className="w-full"
+              >
+                <source
+                  src="https://boombastic-events.b-cdn.net/2PM%20web%20videos/2PM%20video%20low%20res.mp4"
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+
+        {/* Highlights Section */}
+        <section className="py-6 md:py-10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
               <div className="bg-card/50 border border-border/30 rounded-2xl p-6 md:p-8">
                 <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
-                  {isChristmasEvent ? "Why This Beats Every Other Christmas Do" : "Why Daytime Discos Are a Game Changer!"}
+                  {isChristmasEvent ? "Why This Beats Every Other Christmas Do" : "WHY EVERYONE SAYS YES TO THIS ONE"}
                 </h2>
                 <div className="space-y-4">
                   {isChristmasEvent ? (
@@ -1642,17 +1711,41 @@ const EventPage = () => {
                       </div>
                     ))
                   ) : (
-                    event.highlights.length > 0 && event.highlights.map((highlight, index) => {
-                      const [title, description] = highlight.split(': ');
-                      return (
-                        <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
-                          <p className="font-poppins text-foreground text-base md:text-lg">
-                            <strong className="font-semibold">{title}</strong>
-                            {description && <span className="text-foreground/80">: {description}</span>}
-                          </p>
-                        </div>
-                      );
-                    })
+                    [
+                      {
+                        emoji: "🎤",
+                        title: "THE ROOM WHERE EVERYONE KNOWS EVERY WORD",
+                        description: "Wall-to-wall 80s, 90s and 00s perfection. Confetti cannons, dazzling lights, and that moment the whole room sings together. That's what you're booking."
+                      },
+                      {
+                        emoji: "🕺",
+                        title: "NIGHT-OUT ENERGY. AFTERNOON TIMING.",
+                        description: "Same Boombastic production. Same atmosphere you remember from your best nights out. Dance freely, laugh loudly, and still be home by 7pm."
+                      },
+                      {
+                        emoji: "👯",
+                        title: "THE ONE PLAN THAT DOESN'T FALL APART",
+                        description: "2pm Saturday works for everyone. No babysitter dramas, no late-night worries. One link. One plan. You just became the legend who sorted it."
+                      },
+                      {
+                        emoji: "😎",
+                        title: "ALL THE FUN. STILL BUZZING BY WEDNESDAY.",
+                        description: "You walked out last time saying \"Let's do it again!\" This is the time to do it. This is your plan."
+                      },
+                      {
+                        emoji: "🏆",
+                        title: "TRUST THE TRACK RECORD",
+                        description: "Created by Boombastic Events — 10+ years of consistent sell-outs across the UK because we know how to create moments that matter."
+                      }
+                    ].map((card, index) => (
+                      <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">
+                        <p className="font-poppins text-foreground text-base md:text-lg">
+                          <span className="mr-2">{card.emoji}</span>
+                          <strong className="font-semibold">{card.title}</strong>
+                          <span className="text-foreground/80 block mt-2">{card.description}</span>
+                        </p>
+                      </div>
+                    ))
                   )}
                 </div>
               </div>
@@ -1678,7 +1771,7 @@ const EventPage = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-6">
-                Why You Love The 2PM Club
+                WHY YOU LOVE THE 2PM CLUB
               </h2>
               
               <div className="md:max-w-2xl mx-auto">
@@ -1713,42 +1806,29 @@ const EventPage = () => {
           </div>
         </section>
 
-        {/* Embedded Checkout Section */}
-        <section id="checkout-section" className="py-10 md:py-14">
+        {/* Second Eventbrite Embed - Bottom of page */}
+        <section className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <div className="bg-primary/10 border border-primary/30 rounded-2xl p-6 md:p-8">
+              <div className={`rounded-2xl p-6 md:p-8 ${event.accentColor === 'coral' ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : 'bg-primary/10 border border-primary/30'}`}>
                 <div className="text-center mb-6">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 bg-primary/20">
                     <span className="text-2xl">🎟️</span>
                   </div>
-                  {event.status === 'last-tickets' ? (
-                    <>
-                      <h2 className="font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 text-foreground">
-                        {event.urgencyLabel || 'LAST TICKETS'}
-                      </h2>
-                      <p className="font-poppins text-sm text-foreground/70">
-                        Don't miss out!
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <h2 className="font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 text-foreground">
-                        Book Your Tickets
-                      </h2>
-                      <p className="font-poppins text-sm text-foreground/70">
-                        Don't miss out! The most popular day party in the Midlands
-                      </p>
-                    </>
-                  )}
+                  <h2 className="font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 text-foreground">
+                    READY? BOOK YOUR TICKETS
+                  </h2>
+                  <p className="font-poppins text-sm text-foreground/70">
+                    Don't miss out — don't wait for the group chat to decide.
+                  </p>
                 </div>
                 
                 <div className="bg-card/50 rounded-xl overflow-hidden">
                   <EventbriteEmbed 
                     eventbriteId={event.eventbriteId} 
                     eventSlug={event.slug}
-                    containerId={`eventbrite-widget-${event.slug}`} 
-                    height={425} 
+                    containerId={`eventbrite-widget-bottom-${event.slug}`} 
+                    height={700} 
                     promoCode={event.promoCode} 
                     eventTitle={event.title} 
                   />
