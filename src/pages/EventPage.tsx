@@ -1621,9 +1621,30 @@ const EventPage = () => {
                         </p>
                       </div>
                     </>
+                  ) : event.cityCode === 'LEIC' ? (
+                    <>
+                      <h2 className="font-poppins text-xl md:text-2xl text-foreground font-bold mb-6 tracking-wide">
+                        WE'RE BRINGING THE PARTY TO WELFORD ROAD 🏉
+                      </h2>
+                      
+                      <blockquote className="border-l-4 border-[#1A6D37] pl-4 mb-6">
+                        <p className="font-poppins text-lg md:text-xl text-foreground italic">
+                          "You know that feeling. Mr. Brightside kicks in and suddenly you're 22 again, screaming every word with your mates. No responsibility. No overthinking. Just pure, ridiculous joy."
+                        </p>
+                      </blockquote>
+                      
+                      <div className="space-y-4">
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                          That feeling is coming to Leicester. We're launching THE 2PM CLUB at the home of Leicester Tigers for the ultimate afternoon party — and you're invited.
+                        </p>
+                        <p className="font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                          Four hours of the biggest hairbrush anthems and sing-alongs, with night-out energy, confetti moments, and a room full of people who know every word too. The perfect party, at a time that actually works.
+                        </p>
+                      </div>
+                    </>
                   ) : (
                     <>
-                      {/* New hardcoded description */}
+                      {/* Standard hardcoded description */}
                       <h2 className="font-poppins text-xl md:text-2xl text-foreground font-bold mb-6 tracking-wide">
                         THE NIGHT OUT THAT STARTS AT 2PM ✨
                       </h2>
