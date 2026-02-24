@@ -76,6 +76,7 @@ const parseLocation = (location: string): {
     "Franklin's Gardens": 'NN5 5BU',
     "Cinch Stadium": 'NN5 5BU',
     'The Picturedrome': 'NN1 5BD',
+    'Mattioli Woods Welford Road Stadium': 'LE2 7TR',
   };
   
   // City-level postcodes (fallback)
@@ -85,7 +86,8 @@ const parseLocation = (location: string): {
     'Northampton': 'NN1 5BD',
     'Birmingham': 'B1 1AA',
     'Luton': 'LU1 2AA',
-    'Bedford': 'MK40 2TH'
+    'Bedford': 'MK40 2TH',
+    'Leicester': 'LE2 7TR'
   };
   
   // Check venue-specific first, then fall back to city
@@ -227,7 +229,7 @@ const ARTISTS = [
 
 const ArtistListSection = ({ accentColor }: { accentColor?: string }) => {
   const { elementRef, isVisible } = useScrollAnimation(0.1);
-  const isCoralAccent = accentColor === 'coral';
+  const accentTextClass = accentColor === 'coral' ? 'text-[#E88B73]' : accentColor === 'tigers-green' ? 'text-[#2E8B57]' : 'text-primary/80';
   
   return (
     <section className="py-10 md:py-14">
@@ -240,7 +242,7 @@ const ArtistListSection = ({ accentColor }: { accentColor?: string }) => {
             <h2 className="font-poppins text-xl md:text-2xl font-bold text-foreground tracking-tight mb-8">
               🪩 YOUR SOUNDTRACK
             </h2>
-            <p className={`font-poppins text-lg md:text-xl leading-relaxed tracking-wide ${isCoralAccent ? 'text-[#E88B73]' : 'text-primary/80'}`}>
+            <p className={`font-poppins text-lg md:text-xl leading-relaxed tracking-wide ${accentTextClass}`}>
               {ARTISTS.join(' · ')}
             </p>
             <p className="font-poppins text-sm md:text-base text-foreground/60 italic mt-8">
@@ -1023,6 +1025,8 @@ const EventPage = () => {
   // ==========================================
   if (event.status === 'pre-sale') {
     const isCoralAccent = event.accentColor === 'coral';
+    const isTigersGreenAccent = event.accentColor === 'tigers-green';
+    const hasAccent = isCoralAccent || isTigersGreenAccent;
     
     return (
       <>
@@ -1081,7 +1085,7 @@ const EventPage = () => {
                     <img 
                       src={event.squareImg} 
                       alt={`${event.title} event poster`} 
-                      className={`w-full max-w-sm h-auto rounded-xl shadow-2xl ${isCoralAccent ? 'shadow-coral' : 'shadow-primary/20'}`}
+                      className={`w-full max-w-sm h-auto rounded-xl shadow-2xl ${isCoralAccent ? 'shadow-coral' : isTigersGreenAccent ? 'shadow-tigers-green' : 'shadow-primary/20'}`}
                     />
                   </div>
                   
@@ -1097,15 +1101,15 @@ const EventPage = () => {
                     {/* Event Details */}
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-foreground/80">
                       <div className="flex items-center gap-1.5">
-                        <Calendar className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : 'text-primary'}`} />
+                        <Calendar className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : isTigersGreenAccent ? 'icon-tigers-green' : 'text-primary'}`} />
                         <span className="font-poppins text-base font-semibold">{event.date}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <Clock className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : 'text-primary'}`} />
+                        <Clock className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : isTigersGreenAccent ? 'icon-tigers-green' : 'text-primary'}`} />
                         <span className="font-poppins text-base">{event.timeDisplay}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <MapPin className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : 'text-primary'}`} />
+                        <MapPin className={`w-5 h-5 ${isCoralAccent ? 'icon-coral' : isTigersGreenAccent ? 'icon-tigers-green' : 'text-primary'}`} />
                         <span className="font-poppins text-base">{event.venue}</span>
                       </div>
                     </div>
@@ -1115,7 +1119,7 @@ const EventPage = () => {
                       ref={heroBookButtonRef}
                       onClick={scrollToCheckout} 
                       size="lg" 
-                      className={`w-full font-poppins text-lg ${isCoralAccent ? 'btn-coral' : ''}`}
+                      className={`w-full font-poppins text-lg ${isCoralAccent ? 'btn-coral' : isTigersGreenAccent ? 'btn-tigers-green' : ''}`}
                     >
                       Book Your Tickets 🎫
                     </Button>
@@ -1133,7 +1137,7 @@ const EventPage = () => {
           <section id="checkout-section" className="py-8 md:py-12">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
-                <div className={`rounded-2xl p-4 md:p-6 ${isCoralAccent ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : 'bg-primary/10 border border-primary/30'}`}>
+                <div className={`rounded-2xl p-4 md:p-6 ${isCoralAccent ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : isTigersGreenAccent ? 'bg-[#1A6D37]/10 border border-[#1A6D37]/30' : 'bg-primary/10 border border-primary/30'}`}>
                   <div className="bg-card/50 rounded-xl overflow-hidden">
                     <EventbriteEmbed 
                       eventbriteId={event.eventbriteId} 
@@ -1231,7 +1235,7 @@ const EventPage = () => {
 
           {/* Sticky Mobile CTA */}
           {isMobile && showStickyBookTickets && (
-            <div className={`fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm border-t p-3 safe-area-inset-bottom ${isCoralAccent ? 'bg-[#E88B73]/95 border-[#E88B73]/50' : 'bg-primary/95 border-primary/50'}`}>
+            <div className={`fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm border-t p-3 safe-area-inset-bottom ${isCoralAccent ? 'bg-[#E88B73]/95 border-[#E88B73]/50' : isTigersGreenAccent ? 'bg-[#1A6D37]/95 border-[#1A6D37]/50' : 'bg-primary/95 border-primary/50'}`}>
               <div className="flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <p className="font-poppins text-sm font-bold text-white truncate">
@@ -1347,7 +1351,7 @@ const EventPage = () => {
                   <img 
                     src={event.squareImg} 
                     alt={`${event.title} event poster`} 
-                    className={`w-full max-w-md h-auto rounded-xl shadow-2xl ${event.accentColor === 'coral' ? 'shadow-coral' : 'shadow-primary/20'}`} 
+                    className={`w-full max-w-md h-auto rounded-xl shadow-2xl ${event.accentColor === 'coral' ? 'shadow-coral' : event.accentColor === 'tigers-green' ? 'shadow-tigers-green' : 'shadow-primary/20'}`} 
                   />
                 </div>
                 
@@ -1406,15 +1410,15 @@ const EventPage = () => {
                   
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
-                      <Calendar className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : 'text-primary'}`} />
+                      <Calendar className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : event.accentColor === 'tigers-green' ? 'icon-tigers-green' : 'text-primary'}`} />
                       <span className="font-poppins font-medium text-base">{event.date}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Clock className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : 'text-primary'}`} />
+                      <Clock className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : event.accentColor === 'tigers-green' ? 'icon-tigers-green' : 'text-primary'}`} />
                       <span className="font-poppins font-medium text-base">{event.timeDisplay}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : 'text-primary'}`} />
+                      <MapPin className={`w-5 h-5 ${event.accentColor === 'coral' ? 'icon-coral' : event.accentColor === 'tigers-green' ? 'icon-tigers-green' : 'text-primary'}`} />
                       <span className="font-poppins font-medium text-base">{event.venue}, {event.city}</span>
                     </div>
                   </div>
@@ -1433,7 +1437,7 @@ const EventPage = () => {
                       ref={heroBookButtonRef} 
                       onClick={scrollToCheckout} 
                       size="lg" 
-                      className={`w-full md:w-auto font-poppins ${event.accentColor === 'coral' ? 'btn-coral' : ''}`}
+                      className={`w-full md:w-auto font-poppins ${event.accentColor === 'coral' ? 'btn-coral' : event.accentColor === 'tigers-green' ? 'btn-tigers-green' : ''}`}
                     >
                       {event.status === 'sold-out' ? 'Join Waiting List' : 'BOOK TICKETS'}
                     </Button>
@@ -1470,7 +1474,7 @@ const EventPage = () => {
         <section id="checkout-section" className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <div className={`rounded-2xl p-6 md:p-8 ${event.accentColor === 'coral' ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : 'bg-primary/10 border border-primary/30'}`}>
+              <div className={`rounded-2xl p-6 md:p-8 ${event.accentColor === 'coral' ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : event.accentColor === 'tigers-green' ? 'bg-[#1A6D37]/10 border border-[#1A6D37]/30' : 'bg-primary/10 border border-primary/30'}`}>
                 <div className="text-center mb-6">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 bg-primary/20">
                     <span className="text-2xl">🎟️</span>
@@ -1810,7 +1814,7 @@ const EventPage = () => {
         <section className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <div className={`rounded-2xl p-6 md:p-8 ${event.accentColor === 'coral' ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : 'bg-primary/10 border border-primary/30'}`}>
+              <div className={`rounded-2xl p-6 md:p-8 ${event.accentColor === 'coral' ? 'bg-[#E88B73]/10 border border-[#E88B73]/30' : event.accentColor === 'tigers-green' ? 'bg-[#1A6D37]/10 border border-[#1A6D37]/30' : 'bg-primary/10 border border-primary/30'}`}>
                 <div className="text-center mb-6">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 bg-primary/20">
                     <span className="text-2xl">🎟️</span>
@@ -1901,7 +1905,7 @@ const EventPage = () => {
           <div className="fixed top-24 right-4 z-50 animate-fade-in">
             <Button 
               onClick={scrollToCheckout} 
-              className={`font-poppins font-semibold px-6 py-2 rounded-full shadow-lg ${event.accentColor === 'coral' ? 'btn-coral' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}
+              className={`font-poppins font-semibold px-6 py-2 rounded-full shadow-lg ${event.accentColor === 'coral' ? 'btn-coral' : event.accentColor === 'tigers-green' ? 'btn-tigers-green' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}
             >
               {event.status === 'sold-out' ? 'Join Waiting List' : 'Book Tickets'}
             </Button>
