@@ -277,6 +277,27 @@ a.button:focus, button:focus {
   box-shadow: 0 25px 50px -12px rgba(232, 139, 115, 0.25) !important;
 }
 
+/* Leicester Tigers green accent */
+.btn-tigers-green {
+  background: linear-gradient(135deg, #1A6D37 0%, #2E8B57 50%, #1A6D37 100%) !important;
+  border: 2px solid #2E8B57 !important;
+  color: white !important;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.btn-tigers-green:hover {
+  background: linear-gradient(135deg, #155C2E 0%, #1A6D37 50%, #155C2E 100%) !important;
+  border-color: #1A6D37 !important;
+}
+
+.icon-tigers-green {
+  color: #2E8B57 !important;
+}
+
+.shadow-tigers-green {
+  box-shadow: 0 25px 50px -12px rgba(26, 109, 55, 0.25) !important;
+}
+
 /* Pre-sale exclusive badge */
 .pre-sale-badge {
   background: linear-gradient(135deg, #E88B73 0%, #F4A582 100%);
