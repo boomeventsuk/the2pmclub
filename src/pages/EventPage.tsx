@@ -1060,16 +1060,18 @@ const EventPage = () => {
                   </div>
                   
                   {/* Right: Details Card */}
-                  <div className="bg-card/60 backdrop-blur-sm border border-[#2E8B57]/40 rounded-2xl p-5 md:p-6 space-y-4">
+                    <div className="bg-card/60 backdrop-blur-sm border border-[#2E8B57]/40 rounded-2xl p-5 md:p-6 space-y-4">
+                    {/* Urgency Badge */}
+                    <div className="bg-[#1A6D37] text-white text-center py-2 px-4 rounded-lg font-poppins text-sm md:text-base font-bold tracking-wide uppercase animate-pulse">
+                      🔥 Tickets Selling Fast
+                    </div>
+
                     <div>
-                      <p className="font-poppins text-lg md:text-xl text-[#2E8B57] font-semibold mb-2">
-                        WELCOME FROM LEICESTER TIGERS
-                      </p>
                       <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
-                        THE 2PM CLUB Daytime Disco
+                        THE 2PM CLUB<br />Daytime Disco
                       </h1>
-                      <p className="font-poppins text-base text-foreground/70 mt-2">
-                        Your exclusive link to the ultimate afternoon party at Welford Road
+                      <p className="font-poppins text-base md:text-lg text-[#2E8B57] font-semibold mt-2">
+                        Iconic 80s, 90s &amp; 00s anthems
                       </p>
                     </div>
                     
@@ -1119,6 +1121,28 @@ const EventPage = () => {
                     />
                   </div>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Video Section */}
+          <section className="py-6 md:py-8">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <div className="rounded-2xl overflow-hidden shadow-xl">
+                  <video
+                    className="w-full"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster="https://the2pmclub.b-cdn.net/2PM%20Web%20Video%20Thumbnail.jpg"
+                  >
+                    <source src="https://the2pmclub.b-cdn.net/2PM%20video%20low%20res.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <p className="font-poppins text-center text-foreground/60 text-sm mt-3">
+                  This is what you're walking into.
+                </p>
               </div>
             </div>
           </section>
@@ -1202,9 +1226,12 @@ const EventPage = () => {
           {/* Sticky Mobile CTA - Tigers Green */}
           {isMobile && (
             <div className="fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm border-t border-[#2E8B57]/50 bg-background/95 p-3 safe-area-inset-bottom">
-              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <p className="font-poppins text-sm font-bold truncate text-foreground">
+                  <p className="font-poppins text-xs font-bold truncate text-[#1A6D37]">
+                    🔥 TICKETS SELLING FAST
+                  </p>
+                  <p className="font-poppins text-xs truncate text-foreground/70">
                     Leicester — {formatShortDate(event.startIso)}
                   </p>
                 </div>

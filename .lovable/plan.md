@@ -1,32 +1,44 @@
 
 
-# Update Tigers Partner Landing Page
+# Leicester-Specific Description Copy
 
-## Summary
+## What Changes
 
-Rework the `?tigers` variant to align with the email variant structure (including video section), update the headline/copy to match standard 2PM Club branding with urgency, and remove the "Welcome from Leicester Tigers" messaging.
+One file: `src/pages/EventPage.tsx`, lines 1624-1645.
 
-## Changes -- `src/pages/EventPage.tsx` (lines 1026-1222)
+Add a new conditional branch for Leicester (`event.cityCode === 'LEIC'`) inside the default description section (the `else` branch after Christmas and sold-out checks).
 
-### 1. Headline and copy updates
-- Replace "WELCOME FROM LEICESTER TIGERS" with urgency-focused copy: **"TICKETS SELLING FAST"** as a prominent badge
-- Change the main heading to: **"THE 2PM CLUB Daytime Disco"** with subtitle **"Iconic 80s, 90s & 00s anthems"**
-- Keep the venue/date/time details as-is
+## New Leicester Copy
 
-### 2. Add video section (like email variant)
-- Insert the video section between the Eventbrite embed and the Four Reasons section
-- Same video URL and poster as the email variant
-- Caption: "This is what you're walking into."
+**Heading**: WE'RE BRINGING THE PARTY TO WELFORD ROAD
 
-### 3. Add urgency badge in hero details card
-- Add a styled urgency badge at the top of the details card: green-themed "TICKETS SELLING FAST" banner (similar to the `last-tickets` treatment in the email variant but using tigers-green styling)
+**Pull quote** (green left border instead of pink): "You know that feeling. Mr. Brightside kicks in and suddenly you're 22 again, screaming every word with your mates. No responsibility. No overthinking. Just pure, ridiculous joy."
 
-### 4. Update sticky mobile CTA
-- Change the sticky bar text from just "Leicester -- date" to include "TICKETS SELLING FAST" urgency text
+**Body paragraphs**:
+1. "That feeling is coming to Leicester. We're launching THE 2PM CLUB at the home of Leicester Tigers for the ultimate afternoon party -- and you're invited."
+2. "Four hours of the biggest hairbrush anthems and sing-alongs, with night-out energy, confetti moments, and a room full of people who know every word too. The perfect party, at a time that actually works."
 
-### Files modified
+## How It Fits
 
-| File | What changes |
+The existing conditional chain is:
+
+```text
+isChristmasEvent ? (christmas copy)
+: event.status === 'sold-out' ? (sold-out copy)
+: (standard copy)          <-- this block changes
+```
+
+The standard copy block (lines 1624-1645) becomes:
+
+```text
+event.cityCode === 'LEIC' ? (leicester launch copy)
+: (standard copy -- unchanged)
+```
+
+Everything else on the page stays exactly as-is. The blockquote border colour will use the tigers-green accent (`border-[#1A6D37]`) instead of `border-primary` to match the rest of the Leicester page theme.
+
+## File Modified
+
+| File | What Changes |
 |------|-------------|
-| `src/pages/EventPage.tsx` | Update Tigers variant block (~lines 1048-1219): new headline, urgency badge, add video section, update sticky CTA copy |
-
+| `src/pages/EventPage.tsx` | Add Leicester conditional in standard description block (~10 lines added) |
