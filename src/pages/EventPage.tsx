@@ -260,6 +260,7 @@ const EventPage = () => {
   const [searchParams] = useSearchParams();
   const isRetargeting = searchParams.get('rt') === '1';
   const isEmailLanding = searchParams.has('email');
+  const isTigersLanding = searchParams.has('tigers');
   
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -393,6 +394,7 @@ const EventPage = () => {
       console.log('[EventPage] Slug type:', typeof slug);
       console.log('[EventPage] Is retargeting mode:', isRetargeting);
       console.log('[EventPage] Is email landing mode:', isEmailLanding);
+      console.log('[EventPage] Is tigers landing mode:', isTigersLanding);
       
       // Include hidden events for direct URL access (pre-sale pages)
       const eventData = await loadEventData(true);
@@ -408,7 +410,7 @@ const EventPage = () => {
       setLoading(false);
     };
     loadEvent();
-  }, [slug, isRetargeting, isEmailLanding]);
+  }, [slug, isRetargeting, isEmailLanding, isTigersLanding]);
 
   // Detect Christmas events
   const isChristmasEvent = event?.title.toLowerCase().includes('christmas');
@@ -421,7 +423,7 @@ const EventPage = () => {
 
   // Track hero button visibility for sticky button (only for non-retargeting and non-email)
   useEffect(() => {
-    if (isRetargeting || isEmailLanding) return; // These have their own mobile sticky
+    if (isRetargeting || isEmailLanding || isTigersLanding) return; // These have their own mobile sticky
     if (!heroBookButtonRef.current) {
       setShowStickyBookTickets(true);
       return;
