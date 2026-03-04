@@ -260,6 +260,7 @@ const EventPage = () => {
   const [searchParams] = useSearchParams();
   const isRetargeting = searchParams.get('rt') === '1';
   const isEmailLanding = searchParams.has('email');
+  const isTigersLanding = searchParams.has('tigers');
   
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -393,6 +394,7 @@ const EventPage = () => {
       console.log('[EventPage] Slug type:', typeof slug);
       console.log('[EventPage] Is retargeting mode:', isRetargeting);
       console.log('[EventPage] Is email landing mode:', isEmailLanding);
+      console.log('[EventPage] Is tigers landing mode:', isTigersLanding);
       
       // Include hidden events for direct URL access (pre-sale pages)
       const eventData = await loadEventData(true);
@@ -408,7 +410,7 @@ const EventPage = () => {
       setLoading(false);
     };
     loadEvent();
-  }, [slug, isRetargeting, isEmailLanding]);
+  }, [slug, isRetargeting, isEmailLanding, isTigersLanding]);
 
   // Detect Christmas events
   const isChristmasEvent = event?.title.toLowerCase().includes('christmas');
@@ -421,7 +423,7 @@ const EventPage = () => {
 
   // Track hero button visibility for sticky button (only for non-retargeting and non-email)
   useEffect(() => {
-    if (isRetargeting || isEmailLanding) return; // These have their own mobile sticky
+    if (isRetargeting || isEmailLanding || isTigersLanding) return; // These have their own mobile sticky
     if (!heroBookButtonRef.current) {
       setShowStickyBookTickets(true);
       return;
@@ -1011,6 +1013,206 @@ const EventPage = () => {
                   variant={event.status === 'last-tickets' ? 'secondary' : 'default'}
                 >
                   {event.status === 'sold-out' ? 'Join Waiting List' : 'Book Now'}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  }
+
+  // ==========================================
+  // TIGERS PARTNER LANDING MODE - Leicester Tigers website traffic
+  // ==========================================
+  if (isTigersLanding) {
+    return (
+      <>
+        <Helmet>
+          <title>The 2 PM Club — Leicester — {event.date} | {event.venue}</title>
+          <meta name="description" content={`Daytime disco ${event.timeRange} with 80s/90s/00s anthems. Leicester, ${event.date} at ${event.venue}.`} />
+          <link rel="canonical" href={`https://www.the2pmclub.co.uk/events/${event.slug}/`} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="The 2 PM Club" />
+          <meta property="og:title" content={`The 2 PM Club — Leicester — ${event.date}`} />
+          <meta property="og:description" content={`Daytime disco ${event.timeRange} with 80s/90s/00s anthems.`} />
+          <meta property="og:url" content={`https://www.the2pmclub.co.uk/events/${event.slug}/`} />
+          <meta property="og:image" content={event.squareImg} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="robots" content="noindex" />
+        </Helmet>
+
+        <div className="min-h-screen bg-background pb-20 md:pb-0">
+          <Header />
+          
+          {/* Hero Section */}
+          <section className="pt-24 md:pt-28 pb-6 bg-gradient-to-b from-background via-background to-muted/10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-6 items-start">
+                  {/* Left: Event Poster */}
+                  <div className="flex justify-center md:justify-start">
+                    <img 
+                      src={event.squareImg} 
+                      alt={`${event.title} event poster`} 
+                      className="w-full max-w-sm h-auto rounded-xl shadow-2xl shadow-tigers-green" 
+                    />
+                  </div>
+                  
+                  {/* Right: Details Card */}
+                  <div className="bg-card/60 backdrop-blur-sm border border-[#2E8B57]/40 rounded-2xl p-5 md:p-6 space-y-4">
+                    <div>
+                      <p className="font-poppins text-lg md:text-xl text-[#2E8B57] font-semibold mb-2">
+                        WELCOME FROM LEICESTER TIGERS
+                      </p>
+                      <h1 className="font-poppins text-2xl md:text-3xl font-bold text-foreground tracking-tight uppercase">
+                        THE 2PM CLUB Daytime Disco
+                      </h1>
+                      <p className="font-poppins text-base text-foreground/70 mt-2">
+                        Your exclusive link to the ultimate afternoon party at Welford Road
+                      </p>
+                    </div>
+                    
+                    {/* Event Details */}
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-foreground/80">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 icon-tigers-green" />
+                        <span className="font-poppins text-sm">{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="w-4 h-4 icon-tigers-green" />
+                        <span className="font-poppins text-sm">{event.timeDisplay}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 icon-tigers-green" />
+                        <span className="font-poppins text-sm">{event.venue}</span>
+                      </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <Button 
+                      onClick={scrollToCheckout} 
+                      size="lg" 
+                      className="w-full font-poppins text-lg btn-tigers-green"
+                    >
+                      Book Tickets
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Ticket Widget */}
+          <section id="checkout-section" className="py-6 md:py-10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <div className="bg-[#1A6D37]/10 border border-[#2E8B57]/30 rounded-2xl p-4 md:p-6">
+                  <div className="bg-card/50 rounded-xl overflow-hidden">
+                    <EventbriteEmbed 
+                      eventbriteId={event.eventbriteId} 
+                      eventSlug={event.slug}
+                      containerId={`eventbrite-widget-tigers-${event.slug}`} 
+                      height={600} 
+                      promoCode={event.promoCode} 
+                      eventTitle={event.title} 
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Four Reasons */}
+          <section className="py-6 md:py-8">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="font-poppins text-lg md:text-xl font-semibold text-foreground/90 mb-4 text-center">
+                  Here's why people love it:
+                </h2>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="bg-card/40 border border-border/30 rounded-xl p-4">
+                    <p className="font-poppins text-sm md:text-base text-foreground/90">
+                      🎤 A room full of people who know every word. Your kind of crowd.
+                    </p>
+                  </div>
+                  <div className="bg-card/40 border border-border/30 rounded-xl p-4">
+                    <p className="font-poppins text-sm md:text-base text-foreground/90">
+                      🎶 Four hours with your favourite people, your favourite songs, and zero small talk about kids or work.
+                    </p>
+                  </div>
+                  <div className="bg-card/40 border border-border/30 rounded-xl p-4">
+                    <p className="font-poppins text-sm md:text-base text-foreground/90">
+                      🙌 Nobody's too cool to dance or sing out loud — that's literally why we're all here!
+                    </p>
+                  </div>
+                  <div className="bg-card/40 border border-border/30 rounded-xl p-4">
+                    <p className="font-poppins text-sm md:text-base text-foreground/90">
+                      🏡 Done by 6pm. Sunday stays yours.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Share Row */}
+          <section className="py-6 md:py-8">
+            <div className="container mx-auto px-4">
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-card/50 border border-border/30 rounded-xl p-5 text-center">
+                  <p className="font-poppins text-base md:text-lg text-foreground/80 mb-4">
+                    Share this in the group chat
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    {isMobile && (
+                      <Button 
+                        variant="outline"
+                        onClick={() => handleWhatsAppShare(event)}
+                        className="font-poppins"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        WhatsApp
+                      </Button>
+                    )}
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleMessengerShare(event)}
+                      className="font-poppins"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Messenger
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleCopyLink(event)}
+                      className="font-poppins"
+                    >
+                      <Copy className="w-4 h-4 mr-2" />
+                      Copy Link
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <Footer />
+
+          {/* Sticky Mobile CTA - Tigers Green */}
+          {isMobile && (
+            <div className="fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm border-t border-[#2E8B57]/50 bg-background/95 p-3 safe-area-inset-bottom">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="font-poppins text-sm font-bold truncate text-foreground">
+                    Leicester — {formatShortDate(event.startIso)}
+                  </p>
+                </div>
+                <Button 
+                  onClick={scrollToCheckout}
+                  className="font-poppins font-bold px-6 shrink-0 btn-tigers-green"
+                >
+                  Book Now
                 </Button>
               </div>
             </div>

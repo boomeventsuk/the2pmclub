@@ -1,61 +1,44 @@
 
 
-# Tigers Partner Landing Page (`?tigers` variant)
+# Leicester-Specific Description Copy
 
-## Summary
+## What Changes
 
-Create a new query-string variant for the Leicester event page, accessed via `/events/020526-2PM-LEIC/?tigers`. This is a conversion-first page designed for traffic arriving from the Leicester Tigers website -- it skips the promo content and goes straight to booking, very similar to the existing `?email` variant.
+One file: `src/pages/EventPage.tsx`, lines 1624-1645.
 
-## URL
+Add a new conditional branch for Leicester (`event.cityCode === 'LEIC'`) inside the default description section (the `else` branch after Christmas and sold-out checks).
 
+## New Leicester Copy
+
+**Heading**: WE'RE BRINGING THE PARTY TO WELFORD ROAD
+
+**Pull quote** (green left border instead of pink): "You know that feeling. Mr. Brightside kicks in and suddenly you're 22 again, screaming every word with your mates. No responsibility. No overthinking. Just pure, ridiculous joy."
+
+**Body paragraphs**:
+1. "That feeling is coming to Leicester. We're launching THE 2PM CLUB at the home of Leicester Tigers for the ultimate afternoon party -- and you're invited."
+2. "Four hours of the biggest hairbrush anthems and sing-alongs, with night-out energy, confetti moments, and a room full of people who know every word too. The perfect party, at a time that actually works."
+
+## How It Fits
+
+The existing conditional chain is:
+
+```text
+isChristmasEvent ? (christmas copy)
+: event.status === 'sold-out' ? (sold-out copy)
+: (standard copy)          <-- this block changes
 ```
-https://www.the2pmclub.co.uk/events/020526-2PM-LEIC/?tigers
+
+The standard copy block (lines 1624-1645) becomes:
+
+```text
+event.cityCode === 'LEIC' ? (leicester launch copy)
+: (standard copy -- unchanged)
 ```
 
-## What It Looks Like
+Everything else on the page stays exactly as-is. The blockquote border colour will use the tigers-green accent (`border-[#1A6D37]`) instead of `border-primary` to match the rest of the Leicester page theme.
 
-Same structure as the `?email` variant:
-
-1. **Header** (standard site nav)
-2. **Hero** -- poster + compact details card with Tigers-green styling
-3. **Eventbrite Checkout Widget** -- immediately after hero (height 600-700), so visitors can book straight away
-4. **Brief "Why" section** -- 4 short reasons (same as email variant)
-5. **Share row** -- WhatsApp / Messenger / Copy Link
-6. **Sticky mobile CTA** -- green-themed "Book Now" anchored to checkout widget
-
-Key differences from the email variant:
-- Headline copy tailored for Tigers fans: "WELCOME FROM LEICESTER TIGERS" or similar
-- Tigers-green accent on buttons, borders, sticky CTA (reuses existing `.btn-tigers-green` classes)
-- `noindex` meta tag (partner traffic, not for Google)
-- No video section (keep it short and conversion-focused)
-
-## Changes Required
-
-### File: `src/pages/EventPage.tsx`
-
-1. **Read the query param** (alongside existing `isRetargeting` and `isEmailLanding`):
-   ```ts
-   const isTigersLanding = searchParams.has('tigers');
-   ```
-
-2. **Add a new rendering block** between the email and standard blocks (~80 lines). The layout mirrors the email variant but with:
-   - Tigers-specific headline ("WELCOME FROM LEICESTER TIGERS")
-   - Sub-headline: "Your exclusive link to the ultimate afternoon party at Welford Road"
-   - Tigers-green accent on poster shadow, icons, and CTA buttons
-   - Eventbrite embed directly after hero
-   - 4 compact reasons section
-   - Share row
-   - Green-themed sticky mobile CTA
-
-3. **No routing changes needed** -- it uses the same `/events/:slug/` route, just a different query parameter.
-
-### No other files change
-
-The event data, CSS classes (`.btn-tigers-green`, `.icon-tigers-green`, `.shadow-tigers-green`), and routing are all already in place.
-
-## Files Modified
+## File Modified
 
 | File | What Changes |
 |------|-------------|
-| `src/pages/EventPage.tsx` | Add `isTigersLanding` check and new rendering block (~80 lines) |
-
+| `src/pages/EventPage.tsx` | Add Leicester conditional in standard description block (~10 lines added) |
