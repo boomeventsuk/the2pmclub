@@ -16,7 +16,7 @@ const NewHero = () => {
       <img src="https://boombastic-events.b-cdn.net/Boombastic%20Events/event%20photos/2PM/280226-2PM-NPTON-confetti-cannon-rainbow-lighting-crowd.jpeg" alt="THE 2PM CLUB crowd with confetti cannons and rainbow lighting at a daytime disco party" className="absolute inset-0 w-full h-full object-cover object-[center_30%]" />
       
       {/* Gradient overlay - much lighter to show crowd energy */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/15 to-transparent" />
       
       {/* Subtle radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(328_100%_54%_/_0.2)_0%,_transparent_70%)]" />
