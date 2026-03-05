@@ -1,44 +1,32 @@
 
 
-# Leicester-Specific Description Copy
+# Urgency Updates for Milton Keynes and Coventry
 
-## What Changes
+## Summary
 
-One file: `src/pages/EventPage.tsx`, lines 1624-1645.
+Update the event data for MK (last 25 tickets) and Coventry (last 75 tickets) to trigger the existing high-urgency "last-tickets" treatment across homepage cards and event landing pages.
 
-Add a new conditional branch for Leicester (`event.cityCode === 'LEIC'`) inside the default description section (the `else` branch after Christmas and sold-out checks).
+## Changes
 
-## New Leicester Copy
+### File: `public/events.json`
 
-**Heading**: WE'RE BRINGING THE PARTY TO WELFORD ROAD
+**Milton Keynes** (slug `140326-2PM-MK`, line 78-79):
+- Change `status` from `"last-tickets"` to `"last-tickets"` (already correct)
+- Change `urgencyLabel` from `"LAST 50 TICKETS"` to `"FINAL 25 TICKETS"`
 
-**Pull quote** (green left border instead of pink): "You know that feeling. Mr. Brightside kicks in and suddenly you're 22 again, screaming every word with your mates. No responsibility. No overthinking. Just pure, ridiculous joy."
+**Coventry** (slug `070326-2PM-COV`, line 118-119):
+- Change `status` from `"selling-fast-amber"` to `"last-tickets"`
+- Change `urgencyLabel` from `"TICKETS SELLING FAST"` to `"LAST 75 TICKETS"`
 
-**Body paragraphs**:
-1. "That feeling is coming to Leicester. We're launching THE 2PM CLUB at the home of Leicester Tigers for the ultimate afternoon party -- and you're invited."
-2. "Four hours of the biggest hairbrush anthems and sing-alongs, with night-out energy, confetti moments, and a room full of people who know every word too. The perfect party, at a time that actually works."
+These two data changes automatically activate:
+- Red pulsing urgency strip on homepage event cards
+- Full-width pink sticky "LAST XX TICKETS" banner on event pages (all variants: standard, email, retargeting)
+- Pink sticky mobile CTA with ticket count
+- Urgency badge in the hero details card
 
-## How It Fits
+### Files modified
 
-The existing conditional chain is:
-
-```text
-isChristmasEvent ? (christmas copy)
-: event.status === 'sold-out' ? (sold-out copy)
-: (standard copy)          <-- this block changes
-```
-
-The standard copy block (lines 1624-1645) becomes:
-
-```text
-event.cityCode === 'LEIC' ? (leicester launch copy)
-: (standard copy -- unchanged)
-```
-
-Everything else on the page stays exactly as-is. The blockquote border colour will use the tigers-green accent (`border-[#1A6D37]`) instead of `border-primary` to match the rest of the Leicester page theme.
-
-## File Modified
-
-| File | What Changes |
+| File | What changes |
 |------|-------------|
-| `src/pages/EventPage.tsx` | Add Leicester conditional in standard description block (~10 lines added) |
+| `public/events.json` | MK: urgencyLabel to "FINAL 25 TICKETS"; Coventry: status to "last-tickets", urgencyLabel to "LAST 75 TICKETS" |
+
