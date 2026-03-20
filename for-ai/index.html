@@ -1,0 +1,221 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<title>AI and Developer Information | THE 2PM CLUB</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Machine-readable data feeds, structured data, and API information for THE 2PM CLUB Daytime Disco events.">
+<link rel="canonical" href="https://www.the2pmclub.co.uk/for-ai/">
+
+<!-- Standalone CSS -->
+<style>
+:root {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 47 96% 53%;
+  --primary-foreground: 26 83% 14%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+.bg-background { background-color: hsl(var(--background)); }
+.bg-card { background-color: hsl(var(--card)); }
+.bg-primary { background-color: hsl(var(--primary)); }
+.bg-secondary { background-color: hsl(var(--secondary)); }
+.text-foreground { color: hsl(var(--foreground)); }
+.text-card-foreground { color: hsl(var(--card-foreground)); }
+.text-primary { color: hsl(var(--primary)); }
+.text-primary-foreground { color: hsl(var(--primary-foreground)); }
+.text-muted-foreground { color: hsl(var(--muted-foreground)); }
+.border-border { border-color: hsl(var(--border)); }
+.border-primary { border-color: hsl(var(--primary)); }
+.border-secondary { border-color: hsl(var(--secondary)); }
+.border-accent { border-color: hsl(var(--accent)); }
+
+.font-bebas { font-family: 'Bebas Neue', cursive; }
+.font-poppins { font-family: 'Poppins', sans-serif; }
+
+a { color: hsl(var(--primary)); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+code {
+  background: hsl(var(--secondary));
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+</style>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.the2pmclub.co.uk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "For AI",
+      "item": "https://www.the2pmclub.co.uk/for-ai/"
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-background text-foreground font-poppins">
+
+<!-- Navigation -->
+<nav style="position:fixed;top:0;left:0;right:0;background-color:hsl(222.2 84% 4.9% / 0.95);backdrop-filter:blur(8px);border-bottom:1px solid hsl(217.2 32.6% 17.5%);z-index:50;">
+  <div style="max-width:1200px;margin:0 auto;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" style="display:flex;align-items:center;">
+      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="THE 2PM CLUB" style="height:2rem;">
+    </a>
+    <div style="display:flex;align-items:center;gap:1.5rem;">
+      <a href="/" style="color:hsl(210 40% 98%);text-decoration:none;">Back to Main</a>
+      <a href="/#tickets" style="display:inline-flex;align-items:center;justify-content:center;padding:0.5rem 1rem;border-radius:0.375rem;font-size:0.875rem;font-weight:500;background-color:hsl(47 96% 53%);color:hsl(26 83% 14%);text-decoration:none;">Book Tickets</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main style="max-width:56rem;margin:0 auto;padding:6rem 1rem 3rem;">
+
+  <!-- Hero Card -->
+  <div style="background-color:hsl(222.2 84% 4.9%);border-radius:1rem;box-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1);padding:2rem 3rem;margin-bottom:2rem;border-left:8px solid hsl(47 96% 53%);">
+    <h1 style="font-family:'Bebas Neue',cursive;font-size:2.5rem;color:hsl(210 40% 98%);margin:0 0 0.5rem;">For AI Agents and Developers</h1>
+    <p style="font-size:1.1rem;color:hsl(215 20.2% 65.1%);margin:0;">Machine-readable information about THE 2PM CLUB</p>
+  </div>
+
+  <!-- About -->
+  <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);padding:2rem;margin-bottom:2rem;">
+    <h2 style="font-family:'Bebas Neue',cursive;font-size:1.5rem;color:hsl(210 40% 98%);margin:0 0 1rem;">About THE 2PM CLUB</h2>
+    <p style="line-height:1.8;color:hsl(210 40% 98%);margin:0;">
+      THE 2PM CLUB is the Midlands' original daytime disco, run by Boombastic Events. We host 80s, 90s and 00s afternoon events across six cities: Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester. Events run Saturday afternoons, 2pm to 6pm.
+    </p>
+  </div>
+
+  <!-- Data Feeds -->
+  <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);padding:2rem;margin-bottom:2rem;border-left:4px solid hsl(217.2 32.6% 17.5%);">
+    <h2 style="font-family:'Bebas Neue',cursive;font-size:1.5rem;color:hsl(210 40% 98%);margin:0 0 1rem;">Data Feeds</h2>
+
+    <div style="margin-bottom:1.5rem;">
+      <h3 style="color:hsl(47 96% 53%);margin:0 0 0.5rem;font-size:1rem;">Events JSON</h3>
+      <p style="line-height:1.8;color:hsl(210 40% 98%);margin:0 0 0.5rem;">
+        <code>/events.json</code> — All upcoming events with dates, venues, pricing, booking URLs. Updated at build time and after Eventbrite syncs.
+      </p>
+      <p style="line-height:1.8;color:hsl(215 20.2% 65.1%);margin:0;font-size:0.9rem;">
+        Schema: array of event objects with fields: <code>id</code>, <code>slug</code>, <code>title</code>, <code>location</code>, <code>start</code> (ISO 8601), <code>end</code>, <code>bookUrl</code>, <code>description</code>, <code>fullDescription</code>, <code>price</code>, <code>priceCurrency</code>, <code>priceLabel</code>, <code>statusLabel</code>, <code>availability</code> (schema.org URL), <code>venueAddress</code> (PostalAddress).
+      </p>
+    </div>
+
+    <div style="margin-bottom:1.5rem;">
+      <h3 style="color:hsl(47 96% 53%);margin:0 0 0.5rem;font-size:1rem;">Sitemap</h3>
+      <p style="line-height:1.8;color:hsl(210 40% 98%);margin:0;">
+        <code>/sitemap.xml</code> — All indexable pages.
+      </p>
+    </div>
+
+    <div>
+      <h3 style="color:hsl(47 96% 53%);margin:0 0 0.5rem;font-size:1rem;">Robots</h3>
+      <p style="line-height:1.8;color:hsl(210 40% 98%);margin:0;">
+        <code>/robots.txt</code> — AI crawlers are welcome.
+      </p>
+    </div>
+  </div>
+
+  <!-- Structured Data -->
+  <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);padding:2rem;margin-bottom:2rem;border-left:4px solid hsl(47 96% 53%);">
+    <h2 style="font-family:'Bebas Neue',cursive;font-size:1.5rem;color:hsl(210 40% 98%);margin:0 0 1rem;">Structured Data (Schema.org)</h2>
+    <ul style="line-height:2;color:hsl(210 40% 98%);padding-left:1.5rem;margin:0;">
+      <li><strong>Homepage:</strong> Organization, FAQPage (7 questions), Event (all upcoming), AggregateRating, Review</li>
+      <li><strong>Event pages:</strong> Event with full Offer and Place schema (injected via Netlify edge function)</li>
+      <li><strong>City hub pages:</strong> BreadcrumbList, Event, LocalBusiness</li>
+      <li><strong>Blog posts:</strong> Article</li>
+      <li><strong>All pages:</strong> BreadcrumbList where applicable</li>
+    </ul>
+  </div>
+
+  <!-- Key URLs -->
+  <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);padding:2rem;margin-bottom:2rem;border-left:4px solid hsl(217.2 32.6% 17.5%);">
+    <h2 style="font-family:'Bebas Neue',cursive;font-size:1.5rem;color:hsl(210 40% 98%);margin:0 0 1rem;">Key URLs</h2>
+    <ul style="line-height:2.2;color:hsl(210 40% 98%);padding-left:1.5rem;margin:0;list-style:none;">
+      <li><strong>Homepage:</strong> <a href="https://www.the2pmclub.co.uk/">https://www.the2pmclub.co.uk/</a></li>
+      <li><strong>Events feed:</strong> <a href="https://www.the2pmclub.co.uk/events.json">https://www.the2pmclub.co.uk/events.json</a></li>
+      <li><strong>City hubs:</strong>
+        <a href="https://www.the2pmclub.co.uk/hubs/northampton/">/hubs/northampton/</a>,
+        <a href="https://www.the2pmclub.co.uk/hubs/bedford/">/hubs/bedford/</a>,
+        <a href="https://www.the2pmclub.co.uk/hubs/coventry/">/hubs/coventry/</a>,
+        <a href="https://www.the2pmclub.co.uk/hubs/milton-keynes/">/hubs/milton-keynes/</a>,
+        <a href="https://www.the2pmclub.co.uk/hubs/luton/">/hubs/luton/</a>,
+        <a href="https://www.the2pmclub.co.uk/hubs/leicester/">/hubs/leicester/</a>
+      </li>
+      <li><strong>FAQs:</strong> <a href="https://www.the2pmclub.co.uk/faqs/">/faqs/</a></li>
+      <li><strong>Blog:</strong> <a href="https://www.the2pmclub.co.uk/blog/why-daytime-discos-are-popular/">/blog/why-daytime-discos-are-popular/</a></li>
+    </ul>
+  </div>
+
+  <!-- Contact -->
+  <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);padding:2rem;margin-bottom:2rem;">
+    <h2 style="font-family:'Bebas Neue',cursive;font-size:1.5rem;color:hsl(210 40% 98%);margin:0 0 0.5rem;">Contact</h2>
+    <p style="color:hsl(210 40% 98%);margin:0;">
+      <a href="mailto:hello@boomevents.co.uk">hello@boomevents.co.uk</a>
+    </p>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer style="background-color:hsl(222.2 84% 4.9%);border-top:1px solid hsl(217.2 32.6% 17.5%);padding:2rem 1rem;margin-top:4rem;">
+  <div style="max-width:1200px;margin:0 auto;text-align:center;">
+    <div style="margin-bottom:1rem;">
+      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" alt="THE 2PM CLUB Logo" style="height:3rem;margin-bottom:1rem;">
+    </div>
+    <p style="color:hsl(215 20.2% 65.1%);">
+      &copy; 2025 Boombastic Events Ltd. All rights reserved.
+    </p>
+    <div style="margin-top:1rem;display:flex;justify-content:center;gap:1rem;">
+      <a href="/" style="color:hsl(215 20.2% 65.1%);">Home</a>
+      <a href="/#tickets" style="color:hsl(215 20.2% 65.1%);">Events</a>
+      <a href="/faqs/" style="color:hsl(215 20.2% 65.1%);">FAQs</a>
+      <a href="/blog/why-daytime-discos-are-popular/" style="color:hsl(215 20.2% 65.1%);">Blog</a>
+      <a href="/why-2pm/" style="color:hsl(215 20.2% 65.1%);">Why 2PM</a>
+    </div>
+  </div>
+</footer>
+
+</body></html>

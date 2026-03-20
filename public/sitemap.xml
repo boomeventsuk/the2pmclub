@@ -3,13 +3,69 @@
   <url>
     <loc>https://www.the2pmclub.co.uk/</loc>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.the2pmclub.co.uk/events.json</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- City Hub Pages -->
+  <url>
+    <loc>https://www.the2pmclub.co.uk/hubs/northampton/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/hubs/bedford/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/hubs/coventry/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/hubs/milton-keynes/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/hubs/luton/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/hubs/leicester/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Content Pages -->
+  <url>
+    <loc>https://www.the2pmclub.co.uk/what-to-expect/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/group-bookings/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/faqs/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/for-ai/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Event Pages -->
   <url>
     <loc>https://www.the2pmclub.co.uk/events/020526-2PM-LEIC/</loc>
     <changefreq>weekly</changefreq>
@@ -40,16 +96,15 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.the2pmclub.co.uk/faqs/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
+
+  <!-- Blog -->
   <url>
     <loc>https://www.the2pmclub.co.uk/blog/why-daytime-discos-are-popular/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Other -->
   <url>
     <loc>https://www.the2pmclub.co.uk/why-2pm/</loc>
     <changefreq>yearly</changefreq>
