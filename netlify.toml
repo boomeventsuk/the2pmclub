@@ -3,6 +3,10 @@
   publish = "dist"
 
 [[edge_functions]]
+  path = "/"
+  function = "homepage-inject"
+
+[[edge_functions]]
   path = "/events/*"
   function = "og-inject"
 
