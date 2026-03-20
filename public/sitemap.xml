@@ -99,6 +99,16 @@
 
   <!-- Blog -->
   <url>
+    <loc>https://www.the2pmclub.co.uk/blog/what-is-a-daytime-disco/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.the2pmclub.co.uk/blog/hen-do-daytime-disco/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.the2pmclub.co.uk/blog/why-daytime-discos-are-popular/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
