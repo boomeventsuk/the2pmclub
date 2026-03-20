@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Internal ticket data (real numbers, never public)
+scripts/.ticket-data-internal.json

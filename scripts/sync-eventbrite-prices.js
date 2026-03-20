@@ -9,13 +9,14 @@
  * Requires: EVENTBRITE_TOKEN env var (or .env.local file)
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const EVENTS_PATH = resolve(ROOT, 'public/events.json');
+const INTERNAL_PATH = resolve(ROOT, 'scripts/.ticket-data-internal.json');
 
 // Load token from env or .env.local
 function loadToken() {
@@ -48,7 +49,7 @@ async function fetchTicketClasses(eventbriteId, token) {
   return data.ticket_classes || [];
 }
 
-function extractPriceData(ticketClasses) {
+function extractPriceData(ticketClasses, eventDate) {
   if (!ticketClasses || ticketClasses.length === 0) return null;
 
   // Filter to admission tickets only (ignore donations, etc.)
@@ -61,27 +62,13 @@ function extractPriceData(ticketClasses) {
   const cheapest = source.reduce((min, tc) =>
     tc.cost.value < min.cost.value ? tc : min, source[0]);
 
-  // Calculate total capacity and sold across all tiers
+  // Real numbers (internal only, never written to public events.json)
   const totalCapacity = admission.reduce((sum, tc) => sum + (tc.quantity_total || 0), 0);
   const totalSold = admission.reduce((sum, tc) => sum + (tc.quantity_sold || 0), 0);
   const totalRemaining = totalCapacity - totalSold;
+  const percentSold = totalCapacity > 0 ? (totalSold / totalCapacity) * 100 : 0;
 
-  // Determine availability status for Schema.org
-  const allSoldOut = admission.every(tc => tc.on_sale_status === 'SOLD_OUT');
-  const anyAvailable = admission.some(tc => tc.on_sale_status === 'AVAILABLE');
-
-  let schemaAvailability;
-  if (allSoldOut) {
-    schemaAvailability = 'https://schema.org/SoldOut';
-  } else if (totalRemaining <= 50) {
-    schemaAvailability = 'https://schema.org/LimitedAvailability';
-  } else if (anyAvailable) {
-    schemaAvailability = 'https://schema.org/InStock';
-  } else {
-    schemaAvailability = 'https://schema.org/PreOrder';
-  }
-
-  // Build ticket tiers summary
+  // Per-tier details (internal only)
   const tiers = admission.map(tc => ({
     name: tc.display_name || tc.name,
     price: parseFloat(tc.cost.major_value),
@@ -91,24 +78,94 @@ function extractPriceData(ticketClasses) {
     remaining: tc.quantity_total - tc.quantity_sold
   }));
 
-  // Public-safe status label (no raw numbers exposed)
+  const allSoldOut = admission.every(tc => tc.on_sale_status === 'SOLD_OUT');
+  const anyAvailable = admission.some(tc => tc.on_sale_status === 'AVAILABLE');
+
+  // Time awareness: days until event
+  const now = new Date();
+  const eventDay = eventDate ? new Date(eventDate) : null;
+  const daysUntil = eventDay ? Math.ceil((eventDay - now) / (1000 * 60 * 60 * 24)) : 999;
+
+  // ============================================================
+  // JD's urgency curve: always run ahead of reality
+  //
+  // Real state          ->  Public label
+  // 70 remaining        ->  "50 left" territory = "Selling fast"
+  // 40% sold            ->  say half sold = "Over half sold"
+  // 1/3 left            ->  say quarter left = "Last few tickets"
+  // 40 remaining        ->  say 25 left = "Almost gone"
+  // 25 remaining        ->  say 10-15 = "Final tickets"
+  // 0 remaining         ->  "Sold out"
+  //
+  // Events this week get an extra urgency boost.
+  // ============================================================
+
   let statusLabel;
-  if (allSoldOut) {
+  let schemaAvailability;
+
+  if (allSoldOut || totalRemaining === 0) {
     statusLabel = 'Sold out';
-  } else if (totalRemaining <= 30) {
+    schemaAvailability = 'https://schema.org/SoldOut';
+  } else if (totalRemaining <= 25) {
+    // Reality: 25 left. Tell them: final tickets
+    statusLabel = 'Final tickets';
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
+  } else if (totalRemaining <= 40) {
+    // Reality: 40 left. Tell them: almost gone
+    statusLabel = 'Almost gone';
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
+  } else if (percentSold >= 67) {
+    // Reality: 1/3 left. Tell them: last few
+    statusLabel = 'Last few tickets';
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
+  } else if (totalRemaining <= 70) {
+    // Reality: 70 left. Tell them: selling fast
     statusLabel = 'Selling fast';
-  } else if (totalRemaining <= 80) {
-    statusLabel = 'Limited availability';
-  } else {
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
+  } else if (percentSold >= 40) {
+    // Reality: 40% sold. Tell them: over half sold
+    statusLabel = 'Over half sold';
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
+  } else if (daysUntil <= 7 && percentSold >= 20) {
+    // Event this week and at least 20% sold: boost urgency
+    statusLabel = 'Selling fast';
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
+  } else if (daysUntil <= 7) {
+    // Event this week, any sales: nudge urgency
+    statusLabel = 'This week';
+    schemaAvailability = 'https://schema.org/InStock';
+  } else if (anyAvailable) {
     statusLabel = 'On sale';
+    schemaAvailability = 'https://schema.org/InStock';
+  } else {
+    statusLabel = 'Coming soon';
+    schemaAvailability = 'https://schema.org/PreOrder';
   }
 
+  // Tier-level status labels (e.g. "Early bird sold out")
+  const tierLabels = tiers
+    .filter(t => t.status === 'SOLD_OUT')
+    .map(t => `${t.name} sold out`);
+
   return {
-    price: parseFloat(cheapest.cost.major_value),
-    priceCurrency: cheapest.cost.currency,
-    priceLabel: `From ${cheapest.cost.display}`,
-    availability: schemaAvailability,
-    statusLabel
+    // Public fields (written to events.json)
+    public: {
+      price: parseFloat(cheapest.cost.major_value),
+      priceCurrency: cheapest.cost.currency,
+      priceLabel: `From ${cheapest.cost.display}`,
+      availability: schemaAvailability,
+      statusLabel,
+      tierLabels: tierLabels.length > 0 ? tierLabels : undefined
+    },
+    // Internal fields (written to .ticket-data-internal.json only)
+    internal: {
+      totalCapacity,
+      totalSold,
+      totalRemaining,
+      percentSold: Math.round(percentSold),
+      daysUntil,
+      tiers
+    }
   };
 }
 
@@ -117,6 +174,7 @@ async function main() {
   console.log('Eventbrite price sync starting...');
 
   const events = JSON.parse(readFileSync(EVENTS_PATH, 'utf-8'));
+  const internalData = {};
   let updated = 0;
   let errors = 0;
 
@@ -130,22 +188,39 @@ async function main() {
 
     try {
       const ticketClasses = await fetchTicketClasses(event.eventbriteId, token);
-      const priceData = extractPriceData(ticketClasses);
+      const priceData = extractPriceData(ticketClasses, event.start);
 
       if (priceData) {
-        event.price = priceData.price;
-        event.priceCurrency = priceData.priceCurrency;
-        event.priceLabel = priceData.priceLabel;
-        event.availability = priceData.availability;
-        event.statusLabel = priceData.statusLabel;
+        // Public fields only in events.json
+        event.price = priceData.public.price;
+        event.priceCurrency = priceData.public.priceCurrency;
+        event.priceLabel = priceData.public.priceLabel;
+        event.availability = priceData.public.availability;
+        event.statusLabel = priceData.public.statusLabel;
+        if (priceData.public.tierLabels) {
+          event.tierLabels = priceData.public.tierLabels;
+        } else {
+          delete event.tierLabels;
+        }
         event.priceLastSync = new Date().toISOString();
-        // Clean up any legacy fields from previous syncs
+
+        // Clean up any legacy fields that should never be public
         delete event.capacityTotal;
         delete event.ticketsSold;
         delete event.ticketsRemaining;
         delete event.tiers;
+
+        // Internal data stored separately (gitignored)
+        internalData[event.eventbriteId] = {
+          title: event.title,
+          slug: event.slug,
+          ...priceData.internal,
+          publicLabel: priceData.public.statusLabel,
+          syncedAt: new Date().toISOString()
+        };
+
         updated++;
-        console.log(`    OK: ${priceData.priceLabel} (${priceData.statusLabel})`);
+        console.log(`    OK: ${priceData.public.priceLabel} | ${priceData.public.statusLabel} (real: ${priceData.internal.totalRemaining} left, ${priceData.internal.percentSold}% sold, ${priceData.internal.daysUntil}d away)`);
       } else {
         console.log(`    WARN: No price data extracted`);
       }
@@ -158,9 +233,15 @@ async function main() {
     await new Promise(r => setTimeout(r, 200));
   }
 
+  // Write public data
   writeFileSync(EVENTS_PATH, JSON.stringify(events, null, 2) + '\n');
+
+  // Write internal data (gitignored, never pushed)
+  writeFileSync(INTERNAL_PATH, JSON.stringify(internalData, null, 2) + '\n');
+
   console.log(`\nDone. Updated ${updated} events, ${errors} errors.`);
-  console.log(`Written to: ${EVENTS_PATH}`);
+  console.log(`Public:   ${EVENTS_PATH}`);
+  console.log(`Internal: ${INTERNAL_PATH}`);
 }
 
 main().catch(err => {
