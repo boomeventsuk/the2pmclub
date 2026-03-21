@@ -62,80 +62,97 @@ function extractPriceData(ticketClasses, eventDate) {
   const cheapest = source.reduce((min, tc) =>
     tc.cost.value < min.cost.value ? tc : min, source[0]);
 
-  // Real numbers (internal only, never written to public events.json)
-  const totalCapacity = admission.reduce((sum, tc) => sum + (tc.quantity_total || 0), 0);
-  const totalSold = admission.reduce((sum, tc) => sum + (tc.quantity_sold || 0), 0);
-  const totalRemaining = totalCapacity - totalSold;
-  const percentSold = totalCapacity > 0 ? (totalSold / totalCapacity) * 100 : 0;
+  // ============================================================
+  // ATTENDEE-BASED capacity (not ticket count)
+  // Group tickets (e.g. "Group of 4") represent multiple attendees.
+  // A ticket named "Group of 4" with qty 25 = 100 attendee spots.
+  // All percentages and thresholds use attendee counts.
+  // ============================================================
 
-  // Per-tier details (internal only)
-  const tiers = admission.map(tc => ({
-    name: tc.display_name || tc.name,
-    price: parseFloat(tc.cost.major_value),
-    status: tc.on_sale_status,
-    capacity: tc.quantity_total,
-    sold: tc.quantity_sold,
-    remaining: tc.quantity_total - tc.quantity_sold
-  }));
+  function attendeesPerTicket(tc) {
+    const name = (tc.display_name || tc.name || '').toLowerCase();
+    // Match "group of 4", "4 tickets", "group (4)", etc.
+    const groupMatch = name.match(/(?:group|bundle|pack)\s*(?:of\s*)?(\d+)|(\d+)\s*(?:ticket|person|people)/);
+    if (groupMatch) return parseInt(groupMatch[1] || groupMatch[2], 10);
+    return 1;
+  }
+
+  const tiers = admission.map(tc => {
+    const multiplier = attendeesPerTicket(tc);
+    return {
+      name: tc.display_name || tc.name,
+      price: parseFloat(tc.cost.major_value),
+      status: tc.on_sale_status,
+      ticketCapacity: tc.quantity_total,
+      ticketSold: tc.quantity_sold,
+      attendeesPerTicket: multiplier,
+      attendeeCapacity: (tc.quantity_total || 0) * multiplier,
+      attendeeSold: (tc.quantity_sold || 0) * multiplier,
+      attendeeRemaining: ((tc.quantity_total || 0) - (tc.quantity_sold || 0)) * multiplier
+    };
+  });
+
+  const totalAttendeeCapacity = tiers.reduce((sum, t) => sum + t.attendeeCapacity, 0);
+  const totalAttendeeSold = tiers.reduce((sum, t) => sum + t.attendeeSold, 0);
+  const totalAttendeeRemaining = totalAttendeeCapacity - totalAttendeeSold;
+  const percentSold = totalAttendeeCapacity > 0 ? (totalAttendeeSold / totalAttendeeCapacity) * 100 : 0;
 
   const allSoldOut = admission.every(tc => tc.on_sale_status === 'SOLD_OUT');
   const anyAvailable = admission.some(tc => tc.on_sale_status === 'AVAILABLE');
 
-  // Time awareness: days until event
+  // ============================================================
+  // Time awareness: is this event "this Saturday"?
+  // From the Sunday before the event, it counts as event week.
+  // ============================================================
+
   const now = new Date();
   const eventDay = eventDate ? new Date(eventDate) : null;
   const daysUntil = eventDay ? Math.ceil((eventDay - now) / (1000 * 60 * 60 * 24)) : 999;
 
+  // "Event week" = from the Sunday before the event day
+  // If event is Saturday, event week starts the preceding Sunday (6 days before)
+  let isEventWeek = false;
+  if (eventDay) {
+    const eventDayOfWeek = eventDay.getDay(); // 0=Sun, 6=Sat
+    const sundayBefore = new Date(eventDay);
+    sundayBefore.setDate(eventDay.getDate() - (eventDayOfWeek === 0 ? 0 : eventDayOfWeek));
+    sundayBefore.setHours(0, 0, 0, 0);
+    isEventWeek = now >= sundayBefore && now <= eventDay;
+  }
+
   // ============================================================
-  // JD's urgency curve: always run ahead of reality
+  // JD's urgency curve (v2)
   //
-  // Real state          ->  Public label
-  // 70 remaining        ->  "50 left" territory = "Selling fast"
-  // 40% sold            ->  say half sold = "Over half sold"
-  // 1/3 left            ->  say quarter left = "Last few tickets"
-  // 40 remaining        ->  say 25 left = "Almost gone"
-  // 25 remaining        ->  say 10-15 = "Final tickets"
-  // 0 remaining         ->  "Sold out"
+  // Phase 1: "Just announced"    - first ~week, low sales
+  // Phase 2: "Selling fast"      - general traction, up to ~67% sold
+  // Phase 3: "75% sold"          - when really at 67% (1/3 left)
+  // Phase 4: "Final tickets"     - event week (from Sunday before)
+  // Phase 5: "Join waiting list" - sold out
   //
-  // Events this week get an extra urgency boost.
+  // All thresholds based on ATTENDEE count, not ticket count.
   // ============================================================
 
   let statusLabel;
   let schemaAvailability;
 
-  if (allSoldOut || totalRemaining === 0) {
-    statusLabel = 'Sold out';
+  if (allSoldOut || totalAttendeeRemaining === 0) {
+    statusLabel = 'Join waiting list';
     schemaAvailability = 'https://schema.org/SoldOut';
-  } else if (totalRemaining <= 25) {
-    // Reality: 25 left. Tell them: final tickets
+  } else if (isEventWeek) {
+    // Event week always shows "Final tickets" regardless of how many left
     statusLabel = 'Final tickets';
     schemaAvailability = 'https://schema.org/LimitedAvailability';
-  } else if (totalRemaining <= 40) {
-    // Reality: 40 left. Tell them: almost gone
-    statusLabel = 'Almost gone';
-    schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (percentSold >= 67) {
-    // Reality: 1/3 left. Tell them: last few
-    statusLabel = 'Last few tickets';
+    // Reality: 1/3 left. Tell them: 75% sold
+    statusLabel = '75% sold';
     schemaAvailability = 'https://schema.org/LimitedAvailability';
-  } else if (totalRemaining <= 70) {
-    // Reality: 70 left. Tell them: selling fast
+  } else if (percentSold >= 15) {
+    // Real traction. General urgency.
     statusLabel = 'Selling fast';
-    schemaAvailability = 'https://schema.org/LimitedAvailability';
-  } else if (percentSold >= 40) {
-    // Reality: 40% sold. Tell them: over half sold
-    statusLabel = 'Over half sold';
-    schemaAvailability = 'https://schema.org/LimitedAvailability';
-  } else if (daysUntil <= 7 && percentSold >= 20) {
-    // Event this week and at least 20% sold: boost urgency
-    statusLabel = 'Selling fast';
-    schemaAvailability = 'https://schema.org/LimitedAvailability';
-  } else if (daysUntil <= 7) {
-    // Event this week, any sales: nudge urgency
-    statusLabel = 'This week';
     schemaAvailability = 'https://schema.org/InStock';
   } else if (anyAvailable) {
-    statusLabel = 'On sale';
+    // Early days, low sales
+    statusLabel = 'Just announced';
     schemaAvailability = 'https://schema.org/InStock';
   } else {
     statusLabel = 'Coming soon';
@@ -159,11 +176,12 @@ function extractPriceData(ticketClasses, eventDate) {
     },
     // Internal fields (written to .ticket-data-internal.json only)
     internal: {
-      totalCapacity,
-      totalSold,
-      totalRemaining,
+      totalAttendeeCapacity,
+      totalAttendeeSold,
+      totalAttendeeRemaining,
       percentSold: Math.round(percentSold),
       daysUntil,
+      isEventWeek,
       tiers
     }
   };
@@ -220,7 +238,7 @@ async function main() {
         };
 
         updated++;
-        console.log(`    OK: ${priceData.public.priceLabel} | ${priceData.public.statusLabel} (real: ${priceData.internal.totalRemaining} left, ${priceData.internal.percentSold}% sold, ${priceData.internal.daysUntil}d away)`);
+        console.log(`    OK: ${priceData.public.priceLabel} | ${priceData.public.statusLabel} (real: ${priceData.internal.totalAttendeeRemaining} attendees left, ${priceData.internal.percentSold}% sold, ${priceData.internal.daysUntil}d away${priceData.internal.isEventWeek ? ' [EVENT WEEK]' : ''})`);
       } else {
         console.log(`    WARN: No price data extracted`);
       }
