@@ -175,6 +175,13 @@ body.nav-open .mobile-menu{display:block}
   .footer-grid .footer-col:first-child{display:flex;flex-direction:column;align-items:center}
 }
 
+
+/* Photo elements */
+@media(max-width:600px){
+  div[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
+  div[style*="grid-template-columns:repeat(2"]{grid-template-columns:1fr!important}
+  div[style*="max-height:400px"] img{height:250px!important}
+}
 </style>
 
 <!-- Google Fonts -->
@@ -331,7 +338,13 @@ body.nav-open .mobile-menu{display:block}
   </div>
 
   <!-- Intro -->
-  <div class="bg-card rounded-xl shadow-lg p-8 mb-8">
+  
+<!-- Hero Photo -->
+<div style="margin-bottom:2rem;border-radius:.75rem;overflow:hidden;max-height:400px">
+  <img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/140326-2PM-MK-full-venue-dj-screen-2pm-branding-crowd-arms-raised.jpeg?width=1200&quality=80" alt="THE 2PM CLUB daytime disco in Luton" style="width:100%;height:400px;object-fit:cover;display:block" loading="eager">
+</div>
+
+<div class="bg-card rounded-xl shadow-lg p-8 mb-8">
     <p class="text-lg leading-relaxed text-card-foreground">
       Have you heard about THE 2PM CLUB? Luton's debut was a sell-out, and the demand was two to three times what the venue could hold. That kind of response doesn't happen by accident. Hat Factory Arts Centre on Bute Street is the home for Luton events, and it's a brilliant space: central, characterful, and perfectly sized for the kind of atmosphere that makes a 2PM CLUB afternoon unforgettable. Night-out energy in the afternoon, right in the heart of town. Confetti cannons, singalongs, and the kind of buzz that has people messaging their mates before they've even left the building. Home by 7, no Sunday regrets, and a Saturday afternoon that actually delivers on the group chat promise. If you missed the first one, here's your chance. If you were there, you already know what's coming.
     </p>
@@ -472,6 +485,18 @@ body.nav-open .mobile-menu{display:block}
   </script>
 
 </main>
+
+
+<!-- Real event photos -->
+<div class="container mx-auto max-w-4xl px-4" style="margin-bottom:2rem">
+  <h3 style="font-family:'Bebas Neue',cursive;font-size:1.5rem;text-align:center;margin-bottom:1rem;color:hsl(var(--foreground))">REAL PHOTOS. REAL EVENTS. REAL PEOPLE.</h3>
+  
+<!-- Event Photos -->
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:2rem 0">
+    <div style="border-radius:.5rem;overflow:hidden"><img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/070326-2PM-COV-crowd-confetti-cannon-arms-raised-stage.jpeg?width=600&quality=75" alt="THE 2PM CLUB event in Luton" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy"></div>
+    <div style="border-radius:.5rem;overflow:hidden"><img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/140226-2PM-BED-packed-dancefloor-arms-up-glow-sticks.jpeg?width=600&quality=75" alt="THE 2PM CLUB event in Luton" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy"></div>
+</div>
+</div>
 
 <!-- Footer -->
 <footer class="bg-card border-t border-border" style="padding:3rem 0;margin-top:4rem">

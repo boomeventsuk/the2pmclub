@@ -182,6 +182,13 @@ body.nav-open .mobile-menu{display:block}
   .footer-grid .footer-col:first-child{display:flex;flex-direction:column;align-items:center}
 }
 
+
+/* Photo elements */
+@media(max-width:600px){
+  div[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
+  div[style*="grid-template-columns:repeat(2"]{grid-template-columns:1fr!important}
+  div[style*="max-height:400px"] img{height:250px!important}
+}
 </style>
 
 <!-- Google Fonts -->
@@ -338,7 +345,13 @@ body.nav-open .mobile-menu{display:block}
   </div>
 
   <!-- Intro -->
-  <div class="bg-card rounded-xl shadow-lg p-8 mb-8">
+  
+<!-- Hero Photo -->
+<div style="margin-bottom:2rem;border-radius:.75rem;overflow:hidden;max-height:400px">
+  <img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/070326-2PM-COV-full-venue-2pm-stage-branding-lights.jpeg?width=1200&quality=80" alt="THE 2PM CLUB daytime disco in Coventry" style="width:100%;height:400px;object-fit:cover;display:block" loading="eager">
+</div>
+
+<div class="bg-card rounded-xl shadow-lg p-8 mb-8">
     <p class="text-lg leading-relaxed text-card-foreground">
       hmv Empire on Hertford Street is one of the biggest and best live venues in the Midlands, and THE 2PM CLUB is bringing the full daytime disco experience right into the heart of Coventry. This is a proper room with proper sound, proper lighting, and the kind of crowd energy that builds from the first track and doesn't let up until the final confetti cannon. Night-out energy in the afternoon, right in the city centre. We're not going to throw numbers at you, but we will say this: it's going to be busy. The response from Coventry has been strong, and these events have a habit of filling up well before the day. Home by 7. No Sunday regrets. Just a brilliant Saturday afternoon with people who came for the same reason you did.
     </p>
@@ -479,6 +492,19 @@ body.nav-open .mobile-menu{display:block}
   </script>
 
 </main>
+
+
+<!-- Real event photos -->
+<div class="container mx-auto max-w-4xl px-4" style="margin-bottom:2rem">
+  <h3 style="font-family:'Bebas Neue',cursive;font-size:1.5rem;text-align:center;margin-bottom:1rem;color:hsl(var(--foreground))">REAL PHOTOS. REAL EVENTS. REAL PEOPLE.</h3>
+  
+<!-- Event Photos -->
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0">
+    <div style="border-radius:.5rem;overflow:hidden"><img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/070326-2PM-COV-woman-gold-dress-arms-wide-dancing-crowd.jpeg?width=600&quality=75" alt="THE 2PM CLUB event in Coventry" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy"></div>
+    <div style="border-radius:.5rem;overflow:hidden"><img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/070326-2PM-COV-crowd-confetti-cannon-arms-raised-stage.jpeg?width=600&quality=75" alt="THE 2PM CLUB event in Coventry" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy"></div>
+    <div style="border-radius:.5rem;overflow:hidden"><img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/070326-2PM-COV-crowd-arms-raised-drinks-confetti-disco-ball.jpeg?width=600&quality=75" alt="THE 2PM CLUB event in Coventry" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy"></div>
+</div>
+</div>
 
 <!-- Footer -->
 <footer class="bg-card border-t border-border" style="padding:3rem 0;margin-top:4rem">

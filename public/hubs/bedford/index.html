@@ -260,6 +260,13 @@ body.nav-open .mobile-menu{display:block}
   .footer-grid .footer-col:first-child{display:flex;flex-direction:column;align-items:center}
 }
 
+
+/* Photo elements */
+@media(max-width:600px){
+  div[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
+  div[style*="grid-template-columns:repeat(2"]{grid-template-columns:1fr!important}
+  div[style*="max-height:400px"] img{height:250px!important}
+}
 </style>
 
 <!-- Google Fonts -->
@@ -437,7 +444,13 @@ body.nav-open .mobile-menu{display:block}
   </div>
 
   <!-- Intro -->
-  <div class="bg-card rounded-xl shadow-lg p-8 mb-8">
+  
+<!-- Hero Photo -->
+<div style="margin-bottom:2rem;border-radius:.75rem;overflow:hidden;max-height:400px">
+  <img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/140226-2PM-BED-wide-venue-packed-dancefloor-2pm-branding.jpeg?width=1200&quality=80" alt="THE 2PM CLUB daytime disco in Bedford" style="width:100%;height:400px;object-fit:cover;display:block" loading="eager">
+</div>
+
+<div class="bg-card rounded-xl shadow-lg p-8 mb-8">
     <p class="text-lg leading-relaxed text-card-foreground">
       Bedford Esquires on Bromham Road is one of those venues that just gets it. Historic, characterful, and absolutely built for a party. When THE 2PM CLUB rolls into Esquires, the place comes alive: confetti cannons, singalongs, and a crowd that knows exactly why they're there. Night-out energy in the afternoon, no messing about. Three dates across the season means three chances to get yourself sorted, but these don't hang around. Bedford knows what it wants, and tickets move fast. Home by 7, no Sunday regrets, and the kind of Saturday afternoon that makes the rest of the week worth it. If you've been before, you already know. If you haven't, what are you waiting for?
     </p>
@@ -626,6 +639,19 @@ body.nav-open .mobile-menu{display:block}
   </script>
 
 </main>
+
+
+<!-- Real event photos -->
+<div class="container mx-auto max-w-4xl px-4" style="margin-bottom:2rem">
+  <h3 style="font-family:'Bebas Neue',cursive;font-size:1.5rem;text-align:center;margin-bottom:1rem;color:hsl(var(--foreground))">REAL PHOTOS. REAL EVENTS. REAL PEOPLE.</h3>
+  
+<!-- Event Photos -->
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0">
+    <div style="border-radius:.5rem;overflow:hidden"><img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/140226-2PM-BED-packed-dancefloor-arms-up-glow-sticks.jpeg?width=600&quality=75" alt="THE 2PM CLUB event in Bedford" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy"></div>
+    <div style="border-radius:.5rem;overflow:hidden"><img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/140226-2PM-BED-woman-curly-hair-hand-raised-crowd.jpeg?width=600&quality=75" alt="THE 2PM CLUB event in Bedford" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy"></div>
+    <div style="border-radius:.5rem;overflow:hidden"><img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/140226-2PM-BED-mixed-group-friends-hugging-celebrating.jpeg?width=600&quality=75" alt="THE 2PM CLUB event in Bedford" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy"></div>
+</div>
+</div>
 
 <!-- Footer -->
 <footer class="bg-card border-t border-border" style="padding:3rem 0;margin-top:4rem">
