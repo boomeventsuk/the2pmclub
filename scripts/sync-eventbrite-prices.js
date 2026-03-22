@@ -121,14 +121,17 @@ function extractPriceData(ticketClasses, eventDate) {
   }
 
   // ============================================================
-  // JD's urgency curve (v2)
+  // JD's urgency curve (v3)
   //
-  // Phase 1: "Just announced"    - first ~week, low sales
-  // Phase 2: "Selling fast"      - general traction, up to ~67% sold
-  // Phase 3: "75% sold"          - when really at 67% (1/3 left)
-  // Phase 4: "Final tickets"     - event week (from Sunday before)
-  // Phase 5: "Join waiting list" - sold out
+  // Phase 1: "Just announced"      - early days, low sales
+  // Phase 2: "Selling fast"        - 15%+ sold, building momentum
+  // Phase 3: "75% sold"            - really at 67% (1/3 left)
+  // Phase 4: "Final 50 tickets"    - really 70 attendees left
+  // Phase 5: "Final 25 tickets"    - really 40 attendees left
+  // Phase 6: "Final tickets"       - event week fallback
+  // Phase 7: "Join waiting list"   - sold out
   //
+  // Numbered callouts (4/5) take priority over event-week (6).
   // All thresholds based on ATTENDEE count, not ticket count.
   // ============================================================
 
@@ -138,8 +141,16 @@ function extractPriceData(ticketClasses, eventDate) {
   if (allSoldOut || totalAttendeeRemaining === 0) {
     statusLabel = 'Join waiting list';
     schemaAvailability = 'https://schema.org/SoldOut';
+  } else if (totalAttendeeRemaining <= 40) {
+    // Reality: 40 attendees left. Say: final 25
+    statusLabel = 'Final 25 tickets';
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
+  } else if (totalAttendeeRemaining <= 70) {
+    // Reality: 70 attendees left. Say: final 50
+    statusLabel = 'Final 50 tickets';
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (isEventWeek) {
-    // Event week always shows "Final tickets" regardless of how many left
+    // Event week, plenty of stock: generic urgency
     statusLabel = 'Final tickets';
     schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (percentSold >= 67) {
