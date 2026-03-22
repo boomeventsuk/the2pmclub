@@ -33,19 +33,19 @@ const Header = () => {
             >
               Events
             </a>
-            <div className="cities-dropdown">
+            <div className="locations-dropdown">
               <button 
-                className="font-poppins text-muted-foreground hover:text-primary transition-colors cities-dropdown-trigger"
+                className="font-poppins text-muted-foreground hover:text-primary transition-colors locations-trigger"
               >
                 Locations ▾
               </button>
-              <div className="cities-dropdown-menu">
-                <a href="/hubs/northampton/" className="cities-dropdown-item">Northampton</a>
-                <a href="/hubs/bedford/" className="cities-dropdown-item">Bedford</a>
-                <a href="/hubs/milton-keynes/" className="cities-dropdown-item">Milton Keynes</a>
-                <a href="/hubs/coventry/" className="cities-dropdown-item">Coventry</a>
-                <a href="/hubs/luton/" className="cities-dropdown-item">Luton</a>
-                <a href="/hubs/leicester/" className="cities-dropdown-item">Leicester</a>
+              <div className="locations-dropdown-menu">
+                <a href="/hubs/northampton/" className="locations-dropdown-item">Northampton</a>
+                <a href="/hubs/bedford/" className="locations-dropdown-item">Bedford</a>
+                <a href="/hubs/milton-keynes/" className="locations-dropdown-item">Milton Keynes</a>
+                <a href="/hubs/coventry/" className="locations-dropdown-item">Coventry</a>
+                <a href="/hubs/luton/" className="locations-dropdown-item">Luton</a>
+                <a href="/hubs/leicester/" className="locations-dropdown-item">Leicester</a>
               </div>
             </div>
             <a 
