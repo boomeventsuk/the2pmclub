@@ -6,299 +6,7 @@
 <link rel="canonical" href="https://www.the2pmclub.co.uk/blog/what-is-a-daytime-disco/">
 
 <!-- Standalone CSS for blog -->
-<style>
-/* ============================================
-   THE 2PM CLUB -- Design System Tokens
-   Resolved from Tailwind config + index.css
-   ============================================ */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-
-:root {
-  --background: 242 12% 4%;
-  --foreground: 0 0% 100%;
-  --card: 240 12% 8%;
-  --card-foreground: 0 0% 100%;
-  --primary: 328 100% 54%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 207 100% 60%;
-  --secondary-foreground: 0 0% 100%;
-  --muted: 240 12% 15%;
-  --muted-foreground: 0 0% 70%;
-  --accent: 328 100% 54%;
-  --accent-foreground: 0 0% 100%;
-  --border: 240 12% 20%;
-  --input: 240 12% 20%;
-  --ring: 207 100% 60%;
-  --popover: 240 12% 12%;
-  --popover-foreground: 0 0% 100%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
-  --radius: 0.75rem;
-}
-
-*, *::before, *::after { box-sizing: border-box; border-color: hsl(var(--border)); }
-
-body {
-  margin: 0;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-h1 { font-family: 'Poppins', sans-serif; font-size: 2.25rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.025em; color: #FFFFFF; margin: 0 0 1rem; }
-h2 { font-family: 'Poppins', sans-serif; font-size: 1.875rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; color: #FFFFFF; margin: 0 0 0.75rem; }
-h3 { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; color: #FFFFFF; margin: 0 0 0.5rem; }
-p, li { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 400; line-height: 1.6; color: #FFFFFF; }
-a { color: hsl(var(--primary)); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-.container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
-
-/* Card styles */
-.glass-card {
-  background: hsl(240 12% 8% / 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid hsl(240 12% 20% / 0.5);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 20px hsl(0 0% 0% / 0.3);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-}
-.card {
-  background: hsl(240 12% 8%);
-  border: 1px solid hsl(240 12% 20%);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 20px hsl(0 0% 0% / 0.3);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-/* Primary CTA Button */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 2rem;
-  min-height: 2.75rem;
-  background-color: hsl(328 100% 54%);
-  color: #FFFFFF;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  border: none;
-  border-radius: calc(0.75rem - 2px);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.2s ease;
-}
-.btn-primary:hover { background-color: hsl(328 100% 54% / 0.9); text-decoration: none; }
-
-.btn-large {
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
-  border-radius: 9999px;
-  min-height: 3.25rem;
-}
-
-/* Text colours */
-.text-muted { color: hsl(0 0% 70%); }
-.text-primary { color: hsl(328 100% 54%); }
-.text-secondary { color: hsl(207 100% 60%); }
-
-/* Photo elements */
-@media(max-width:600px){
-  .photo-grid-3{grid-template-columns:1fr!important}
-  .photo-grid-2{grid-template-columns:1fr!important}
-  .hero-photo img{height:250px!important}
-}
-
-/* ============================================
-   HEADER
-   ============================================ */
-.site-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 50;
-  background: hsl(242 12% 4% / 0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid hsl(240 12% 20%);
-}
-.header-inner {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-.site-logo img { height: 40px; width: auto; }
-.primary-nav {
-  display: flex;
-  gap: 28px;
-  margin-left: auto;
-  align-items: center;
-}
-.primary-nav a, .locations-trigger {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: hsl(0 0% 70%);
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  padding: 0;
-}
-.primary-nav a:hover, .locations-trigger:hover { color: hsl(328 100% 54%); text-decoration: none; }
-.header-actions { display: flex; gap: 12px; align-items: center; margin-left: 18px; }
-.header-icons { display: flex; gap: 12px; align-items: center; }
-.header-icons a { display: inline-flex; width: 22px; height: 22px; opacity: 0.9; }
-.header-icons a:hover { opacity: 1; }
-.header-icons svg { width: 22px; height: 22px; fill: #fff; }
-.nav-toggle {
-  display: none;
-  background: transparent;
-  border: 0;
-  padding: 8px;
-  margin-left: 8px;
-  font-size: 1.5rem;
-  color: #fff;
-  cursor: pointer;
-}
-
-/* Locations dropdown */
-.locations-dropdown { position: relative; display: inline-flex; align-items: center; }
-.locations-dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 180px;
-  padding: 8px 0;
-  margin-top: 8px;
-  background: #13131A;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  z-index: 100;
-}
-.locations-dropdown:hover .locations-dropdown-menu { display: block; }
-.locations-dropdown.open .locations-dropdown-menu { display: block; }
-.locations-trigger { padding-bottom: 12px !important; }
-.locations-dropdown-menu { margin-top: 0 !important; padding-top: 4px; }
-.locations-dropdown-item {
-  display: block;
-  padding: 8px 16px;
-  color: rgba(255,255,255,0.7);
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  text-decoration: none;
-  transition: color 0.2s, background 0.2s;
-}
-.locations-dropdown-item:hover { color: #fff; background: rgba(255,255,255,0.06); text-decoration: none; }
-
-/* Mobile */
-.mobile-menu { display: none; }
-@media (max-width: 900px) {
-  .primary-nav { display: none; }
-  .header-icons { display: none; }
-  .nav-toggle { display: inline-flex; }
-  .mobile-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 60;
-    background: #0B0B0F;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding: 12px 16px;
-  }
-  body.nav-open .mobile-menu { display: block; }
-  .mobile-menu a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 4px;
-    color: #FFFFFF;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.125rem;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .mobile-menu a:hover { color: hsl(328 100% 54%); }
-  .mobile-menu button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 10px 4px;
-    background: none;
-    border: none;
-    color: #FFFFFF;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.125rem;
-    cursor: pointer;
-  }
-  .locations-sub a { padding-left: 16px; color: hsl(0 0% 70%); font-size: 1rem; }
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-.site-footer {
-  background: hsl(240 12% 8%);
-  border-top: 1px solid hsl(240 12% 20%);
-  padding: 3rem 0;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; text-align: center; } }
-.footer-heading { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: #FFFFFF; margin-bottom: 1rem; }
-.footer-link {
-  display: block;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem;
-  color: hsl(0 0% 70%);
-  text-decoration: none;
-  padding: 0.375rem 0;
-  transition: color 0.2s;
-}
-.footer-link:hover { color: hsl(328 100% 54%); }
-.footer-copyright {
-  max-width: 1400px;
-  margin: 3rem auto 0;
-  padding: 2rem 2rem 0;
-  border-top: 1px solid hsl(240 12% 20%);
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem;
-  color: hsl(0 0% 70%);
-}
-
-</style>
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="/shared-styles.css">
 <!-- Social Meta -->
 <meta property="og:title" content="What is a Daytime Disco? The Complete Guide">
 <meta property="og:description" content="Everything you need to know about daytime discos: what they are, why 2pm is the perfect time, and why Saturday afternoons are the new Saturday nights.">
@@ -374,17 +82,31 @@ a:hover { text-decoration: underline; }
 }
 </script>
 </head>
-<body class="bg-background text-foreground font-poppins min-h-screen">
-<!-- Header -->
+<body>
+<!-- ============================================
+     THE 2PM CLUB — Shared Header HTML
+     Copy this into your static pages.
+     Requires: <link rel="stylesheet" href="/shared-styles.css">
+     ============================================ -->
+
 <header class="site-header">
   <div class="header-inner">
+    <!-- Logo -->
     <a href="/" class="site-logo">
-      <img src="https://boombastic-events.b-cdn.net/2PM%20CLUB/2pm-logo-full-white.png" alt="THE 2PM CLUB" height="40">
+      <img
+        src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png"
+        alt="The 2 PM Club logo"
+        height="40"
+        width="auto"
+      />
     </a>
+
+    <!-- Desktop nav -->
     <nav class="primary-nav">
       <a href="/#tickets">Events</a>
+
       <div class="locations-dropdown">
-        <button class="locations-trigger" onclick="this.parentElement.classList.toggle("open")">Locations &#9662;</button>
+        <button class="locations-trigger" type="button">Locations ▾</button>
         <div class="locations-dropdown-menu">
           <a href="/hubs/northampton/" class="locations-dropdown-item">Northampton</a>
           <a href="/hubs/bedford/" class="locations-dropdown-item">Bedford</a>
@@ -394,63 +116,129 @@ a:hover { text-decoration: underline; }
           <a href="/hubs/leicester/" class="locations-dropdown-item">Leicester</a>
         </div>
       </div>
+
       <a href="/what-to-expect/">What to Expect</a>
       <a href="/group-bookings/">Group Bookings</a>
       <a href="/faqs/">FAQs</a>
     </nav>
+
+    <!-- Book Tickets CTA -->
     <div class="header-actions">
-      <div class="header-icons">
-        <a href="https://www.facebook.com/the2pmclub" target="_blank" rel="noopener" aria-label="Facebook">
-          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
-        <a href="mailto:hello@boomevents.co.uk" aria-label="Email us">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        </a>
-      </div>
-      <a href="/#tickets" class="btn-primary" style="font-size:0.8125rem;padding:0.375rem 0.75rem">Book Tickets</a>
+      <a href="/#tickets" class="btn-primary">Book Tickets</a>
     </div>
-    <button class="nav-toggle" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">&#9776;</button>
-    <div class="mobile-menu">
-      <a href="/#tickets">Events</a>
-      <div>
-        <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block'">Locations <span>&#9662;</span></button>
-        <div class="locations-sub" style="display:none">
-          <a href="/hubs/northampton/">Northampton</a>
-          <a href="/hubs/bedford/">Bedford</a>
-          <a href="/hubs/milton-keynes/">Milton Keynes</a>
-          <a href="/hubs/coventry/">Coventry</a>
-          <a href="/hubs/luton/">Luton</a>
-          <a href="/hubs/leicester/">Leicester</a>
-        </div>
-      </div>
-      <a href="/what-to-expect/">What to Expect</a>
-      <a href="/group-bookings/">Group Bookings</a>
-      <a href="/faqs/">FAQs</a>
+
+    <!-- Social icons -->
+    <div class="header-icons">
+      <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+      </a>
+      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+      </a>
     </div>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu" type="button">☰</button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <a href="/#tickets">Events</a>
+
+    <button type="button" id="locations-toggle">
+      Locations
+      <span style="font-size:0.75rem;opacity:0.6">▼</span>
+    </button>
+    <div class="locations-sub" id="locations-sub">
+      <a href="/hubs/northampton/">Northampton</a>
+      <a href="/hubs/bedford/">Bedford</a>
+      <a href="/hubs/milton-keynes/">Milton Keynes</a>
+      <a href="/hubs/coventry/">Coventry</a>
+      <a href="/hubs/luton/">Luton</a>
+      <a href="/hubs/leicester/">Leicester</a>
+    </div>
+
+    <a href="/what-to-expect/">What to Expect</a>
+    <a href="/group-bookings/">Group Bookings</a>
+    <a href="/faqs/">FAQs</a>
+
+    <hr />
+    <a href="https://www.facebook.com/boombastic.eventsuk" target="_blank" rel="noopener noreferrer nofollow">Facebook</a>
+    <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query">Email us</a>
   </div>
 </header>
-<div style="height:72px"></div><!-- spacer for fixed header -->
+
+<!-- Spacer to push content below fixed header -->
+<div class="header-spacer"></div>
+
+<!-- Header JS (hamburger toggle + locations accordion) -->
+<script>
+(function(){
+  var toggle = document.querySelector('.nav-toggle');
+  var menu   = document.getElementById('mobile-menu');
+  if(!toggle || !menu) return;
+
+  menu.setAttribute('hidden','');
+  toggle.setAttribute('aria-expanded','false');
+
+  function setMenu(open){
+    if(open){
+      document.body.classList.add('nav-open');
+      menu.removeAttribute('hidden');
+      toggle.setAttribute('aria-expanded','true');
+    } else {
+      document.body.classList.remove('nav-open');
+      menu.setAttribute('hidden','');
+      toggle.setAttribute('aria-expanded','false');
+    }
+  }
+
+  toggle.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('nav-open'));
+  });
+
+  menu.addEventListener('click', function(e){
+    if(e.target.closest('a')) setMenu(false);
+  });
+
+  // Locations accordion
+  var locBtn = document.getElementById('locations-toggle');
+  var locSub = document.getElementById('locations-sub');
+  if(locBtn && locSub){
+    locBtn.addEventListener('click', function(){
+      locSub.classList.toggle('open');
+      var arrow = locBtn.querySelector('span');
+      if(arrow) arrow.textContent = locSub.classList.contains('open') ? '▲' : '▼';
+    });
+  }
+})();
+</script>
+
+<!-- spacer for fixed header -->
 <!-- Main Content -->
 <main class="container mx-auto max-w-4xl px-4 py-4 pt-4">
   <!-- Hero Card -->
   <div class="card">
-    <h1 class="font-bebas text-4xl md:text-5xl text-card-foreground mb-4">
+    <h1 class="text-4xl md:text-5xl mb-4">
       What is a Daytime Disco?
     </h1>
-    <p class="text-xl text-muted-foreground font-medium">
+    <p class="text-xl font-medium">
       The complete guide to afternoon dance events, from the people who started one.
     </p>
   </div>
 
   <!-- Introduction -->
-  <div class="bg-card rounded-xl shadow-lg p-8 mb-8">
-    <p class="text-lg leading-relaxed text-card-foreground mb-4">
+  <div class="rounded-xl shadow-lg p-8 mb-8">
+    <p class="text-lg leading-relaxed mb-4">
       A daytime disco is exactly what it sounds like: a proper club-level dance event that happens in the afternoon instead of the evening. Think packed dance floor, massive sound system, lighting rig, confetti cannons, and four hours of wall-to-wall anthems. But instead of starting at 10pm and crawling home at 2am, you start at 2pm and you're home by 7.
     </p>
-    <p class="text-lg leading-relaxed text-card-foreground mb-4">
+    <p class="text-lg leading-relaxed mb-4">
       It's not a compromise. It's not "going out lite." It's the same energy, the same euphoria, the same arms-in-the-air moments. Just at a time that actually works with real life.
     </p>
-    <p class="text-lg leading-relaxed text-card-foreground">
+    <p class="text-lg leading-relaxed">
       Night-out energy in the afternoon. No Sunday regrets. That's the whole idea, and it works brilliantly.
     </p>
   </div>
@@ -459,102 +247,102 @@ a:hover { text-decoration: underline; }
   <div class="space-y-8">
 
     <!-- How It Works Card -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">How a Daytime Disco Actually Works</h2>
-      <p class="text-card-foreground leading-relaxed mb-4">
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="text-2xl mb-4">How a Daytime Disco Actually Works</h2>
+      <p class="leading-relaxed mb-4">
         The format is simple and that's part of the genius. Doors open at 2pm. You walk into a venue that's been transformed with full club-level production: professional PA system, intelligent lighting rig, big screens, haze, and confetti cannons loaded and ready. A DJ is already building the energy with 80s, 90s and 00s anthems. The bar is open. The dance floor is filling up.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-4">
+      <p class="leading-relaxed mb-4">
         For the next four hours, the DJ takes the room on a journey. Starting with accessible crowd-pleasers that pull people onto the floor, building through the decades, and hitting peak euphoria somewhere around the three-hour mark. The whole room is singing. Confetti is flying. Arms are in the air.
       </p>
-      <p class="text-card-foreground leading-relaxed">
+      <p class="leading-relaxed">
         By 5:30-6pm, it's done. You spill out into daylight, buzzing, grinning, slightly hoarse. You're home by 7. On the sofa by 7:30. Takeaway ordered by 8. Sunday is completely intact. <strong>That's the formula, and it works every single time.</strong>
       </p>
     </div>
 
     <!-- Why 2PM Card -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Why 2PM is the Perfect Time (There's Actual Research)</h2>
-      <p class="text-card-foreground leading-relaxed mb-4">
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-primary">
+      <h2 class="text-2xl mb-4">Why 2PM is the Perfect Time (There's Actual Research)</h2>
+      <p class="leading-relaxed mb-4">
         We didn't pick 2pm because it sounded catchy. We picked it because it works, and the research backs it up comprehensively. Afternoon events starting between 2-4pm achieve near-perfect attendance, while events starting later in the day hover around 70% capacity. The data is clear: earlier is better.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-4">
+      <p class="leading-relaxed mb-4">
         Here's why. UK women aged 30-50, the core demographic for daytime discos, have their peak free time on Saturday afternoons between 2-6pm. That window has the lowest domestic obligations and the highest leisure availability of the entire weekend. It's the one slot where the stars align: kids can be with partners, parents, or friends. Work is done. Sunday isn't at risk.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-4">
+      <p class="leading-relaxed mb-4">
         The 2pm start also solves every barrier that kills night-time events for this audience. <strong>Lower recovery anxiety</strong>, because there's no hangover when you finish at 6pm. <strong>Enhanced safety perception</strong>, because you're travelling in daylight both ways. <strong>Family-compatible timing</strong>, because the childcare window is short and manageable. And the identity piece matters too: attending a daytime disco says "I'm fun AND functional." It's identity-affirming rather than identity-threatening.
       </p>
-      <p class="text-card-foreground leading-relaxed font-medium">
+      <p class="leading-relaxed font-medium">
         We figured all this out intuitively by running events for over a decade. The academic research just confirmed what we already knew: the 2-6pm Saturday window is the sweet spot, and everything else is a compromise.
       </p>
     </div>
 
     <!-- The Music Card -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">The Music</h2>
-      <p class="text-card-foreground leading-relaxed mb-4">
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="text-2xl mb-4">The Music</h2>
+      <p class="leading-relaxed mb-4">
         80s, 90s and 00s anthems. Every song is one the whole room knows every word to. Mr Brightside. Livin' On A Prayer. Dancing Queen. Freed From Desire. Crazy In Love. Wannabe. These aren't deep cuts or DJ flexes. These are songs that make 400 people simultaneously lose their minds and sing at the ceiling.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-4">
+      <p class="leading-relaxed mb-4">
         There's a reason nostalgic music hits harder than any other kind of nostalgia. Research shows that music nostalgia is more powerful than fashion nostalgia, film nostalgia, or any other type, because it's <strong>embodied</strong> (Wildschut et al., 2006). You don't just remember a song. You sing it, you dance to it, you physically relive the memory. Your body knows every beat. When the opening bars of a song you haven't heard in fifteen years hit the speakers, something primal kicks in. You're not remembering being young. You're feeling it, right now, in this room, with hundreds of other people feeling exactly the same thing.
       </p>
-      <p class="text-card-foreground leading-relaxed">
+      <p class="leading-relaxed">
         That's the tribal validation effect. Nostalgic content triggers roughly twice the emotional reaction of standard content. When it happens collectively, in a room full of people who share your references, the effect multiplies. It's why people describe daytime discos as "the best afternoon of my life" rather than "yeah, the music was alright." <strong>The music isn't background. The music is the whole point.</strong>
       </p>
     </div>
 
     <!-- Who Goes Card -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Who Goes to a Daytime Disco?</h2>
-      <p class="text-card-foreground leading-relaxed mb-4">
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="text-2xl mb-4">Who Goes to a Daytime Disco?</h2>
+      <p class="leading-relaxed mb-4">
         Predominantly women, predominantly over 30. But honestly, everyone is welcome. The crowd at a daytime disco is one of the most joyful, inclusive, zero-judgement rooms you'll ever walk into. Nobody is sizing you up. Nobody cares what you're wearing. Everyone is there for the same reason: to sing, dance, and feel brilliant for four hours.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-4">
+      <p class="leading-relaxed mb-4">
         Let's address something directly. A lot of people in their 30s, 40s and 50s feel like they've "aged out" of going out. Nightclubs feel wrong. The music's unfamiliar. The crowd is twenty years younger. The whole experience feels like turning up to someone else's party. That feeling is real, and it's the exact problem daytime discos solve. This is your music, your crowd, your vibe. The room is full of people who grew up on the same songs you did.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-4">
+      <p class="leading-relaxed mb-4">
         At THE 2PM CLUB, <strong>52% of attendees are first-timers</strong>. That means more than half the room is doing this for the first time, so nobody is the odd one out. And <strong>21% brought someone new</strong>, which tells you something important: people enjoy it so much they actively recruit their friends. That's not marketing. That's word of mouth doing the heavy lifting.
       </p>
-      <p class="text-card-foreground leading-relaxed font-medium">
+      <p class="leading-relaxed font-medium">
         The typical group is 4-6 friends, often coordinated through a single WhatsApp message from the one person in the group who always organises things. Research calls this person the "Social Architect," and if you're reading this, it's probably you.
       </p>
     </div>
 
     <!-- How It's Different Card -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">How a Daytime Disco is Different From...</h2>
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-primary">
+      <h2 class="text-2xl mb-4">How a Daytime Disco is Different From...</h2>
 
-      <p class="text-card-foreground leading-relaxed mb-3">
+      <p class="leading-relaxed mb-3">
         <strong>A nightclub:</strong> Same energy, same production, same euphoria. But you keep your Sunday. You keep your Monday. You wake up feeling smug instead of broken. The music is better, too, because every single track is a banger. No filler.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-3">
+      <p class="leading-relaxed mb-3">
         <strong>A silent disco:</strong> Completely different format. At a silent disco, everyone wears headphones and chooses their own channel. At a daytime disco, everyone hears the same music, sings together, and shares the moment. There's something irreplaceable about 400 voices belting out the same chorus at the same time. You can't get that through headphones.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-3">
+      <p class="leading-relaxed mb-3">
         <strong>A brunch party:</strong> No pretending that cocktails count as a personality. A daytime disco is a proper dance event with proper production. There are no avocados involved. Just a sound system, a lighting rig, and four hours of songs you've been singing in the car for twenty years.
       </p>
-      <p class="text-card-foreground leading-relaxed">
+      <p class="leading-relaxed">
         <strong>An afternoon tea:</strong> Nothing wrong with scones. But have you tried confetti cannons?
       </p>
     </div>
 
     <!-- The Proof Card -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">The Real Test: Can You See the Proof?</h2>
-      <p class="text-card-foreground leading-relaxed mb-4">
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="text-2xl mb-4">The Real Test: Can You See the Proof?</h2>
+      <p class="leading-relaxed mb-4">
         Any event can make promises on a website. Slick graphics. Exciting descriptions. Big claims about atmosphere and energy. The question is whether they can actually show you what happens in the room.
       </p>
-      <p class="text-card-foreground leading-relaxed mb-4">
+      <p class="leading-relaxed mb-4">
         At THE 2PM CLUB, every single event is professionally photographed and filmed. You can see the crowd. The energy. The confetti. The singalongs. The arms in the air. The moment the opening bars of Don't Stop Me Now hit and the room erupts. <strong>Real photos from real events in real venues across the Midlands.</strong> Not stock imagery. Not AI-generated pictures of people who don't exist. Actual proof that this is what it looks like when it's done properly.
       </p>
-      <p class="text-card-foreground leading-relaxed">
+      <p class="leading-relaxed">
         If a daytime disco can't show you what their events look like, ask yourself why. At THE 2PM CLUB, we've been running sell-out events across Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester for years, backed by over 12 years of event production experience from Boombastic Events. The proof isn't in the promises. It's in the content.
       </p>
     </div>
 
     <!-- Bottom Line Card (gradient) -->
     <div class="bg-gradient-to-r from-primary to-secondary text-primary-foreground rounded-xl shadow-lg p-8">
-      <h2 class="font-bebas text-2xl mb-4">The Bottom Line</h2>
+      <h2 class="text-2xl mb-4">The Bottom Line</h2>
       <p class="leading-relaxed mb-4">
         A daytime disco is four hours of pure joy, packed into Saturday afternoon. You get the euphoria of a big night out without sacrificing your Sunday, your Monday, or your dignity. You sing every word. You dance until your feet hurt. You go home feeling brilliant.
       </p>
@@ -576,71 +364,71 @@ a:hover { text-decoration: underline; }
     <a href="/#tickets" class="btn-primary btn-large">
       See For Yourself
     </a>
-    <p class="text-muted-foreground mt-3 text-sm">
+    <p class="mt-3 text-sm">
       Or read the <a href="/what-to-expect/" class="text-primary hover:underline">hour-by-hour guide to what happens at THE 2PM CLUB</a>.
     </p>
   </div>
 
   <!-- FAQ Section -->
-  <div class="bg-card rounded-xl shadow-lg p-8 mb-8">
-    <h2 class="font-bebas text-2xl text-card-foreground mb-6">Frequently Asked Questions</h2>
+  <div class="rounded-xl shadow-lg p-8 mb-8">
+    <h2 class="text-2xl mb-6">Frequently Asked Questions</h2>
 
     <div class="space-y-4">
       <div class="faq-item border-b border-border pb-4" onclick="this.classList.toggle('open')">
         <div class="flex justify-between items-center">
-          <h3 class="text-card-foreground font-medium">Is a daytime disco the same as a rave?</h3>
-          <svg class="faq-chevron w-5 h-5 text-muted-foreground flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          <h3 class="font-medium">Is a daytime disco the same as a rave?</h3>
+          <svg class="faq-chevron w-5 h-5 flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer">
-          <p class="text-muted-foreground mt-3">No. Think singalong anthems, not techno. A daytime disco is built around songs everyone knows: 80s, 90s and 00s classics that the whole room sings along to. The vibe is euphoric and inclusive, more Mr Brightside than warehouse beats.</p>
+          <p class="mt-3">No. Think singalong anthems, not techno. A daytime disco is built around songs everyone knows: 80s, 90s and 00s classics that the whole room sings along to. The vibe is euphoric and inclusive, more Mr Brightside than warehouse beats.</p>
         </div>
       </div>
 
       <div class="faq-item border-b border-border pb-4" onclick="this.classList.toggle('open')">
         <div class="flex justify-between items-center">
-          <h3 class="text-card-foreground font-medium">Do I need to be a good dancer?</h3>
-          <svg class="faq-chevron w-5 h-5 text-muted-foreground flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          <h3 class="font-medium">Do I need to be a good dancer?</h3>
+          <svg class="faq-chevron w-5 h-5 flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer">
-          <p class="text-muted-foreground mt-3">You need to know the words to Mr Brightside. That's it. Nobody is watching your footwork. Everyone is too busy singing, jumping, and having the time of their life.</p>
+          <p class="mt-3">You need to know the words to Mr Brightside. That's it. Nobody is watching your footwork. Everyone is too busy singing, jumping, and having the time of their life.</p>
         </div>
       </div>
 
       <div class="faq-item border-b border-border pb-4" onclick="this.classList.toggle('open')">
         <div class="flex justify-between items-center">
-          <h3 class="text-card-foreground font-medium">What age group goes to a daytime disco?</h3>
-          <svg class="faq-chevron w-5 h-5 text-muted-foreground flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          <h3 class="font-medium">What age group goes to a daytime disco?</h3>
+          <svg class="faq-chevron w-5 h-5 flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer">
-          <p class="text-muted-foreground mt-3">Mostly 30s to 50s, but everyone over 18 is welcome. At THE 2PM CLUB, 52% of attendees are first-timers, so you'll never be the odd one out.</p>
+          <p class="mt-3">Mostly 30s to 50s, but everyone over 18 is welcome. At THE 2PM CLUB, 52% of attendees are first-timers, so you'll never be the odd one out.</p>
         </div>
       </div>
 
       <div class="faq-item border-b border-border pb-4" onclick="this.classList.toggle('open')">
         <div class="flex justify-between items-center">
-          <h3 class="text-card-foreground font-medium">Are daytime discos family friendly?</h3>
-          <svg class="faq-chevron w-5 h-5 text-muted-foreground flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          <h3 class="font-medium">Are daytime discos family friendly?</h3>
+          <svg class="faq-chevron w-5 h-5 flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer">
-          <p class="text-muted-foreground mt-3">THE 2PM CLUB is an 18+ event. Some daytime disco formats run family-friendly versions, but our events are designed as an adults-only afternoon out with a fully licensed bar and club-level production.</p>
+          <p class="mt-3">THE 2PM CLUB is an 18+ event. Some daytime disco formats run family-friendly versions, but our events are designed as an adults-only afternoon out with a fully licensed bar and club-level production.</p>
         </div>
       </div>
 
       <div class="faq-item pb-4" onclick="this.classList.toggle('open')">
         <div class="flex justify-between items-center">
-          <h3 class="text-card-foreground font-medium">How do I find a daytime disco near me?</h3>
-          <svg class="faq-chevron w-5 h-5 text-muted-foreground flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          <h3 class="font-medium">How do I find a daytime disco near me?</h3>
+          <svg class="faq-chevron w-5 h-5 flex-shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer">
-          <p class="text-muted-foreground mt-3">THE 2PM CLUB runs sell-out daytime discos across the Midlands: Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester. <a href="/#tickets" class="text-primary hover:underline">Check our events page</a> for upcoming dates and tickets.</p>
+          <p class="mt-3">THE 2PM CLUB runs sell-out daytime discos across the Midlands: Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester. <a href="/#tickets" class="text-primary hover:underline">Check our events page</a> for upcoming dates and tickets.</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Social Share -->
-  <div class="bg-card rounded-xl shadow-lg p-6 text-center">
-    <h3 class="font-bebas text-lg mb-4 text-card-foreground">Share this article</h3>
+  <div class="rounded-xl shadow-lg p-6 text-center">
+    <h3 class="text-lg mb-4">Share this article</h3>
     <div class="share-icons">
       <button class="icon-btn whatsapp" onclick="handleWhatsAppShare()">
         <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="WhatsApp" width="24" height="24">
@@ -697,23 +485,52 @@ a:hover { text-decoration: underline; }
 
 </main>
 
-<!-- Footer -->
+<!-- ============================================
+     THE 2PM CLUB — Shared Footer HTML
+     Copy this into your static pages.
+     Requires: <link rel="stylesheet" href="/shared-styles.css">
+     ============================================ -->
+
 <footer class="site-footer">
   <div class="footer-grid">
+    <!-- Column 1: Brand -->
     <div>
-      <p class="footer-heading">THE 2PM CLUB</p>
-      <p style="font-size:0.875rem;color:hsl(0 0% 70%);margin:0 0 1rem">Night-out energy, home by 7.</p>
-      <p style="font-size:0.875rem;margin:0"><a href="mailto:hello@boomevents.co.uk" class="footer-link" style="display:inline">hello@boomevents.co.uk</a></p>
+      <div style="margin-bottom:1.5rem">
+        <img
+          src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png"
+          alt="Boombastic Events Logo"
+          height="64"
+          width="auto"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" class="footer-link" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:1.5rem">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        hello@boomevents.co.uk
+      </a>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
+          <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
+          <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+        </a>
+      </div>
     </div>
+
+    <!-- Column 2: Explore -->
     <div>
-      <p class="footer-heading">Explore</p>
+      <h3 class="footer-heading">Explore</h3>
       <a href="/what-to-expect/" class="footer-link">What to Expect</a>
       <a href="/group-bookings/" class="footer-link">Group Bookings</a>
       <a href="/faqs/" class="footer-link">FAQs</a>
       <a href="/blog/why-daytime-discos-are-popular/" class="footer-link">Blog</a>
     </div>
+
+    <!-- Column 3: Locations -->
     <div>
-      <p class="footer-heading">Locations</p>
+      <h3 class="footer-heading">Locations</h3>
       <a href="/hubs/northampton/" class="footer-link">Northampton</a>
       <a href="/hubs/bedford/" class="footer-link">Bedford</a>
       <a href="/hubs/milton-keynes/" class="footer-link">Milton Keynes</a>
@@ -722,7 +539,12 @@ a:hover { text-decoration: underline; }
       <a href="/hubs/leicester/" class="footer-link">Leicester</a>
     </div>
   </div>
-  <p class="footer-copyright">&copy; 2026 Boombastic Events Ltd. All rights reserved.</p>
+
+  <!-- Copyright -->
+  <div class="footer-copyright">
+    © <script>document.write(new Date().getFullYear())</script> Boombastic Events Ltd. All rights reserved.
+  </div>
 </footer>
+
 
 </body></html>

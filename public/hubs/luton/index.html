@@ -5,300 +5,7 @@
 <meta name="description" content="Daytime disco at Hat Factory Arts Centre, Luton. THE 2PM CLUB brings night-out energy to Saturday afternoons. Things to do Saturday afternoon Luton. Sell-out debut.">
 <link rel="canonical" href="https://www.the2pmclub.co.uk/hubs/luton/">
 
-<!-- Standalone CSS -->
-<style>
-/* ============================================
-   THE 2PM CLUB -- Design System Tokens
-   Resolved from Tailwind config + index.css
-   ============================================ */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-
-:root {
-  --background: 242 12% 4%;
-  --foreground: 0 0% 100%;
-  --card: 240 12% 8%;
-  --card-foreground: 0 0% 100%;
-  --primary: 328 100% 54%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 207 100% 60%;
-  --secondary-foreground: 0 0% 100%;
-  --muted: 240 12% 15%;
-  --muted-foreground: 0 0% 70%;
-  --accent: 328 100% 54%;
-  --accent-foreground: 0 0% 100%;
-  --border: 240 12% 20%;
-  --input: 240 12% 20%;
-  --ring: 207 100% 60%;
-  --popover: 240 12% 12%;
-  --popover-foreground: 0 0% 100%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
-  --radius: 0.75rem;
-}
-
-*, *::before, *::after { box-sizing: border-box; border-color: hsl(var(--border)); }
-
-body {
-  margin: 0;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-h1 { font-family: 'Poppins', sans-serif; font-size: 2.25rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.025em; color: #FFFFFF; margin: 0 0 1rem; }
-h2 { font-family: 'Poppins', sans-serif; font-size: 1.875rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; color: #FFFFFF; margin: 0 0 0.75rem; }
-h3 { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; color: #FFFFFF; margin: 0 0 0.5rem; }
-p, li { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 400; line-height: 1.6; color: #FFFFFF; }
-a { color: hsl(var(--primary)); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-.container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
-
-/* Card styles */
-.glass-card {
-  background: hsl(240 12% 8% / 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid hsl(240 12% 20% / 0.5);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 20px hsl(0 0% 0% / 0.3);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-}
-.card {
-  background: hsl(240 12% 8%);
-  border: 1px solid hsl(240 12% 20%);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 20px hsl(0 0% 0% / 0.3);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-/* Primary CTA Button */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 2rem;
-  min-height: 2.75rem;
-  background-color: hsl(328 100% 54%);
-  color: #FFFFFF;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  border: none;
-  border-radius: calc(0.75rem - 2px);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.2s ease;
-}
-.btn-primary:hover { background-color: hsl(328 100% 54% / 0.9); text-decoration: none; }
-
-.btn-large {
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
-  border-radius: 9999px;
-  min-height: 3.25rem;
-}
-
-/* Text colours */
-.text-muted { color: hsl(0 0% 70%); }
-.text-primary { color: hsl(328 100% 54%); }
-.text-secondary { color: hsl(207 100% 60%); }
-
-/* Photo elements */
-@media(max-width:600px){
-  .photo-grid-3{grid-template-columns:1fr!important}
-  .photo-grid-2{grid-template-columns:1fr!important}
-  .hero-photo img{height:250px!important}
-}
-
-/* ============================================
-   HEADER
-   ============================================ */
-.site-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 50;
-  background: hsl(242 12% 4% / 0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid hsl(240 12% 20%);
-}
-.header-inner {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-.site-logo img { height: 40px; width: auto; }
-.primary-nav {
-  display: flex;
-  gap: 28px;
-  margin-left: auto;
-  align-items: center;
-}
-.primary-nav a, .locations-trigger {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: hsl(0 0% 70%);
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  padding: 0;
-}
-.primary-nav a:hover, .locations-trigger:hover { color: hsl(328 100% 54%); text-decoration: none; }
-.header-actions { display: flex; gap: 12px; align-items: center; margin-left: 18px; }
-.header-icons { display: flex; gap: 12px; align-items: center; }
-.header-icons a { display: inline-flex; width: 22px; height: 22px; opacity: 0.9; }
-.header-icons a:hover { opacity: 1; }
-.header-icons svg { width: 22px; height: 22px; fill: #fff; }
-.nav-toggle {
-  display: none;
-  background: transparent;
-  border: 0;
-  padding: 8px;
-  margin-left: 8px;
-  font-size: 1.5rem;
-  color: #fff;
-  cursor: pointer;
-}
-
-/* Locations dropdown */
-.locations-dropdown { position: relative; display: inline-flex; align-items: center; }
-.locations-dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 180px;
-  padding: 8px 0;
-  margin-top: 8px;
-  background: #13131A;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  z-index: 100;
-}
-.locations-dropdown:hover .locations-dropdown-menu { display: block; }
-.locations-dropdown.open .locations-dropdown-menu { display: block; }
-.locations-trigger { padding-bottom: 12px !important; }
-.locations-dropdown-menu { margin-top: 0 !important; padding-top: 4px; }
-.locations-dropdown-item {
-  display: block;
-  padding: 8px 16px;
-  color: rgba(255,255,255,0.7);
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  text-decoration: none;
-  transition: color 0.2s, background 0.2s;
-}
-.locations-dropdown-item:hover { color: #fff; background: rgba(255,255,255,0.06); text-decoration: none; }
-
-/* Mobile */
-.mobile-menu { display: none; }
-@media (max-width: 900px) {
-  .primary-nav { display: none; }
-  .header-icons { display: none; }
-  .nav-toggle { display: inline-flex; }
-  .mobile-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 60;
-    background: #0B0B0F;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding: 12px 16px;
-  }
-  body.nav-open .mobile-menu { display: block; }
-  .mobile-menu a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 4px;
-    color: #FFFFFF;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.125rem;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .mobile-menu a:hover { color: hsl(328 100% 54%); }
-  .mobile-menu button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 10px 4px;
-    background: none;
-    border: none;
-    color: #FFFFFF;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.125rem;
-    cursor: pointer;
-  }
-  .locations-sub a { padding-left: 16px; color: hsl(0 0% 70%); font-size: 1rem; }
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-.site-footer {
-  background: hsl(240 12% 8%);
-  border-top: 1px solid hsl(240 12% 20%);
-  padding: 3rem 0;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; text-align: center; } }
-.footer-heading { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: #FFFFFF; margin-bottom: 1rem; }
-.footer-link {
-  display: block;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem;
-  color: hsl(0 0% 70%);
-  text-decoration: none;
-  padding: 0.375rem 0;
-  transition: color 0.2s;
-}
-.footer-link:hover { color: hsl(328 100% 54%); }
-.footer-copyright {
-  max-width: 1400px;
-  margin: 3rem auto 0;
-  padding: 2rem 2rem 0;
-  border-top: 1px solid hsl(240 12% 20%);
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.875rem;
-  color: hsl(0 0% 70%);
-}
-
-</style>
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="/shared-styles.css">
 <!-- Social Meta -->
 <meta property="og:title" content="Daytime Disco in Luton | THE 2PM CLUB">
 <meta property="og:description" content="Have you heard? THE 2PM CLUB is in Luton. Night-out energy in the afternoon at Hat Factory Arts Centre.">
@@ -356,17 +63,31 @@ a:hover { text-decoration: underline; }
 </script>
 
 </head>
-<body class="bg-background text-foreground font-poppins min-h-screen">
-<!-- Header -->
+<body>
+<!-- ============================================
+     THE 2PM CLUB — Shared Header HTML
+     Copy this into your static pages.
+     Requires: <link rel="stylesheet" href="/shared-styles.css">
+     ============================================ -->
+
 <header class="site-header">
   <div class="header-inner">
+    <!-- Logo -->
     <a href="/" class="site-logo">
-      <img src="https://boombastic-events.b-cdn.net/2PM%20CLUB/2pm-logo-full-white.png" alt="THE 2PM CLUB" height="40">
+      <img
+        src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png"
+        alt="The 2 PM Club logo"
+        height="40"
+        width="auto"
+      />
     </a>
+
+    <!-- Desktop nav -->
     <nav class="primary-nav">
       <a href="/#tickets">Events</a>
+
       <div class="locations-dropdown">
-        <button class="locations-trigger" onclick="this.parentElement.classList.toggle("open")">Locations &#9662;</button>
+        <button class="locations-trigger" type="button">Locations ▾</button>
         <div class="locations-dropdown-menu">
           <a href="/hubs/northampton/" class="locations-dropdown-item">Northampton</a>
           <a href="/hubs/bedford/" class="locations-dropdown-item">Bedford</a>
@@ -376,49 +97,115 @@ a:hover { text-decoration: underline; }
           <a href="/hubs/leicester/" class="locations-dropdown-item">Leicester</a>
         </div>
       </div>
+
       <a href="/what-to-expect/">What to Expect</a>
       <a href="/group-bookings/">Group Bookings</a>
       <a href="/faqs/">FAQs</a>
     </nav>
+
+    <!-- Book Tickets CTA -->
     <div class="header-actions">
-      <div class="header-icons">
-        <a href="https://www.facebook.com/the2pmclub" target="_blank" rel="noopener" aria-label="Facebook">
-          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
-        <a href="mailto:hello@boomevents.co.uk" aria-label="Email us">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        </a>
-      </div>
-      <a href="/#tickets" class="btn-primary" style="font-size:0.8125rem;padding:0.375rem 0.75rem">Book Tickets</a>
+      <a href="/#tickets" class="btn-primary">Book Tickets</a>
     </div>
-    <button class="nav-toggle" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">&#9776;</button>
-    <div class="mobile-menu">
-      <a href="/#tickets">Events</a>
-      <div>
-        <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block'">Locations <span>&#9662;</span></button>
-        <div class="locations-sub" style="display:none">
-          <a href="/hubs/northampton/">Northampton</a>
-          <a href="/hubs/bedford/">Bedford</a>
-          <a href="/hubs/milton-keynes/">Milton Keynes</a>
-          <a href="/hubs/coventry/">Coventry</a>
-          <a href="/hubs/luton/">Luton</a>
-          <a href="/hubs/leicester/">Leicester</a>
-        </div>
-      </div>
-      <a href="/what-to-expect/">What to Expect</a>
-      <a href="/group-bookings/">Group Bookings</a>
-      <a href="/faqs/">FAQs</a>
+
+    <!-- Social icons -->
+    <div class="header-icons">
+      <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+      </a>
+      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+      </a>
     </div>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu" type="button">☰</button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <a href="/#tickets">Events</a>
+
+    <button type="button" id="locations-toggle">
+      Locations
+      <span style="font-size:0.75rem;opacity:0.6">▼</span>
+    </button>
+    <div class="locations-sub" id="locations-sub">
+      <a href="/hubs/northampton/">Northampton</a>
+      <a href="/hubs/bedford/">Bedford</a>
+      <a href="/hubs/milton-keynes/">Milton Keynes</a>
+      <a href="/hubs/coventry/">Coventry</a>
+      <a href="/hubs/luton/">Luton</a>
+      <a href="/hubs/leicester/">Leicester</a>
+    </div>
+
+    <a href="/what-to-expect/">What to Expect</a>
+    <a href="/group-bookings/">Group Bookings</a>
+    <a href="/faqs/">FAQs</a>
+
+    <hr />
+    <a href="https://www.facebook.com/boombastic.eventsuk" target="_blank" rel="noopener noreferrer nofollow">Facebook</a>
+    <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query">Email us</a>
   </div>
 </header>
-<div style="height:72px"></div><!-- spacer for fixed header -->
+
+<!-- Spacer to push content below fixed header -->
+<div class="header-spacer"></div>
+
+<!-- Header JS (hamburger toggle + locations accordion) -->
+<script>
+(function(){
+  var toggle = document.querySelector('.nav-toggle');
+  var menu   = document.getElementById('mobile-menu');
+  if(!toggle || !menu) return;
+
+  menu.setAttribute('hidden','');
+  toggle.setAttribute('aria-expanded','false');
+
+  function setMenu(open){
+    if(open){
+      document.body.classList.add('nav-open');
+      menu.removeAttribute('hidden');
+      toggle.setAttribute('aria-expanded','true');
+    } else {
+      document.body.classList.remove('nav-open');
+      menu.setAttribute('hidden','');
+      toggle.setAttribute('aria-expanded','false');
+    }
+  }
+
+  toggle.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('nav-open'));
+  });
+
+  menu.addEventListener('click', function(e){
+    if(e.target.closest('a')) setMenu(false);
+  });
+
+  // Locations accordion
+  var locBtn = document.getElementById('locations-toggle');
+  var locSub = document.getElementById('locations-sub');
+  if(locBtn && locSub){
+    locBtn.addEventListener('click', function(){
+      locSub.classList.toggle('open');
+      var arrow = locBtn.querySelector('span');
+      if(arrow) arrow.textContent = locSub.classList.contains('open') ? '▲' : '▼';
+    });
+  }
+})();
+</script>
+
+<!-- spacer for fixed header -->
 <!-- Main Content -->
 <main class="container mx-auto max-w-4xl px-4 py-12 pt-24">
 
   <!-- Hero Card -->
   <div class="card">
-    <h1 class="font-bebas text-4xl md:text-5xl text-card-foreground mb-4">Daytime Disco in Luton</h1>
-    <p class="text-xl text-muted-foreground font-medium">Have you heard? Luton's got a new Saturday afternoon.</p>
+    <h1 class="text-4xl md:text-5xl mb-4">Daytime Disco in Luton</h1>
+    <p class="text-xl font-medium">Have you heard? Luton's got a new Saturday afternoon.</p>
   </div>
 
   <!-- Intro -->
@@ -428,8 +215,8 @@ a:hover { text-decoration: underline; }
   <img src="https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/140326-2PM-MK-full-venue-dj-screen-2pm-branding-crowd-arms-raised.jpeg?width=1200&quality=80" alt="THE 2PM CLUB daytime disco in Luton" style="width:100%;height:400px;object-fit:cover;display:block" loading="eager">
 </div>
 
-<div class="bg-card rounded-xl shadow-lg p-8 mb-8">
-    <p class="text-lg leading-relaxed text-card-foreground">
+<div class="rounded-xl shadow-lg p-8 mb-8">
+    <p class="text-lg leading-relaxed">
       Have you heard about THE 2PM CLUB? Luton's debut was a sell-out, and the demand was two to three times what the venue could hold. That kind of response doesn't happen by accident. Hat Factory Arts Centre on Bute Street is the home for Luton events, and it's a brilliant space: central, characterful, and perfectly sized for the kind of atmosphere that makes a 2PM CLUB afternoon unforgettable. Night-out energy in the afternoon, right in the heart of town. Confetti cannons, singalongs, and the kind of buzz that has people messaging their mates before they've even left the building. Home by 7, no Sunday regrets, and a Saturday afternoon that actually delivers on the group chat promise. If you missed the first one, here's your chance. If you were there, you already know what's coming.
     </p>
   </div>
@@ -437,41 +224,41 @@ a:hover { text-decoration: underline; }
   <div class="space-y-8">
 
     <!-- Upcoming Events -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Upcoming Events in Luton</h2>
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="text-2xl mb-4">Upcoming Events in Luton</h2>
 
-      <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
-        <h3 class="font-bebas text-xl text-primary mb-2">THE 2PM CLUB at Hat Factory (Summer)</h3>
-        <p class="text-muted-foreground mb-1">Saturday 23rd May 2026 | 2pm - 6pm</p>
-        <p class="text-muted-foreground mb-3">Hat Factory Arts Centre, 65-67 Bute Street, Luton, LU1 2EY</p>
+      <div class="rounded-xl shadow-lg p-8 border-l-4 border-primary">
+        <h3 class="text-xl text-primary mb-2">THE 2PM CLUB at Hat Factory (Summer)</h3>
+        <p class="mb-1">Saturday 23rd May 2026 | 2pm - 6pm</p>
+        <p class="mb-3">Hat Factory Arts Centre, 65-67 Bute Street, Luton, LU1 2EY</p>
         <p class="text-primary font-bold text-lg mb-3">From &pound;12.00</p>
-        <a href="https://www.eventbrite.co.uk/e/1982497843417?aff=BoomWeb" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 transition-colors">Book Tickets</a>
+        <a href="https://www.eventbrite.co.uk/e/1982497843417?aff=BoomWeb" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">Book Tickets</a>
       </div>
     </div>
 
     <!-- Venue Details -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">The Venue: Hat Factory Arts Centre</h2>
-      <p class="text-card-foreground leading-relaxed mb-4">
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="text-2xl mb-4">The Venue: Hat Factory Arts Centre</h2>
+      <p class="leading-relaxed mb-4">
         The Hat Factory is one of Luton's most distinctive venues. A converted hat factory (the clue's in the name) on Bute Street, it's been reimagined as a creative arts space with a proper events room that's ideal for a 2PM CLUB afternoon. The sound is excellent, the space has real character, and its central location makes it easy to reach from anywhere in town. The bar serves a solid selection throughout, and the staff know how to run an event. It's intimate enough to feel the energy from every corner of the room, which is exactly what you want when the confetti drops.
       </p>
-      <p class="text-card-foreground leading-relaxed">
+      <p class="leading-relaxed">
         <strong>Address:</strong> 65-67 Bute Street, Luton, LU1 2EY
       </p>
     </div>
 
     <!-- Testimonials -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">What Luton Says</h2>
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="text-2xl mb-4">What Luton Says</h2>
       <blockquote class="border-l-4 border-primary pl-6 my-4">
-        <p class="text-card-foreground leading-relaxed italic">"Finally able to get all my friends together, when's the next one?"</p>
+        <p class="leading-relaxed italic">"Finally able to get all my friends together, when's the next one?"</p>
         <cite class="block mt-2 text-primary font-semibold not-italic">Marie T, Luton</cite>
       </blockquote>
     </div>
 
     <!-- FAQ -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Frequently Asked Questions</h2>
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="text-2xl mb-4">Frequently Asked Questions</h2>
 
       <div class="faq-item">
         <button class="faq-button" onclick="toggleFaq(this)">
@@ -479,7 +266,7 @@ a:hover { text-decoration: underline; }
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-answer">
-          <p class="text-card-foreground leading-relaxed">The Hat Factory is in Luton town centre. The Galaxy Centre multi-storey car park is a 5-minute walk away, and there is also on-street parking on surrounding roads.</p>
+          <p class="leading-relaxed">The Hat Factory is in Luton town centre. The Galaxy Centre multi-storey car park is a 5-minute walk away, and there is also on-street parking on surrounding roads.</p>
         </div>
       </div>
 
@@ -489,7 +276,7 @@ a:hover { text-decoration: underline; }
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-answer">
-          <p class="text-card-foreground leading-relaxed">Yes. The Hat Factory has a fully licensed bar open throughout the event.</p>
+          <p class="leading-relaxed">Yes. The Hat Factory has a fully licensed bar open throughout the event.</p>
         </div>
       </div>
 
@@ -499,7 +286,7 @@ a:hover { text-decoration: underline; }
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-answer">
-          <p class="text-card-foreground leading-relaxed">Yes. Luton station is about a 10-minute walk from the venue. It's on the Thameslink line, making it easy to reach from London, Bedford, and surrounding areas.</p>
+          <p class="leading-relaxed">Yes. Luton station is about a 10-minute walk from the venue. It's on the Thameslink line, making it easy to reach from London, Bedford, and surrounding areas.</p>
         </div>
       </div>
 
@@ -509,21 +296,21 @@ a:hover { text-decoration: underline; }
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-answer">
-          <p class="text-card-foreground leading-relaxed">The debut sold out with demand far exceeding capacity. We'd strongly recommend booking early. The get-together that actually happens only works if you've got a ticket.</p>
+          <p class="leading-relaxed">The debut sold out with demand far exceeding capacity. We'd strongly recommend booking early. The get-together that actually happens only works if you've got a ticket.</p>
         </div>
       </div>
     </div>
 
     <!-- Cross-city links -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">THE 2PM CLUB in Other Cities</h2>
-      <p class="text-card-foreground leading-relaxed mb-4">We're bringing the party to towns across the Midlands and beyond.</p>
+    <div class="rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="text-2xl mb-4">THE 2PM CLUB in Other Cities</h2>
+      <p class="leading-relaxed mb-4">We're bringing the party to towns across the Midlands and beyond.</p>
       <div class="flex flex-wrap gap-3">
-        <a href="/hubs/northampton/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Northampton</a>
-        <a href="/hubs/bedford/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Bedford</a>
-        <a href="/hubs/coventry/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Coventry</a>
-        <a href="/hubs/milton-keynes/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Milton Keynes</a>
-        <a href="/hubs/leicester/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Leicester</a>
+        <a href="/hubs/northampton/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground">Northampton</a>
+        <a href="/hubs/bedford/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground">Bedford</a>
+        <a href="/hubs/coventry/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground">Coventry</a>
+        <a href="/hubs/milton-keynes/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground">Milton Keynes</a>
+        <a href="/hubs/leicester/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground">Leicester</a>
       </div>
     </div>
 
@@ -537,8 +324,8 @@ a:hover { text-decoration: underline; }
   </div>
 
   <!-- Social Share -->
-  <div class="bg-card rounded-xl shadow-lg p-6 text-center">
-    <h3 class="font-bebas text-lg mb-4 text-card-foreground">Share this page</h3>
+  <div class="rounded-xl shadow-lg p-6 text-center">
+    <h3 class="text-lg mb-4">Share this page</h3>
     <div class="share-icons">
       <button class="icon-btn whatsapp" onclick="handleWhatsAppShare()">
         <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="WhatsApp" width="24" height="24">
@@ -574,23 +361,52 @@ a:hover { text-decoration: underline; }
 </div>
 </div>
 
-<!-- Footer -->
+<!-- ============================================
+     THE 2PM CLUB — Shared Footer HTML
+     Copy this into your static pages.
+     Requires: <link rel="stylesheet" href="/shared-styles.css">
+     ============================================ -->
+
 <footer class="site-footer">
   <div class="footer-grid">
+    <!-- Column 1: Brand -->
     <div>
-      <p class="footer-heading">THE 2PM CLUB</p>
-      <p style="font-size:0.875rem;color:hsl(0 0% 70%);margin:0 0 1rem">Night-out energy, home by 7.</p>
-      <p style="font-size:0.875rem;margin:0"><a href="mailto:hello@boomevents.co.uk" class="footer-link" style="display:inline">hello@boomevents.co.uk</a></p>
+      <div style="margin-bottom:1.5rem">
+        <img
+          src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png"
+          alt="Boombastic Events Logo"
+          height="64"
+          width="auto"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" class="footer-link" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:1.5rem">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        hello@boomevents.co.uk
+      </a>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
+          <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
+          <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+        </a>
+      </div>
     </div>
+
+    <!-- Column 2: Explore -->
     <div>
-      <p class="footer-heading">Explore</p>
+      <h3 class="footer-heading">Explore</h3>
       <a href="/what-to-expect/" class="footer-link">What to Expect</a>
       <a href="/group-bookings/" class="footer-link">Group Bookings</a>
       <a href="/faqs/" class="footer-link">FAQs</a>
       <a href="/blog/why-daytime-discos-are-popular/" class="footer-link">Blog</a>
     </div>
+
+    <!-- Column 3: Locations -->
     <div>
-      <p class="footer-heading">Locations</p>
+      <h3 class="footer-heading">Locations</h3>
       <a href="/hubs/northampton/" class="footer-link">Northampton</a>
       <a href="/hubs/bedford/" class="footer-link">Bedford</a>
       <a href="/hubs/milton-keynes/" class="footer-link">Milton Keynes</a>
@@ -599,7 +415,12 @@ a:hover { text-decoration: underline; }
       <a href="/hubs/leicester/" class="footer-link">Leicester</a>
     </div>
   </div>
-  <p class="footer-copyright">&copy; 2026 Boombastic Events Ltd. All rights reserved.</p>
+
+  <!-- Copyright -->
+  <div class="footer-copyright">
+    © <script>document.write(new Date().getFullYear())</script> Boombastic Events Ltd. All rights reserved.
+  </div>
 </footer>
+
 
 </body></html>
