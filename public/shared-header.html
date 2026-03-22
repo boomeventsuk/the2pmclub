@@ -1,0 +1,133 @@
+<!-- ============================================
+     THE 2PM CLUB — Shared Header HTML
+     Copy this into your static pages.
+     Requires: <link rel="stylesheet" href="/shared-styles.css">
+     ============================================ -->
+
+<header class="site-header">
+  <div class="header-inner">
+    <!-- Logo -->
+    <a href="/" class="site-logo">
+      <img
+        src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png"
+        alt="The 2 PM Club logo"
+        height="40"
+        width="auto"
+      />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="primary-nav">
+      <a href="/#tickets">Events</a>
+
+      <div class="locations-dropdown">
+        <button class="locations-trigger" type="button">Locations ▾</button>
+        <div class="locations-dropdown-menu">
+          <a href="/hubs/northampton/" class="locations-dropdown-item">Northampton</a>
+          <a href="/hubs/bedford/" class="locations-dropdown-item">Bedford</a>
+          <a href="/hubs/milton-keynes/" class="locations-dropdown-item">Milton Keynes</a>
+          <a href="/hubs/coventry/" class="locations-dropdown-item">Coventry</a>
+          <a href="/hubs/luton/" class="locations-dropdown-item">Luton</a>
+          <a href="/hubs/leicester/" class="locations-dropdown-item">Leicester</a>
+        </div>
+      </div>
+
+      <a href="/what-to-expect/">What to Expect</a>
+      <a href="/group-bookings/">Group Bookings</a>
+      <a href="/faqs/">FAQs</a>
+    </nav>
+
+    <!-- Book Tickets CTA -->
+    <div class="header-actions">
+      <a href="/#tickets" class="btn-primary">Book Tickets</a>
+    </div>
+
+    <!-- Social icons -->
+    <div class="header-icons">
+      <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+      </a>
+      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+      </a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu" type="button">☰</button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <a href="/#tickets">Events</a>
+
+    <button type="button" id="locations-toggle">
+      Locations
+      <span style="font-size:0.75rem;opacity:0.6">▼</span>
+    </button>
+    <div class="locations-sub" id="locations-sub">
+      <a href="/hubs/northampton/">Northampton</a>
+      <a href="/hubs/bedford/">Bedford</a>
+      <a href="/hubs/milton-keynes/">Milton Keynes</a>
+      <a href="/hubs/coventry/">Coventry</a>
+      <a href="/hubs/luton/">Luton</a>
+      <a href="/hubs/leicester/">Leicester</a>
+    </div>
+
+    <a href="/what-to-expect/">What to Expect</a>
+    <a href="/group-bookings/">Group Bookings</a>
+    <a href="/faqs/">FAQs</a>
+
+    <hr />
+    <a href="https://www.facebook.com/boombastic.eventsuk" target="_blank" rel="noopener noreferrer nofollow">Facebook</a>
+    <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query">Email us</a>
+  </div>
+</header>
+
+<!-- Spacer to push content below fixed header -->
+<div class="header-spacer"></div>
+
+<!-- Header JS (hamburger toggle + locations accordion) -->
+<script>
+(function(){
+  var toggle = document.querySelector('.nav-toggle');
+  var menu   = document.getElementById('mobile-menu');
+  if(!toggle || !menu) return;
+
+  menu.setAttribute('hidden','');
+  toggle.setAttribute('aria-expanded','false');
+
+  function setMenu(open){
+    if(open){
+      document.body.classList.add('nav-open');
+      menu.removeAttribute('hidden');
+      toggle.setAttribute('aria-expanded','true');
+    } else {
+      document.body.classList.remove('nav-open');
+      menu.setAttribute('hidden','');
+      toggle.setAttribute('aria-expanded','false');
+    }
+  }
+
+  toggle.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('nav-open'));
+  });
+
+  menu.addEventListener('click', function(e){
+    if(e.target.closest('a')) setMenu(false);
+  });
+
+  // Locations accordion
+  var locBtn = document.getElementById('locations-toggle');
+  var locSub = document.getElementById('locations-sub');
+  if(locBtn && locSub){
+    locBtn.addEventListener('click', function(){
+      locSub.classList.toggle('open');
+      var arrow = locBtn.querySelector('span');
+      if(arrow) arrow.textContent = locSub.classList.contains('open') ? '▲' : '▼';
+    });
+  }
+})();
+</script>
