@@ -1,12 +1,34 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8">
-<title>AI and Developer Information | THE 2PM CLUB</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Machine-readable data feeds, structured data, and API information for THE 2PM CLUB Daytime Disco events.">
-<link rel="canonical" href="https://www.the2pmclub.co.uk/for-ai/">
+#!/usr/bin/env node
+/**
+ * Rebuilds all static pages with the correct cerise pink design system.
+ * Replaces old gold/navy CSS variables, header, and footer.
+ */
+import { readFileSync, writeFileSync, readdirSync } from 'fs';
+import { resolve, join } from 'path';
 
-<!-- Standalone CSS -->
-<style>
+const ROOT = resolve(import.meta.dirname, '..');
+
+// All static pages to update
+const PAGES = [
+  'public/hubs/northampton/index.html',
+  'public/hubs/bedford/index.html',
+  'public/hubs/coventry/index.html',
+  'public/hubs/milton-keynes/index.html',
+  'public/hubs/luton/index.html',
+  'public/hubs/leicester/index.html',
+  'public/what-to-expect/index.html',
+  'public/group-bookings/index.html',
+  'public/faqs/index.html',
+  'public/for-ai/index.html',
+  'public/blog/what-is-a-daytime-disco/index.html',
+  'public/blog/hen-do-daytime-disco/index.html',
+  'public/blog/why-daytime-discos-are-popular/index.html',
+];
+
+// ============================================
+// CORRECT CSS DESIGN TOKENS (from Lovable)
+// ============================================
+const DESIGN_TOKENS = `
 /* ============================================
    THE 2PM CLUB -- Design System Tokens
    Resolved from Tailwind config + index.css
@@ -288,47 +310,12 @@ a:hover { text-decoration: underline; }
   font-size: 0.875rem;
   color: hsl(0 0% 70%);
 }
+`;
 
-</style>
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- Social Meta -->
-<meta property="og:title" content="AI and Developer Information | THE 2PM CLUB">
-<meta property="og:description" content="Machine-readable data feeds, structured data, and API information for THE 2PM CLUB Daytime Disco events.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.the2pmclub.co.uk/for-ai/">
-<meta property="og:image" content="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg">
-<meta property="og:locale" content="en_GB">
-<meta name="twitter:card" content="summary_large_image">
-
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://www.the2pmclub.co.uk/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "For AI",
-      "item": "https://www.the2pmclub.co.uk/for-ai/"
-    }
-  ]
-}
-</script>
-</head>
-<body class="bg-background text-foreground font-poppins min-h-screen">
-<!-- Header -->
+// ============================================
+// HEADER HTML
+// ============================================
+const HEADER_HTML = `<!-- Header -->
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="site-logo">
@@ -382,163 +369,12 @@ a:hover { text-decoration: underline; }
     </div>
   </div>
 </header>
-<div style="height:72px"></div><!-- spacer for fixed header -->
-<div class="container mx-auto px-4 py-4 header-inner">
-    <a href="/" class="site-logo">
-      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="The 2PM Club logo" style="height:40px;width:auto;">
-    </a>
-    <nav class="primary-nav">
-      <a href="/#tickets" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Events</a>
-      <div class="locations-dropdown" style="position:relative">
-        <button class="font-poppins text-muted-foreground hover:text-primary transition-colors" style="background:none;border:none;cursor:pointer;font-size:inherit;padding:0">Locations &#9662;</button>
-        <div class="locations-dropdown-menu">
-          <a href="/hubs/northampton/" class="locations-dropdown-item">Northampton</a>
-          <a href="/hubs/bedford/" class="locations-dropdown-item">Bedford</a>
-          <a href="/hubs/milton-keynes/" class="locations-dropdown-item">Milton Keynes</a>
-          <a href="/hubs/coventry/" class="locations-dropdown-item">Coventry</a>
-          <a href="/hubs/luton/" class="locations-dropdown-item">Luton</a>
-          <a href="/hubs/leicester/" class="locations-dropdown-item">Leicester</a>
-        </div>
-      </div>
-      <a href="/what-to-expect/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">What to Expect</a>
-      <a href="/group-bookings/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Group Bookings</a>
-      <a href="/faqs/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">FAQs</a>
-    </nav>
-    <div class="header-actions">
-      <a href="/#tickets" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" style="text-decoration:none">Book Tickets</a>
-    </div>
-    <div class="header-icons">
-      <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
-        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
-      </a>
-      <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
-        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
-      </a>
-      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" aria-label="Email">
-        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
-      </a>
-    </div>
-    <button onclick="document.body.classList.toggle('nav-open')" class="nav-toggle" aria-label="Menu">&#9776;</button>
-  </div>
-  <div id="mobile-menu" class="mobile-menu">
-    <a href="/#tickets">Events</a>
-    <div class="mobile-locations-toggle">
-      <button onclick="this.parentElement.classList.toggle('open')" style="background:none;border:none;color:#fff;font-size:1.1rem;padding:10px 4px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center">Locations <span class="mobile-locations-arrow">&#9662;</span></button>
-      <div class="mobile-locations-list" style="display:none;padding-left:16px">
-        <a href="/hubs/northampton/">Northampton</a>
-        <a href="/hubs/bedford/">Bedford</a>
-        <a href="/hubs/milton-keynes/">Milton Keynes</a>
-        <a href="/hubs/coventry/">Coventry</a>
-        <a href="/hubs/luton/">Luton</a>
-        <a href="/hubs/leicester/">Leicester</a>
-      </div>
-    </div>
-    <a href="/what-to-expect/">What to Expect</a>
-    <a href="/group-bookings/">Group Bookings</a>
-    <a href="/faqs/">FAQs</a>
-    <a href="/blog/why-daytime-discos-are-popular/">Blog</a>
-    <hr style="border-color:rgba(255,255,255,.08);margin:12px 0">
-    <a href="/#tickets" style="color:hsl(328 100% 54%);font-weight:600">Book Tickets</a>
-  </div>
-</header>
+<div style="height:72px"></div><!-- spacer for fixed header -->`;
 
-<!-- Main Content -->
-<main class="container mx-auto max-w-4xl px-4 py-12 pt-24">
-
-  <!-- Hero Card -->
-  <div class="card">
-    <h1 class="font-bebas text-4xl md:text-5xl text-card-foreground mb-4">
-      For AI Agents and Developers
-    </h1>
-    <p class="text-xl text-muted-foreground font-medium">
-      Machine-readable information about THE 2PM CLUB
-    </p>
-  </div>
-
-  <!-- Content Cards -->
-  <div class="space-y-8">
-
-    <!-- About -->
-    <div class="bg-card rounded-xl shadow-lg p-8">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">About THE 2PM CLUB</h2>
-      <p class="text-card-foreground leading-relaxed">
-        THE 2PM CLUB is the Midlands' original daytime disco, run by Boombastic Events. We host 80s, 90s and 00s afternoon events across six cities: Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester. Events run Saturday afternoons, 2pm to 6pm.
-      </p>
-    </div>
-
-    <!-- Data Feeds -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Data Feeds</h2>
-
-      <div class="mb-6">
-        <h3 class="text-primary font-semibold mb-2">Events JSON</h3>
-        <p class="text-card-foreground leading-relaxed mb-2">
-          <code>/events.json</code> — All upcoming events with dates, venues, pricing, booking URLs. Updated at build time and after Eventbrite syncs.
-        </p>
-        <p class="text-muted-foreground leading-relaxed text-sm">
-          Schema: array of event objects with fields: <code>id</code>, <code>slug</code>, <code>title</code>, <code>location</code>, <code>start</code> (ISO 8601), <code>end</code>, <code>bookUrl</code>, <code>description</code>, <code>fullDescription</code>, <code>price</code>, <code>priceCurrency</code>, <code>priceLabel</code>, <code>statusLabel</code>, <code>availability</code> (schema.org URL), <code>venueAddress</code> (PostalAddress).
-        </p>
-      </div>
-
-      <div class="mb-6">
-        <h3 class="text-primary font-semibold mb-2">Sitemap</h3>
-        <p class="text-card-foreground leading-relaxed">
-          <code>/sitemap.xml</code> — All indexable pages.
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-primary font-semibold mb-2">Robots</h3>
-        <p class="text-card-foreground leading-relaxed">
-          <code>/robots.txt</code> — AI crawlers are welcome.
-        </p>
-      </div>
-    </div>
-
-    <!-- Structured Data -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Structured Data (Schema.org)</h2>
-      <ul class="text-card-foreground leading-loose pl-6 list-disc">
-        <li><strong>Homepage:</strong> Organization, FAQPage (7 questions), Event (all upcoming), AggregateRating, Review</li>
-        <li><strong>Event pages:</strong> Event with full Offer and Place schema (injected via Netlify edge function)</li>
-        <li><strong>City hub pages:</strong> BreadcrumbList, Event, LocalBusiness</li>
-        <li><strong>Blog posts:</strong> Article</li>
-        <li><strong>All pages:</strong> BreadcrumbList where applicable</li>
-      </ul>
-    </div>
-
-    <!-- Key URLs -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Key URLs</h2>
-      <ul class="text-card-foreground leading-loose pl-6 list-none">
-        <li><strong>Homepage:</strong> <a href="https://www.the2pmclub.co.uk/" class="text-primary hover:text-primary/80 transition-colors">https://www.the2pmclub.co.uk/</a></li>
-        <li><strong>Events feed:</strong> <a href="https://www.the2pmclub.co.uk/events.json" class="text-primary hover:text-primary/80 transition-colors">https://www.the2pmclub.co.uk/events.json</a></li>
-        <li><strong>City hubs:</strong>
-          <a href="https://www.the2pmclub.co.uk/hubs/northampton/" class="text-primary hover:text-primary/80 transition-colors">/hubs/northampton/</a>,
-          <a href="https://www.the2pmclub.co.uk/hubs/bedford/" class="text-primary hover:text-primary/80 transition-colors">/hubs/bedford/</a>,
-          <a href="https://www.the2pmclub.co.uk/hubs/coventry/" class="text-primary hover:text-primary/80 transition-colors">/hubs/coventry/</a>,
-          <a href="https://www.the2pmclub.co.uk/hubs/milton-keynes/" class="text-primary hover:text-primary/80 transition-colors">/hubs/milton-keynes/</a>,
-          <a href="https://www.the2pmclub.co.uk/hubs/luton/" class="text-primary hover:text-primary/80 transition-colors">/hubs/luton/</a>,
-          <a href="https://www.the2pmclub.co.uk/hubs/leicester/" class="text-primary hover:text-primary/80 transition-colors">/hubs/leicester/</a>
-        </li>
-        <li><strong>FAQs:</strong> <a href="https://www.the2pmclub.co.uk/faqs/" class="text-primary hover:text-primary/80 transition-colors">/faqs/</a></li>
-        <li><strong>Blog:</strong> <a href="https://www.the2pmclub.co.uk/blog/why-daytime-discos-are-popular/" class="text-primary hover:text-primary/80 transition-colors">/blog/why-daytime-discos-are-popular/</a></li>
-      </ul>
-    </div>
-
-    <!-- Contact -->
-    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
-      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Contact</h2>
-      <p class="text-card-foreground leading-relaxed">
-        <a href="mailto:hello@boomevents.co.uk" class="text-primary hover:text-primary/80 transition-colors">hello@boomevents.co.uk</a>
-      </p>
-    </div>
-
-  </div>
-
-</main>
-
-<!-- Footer -->
+// ============================================
+// FOOTER HTML
+// ============================================
+const FOOTER_HTML = `<!-- Footer -->
 <footer class="site-footer">
   <div class="footer-grid">
     <div>
@@ -564,6 +400,131 @@ a:hover { text-decoration: underline; }
     </div>
   </div>
   <p class="footer-copyright">&copy; 2026 Boombastic Events Ltd. All rights reserved.</p>
-</footer>
+</footer>`;
 
-</body></html>
+
+function processPage(pagePath) {
+  const fullPath = resolve(ROOT, pagePath);
+  let html;
+  try {
+    html = readFileSync(fullPath, 'utf-8');
+  } catch (e) {
+    console.log(`SKIP: ${pagePath} (not found)`);
+    return false;
+  }
+
+  // 1. Replace everything between <style> and </style> with new design tokens
+  // Keep any page-specific styles that aren't in the root block
+  const styleMatch = html.match(/<style[^>]*>([\s\S]*?)<\/style>/);
+  if (styleMatch) {
+    // Extract any page-specific CSS that isn't part of the design system
+    const existingCSS = styleMatch[1];
+
+    // Keep accordion/toggle styles if present
+    let pageSpecificCSS = '';
+    const accordionMatch = existingCSS.match(/(\/\* FAQ accordion[\s\S]*?)(?=\/\*|$)/);
+    if (accordionMatch) pageSpecificCSS += accordionMatch[1];
+    const toggleMatch = existingCSS.match(/(\.faq-toggle[\s\S]*?)(?=\/\*|$)/);
+    if (toggleMatch && !pageSpecificCSS.includes('faq-toggle')) pageSpecificCSS += toggleMatch[1];
+    // Keep share button styles
+    const shareMatch = existingCSS.match(/(\.share-buttons[\s\S]*?)(?=\/\*|$)/);
+    if (shareMatch) pageSpecificCSS += shareMatch[1];
+
+    html = html.replace(/<style[^>]*>[\s\S]*?<\/style>/, `<style>${DESIGN_TOKENS}\n${pageSpecificCSS}</style>`);
+  }
+
+  // 2. Replace old header (everything from first <nav or <header to the spacer div)
+  // Look for existing header patterns
+  const headerPatterns = [
+    /<!-- Header -->[\s\S]*?<!-- spacer[^>]*>[\s\S]*?<\/div>/i,
+    /<!-- Nav -->[\s\S]*?<div style="height:\d+px"><\/div>/i,
+    /<nav[\s\S]*?<\/nav>\s*<div style="height:\d+px"><\/div>/i,
+    /<header[\s\S]*?<\/header>\s*<div style="height:\d+px"><\/div>/i,
+  ];
+
+  let headerReplaced = false;
+  for (const pattern of headerPatterns) {
+    if (pattern.test(html)) {
+      html = html.replace(pattern, HEADER_HTML);
+      headerReplaced = true;
+      break;
+    }
+  }
+
+  if (!headerReplaced) {
+    // Try broader pattern: anything that looks like a nav at the top of body
+    const bodyMatch = html.match(/(<body[^>]*>)/i);
+    if (bodyMatch) {
+      // Find where the main content starts (first <main or first .container after nav)
+      const afterBody = html.indexOf(bodyMatch[0]) + bodyMatch[0].length;
+      const mainStart = html.indexOf('<main', afterBody);
+      const firstContainer = html.indexOf('class="container', afterBody);
+      const contentStart = Math.min(
+        mainStart > -1 ? mainStart : 99999,
+        firstContainer > -1 ? firstContainer : 99999
+      );
+
+      if (contentStart < 99999) {
+        // Find the start of the element containing the container
+        let elemStart = contentStart;
+        while (elemStart > afterBody && html[elemStart] !== '<') elemStart--;
+
+        // Replace everything between <body> and the content start
+        const before = html.slice(afterBody, elemStart).trim();
+        if (before.length > 0) {
+          html = html.slice(0, afterBody) + '\n' + HEADER_HTML + '\n' + html.slice(elemStart);
+          headerReplaced = true;
+        }
+      }
+    }
+  }
+
+  // 3. Replace old footer
+  const footerPatterns = [
+    /<!-- Footer -->[\s\S]*?<\/footer>/i,
+    /<footer[\s\S]*?<\/footer>/i,
+  ];
+
+  let footerReplaced = false;
+  for (const pattern of footerPatterns) {
+    if (pattern.test(html)) {
+      html = html.replace(pattern, FOOTER_HTML);
+      footerReplaced = true;
+      break;
+    }
+  }
+
+  // 4. Replace old class names with new ones
+  // Old: bg-card rounded-2xl -> new: card or glass-card
+  html = html.replace(/class="bg-card rounded-2xl[^"]*"/g, 'class="card"');
+
+  // Old button styles -> new btn-primary
+  html = html.replace(/class="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full text-xl font-bold[^"]*"/g, 'class="btn-primary btn-large"');
+  html = html.replace(/class="inline-block bg-gradient-to-r from-primary to-secondary text-secondary-foreground px-8 py-4 rounded-full text-xl font-bold[^"]*"/g, 'class="btn-primary btn-large"');
+
+  // 5. Fix any old Bebas Neue references to Poppins
+  html = html.replace(/font-family:\s*['"]?Bebas Neue['"]?\s*,\s*cursive/g, "font-family:'Poppins',sans-serif");
+  html = html.replace(/font-family:\s*'Bebas Neue'\s*,\s*cursive/g, "font-family:'Poppins',sans-serif");
+
+  // 6. Fix old gold colour references
+  html = html.replace(/hsl\(47[\s,]+96%[\s,]+53%\)/g, 'hsl(328 100% 54%)');   // old gold -> cerise
+  html = html.replace(/hsl\(47,\s*96%,\s*53%\)/g, 'hsl(328, 100%, 54%)');
+  html = html.replace(/#F0C640/gi, '#FF1493');                                    // old gold hex -> cerise hex
+  html = html.replace(/hsl\(222\.2[\s,]+84%[\s,]+4\.9%\)/g, 'hsl(242 12% 4%)'); // old navy -> new bg
+
+  // 7. Add padding-top to main content area for fixed header
+  // (header spacer is already in HEADER_HTML)
+
+  writeFileSync(fullPath, html);
+  return true;
+}
+
+let updated = 0;
+for (const page of PAGES) {
+  if (processPage(page)) {
+    updated++;
+    console.log(`OK: ${page}`);
+  }
+}
+
+console.log(`\nDone. Updated ${updated} pages with correct design tokens.`);
