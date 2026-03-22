@@ -1,44 +1,92 @@
 
 
-# Leicester-Specific Description Copy
+# Update Navigation, Footer, and Routing for Static Pages
 
-## What Changes
+## Summary
 
-One file: `src/pages/EventPage.tsx`, lines 1624-1645.
+Add new navigation links to the header (desktop + mobile), restructure the footer with columns, and update Netlify redirects so static HTML pages are served directly instead of being caught by the SPA fallback.
 
-Add a new conditional branch for Leicester (`event.cityCode === 'LEIC'`) inside the default description section (the `else` branch after Christmas and sold-out checks).
+## 1. Netlify `_redirects` -- Route Static Pages Before SPA Fallback
 
-## New Leicester Copy
+**File: `public/_redirects`**
 
-**Heading**: WE'RE BRINGING THE PARTY TO WELFORD ROAD
-
-**Pull quote** (green left border instead of pink): "You know that feeling. Mr. Brightside kicks in and suddenly you're 22 again, screaming every word with your mates. No responsibility. No overthinking. Just pure, ridiculous joy."
-
-**Body paragraphs**:
-1. "That feeling is coming to Leicester. We're launching THE 2PM CLUB at the home of Leicester Tigers for the ultimate afternoon party -- and you're invited."
-2. "Four hours of the biggest hairbrush anthems and sing-alongs, with night-out energy, confetti moments, and a room full of people who know every word too. The perfect party, at a time that actually works."
-
-## How It Fits
-
-The existing conditional chain is:
+Add explicit rewrite rules above the catch-all so Netlify serves the static HTML files directly:
 
 ```text
-isChristmasEvent ? (christmas copy)
-: event.status === 'sold-out' ? (sold-out copy)
-: (standard copy)          <-- this block changes
+https://the2pmclub.co.uk/*   https://www.the2pmclub.co.uk/:splat  301!
+/index.html                  /                                   301!
+/:path/index.html            /:path/                              301!
+
+# Static pages — serve their own index.html, not the SPA
+/what-to-expect/*   /what-to-expect/index.html   200
+/group-bookings/*   /group-bookings/index.html   200
+/faqs/*             /faqs/index.html             200
+/for-ai/*           /for-ai/index.html           200
+/hubs/:splat        /hubs/:splat                 200
+/blog/what-is-a-daytime-disco/*       /blog/what-is-a-daytime-disco/index.html   200
+/blog/hen-do-daytime-disco/*          /blog/hen-do-daytime-disco/index.html      200
+
+# SPA fallback (everything else)
+/*                           /index.html                          200
 ```
 
-The standard copy block (lines 1624-1645) becomes:
+## 2. Desktop Navigation -- Header.tsx
 
-```text
-event.cityCode === 'LEIC' ? (leicester launch copy)
-: (standard copy -- unchanged)
-```
+**File: `src/components/Header.tsx`**
 
-Everything else on the page stays exactly as-is. The blockquote border colour will use the tigers-green accent (`border-[#1A6D37]`) instead of `border-primary` to match the rest of the Leicester page theme.
+Replace the current `primary-nav` contents with:
 
-## File Modified
+- **Events** -- `<a href="/#tickets">` (scrolls to tickets on homepage)
+- **Cities** -- a hover-dropdown `<div>` with 6 city links (Northampton, Bedford, Milton Keynes, Coventry, Luton, Leicester) using plain `<a href>` tags
+- **What to Expect** -- `<a href="/what-to-expect/">`
+- **Group Bookings** -- `<a href="/group-bookings/">`
+- **FAQs** -- `<a href="/faqs/">`
+
+Keep the social icons and **Book Tickets** CTA button (linking to `/#tickets`).
+
+The Cities dropdown uses CSS hover (`:hover`) with absolute positioning -- no new dependencies. Styled to match the existing dark theme (`bg-card`, `border-border`).
+
+All links are regular `<a>` tags, not React Router `<Link>` components.
+
+## 3. Mobile Menu -- Header.tsx
+
+**File: `src/components/Header.tsx`**
+
+Update the mobile menu section:
+
+- **Events** -- links to `/#tickets`
+- **Cities** heading with a toggle (using React `useState`) to expand/collapse the 6 city links underneath
+- **What to Expect**, **Group Bookings**, **FAQs** -- plain `<a>` links
+- Keep social links (Facebook, Email) at bottom
+
+## 4. Footer Restructure -- Footer.tsx
+
+**File: `src/components/Footer.tsx`**
+
+Change from single centered column to a multi-column layout:
+
+- **Column 1**: Logo + email + social icons (existing content)
+- **Column 2 "Explore"**: What to Expect, Group Bookings, FAQs, Blog
+- **Column 3 "Cities"**: Northampton, Bedford, Milton Keynes, Coventry, Luton, Leicester
+
+Desktop: 3 columns side by side. Mobile: stacked. Copyright stays full-width at bottom. All links are plain `<a>` tags.
+
+## 5. CSS for Dropdown
+
+**File: `index.html`** (where existing nav CSS lives, lines 367-393)
+
+Add styles for the Cities dropdown:
+
+- `.cities-dropdown` -- `position: relative; display: inline-block`
+- `.cities-dropdown-menu` -- hidden by default, shown on hover, absolute positioned, dark card background, rounded, shadow
+- On mobile: dropdown styles not needed (handled by accordion in mobile menu)
+
+## Files Modified
 
 | File | What Changes |
 |------|-------------|
-| `src/pages/EventPage.tsx` | Add Leicester conditional in standard description block (~10 lines added) |
+| `public/_redirects` | Add static page rewrite rules above SPA fallback |
+| `src/components/Header.tsx` | New nav links, Cities dropdown, updated mobile menu |
+| `src/components/Footer.tsx` | Multi-column layout with Explore and Cities columns |
+| `index.html` | Add CSS for Cities dropdown hover menu |
+
