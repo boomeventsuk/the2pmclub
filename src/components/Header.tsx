@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
-  const [citiesOpen, setCitiesOpen] = useState(false);
+  const [locationsOpen, setLocationsOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     document.body.classList.toggle('nav-open');
