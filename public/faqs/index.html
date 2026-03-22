@@ -224,22 +224,22 @@ body {
 .header-icons svg{width:22px;height:22px;fill:#fff}
 .nav-toggle{display:none;background:transparent;border:0;padding:8px;margin-left:8px;font-size:1.5rem;color:#fff;cursor:pointer}
 
-/* Cities dropdown */
-.cities-dropdown{position:relative}
-.cities-dropdown-menu{display:none;position:absolute;top:calc(100% + 8px);left:-12px;min-width:180px;background:#13131A;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 0;z-index:70;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.cities-dropdown:hover .cities-dropdown-menu{display:block}
-.cities-dropdown-item{display:block;padding:8px 16px;color:hsl(215,20.2%,65.1%);text-decoration:none;font-size:.9rem;font-family:'Poppins',sans-serif;transition:all .2s}
-.cities-dropdown-item:hover{color:hsl(47,96%,53%);background:rgba(255,255,255,.04)}
+/* Locations dropdown */
+.locations-dropdown{position:relative}
+.locations-dropdown-menu{display:none;position:absolute;top:calc(100% + 8px);left:-12px;min-width:180px;background:#13131A;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 0;z-index:70;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.locations-dropdown:hover .locations-dropdown-menu{display:block}
+.locations-dropdown-item{display:block;padding:8px 16px;color:hsl(215,20.2%,65.1%);text-decoration:none;font-size:.9rem;font-family:'Poppins',sans-serif;transition:all .2s}
+.locations-dropdown-item:hover{color:hsl(47,96%,53%);background:rgba(255,255,255,.04)}
 
 /* Mobile menu */
 .mobile-menu{display:none;position:absolute;top:100%;left:0;right:0;z-index:60;background:#0B0B0F;border-top:1px solid rgba(255,255,255,.08);padding:12px 16px}
 body.nav-open .mobile-menu{display:block}
 .mobile-menu a{display:flex;align-items:center;gap:10px;padding:10px 4px;color:#fff;text-decoration:none;font-size:1.1rem;font-family:'Poppins',sans-serif}
 .mobile-menu a:hover{color:hsl(47,96%,53%)}
-.mobile-cities-list a{font-size:1rem;padding:8px 4px}
-.mobile-cities-toggle.open .mobile-cities-list{display:block!important}
-.mobile-cities-toggle.open .mobile-cities-arrow{transform:rotate(180deg)}
-.mobile-cities-arrow{transition:transform .2s;display:inline-block}
+.mobile-locations-list a{font-size:1rem;padding:8px 4px}
+.mobile-locations-toggle.open .mobile-locations-list{display:block!important}
+.mobile-locations-toggle.open .mobile-locations-arrow{transform:rotate(180deg)}
+.mobile-locations-arrow{transition:transform .2s;display:inline-block}
 
 /* Footer grid */
 .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem;align-items:start}
@@ -444,15 +444,15 @@ body.nav-open .mobile-menu{display:block}
     </a>
     <nav class="primary-nav">
       <a href="/#tickets" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Events</a>
-      <div class="cities-dropdown" style="position:relative">
-        <button class="font-poppins text-muted-foreground hover:text-primary transition-colors" style="background:none;border:none;cursor:pointer;font-size:inherit;padding:0">Cities &#9662;</button>
-        <div class="cities-dropdown-menu">
-          <a href="/hubs/northampton/" class="cities-dropdown-item">Northampton</a>
-          <a href="/hubs/bedford/" class="cities-dropdown-item">Bedford</a>
-          <a href="/hubs/milton-keynes/" class="cities-dropdown-item">Milton Keynes</a>
-          <a href="/hubs/coventry/" class="cities-dropdown-item">Coventry</a>
-          <a href="/hubs/luton/" class="cities-dropdown-item">Luton</a>
-          <a href="/hubs/leicester/" class="cities-dropdown-item">Leicester</a>
+      <div class="locations-dropdown" style="position:relative">
+        <button class="font-poppins text-muted-foreground hover:text-primary transition-colors" style="background:none;border:none;cursor:pointer;font-size:inherit;padding:0">Locations &#9662;</button>
+        <div class="locations-dropdown-menu">
+          <a href="/hubs/northampton/" class="locations-dropdown-item">Northampton</a>
+          <a href="/hubs/bedford/" class="locations-dropdown-item">Bedford</a>
+          <a href="/hubs/milton-keynes/" class="locations-dropdown-item">Milton Keynes</a>
+          <a href="/hubs/coventry/" class="locations-dropdown-item">Coventry</a>
+          <a href="/hubs/luton/" class="locations-dropdown-item">Luton</a>
+          <a href="/hubs/leicester/" class="locations-dropdown-item">Leicester</a>
         </div>
       </div>
       <a href="/what-to-expect/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">What to Expect</a>
@@ -477,9 +477,9 @@ body.nav-open .mobile-menu{display:block}
   </div>
   <div id="mobile-menu" class="mobile-menu">
     <a href="/#tickets">Events</a>
-    <div class="mobile-cities-toggle">
-      <button onclick="this.parentElement.classList.toggle('open')" style="background:none;border:none;color:#fff;font-size:1.1rem;padding:10px 4px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center">Cities <span class="mobile-cities-arrow">&#9662;</span></button>
-      <div class="mobile-cities-list" style="display:none;padding-left:16px">
+    <div class="mobile-locations-toggle">
+      <button onclick="this.parentElement.classList.toggle('open')" style="background:none;border:none;color:#fff;font-size:1.1rem;padding:10px 4px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center">Locations <span class="mobile-locations-arrow">&#9662;</span></button>
+      <div class="mobile-locations-list" style="display:none;padding-left:16px">
         <a href="/hubs/northampton/">Northampton</a>
         <a href="/hubs/bedford/">Bedford</a>
         <a href="/hubs/milton-keynes/">Milton Keynes</a>
@@ -743,7 +743,7 @@ body.nav-open .mobile-menu{display:block}
         <a href="/blog/why-daytime-discos-are-popular/" class="text-muted-foreground footer-link">Blog</a>
       </div>
       <div class="footer-col">
-        <h4 style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:12px;color:hsl(47,96%,53%)">Cities</h4>
+        <h4 style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:12px;color:hsl(47,96%,53%)">Locations</h4>
         <a href="/hubs/northampton/" class="text-muted-foreground footer-link">Northampton</a>
         <a href="/hubs/bedford/" class="text-muted-foreground footer-link">Bedford</a>
         <a href="/hubs/milton-keynes/" class="text-muted-foreground footer-link">Milton Keynes</a>
