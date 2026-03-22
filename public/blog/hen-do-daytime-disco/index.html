@@ -194,6 +194,9 @@ a:hover { text-decoration: underline; }
   z-index: 100;
 }
 .locations-dropdown:hover .locations-dropdown-menu { display: block; }
+.locations-dropdown.open .locations-dropdown-menu { display: block; }
+.locations-trigger { padding-bottom: 12px !important; }
+.locations-dropdown-menu { margin-top: 0 !important; padding-top: 4px; }
 .locations-dropdown-item {
   display: block;
   padding: 8px 16px;
@@ -367,7 +370,7 @@ a:hover { text-decoration: underline; }
     <nav class="primary-nav">
       <a href="/#tickets">Events</a>
       <div class="locations-dropdown">
-        <button class="locations-trigger">Locations &#9662;</button>
+        <button class="locations-trigger" onclick="this.parentElement.classList.toggle("open")">Locations &#9662;</button>
         <div class="locations-dropdown-menu">
           <a href="/hubs/northampton/" class="locations-dropdown-item">Northampton</a>
           <a href="/hubs/bedford/" class="locations-dropdown-item">Bedford</a>
@@ -413,65 +416,6 @@ a:hover { text-decoration: underline; }
   </div>
 </header>
 <div style="height:72px"></div><!-- spacer for fixed header -->
-<div class="container mx-auto px-4 py-4 header-inner">
-    <a href="/" class="site-logo">
-      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="The 2PM Club logo" style="height:40px;width:auto;">
-    </a>
-    <nav class="primary-nav">
-      <a href="/#tickets" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Events</a>
-      <div class="locations-dropdown" style="position:relative">
-        <button class="font-poppins text-muted-foreground hover:text-primary transition-colors" style="background:none;border:none;cursor:pointer;font-size:inherit;padding:0">Locations &#9662;</button>
-        <div class="locations-dropdown-menu">
-          <a href="/hubs/northampton/" class="locations-dropdown-item">Northampton</a>
-          <a href="/hubs/bedford/" class="locations-dropdown-item">Bedford</a>
-          <a href="/hubs/milton-keynes/" class="locations-dropdown-item">Milton Keynes</a>
-          <a href="/hubs/coventry/" class="locations-dropdown-item">Coventry</a>
-          <a href="/hubs/luton/" class="locations-dropdown-item">Luton</a>
-          <a href="/hubs/leicester/" class="locations-dropdown-item">Leicester</a>
-        </div>
-      </div>
-      <a href="/what-to-expect/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">What to Expect</a>
-      <a href="/group-bookings/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Group Bookings</a>
-      <a href="/faqs/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">FAQs</a>
-    </nav>
-    <div class="header-actions">
-      <a href="/#tickets" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" style="text-decoration:none">Book Tickets</a>
-    </div>
-    <div class="header-icons">
-      <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
-        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
-      </a>
-      <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
-        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
-      </a>
-      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" aria-label="Email">
-        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
-      </a>
-    </div>
-    <button onclick="document.body.classList.toggle('nav-open')" class="nav-toggle" aria-label="Menu">&#9776;</button>
-  </div>
-  <div id="mobile-menu" class="mobile-menu">
-    <a href="/#tickets">Events</a>
-    <div class="mobile-locations-toggle">
-      <button onclick="this.parentElement.classList.toggle('open')" style="background:none;border:none;color:#fff;font-size:1.1rem;padding:10px 4px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center">Locations <span class="mobile-locations-arrow">&#9662;</span></button>
-      <div class="mobile-locations-list" style="display:none;padding-left:16px">
-        <a href="/hubs/northampton/">Northampton</a>
-        <a href="/hubs/bedford/">Bedford</a>
-        <a href="/hubs/milton-keynes/">Milton Keynes</a>
-        <a href="/hubs/coventry/">Coventry</a>
-        <a href="/hubs/luton/">Luton</a>
-        <a href="/hubs/leicester/">Leicester</a>
-      </div>
-    </div>
-    <a href="/what-to-expect/">What to Expect</a>
-    <a href="/group-bookings/">Group Bookings</a>
-    <a href="/faqs/">FAQs</a>
-    <a href="/blog/why-daytime-discos-are-popular/">Blog</a>
-    <hr style="border-color:rgba(255,255,255,.08);margin:12px 0">
-    <a href="/#tickets" style="color:hsl(328 100% 54%);font-weight:600">Book Tickets</a>
-  </div>
-</header>
-
 <!-- Main Content -->
 <main class="container mx-auto max-w-4xl px-4 py-12 pt-24">
   <!-- Hero Card -->
