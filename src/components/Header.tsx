@@ -37,7 +37,7 @@ const Header = () => {
               <button 
                 className="font-poppins text-muted-foreground hover:text-primary transition-colors cities-dropdown-trigger"
               >
-                Cities ▾
+                Locations ▾
               </button>
               <div className="cities-dropdown-menu">
                 <a href="/hubs/northampton/" className="cities-dropdown-item">Northampton</a>
