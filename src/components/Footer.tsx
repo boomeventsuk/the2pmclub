@@ -60,7 +60,7 @@ const Footer = () => {
 
           {/* Column 3: Cities */}
           <div className="text-center md:text-left">
-            <h3 className="font-poppins font-semibold text-foreground mb-4">Cities</h3>
+            <h3 className="font-poppins font-semibold text-foreground mb-4">Locations</h3>
             <ul className="space-y-3">
               <li><a href="/hubs/northampton/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Northampton</a></li>
               <li><a href="/hubs/bedford/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Bedford</a></li>
