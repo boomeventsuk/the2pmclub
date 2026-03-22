@@ -30,13 +30,14 @@
   --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
 }
 
-* { border-color: hsl(var(--border)); box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  border-color: hsl(var(--border));
+}
 
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: 'Poppins', sans-serif;
-  line-height: 1.6;
 }
 
 .bg-background { background-color: hsl(var(--background)); }
@@ -56,102 +57,95 @@ body {
 .font-bebas { font-family: 'Bebas Neue', cursive; }
 .font-poppins { font-family: 'Poppins', sans-serif; }
 
-.container { max-width: 1200px; margin: 0 auto; }
-
-nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  background-color: hsla(222.2, 84%, 4.9%, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid hsl(var(--border));
-  z-index: 50;
+.share-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-nav .container { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; }
-nav a { text-decoration: none; }
-nav img { height: 2rem; }
-.nav-links { display: flex; align-items: center; gap: 1.5rem; }
-.nav-links a { color: hsl(var(--foreground)); transition: color 0.3s; }
-.nav-links a:hover { color: hsl(var(--primary)); }
-.btn-primary {
-  display: inline-flex; align-items: center; justify-content: center;
-  background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground));
-  padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500;
-  text-decoration: none; transition: background-color 0.3s;
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: hsl(var(--primary));
+  background: transparent;
+  border: 2px solid hsl(var(--primary));
 }
-.btn-primary:hover { opacity: 0.9; }
 
-main { max-width: 56rem; margin: 0 auto; padding: 6rem 1rem 3rem; }
-
-.card {
-  background-color: hsl(var(--card));
-  border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-  padding: 2rem; margin-bottom: 2rem;
-}
-.card-accent { border-left: 8px solid hsl(var(--primary)); }
-.card-secondary { border-left: 4px solid hsl(var(--secondary)); }
-.card-primary { border-left: 4px solid hsl(var(--primary)); }
-.card-gradient {
-  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+.icon-btn:hover {
+  background: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
+  transform: translateY(-2px);
 }
 
-h1 { font-family: 'Bebas Neue', cursive; font-size: 2.5rem; margin-bottom: 1rem; }
-h2 { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; margin-bottom: 1rem; }
-h3 { font-family: 'Bebas Neue', cursive; font-size: 1.25rem; margin-bottom: 0.75rem; }
-p { margin-bottom: 1rem; }
-p:last-child { margin-bottom: 0; }
-strong { font-weight: 600; }
-
-.event-card {
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
-  padding: 1.5rem; background: hsl(var(--secondary)); border-radius: 0.75rem; margin-bottom: 1rem;
+.__share-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
 }
-.event-info h3 { margin-bottom: 0.25rem; color: hsl(var(--primary)); }
-.event-info p { margin-bottom: 0; color: hsl(var(--muted-foreground)); font-size: 0.9rem; }
-.event-price { font-size: 1.25rem; font-weight: 700; color: hsl(var(--primary)); }
 
-.testimonial {
-  border-left: 4px solid hsl(var(--primary)); padding-left: 1.5rem; margin: 1.5rem 0;
-  font-style: italic;
+.__share-toast.show {
+  opacity: 1;
+  visibility: visible;
 }
-.testimonial cite { display: block; margin-top: 0.5rem; font-style: normal; font-weight: 600; color: hsl(var(--primary)); }
 
-.faq-item { margin-bottom: 1.5rem; }
-.faq-item h3 { color: hsl(var(--primary)); }
-
-.city-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
-.city-link {
-  display: inline-block; padding: 0.5rem 1rem; border: 2px solid hsl(var(--primary));
-  border-radius: 2rem; color: hsl(var(--primary)); text-decoration: none;
-  font-size: 0.875rem; font-weight: 500; transition: all 0.3s;
+.faq-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 1rem 0;
+  cursor: pointer;
+  text-align: left;
+  color: hsl(var(--primary));
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.25rem;
 }
-.city-link:hover { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
 
-.cta-section { text-align: center; margin: 3rem 0 2rem; }
-.cta-btn {
-  display: inline-block; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground));
-  padding: 1rem 2rem; border-radius: 9999px; font-size: 1.25rem; font-weight: 700;
-  text-decoration: none; transition: all 0.3s; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+.faq-button svg {
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
 }
-.cta-btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
-footer {
-  background-color: hsl(var(--background)); border-top: 1px solid hsl(var(--border));
-  padding: 2rem 0; margin-top: 4rem; text-align: center;
+.faq-button.active svg {
+  transform: rotate(180deg);
 }
-footer img { height: 3rem; margin: 0 auto 1rem; display: block; }
-footer p { color: hsl(var(--muted-foreground)); }
-footer .links { margin-top: 1rem; }
-footer .links a {
-  color: hsl(var(--muted-foreground)); text-decoration: none; margin: 0 0.75rem;
-  transition: color 0.3s;
-}
-footer .links a:hover { color: hsl(var(--foreground)); }
 
-@media (min-width: 768px) {
-  h1 { font-size: 3rem; }
-  .card { padding: 2rem 3rem; }
-  main { padding-top: 7rem; }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer p {
+  padding-bottom: 1rem;
+}
+
+.faq-item {
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.faq-item:last-child {
+  border-bottom: none;
 }
 </style>
 
@@ -274,145 +268,308 @@ footer .links a:hover { color: hsl(var(--foreground)); }
 </script>
 
 </head>
-<body>
+<body class="bg-background text-foreground font-poppins min-h-screen">
 
 <!-- Navigation -->
-<nav>
-  <div class="container">
-    <a href="/">
-      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="THE 2PM CLUB">
+<header class="site-header fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+  <div class="container mx-auto px-4 py-4 header-inner">
+    <a href="/" class="site-logo">
+      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="The 2PM Club logo" style="height:40px;width:auto;">
     </a>
-    <div class="nav-links">
-      <a href="/">Back to Main</a>
-      <a href="/#tickets" class="btn-primary">Book Tickets</a>
+    <nav class="primary-nav">
+      <a href="/#tickets" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Events</a>
+      <div class="cities-dropdown" style="position:relative">
+        <button class="font-poppins text-muted-foreground hover:text-primary transition-colors" style="background:none;border:none;cursor:pointer;font-size:inherit;padding:0">Cities &#9662;</button>
+        <div class="cities-dropdown-menu">
+          <a href="/hubs/northampton/" class="cities-dropdown-item">Northampton</a>
+          <a href="/hubs/bedford/" class="cities-dropdown-item">Bedford</a>
+          <a href="/hubs/milton-keynes/" class="cities-dropdown-item">Milton Keynes</a>
+          <a href="/hubs/coventry/" class="cities-dropdown-item">Coventry</a>
+          <a href="/hubs/luton/" class="cities-dropdown-item">Luton</a>
+          <a href="/hubs/leicester/" class="cities-dropdown-item">Leicester</a>
+        </div>
+      </div>
+      <a href="/what-to-expect/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">What to Expect</a>
+      <a href="/group-bookings/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Group Bookings</a>
+      <a href="/faqs/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">FAQs</a>
+    </nav>
+    <div class="header-actions">
+      <a href="/#tickets" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" style="text-decoration:none">Book Tickets</a>
     </div>
+    <div class="header-icons">
+      <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+      </a>
+      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+      </a>
+    </div>
+    <button onclick="document.body.classList.toggle('nav-open')" class="nav-toggle" aria-label="Menu">&#9776;</button>
   </div>
-</nav>
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="/#tickets">Events</a>
+    <div class="mobile-cities-toggle">
+      <button onclick="this.parentElement.classList.toggle('open')" style="background:none;border:none;color:#fff;font-size:1.1rem;padding:10px 4px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center">Cities <span class="mobile-cities-arrow">&#9662;</span></button>
+      <div class="mobile-cities-list" style="display:none;padding-left:16px">
+        <a href="/hubs/northampton/">Northampton</a>
+        <a href="/hubs/bedford/">Bedford</a>
+        <a href="/hubs/milton-keynes/">Milton Keynes</a>
+        <a href="/hubs/coventry/">Coventry</a>
+        <a href="/hubs/luton/">Luton</a>
+        <a href="/hubs/leicester/">Leicester</a>
+      </div>
+    </div>
+    <a href="/what-to-expect/">What to Expect</a>
+    <a href="/group-bookings/">Group Bookings</a>
+    <a href="/faqs/">FAQs</a>
+    <a href="/blog/why-daytime-discos-are-popular/">Blog</a>
+    <hr style="border-color:rgba(255,255,255,.08);margin:12px 0">
+    <a href="/#tickets" style="color:hsl(47,96%,53%);font-weight:600">Book Tickets</a>
+  </div>
+</header>
 
 <!-- Main Content -->
-<main>
+<main class="container mx-auto max-w-4xl px-4 py-12 pt-24">
+
   <!-- Hero Card -->
-  <div class="card card-accent">
-    <h1>Daytime Disco in Northampton</h1>
-    <p style="font-size:1.25rem; color: hsl(var(--muted-foreground)); font-weight: 500;">
+  <div class="bg-card rounded-2xl shadow-xl p-8 md:p-12 mb-8 border-l-8 border-primary">
+    <h1 class="font-bebas text-4xl md:text-5xl text-card-foreground mb-4">
+      Daytime Disco in Northampton
+    </h1>
+    <p class="text-xl text-muted-foreground font-medium">
       Where it all started. Night-out energy in the afternoon, home by 7.
     </p>
   </div>
 
   <!-- Intro -->
-  <div class="card">
-    <p style="font-size:1.125rem;">
+  <div class="bg-card rounded-xl shadow-lg p-8 mb-8">
+    <p class="text-lg leading-relaxed text-card-foreground">
       Northampton is home turf. This is where THE 2PM CLUB kicked off, and over a year of sell-outs later, the town knows the drill. From the iconic Picturedrome on Kettering Road to the brand new summer dates at Franklin's Gardens, Northampton has taken Saturday afternoons and made them legendary. Confetti cannons, singalongs, and the kind of energy you thought you had to stay out until 2am to find. Except here, you're home by 7, Sunday feels brilliant, and the group chat is already planning the next one. The get-together that actually happens, every single time.
     </p>
   </div>
 
   <!-- Upcoming Events -->
-  <div class="card card-secondary">
-    <h2>Upcoming Events in Northampton</h2>
+  <div class="space-y-8">
 
-    <div class="event-card">
-      <div class="event-info">
-        <h3>THE 2PM CLUB at The Picturedrome</h3>
-        <p>Saturday 28th February 2026 | 2pm - 6pm</p>
-        <p>222 Kettering Road, Northampton, NN1 4BN</p>
-      </div>
-      <div>
-        <span class="event-price">From &pound;7.50</span>
-      </div>
-    </div>
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Upcoming Events in Northampton</h2>
 
-    <div class="event-card">
-      <div class="event-info">
-        <h3>THE 2PM CLUB at Franklin's Gardens</h3>
-        <p>Saturday 6th June 2026 | 2pm - 6pm</p>
-        <p>Cinch Stadium, Weedon Road, Northampton, NN5 5BG</p>
+      <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary mb-4">
+        <h3 class="font-bebas text-xl text-primary mb-2">THE 2PM CLUB at The Picturedrome</h3>
+        <p class="text-muted-foreground mb-1">Saturday 28th February 2026 | 2pm - 6pm</p>
+        <p class="text-muted-foreground mb-3">222 Kettering Road, Northampton, NN1 4BN</p>
+        <p class="text-primary font-bold text-lg mb-3">From &pound;7.50</p>
+        <a href="/#tickets" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 transition-colors">Book Tickets</a>
       </div>
-      <div>
-        <span class="event-price">From &pound;12.50</span>
+
+      <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
+        <h3 class="font-bebas text-xl text-primary mb-2">THE 2PM CLUB at Franklin's Gardens</h3>
+        <p class="text-muted-foreground mb-1">Saturday 6th June 2026 | 2pm - 6pm</p>
+        <p class="text-muted-foreground mb-3">Cinch Stadium, Weedon Road, Northampton, NN5 5BG</p>
+        <p class="text-primary font-bold text-lg mb-3">From &pound;12.50</p>
+        <a href="/#tickets" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 transition-colors">Book Tickets</a>
       </div>
     </div>
 
-    <div style="margin-top: 1.5rem; text-align: center;">
-      <a href="/#tickets" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Book Northampton Tickets</a>
+    <!-- Venue Details -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">The Venues</h2>
+      <p class="text-card-foreground leading-relaxed mb-4">
+        <strong>The Picturedrome</strong> is a Northampton institution. Intimate enough to feel the bass in your chest, big enough to lose yourself in the crowd. It's where THE 2PM CLUB found its feet, and the atmosphere on event days is something else entirely. Located on Kettering Road, it's easy to reach from across the town.
+      </p>
+      <p class="text-card-foreground leading-relaxed">
+        <strong>Cinch Stadium at Franklin's Gardens</strong> takes things outdoors for summer 2026. Home of Northampton Saints, this is a proper upgrade for the warmer months. More space, bigger production, same energy. If you've been to a Picturedrome show, imagine that with sunshine.
+      </p>
     </div>
+
+    <!-- Testimonials -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">What Northampton Says</h2>
+      <blockquote class="border-l-4 border-primary pl-6 my-4">
+        <p class="text-card-foreground leading-relaxed italic">"Best afternoon ever. Home by 7, in bed by 10, felt amazing Sunday morning. This is how going out should be."</p>
+        <cite class="block mt-2 text-primary font-semibold not-italic">Sarah K, Northampton</cite>
+      </blockquote>
+    </div>
+
+    <!-- FAQ -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-button" onclick="toggleFaq(this)">
+          Is there parking at The Picturedrome?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="text-card-foreground leading-relaxed">There is street parking on Kettering Road and surrounding streets. The Mounts car park is a short walk away. We recommend arriving a little early on event days as spaces fill up quickly.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-button" onclick="toggleFaq(this)">
+          Is there a bar at the venue?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="text-card-foreground leading-relaxed">Yes, both The Picturedrome and Franklin's Gardens have fully licensed bars. Drinks are available throughout the event. There is no need to bring your own.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-button" onclick="toggleFaq(this)">
+          What time do doors open?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="text-card-foreground leading-relaxed">Doors open at 2pm and the event runs until 6pm. We recommend arriving close to doors to make the most of it.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-button" onclick="toggleFaq(this)">
+          How do I get to Franklin's Gardens?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="text-card-foreground leading-relaxed">Franklin's Gardens is on Weedon Road, just west of the town centre. There is dedicated parking on site. It's also served by local bus routes from the town centre.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-city links -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">THE 2PM CLUB in Other Cities</h2>
+      <p class="text-card-foreground leading-relaxed mb-4">We're bringing the party to towns across the Midlands and beyond.</p>
+      <div class="flex flex-wrap gap-3">
+        <a href="/hubs/bedford/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Bedford</a>
+        <a href="/hubs/coventry/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Coventry</a>
+        <a href="/hubs/milton-keynes/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Milton Keynes</a>
+        <a href="/hubs/luton/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Luton</a>
+        <a href="/hubs/leicester/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Leicester</a>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Venue Details -->
-  <div class="card card-primary">
-    <h2>The Venues</h2>
-    <p>
-      <strong>The Picturedrome</strong> is a Northampton institution. Intimate enough to feel the bass in your chest, big enough to lose yourself in the crowd. It's where THE 2PM CLUB found its feet, and the atmosphere on event days is something else entirely. Located on Kettering Road, it's easy to reach from across the town.
-    </p>
-    <p>
-      <strong>Cinch Stadium at Franklin's Gardens</strong> takes things outdoors for summer 2026. Home of Northampton Saints, this is a proper upgrade for the warmer months. More space, bigger production, same energy. If you've been to a Picturedrome show, imagine that with sunshine.
-    </p>
+  <!-- CTA Section -->
+  <div class="text-center mt-12 mb-8">
+    <a href="/#tickets" class="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full text-xl font-bold hover:bg-primary/90 transition-colors shadow-lg">
+      Book Your Northampton Tickets
+    </a>
   </div>
 
-  <!-- Testimonials -->
-  <div class="card">
-    <h2>What Northampton Says</h2>
-    <div class="testimonial">
-      <p>"Best afternoon ever. Home by 7, in bed by 10, felt amazing Sunday morning. This is how going out should be."</p>
-      <cite>Sarah K, Northampton</cite>
+  <!-- Social Share -->
+  <div class="bg-card rounded-xl shadow-lg p-6 text-center">
+    <h3 class="font-bebas text-lg mb-4 text-card-foreground">Share this page</h3>
+    <div class="share-icons">
+      <button class="icon-btn whatsapp" onclick="handleWhatsAppShare()">
+        <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="WhatsApp" width="24" height="24">
+      </button>
+      <button class="icon-btn facebook" onclick="handleFacebookShare()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </button>
+      <button class="icon-btn copy" onclick="handleCopyLink()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
     </div>
+    <div class="__share-toast">Link copied to clipboard!</div>
   </div>
 
-  <!-- FAQ -->
-  <div class="card card-secondary">
-    <h2>Frequently Asked Questions</h2>
+  <script>
+    function handleWhatsAppShare() {
+      const url = window.location.href;
+      const text = document.title;
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+      window.open(whatsappUrl, '_blank');
+    }
 
-    <div class="faq-item">
-      <h3>Is there parking at The Picturedrome?</h3>
-      <p>There is street parking on Kettering Road and surrounding streets. The Mounts car park is a short walk away. We recommend arriving a little early on event days as spaces fill up quickly.</p>
-    </div>
+    function handleFacebookShare() {
+      const url = window.location.href;
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      window.open(facebookUrl, 'facebook-share', 'width=580,height=296');
+    }
 
-    <div class="faq-item">
-      <h3>Is there a bar at the venue?</h3>
-      <p>Yes, both The Picturedrome and Franklin's Gardens have fully licensed bars. Drinks are available throughout the event. There is no need to bring your own.</p>
-    </div>
+    function handleCopyLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const toast = document.querySelector('.__share-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }).catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        const toast = document.querySelector('.__share-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      });
+    }
 
-    <div class="faq-item">
-      <h3>What time do doors open?</h3>
-      <p>Doors open at 2pm and the event runs until 6pm. We recommend arriving close to doors to make the most of it.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>How do I get to Franklin's Gardens?</h3>
-      <p>Franklin's Gardens is on Weedon Road, just west of the town centre. There is dedicated parking on site. It's also served by local bus routes from the town centre.</p>
-    </div>
-  </div>
-
-  <!-- Cross-links -->
-  <div class="card">
-    <h2>THE 2PM CLUB in Other Cities</h2>
-    <p>We're bringing the party to towns across the Midlands and beyond.</p>
-    <div class="city-links">
-      <a href="/hubs/bedford/" class="city-link">Bedford</a>
-      <a href="/hubs/coventry/" class="city-link">Coventry</a>
-      <a href="/hubs/milton-keynes/" class="city-link">Milton Keynes</a>
-      <a href="/hubs/luton/" class="city-link">Luton</a>
-      <a href="/hubs/leicester/" class="city-link">Leicester</a>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-section">
-    <a href="/#tickets" class="cta-btn">Book Your Northampton Tickets</a>
-  </div>
+    function toggleFaq(button) {
+      const answer = button.nextElementSibling;
+      const isOpen = button.classList.contains('active');
+      document.querySelectorAll('.faq-button.active').forEach(btn => {
+        btn.classList.remove('active');
+        btn.nextElementSibling.style.maxHeight = null;
+      });
+      if (!isOpen) {
+        button.classList.add('active');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    }
+  </script>
 
 </main>
 
 <!-- Footer -->
-<footer>
-  <div class="container" style="padding: 0 1rem;">
-    <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" alt="THE 2PM CLUB Logo">
-    <p>&copy; 2025 Boombastic Events Ltd. All rights reserved.</p>
-    <div class="links">
-      <a href="/">Home</a>
-      <a href="/#tickets">Events</a>
-      <a href="/faqs/">FAQs</a>
-      <a href="/blog/why-daytime-discos-are-popular/">Blog</a>
-      <a href="/why-2pm/">Why 2PM</a>
+<footer class="bg-card border-t border-border" style="padding:3rem 0;margin-top:4rem">
+  <div class="container mx-auto px-4">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" alt="Boombastic Events" style="height:48px;width:auto;margin-bottom:16px" loading="lazy">
+        <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" class="text-muted-foreground" style="display:flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:16px">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+          hello@boomevents.co.uk
+        </a>
+        <div style="display:flex;gap:16px">
+          <a href="https://www.facebook.com/boombastic.eventsuk" class="text-muted-foreground" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow" style="text-decoration:none">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/boombastic.eventsuk" class="text-muted-foreground" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow" style="text-decoration:none">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:12px;color:hsl(47,96%,53%)">Explore</h4>
+        <a href="/what-to-expect/" class="text-muted-foreground footer-link">What to Expect</a>
+        <a href="/group-bookings/" class="text-muted-foreground footer-link">Group Bookings</a>
+        <a href="/faqs/" class="text-muted-foreground footer-link">FAQs</a>
+        <a href="/blog/why-daytime-discos-are-popular/" class="text-muted-foreground footer-link">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4 style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:12px;color:hsl(47,96%,53%)">Cities</h4>
+        <a href="/hubs/northampton/" class="text-muted-foreground footer-link">Northampton</a>
+        <a href="/hubs/bedford/" class="text-muted-foreground footer-link">Bedford</a>
+        <a href="/hubs/milton-keynes/" class="text-muted-foreground footer-link">Milton Keynes</a>
+        <a href="/hubs/coventry/" class="text-muted-foreground footer-link">Coventry</a>
+        <a href="/hubs/luton/" class="text-muted-foreground footer-link">Luton</a>
+        <a href="/hubs/leicester/" class="text-muted-foreground footer-link">Leicester</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid hsl(217.2,32.6%,17.5%);margin-top:2rem;padding-top:1.5rem;text-align:center">
+      <p class="text-muted-foreground" style="font-size:0.875rem">&copy; 2026 Boombastic Events Ltd. All rights reserved.</p>
     </div>
   </div>
 </footer>

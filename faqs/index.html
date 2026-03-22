@@ -32,14 +32,12 @@
 
 * {
   border-color: hsl(var(--border));
-  box-sizing: border-box;
 }
 
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: 'Poppins', sans-serif;
-  margin: 0;
 }
 
 .bg-background { background-color: hsl(var(--background)); }
@@ -59,31 +57,93 @@ body {
 .font-bebas { font-family: 'Bebas Neue', cursive; }
 .font-poppins { font-family: 'Poppins', sans-serif; }
 
-a { color: hsl(var(--primary)); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-dl {
-  margin: 0;
-}
-
-dt {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: hsl(var(--primary));
-  padding: 1.5rem 2rem 0.5rem;
-  cursor: default;
-}
-
-dd {
-  margin: 0;
-  padding: 0 2rem 1.5rem;
-  line-height: 1.8;
+/* FAQ accordion styles */
+.faq-item { border-bottom: 1px solid hsl(var(--border)); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
   color: hsl(var(--card-foreground));
-  border-bottom: 1px solid hsl(var(--border));
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: left;
+  padding: 1.25rem 0;
+  cursor: pointer;
+}
+.faq-question:hover { color: hsl(var(--primary)); }
+.faq-question::after {
+  content: '+';
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: hsl(var(--primary));
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+.faq-item.open .faq-question::after {
+  content: '-';
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+.faq-item.open .faq-answer {
+  max-height: 200px;
+  padding-bottom: 1.25rem;
 }
 
-dd:last-child {
-  border-bottom: none;
+.share-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: hsl(var(--primary));
+  background: transparent;
+  border: 2px solid hsl(var(--primary));
+}
+
+.icon-btn:hover {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transform: translateY(-2px);
+}
+
+.__share-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.__share-toast.show {
+  opacity: 1;
+  visibility: visible;
 }
 </style>
 
@@ -96,8 +156,10 @@ dd:last-child {
 <meta property="og:title" content="FAQs | THE 2PM CLUB Daytime Disco">
 <meta property="og:description" content="Everything you need to know about THE 2PM CLUB Daytime Disco: timings, tickets, dress code, accessibility, and more.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://www.the2pmclub.co.uk/faqs/">
+<meta property="og:image" content="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg">
 <meta property="og:locale" content="en_GB">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 
 <!-- Structured Data: FAQPage -->
 <script type="application/ld+json">
@@ -259,133 +321,326 @@ dd:last-child {
 }
 </script>
 </head>
-<body class="bg-background text-foreground font-poppins">
+<body class="bg-background text-foreground font-poppins min-h-screen">
 
 <!-- Navigation -->
-<nav style="position:fixed;top:0;left:0;right:0;background-color:hsl(222.2 84% 4.9% / 0.95);backdrop-filter:blur(8px);border-bottom:1px solid hsl(217.2 32.6% 17.5%);z-index:50;">
-  <div style="max-width:1200px;margin:0 auto;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;">
-    <a href="/" style="display:flex;align-items:center;">
-      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="THE 2PM CLUB" style="height:2rem;">
+<header class="site-header fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+  <div class="container mx-auto px-4 py-4 header-inner">
+    <a href="/" class="site-logo">
+      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="The 2PM Club logo" style="height:40px;width:auto;">
     </a>
-    <div style="display:flex;align-items:center;gap:1.5rem;">
-      <a href="/" style="color:hsl(210 40% 98%);text-decoration:none;">Back to Main</a>
-      <a href="/#tickets" style="display:inline-flex;align-items:center;justify-content:center;padding:0.5rem 1rem;border-radius:0.375rem;font-size:0.875rem;font-weight:500;background-color:hsl(47 96% 53%);color:hsl(26 83% 14%);text-decoration:none;">Book Tickets</a>
+    <nav class="primary-nav">
+      <a href="/#tickets" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Events</a>
+      <div class="cities-dropdown" style="position:relative">
+        <button class="font-poppins text-muted-foreground hover:text-primary transition-colors" style="background:none;border:none;cursor:pointer;font-size:inherit;padding:0">Cities &#9662;</button>
+        <div class="cities-dropdown-menu">
+          <a href="/hubs/northampton/" class="cities-dropdown-item">Northampton</a>
+          <a href="/hubs/bedford/" class="cities-dropdown-item">Bedford</a>
+          <a href="/hubs/milton-keynes/" class="cities-dropdown-item">Milton Keynes</a>
+          <a href="/hubs/coventry/" class="cities-dropdown-item">Coventry</a>
+          <a href="/hubs/luton/" class="cities-dropdown-item">Luton</a>
+          <a href="/hubs/leicester/" class="cities-dropdown-item">Leicester</a>
+        </div>
+      </div>
+      <a href="/what-to-expect/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">What to Expect</a>
+      <a href="/group-bookings/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Group Bookings</a>
+      <a href="/faqs/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">FAQs</a>
+    </nav>
+    <div class="header-actions">
+      <a href="/#tickets" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" style="text-decoration:none">Book Tickets</a>
     </div>
+    <div class="header-icons">
+      <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+      </a>
+      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+      </a>
+    </div>
+    <button onclick="document.body.classList.toggle('nav-open')" class="nav-toggle" aria-label="Menu">&#9776;</button>
   </div>
-</nav>
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="/#tickets">Events</a>
+    <div class="mobile-cities-toggle">
+      <button onclick="this.parentElement.classList.toggle('open')" style="background:none;border:none;color:#fff;font-size:1.1rem;padding:10px 4px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center">Cities <span class="mobile-cities-arrow">&#9662;</span></button>
+      <div class="mobile-cities-list" style="display:none;padding-left:16px">
+        <a href="/hubs/northampton/">Northampton</a>
+        <a href="/hubs/bedford/">Bedford</a>
+        <a href="/hubs/milton-keynes/">Milton Keynes</a>
+        <a href="/hubs/coventry/">Coventry</a>
+        <a href="/hubs/luton/">Luton</a>
+        <a href="/hubs/leicester/">Leicester</a>
+      </div>
+    </div>
+    <a href="/what-to-expect/">What to Expect</a>
+    <a href="/group-bookings/">Group Bookings</a>
+    <a href="/faqs/">FAQs</a>
+    <a href="/blog/why-daytime-discos-are-popular/">Blog</a>
+    <hr style="border-color:rgba(255,255,255,.08);margin:12px 0">
+    <a href="/#tickets" style="color:hsl(47,96%,53%);font-weight:600">Book Tickets</a>
+  </div>
+</header>
 
 <!-- Main Content -->
-<main style="max-width:56rem;margin:0 auto;padding:6rem 1rem 3rem;">
+<main class="container mx-auto max-w-4xl px-4 py-12 pt-24">
 
   <!-- Hero Card -->
-  <div style="background-color:hsl(222.2 84% 4.9%);border-radius:1rem;box-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1);padding:2rem 3rem;margin-bottom:2rem;border-left:8px solid hsl(47 96% 53%);">
-    <h1 style="font-family:'Bebas Neue',cursive;font-size:2.5rem;color:hsl(210 40% 98%);margin:0 0 0.5rem;">Frequently Asked Questions</h1>
-    <p style="font-size:1.15rem;color:hsl(215 20.2% 65.1%);margin:0;font-weight:500;">Everything you need to know before you book.</p>
+  <div class="bg-card rounded-2xl shadow-xl p-8 md:p-12 mb-8 border-l-8 border-primary">
+    <h1 class="font-bebas text-4xl md:text-5xl text-card-foreground mb-4">
+      Frequently Asked Questions
+    </h1>
+    <p class="text-xl text-muted-foreground font-medium">
+      Everything you need to know before you book.
+    </p>
   </div>
 
   <!-- FAQ Cards -->
-  <div style="display:flex;flex-direction:column;gap:1.5rem;">
+  <div class="space-y-8">
 
     <!-- Timing & Access -->
-    <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);overflow:hidden;border-left:4px solid hsl(47 96% 53%);">
-      <dl>
-        <dt>What time do events run?</dt>
-        <dd>Most events run 2pm to 6pm. If a different finish time applies, it is shown on the event page.</dd>
-
-        <dt>Do doors open before start time?</dt>
-        <dd>Doors open at the stated start time (usually 2pm). The show runs straight through with no scheduled breaks.</dd>
-
-        <dt>Is there a last entry time?</dt>
-        <dd>No published last entry. You can arrive whenever suits you after doors open.</dd>
-
-        <dt>Can I leave and re-enter?</dt>
-        <dd>Re-entry is at staff discretion.</dd>
-      </dl>
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-6">Timing &amp; Access</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What time do events run?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Most events run 2pm to 6pm. If a different finish time applies, it is shown on the event page.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Do doors open before start time?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Doors open at the stated start time (usually 2pm). The show runs straight through with no scheduled breaks.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Is there a last entry time?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">No published last entry. You can arrive whenever suits you after doors open.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Can I leave and re-enter?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Re-entry is at staff discretion.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Tickets -->
-    <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);overflow:hidden;border-left:4px solid hsl(217.2 32.6% 17.5%);">
-      <dl>
-        <dt>How much are tickets?</dt>
-        <dd>Tickets usually start from &pound;10. Typical range is &pound;10 to &pound;15, with Eventbrite fees added at checkout. Group tickets available for 4+.</dd>
-
-        <dt>Are tickets refundable or transferable?</dt>
-        <dd>Tickets are non-refundable unless an event is cancelled. See the Eventbrite listing for transfer options.</dd>
-
-        <dt>Can I buy tickets on the door?</dt>
-        <dd>If not sold out, a limited number may be available on the door. Card or cash accepted.</dd>
-      </dl>
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-6">Tickets</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">How much are tickets?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Tickets usually start from &pound;10. Typical range is &pound;10 to &pound;15, with Eventbrite fees added at checkout. Group tickets available for 4+.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Are tickets refundable or transferable?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Tickets are non-refundable unless an event is cancelled. See the Eventbrite listing for transfer options.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Can I buy tickets on the door?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">If not sold out, a limited number may be available on the door. Card or cash accepted.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- The Vibe -->
-    <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);overflow:hidden;border-left:4px solid hsl(47 96% 53%);">
-      <dl>
-        <dt>Who are the events for?</dt>
-        <dd>Adults. Age guidance is 18+ recommended unless stated otherwise on the event page.</dd>
-
-        <dt>What's the dress code?</dt>
-        <dd>Whatever makes you feel fabulous. Sequins, trainers, jeans and a nice top. There's no strict dress code. Comfortable footwear encouraged because you will be dancing.</dd>
-
-        <dt>Do you use special effects?</dt>
-        <dd>Flashing lights are used (no strobe). Confetti cannons appear at most events.</dd>
-
-        <dt>Will photos or video be taken?</dt>
-        <dd>Official photographers capture highlight moments. If you prefer not to be photographed, speak to the photographer or a team member on the day.</dd>
-      </dl>
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-6">The Vibe</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Who are the events for?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Adults. Age guidance is 18+ recommended unless stated otherwise on the event page.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What's the dress code?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Whatever makes you feel fabulous. Sequins, trainers, jeans and a nice top. There's no strict dress code. Comfortable footwear encouraged because you will be dancing.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Do you use special effects?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Flashing lights are used (no strobe). Confetti cannons appear at most events.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Will photos or video be taken?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Official photographers capture highlight moments. If you prefer not to be photographed, speak to the photographer or a team member on the day.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Venue & Practical -->
-    <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);overflow:hidden;border-left:4px solid hsl(217.2 32.6% 17.5%);">
-      <dl>
-        <dt>Is the event accessible?</dt>
-        <dd>Accessibility varies by venue. Limited seating areas are available. Many venues have accessible toilets. Contact <a href="mailto:hello@boomevents.co.uk">hello@boomevents.co.uk</a> or speak to the venue directly for specific access needs.</dd>
-
-        <dt>What's the ID and bag policy?</dt>
-        <dd>Challenge 25 is in operation. Small bags only; all bags may be searched. Backpacks are discouraged.</dd>
-
-        <dt>Is there a bar or food?</dt>
-        <dd>Bars are available at all events. Some venues offer food. Free tap water is always available at the bar.</dd>
-
-        <dt>Lost property</dt>
-        <dd>Contact the venue directly for lost property after the event.</dd>
-      </dl>
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-6">Venue &amp; Practical</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Is the event accessible?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Accessibility varies by venue. Limited seating areas are available. Many venues have accessible toilets. Contact hello@boomevents.co.uk or speak to the venue directly for specific access needs.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What's the ID and bag policy?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Challenge 25 is in operation. Small bags only; all bags may be searched. Backpacks are discouraged.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Is there a bar or food?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Bars are available at all events. Some venues offer food. Free tap water is always available at the bar.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Lost property</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Contact the venue directly for lost property after the event.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Contact -->
-    <div style="background-color:hsl(222.2 84% 4.9%);border-radius:0.75rem;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);overflow:hidden;border-left:4px solid hsl(47 96% 53%);">
-      <dl>
-        <dt>How do I contact the organisers?</dt>
-        <dd>Email <a href="mailto:hello@boomevents.co.uk">hello@boomevents.co.uk</a>. We aim to reply within 48 hours, Monday to Friday.</dd>
-      </dl>
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-6">Contact</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">How do I contact the organisers?</button>
+          <div class="faq-answer">
+            <p class="text-muted-foreground leading-relaxed">Email hello@boomevents.co.uk. We aim to reply within 48 hours, Monday to Friday.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
 
   <!-- CTA Section -->
-  <div style="text-align:center;margin-top:3rem;margin-bottom:2rem;">
-    <p style="font-family:'Bebas Neue',cursive;font-size:1.5rem;color:hsl(210 40% 98%);margin:0 0 1rem;">Still have questions? Just ask.</p>
-    <a href="mailto:hello@boomevents.co.uk" style="display:inline-block;background-color:hsl(47 96% 53%);color:hsl(26 83% 14%);padding:1rem 2rem;border-radius:9999px;font-size:1.15rem;font-weight:700;text-decoration:none;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);margin-bottom:1rem;">Email Us</a>
+  <div class="text-center mt-12 mb-8">
+    <p class="font-bebas text-2xl text-card-foreground mb-4">Still have questions? Just ask.</p>
+    <a href="mailto:hello@boomevents.co.uk" class="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full text-xl font-bold hover:bg-primary/90 transition-colors shadow-lg">
+      Email Us
+    </a>
     <br>
-    <a href="/#tickets" style="display:inline-block;margin-top:0.75rem;background:linear-gradient(135deg, hsl(47 96% 53%), hsl(217.2 32.6% 17.5%));color:hsl(210 40% 98%);padding:1rem 2rem;border-radius:9999px;font-size:1.15rem;font-weight:700;text-decoration:none;box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1);">Find Your Event</a>
+    <a href="/#tickets" class="inline-block mt-4 bg-gradient-to-r from-primary to-secondary text-secondary-foreground px-8 py-4 rounded-full text-xl font-bold transition-colors shadow-lg">
+      Find Your Event
+    </a>
   </div>
+
+  <!-- Social Share -->
+  <div class="bg-card rounded-xl shadow-lg p-6 text-center">
+    <h3 class="font-bebas text-lg mb-4 text-card-foreground">Share this page</h3>
+    <div class="share-icons">
+      <button class="icon-btn whatsapp" onclick="handleWhatsAppShare()">
+        <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="WhatsApp" width="24" height="24">
+      </button>
+      <button class="icon-btn facebook" onclick="handleFacebookShare()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </button>
+      <button class="icon-btn copy" onclick="handleCopyLink()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </div>
+    <div class="__share-toast">Link copied to clipboard!</div>
+  </div>
+
+  <script>
+    function handleWhatsAppShare() {
+      var url = window.location.href;
+      var text = document.title;
+      var whatsappUrl = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url);
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function handleFacebookShare() {
+      var url = window.location.href;
+      var facebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+      window.open(facebookUrl, 'facebook-share', 'width=580,height=296');
+    }
+
+    function handleCopyLink() {
+      var url = window.location.href;
+      navigator.clipboard.writeText(url).then(function() {
+        var toast = document.querySelector('.__share-toast');
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 3000);
+      }).catch(function() {
+        var textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        var toast = document.querySelector('.__share-toast');
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 3000);
+      });
+    }
+  </script>
 
 </main>
 
 <!-- Footer -->
-<footer style="background-color:hsl(222.2 84% 4.9%);border-top:1px solid hsl(217.2 32.6% 17.5%);padding:2rem 1rem;margin-top:4rem;">
-  <div style="max-width:1200px;margin:0 auto;text-align:center;">
-    <div style="margin-bottom:1rem;">
-      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" alt="THE 2PM CLUB Logo" style="height:3rem;margin-bottom:1rem;">
+<footer class="bg-card border-t border-border" style="padding:3rem 0;margin-top:4rem">
+  <div class="container mx-auto px-4">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" alt="Boombastic Events" style="height:48px;width:auto;margin-bottom:16px" loading="lazy">
+        <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" class="text-muted-foreground" style="display:flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:16px">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+          hello@boomevents.co.uk
+        </a>
+        <div style="display:flex;gap:16px">
+          <a href="https://www.facebook.com/boombastic.eventsuk" class="text-muted-foreground" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow" style="text-decoration:none">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/boombastic.eventsuk" class="text-muted-foreground" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow" style="text-decoration:none">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:12px;color:hsl(47,96%,53%)">Explore</h4>
+        <a href="/what-to-expect/" class="text-muted-foreground footer-link">What to Expect</a>
+        <a href="/group-bookings/" class="text-muted-foreground footer-link">Group Bookings</a>
+        <a href="/faqs/" class="text-muted-foreground footer-link">FAQs</a>
+        <a href="/blog/why-daytime-discos-are-popular/" class="text-muted-foreground footer-link">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4 style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:12px;color:hsl(47,96%,53%)">Cities</h4>
+        <a href="/hubs/northampton/" class="text-muted-foreground footer-link">Northampton</a>
+        <a href="/hubs/bedford/" class="text-muted-foreground footer-link">Bedford</a>
+        <a href="/hubs/milton-keynes/" class="text-muted-foreground footer-link">Milton Keynes</a>
+        <a href="/hubs/coventry/" class="text-muted-foreground footer-link">Coventry</a>
+        <a href="/hubs/luton/" class="text-muted-foreground footer-link">Luton</a>
+        <a href="/hubs/leicester/" class="text-muted-foreground footer-link">Leicester</a>
+      </div>
     </div>
-    <p style="color:hsl(215 20.2% 65.1%);">
-      &copy; 2025 Boombastic Events Ltd. All rights reserved.
-    </p>
-    <div style="margin-top:1rem;display:flex;justify-content:center;gap:1rem;">
-      <a href="/" style="color:hsl(215 20.2% 65.1%);">Home</a>
-      <a href="/#tickets" style="color:hsl(215 20.2% 65.1%);">Events</a>
-      <a href="/faqs/" style="color:hsl(215 20.2% 65.1%);">FAQs</a>
-      <a href="/blog/why-daytime-discos-are-popular/" style="color:hsl(215 20.2% 65.1%);">Blog</a>
-      <a href="/why-2pm/" style="color:hsl(215 20.2% 65.1%);">Why 2PM</a>
+    <div style="border-top:1px solid hsl(217.2,32.6%,17.5%);margin-top:2rem;padding-top:1.5rem;text-align:center">
+      <p class="text-muted-foreground" style="font-size:0.875rem">&copy; 2026 Boombastic Events Ltd. All rights reserved.</p>
     </div>
   </div>
 </footer>

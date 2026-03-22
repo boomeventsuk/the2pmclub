@@ -5,6 +5,7 @@
 <meta name="description" content="Daytime disco at Hat Factory Arts Centre, Luton. THE 2PM CLUB brings night-out energy to Saturday afternoons. Things to do Saturday afternoon Luton. Sell-out debut.">
 <link rel="canonical" href="https://www.the2pmclub.co.uk/hubs/luton/">
 
+<!-- Standalone CSS -->
 <style>
 :root {
   --background: 222.2 84% 4.9%;
@@ -26,58 +27,49 @@
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
   --ring: 212.7 26.8% 83.9%;
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
 }
 
-* { border-color: hsl(var(--border)); box-sizing: border-box; margin: 0; padding: 0; }
-body { background-color: hsl(var(--background)); color: hsl(var(--foreground)); font-family: 'Poppins', sans-serif; line-height: 1.6; }
-.container { max-width: 1200px; margin: 0 auto; }
-nav { position: fixed; top: 0; left: 0; right: 0; background-color: hsla(222.2, 84%, 4.9%, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid hsl(var(--border)); z-index: 50; }
-nav .container { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; }
-nav a { text-decoration: none; }
-nav img { height: 2rem; }
-.nav-links { display: flex; align-items: center; gap: 1.5rem; }
-.nav-links a { color: hsl(var(--foreground)); transition: color 0.3s; }
-.nav-links a:hover { color: hsl(var(--primary)); }
-.btn-primary { display: inline-flex; align-items: center; justify-content: center; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: background-color 0.3s; }
-.btn-primary:hover { opacity: 0.9; }
-main { max-width: 56rem; margin: 0 auto; padding: 6rem 1rem 3rem; }
-.card { background-color: hsl(var(--card)); border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); padding: 2rem; margin-bottom: 2rem; }
-.card-accent { border-left: 8px solid hsl(var(--primary)); }
-.card-secondary { border-left: 4px solid hsl(var(--secondary)); }
-.card-primary { border-left: 4px solid hsl(var(--primary)); }
-h1 { font-family: 'Bebas Neue', cursive; font-size: 2.5rem; margin-bottom: 1rem; }
-h2 { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; margin-bottom: 1rem; }
-h3 { font-family: 'Bebas Neue', cursive; font-size: 1.25rem; margin-bottom: 0.75rem; }
-p { margin-bottom: 1rem; }
-p:last-child { margin-bottom: 0; }
-strong { font-weight: 600; }
-.event-card { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 1.5rem; background: hsl(var(--secondary)); border-radius: 0.75rem; margin-bottom: 1rem; }
-.event-info h3 { margin-bottom: 0.25rem; color: hsl(var(--primary)); }
-.event-info p { margin-bottom: 0; color: hsl(var(--muted-foreground)); font-size: 0.9rem; }
-.event-price { font-size: 1.25rem; font-weight: 700; color: hsl(var(--primary)); }
-.testimonial { border-left: 4px solid hsl(var(--primary)); padding-left: 1.5rem; margin: 1.5rem 0; font-style: italic; }
-.testimonial cite { display: block; margin-top: 0.5rem; font-style: normal; font-weight: 600; color: hsl(var(--primary)); }
-.faq-item { margin-bottom: 1.5rem; }
-.faq-item h3 { color: hsl(var(--primary)); }
-.city-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
-.city-link { display: inline-block; padding: 0.5rem 1rem; border: 2px solid hsl(var(--primary)); border-radius: 2rem; color: hsl(var(--primary)); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: all 0.3s; }
-.city-link:hover { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
-.cta-section { text-align: center; margin: 3rem 0 2rem; }
-.cta-btn { display: inline-block; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 1rem 2rem; border-radius: 9999px; font-size: 1.25rem; font-weight: 700; text-decoration: none; transition: all 0.3s; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-.cta-btn:hover { opacity: 0.9; transform: translateY(-2px); }
-footer { background-color: hsl(var(--background)); border-top: 1px solid hsl(var(--border)); padding: 2rem 0; margin-top: 4rem; text-align: center; }
-footer img { height: 3rem; margin: 0 auto 1rem; display: block; }
-footer p { color: hsl(var(--muted-foreground)); }
-footer .links { margin-top: 1rem; }
-footer .links a { color: hsl(var(--muted-foreground)); text-decoration: none; margin: 0 0.75rem; transition: color 0.3s; }
-footer .links a:hover { color: hsl(var(--foreground)); }
-@media (min-width: 768px) { h1 { font-size: 3rem; } .card { padding: 2rem 3rem; } main { padding-top: 7rem; } }
+* { border-color: hsl(var(--border)); }
+body { background-color: hsl(var(--background)); color: hsl(var(--foreground)); font-family: 'Poppins', sans-serif; }
+
+.bg-background { background-color: hsl(var(--background)); }
+.bg-card { background-color: hsl(var(--card)); }
+.bg-primary { background-color: hsl(var(--primary)); }
+.bg-secondary { background-color: hsl(var(--secondary)); }
+.text-foreground { color: hsl(var(--foreground)); }
+.text-card-foreground { color: hsl(var(--card-foreground)); }
+.text-primary { color: hsl(var(--primary)); }
+.text-primary-foreground { color: hsl(var(--primary-foreground)); }
+.text-muted-foreground { color: hsl(var(--muted-foreground)); }
+.border-border { border-color: hsl(var(--border)); }
+.border-primary { border-color: hsl(var(--primary)); }
+.border-secondary { border-color: hsl(var(--secondary)); }
+.border-accent { border-color: hsl(var(--accent)); }
+
+.font-bebas { font-family: 'Bebas Neue', cursive; }
+.font-poppins { font-family: 'Poppins', sans-serif; }
+
+.share-icons { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer; transition: all 0.3s ease; color: hsl(var(--primary)); background: transparent; border: 2px solid hsl(var(--primary)); }
+.icon-btn:hover { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); transform: translateY(-2px); }
+.__share-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 1rem 2rem; border-radius: 0.5rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; }
+.__share-toast.show { opacity: 1; visibility: visible; }
+.faq-button { width: 100%; display: flex; justify-content: space-between; align-items: center; background: none; border: none; padding: 1rem 0; cursor: pointer; text-align: left; color: hsl(var(--primary)); font-family: 'Bebas Neue', cursive; font-size: 1.25rem; }
+.faq-button svg { transition: transform 0.3s ease; flex-shrink: 0; margin-left: 1rem; }
+.faq-button.active svg { transform: rotate(180deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.faq-answer p { padding-bottom: 1rem; }
+.faq-item { border-bottom: 1px solid hsl(var(--border)); }
+.faq-item:last-child { border-bottom: none; }
 </style>
 
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+<!-- Social Meta -->
 <meta property="og:title" content="Daytime Disco in Luton | THE 2PM CLUB">
 <meta property="og:description" content="Have you heard? THE 2PM CLUB is in Luton. Night-out energy in the afternoon at Hat Factory Arts Centre.">
 <meta property="og:type" content="website">
@@ -86,6 +78,7 @@ footer .links a:hover { color: hsl(var(--foreground)); }
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
 
+<!-- Structured Data: BreadcrumbList -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -98,6 +91,7 @@ footer .links a:hover { color: hsl(var(--foreground)); }
 }
 </script>
 
+<!-- Structured Data: Events -->
 <script type="application/ld+json">
 [
   {
@@ -137,6 +131,7 @@ footer .links a:hover { color: hsl(var(--foreground)); }
 ]
 </script>
 
+<!-- Structured Data: LocalBusiness -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -150,127 +145,259 @@ footer .links a:hover { color: hsl(var(--foreground)); }
 </script>
 
 </head>
-<body>
+<body class="bg-background text-foreground font-poppins min-h-screen">
 
-<nav>
-  <div class="container">
-    <a href="/"><img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="THE 2PM CLUB"></a>
-    <div class="nav-links">
-      <a href="/">Back to Main</a>
-      <a href="/#tickets" class="btn-primary">Book Tickets</a>
+<!-- Navigation -->
+<header class="site-header fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+  <div class="container mx-auto px-4 py-4 header-inner">
+    <a href="/" class="site-logo">
+      <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png" alt="The 2PM Club logo" style="height:40px;width:auto;">
+    </a>
+    <nav class="primary-nav">
+      <a href="/#tickets" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Events</a>
+      <div class="cities-dropdown" style="position:relative">
+        <button class="font-poppins text-muted-foreground hover:text-primary transition-colors" style="background:none;border:none;cursor:pointer;font-size:inherit;padding:0">Cities &#9662;</button>
+        <div class="cities-dropdown-menu">
+          <a href="/hubs/northampton/" class="cities-dropdown-item">Northampton</a>
+          <a href="/hubs/bedford/" class="cities-dropdown-item">Bedford</a>
+          <a href="/hubs/milton-keynes/" class="cities-dropdown-item">Milton Keynes</a>
+          <a href="/hubs/coventry/" class="cities-dropdown-item">Coventry</a>
+          <a href="/hubs/luton/" class="cities-dropdown-item">Luton</a>
+          <a href="/hubs/leicester/" class="cities-dropdown-item">Leicester</a>
+        </div>
+      </div>
+      <a href="/what-to-expect/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">What to Expect</a>
+      <a href="/group-bookings/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">Group Bookings</a>
+      <a href="/faqs/" class="font-poppins text-muted-foreground hover:text-primary transition-colors">FAQs</a>
+    </nav>
+    <div class="header-actions">
+      <a href="/#tickets" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" style="text-decoration:none">Book Tickets</a>
     </div>
+    <div class="header-icons">
+      <a href="https://www.instagram.com/boombastic.eventsuk" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/boombastic.eventsuk" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">
+        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+      </a>
+      <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+      </a>
+    </div>
+    <button onclick="document.body.classList.toggle('nav-open')" class="nav-toggle" aria-label="Menu">&#9776;</button>
   </div>
-</nav>
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="/#tickets">Events</a>
+    <div class="mobile-cities-toggle">
+      <button onclick="this.parentElement.classList.toggle('open')" style="background:none;border:none;color:#fff;font-size:1.1rem;padding:10px 4px;width:100%;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center">Cities <span class="mobile-cities-arrow">&#9662;</span></button>
+      <div class="mobile-cities-list" style="display:none;padding-left:16px">
+        <a href="/hubs/northampton/">Northampton</a>
+        <a href="/hubs/bedford/">Bedford</a>
+        <a href="/hubs/milton-keynes/">Milton Keynes</a>
+        <a href="/hubs/coventry/">Coventry</a>
+        <a href="/hubs/luton/">Luton</a>
+        <a href="/hubs/leicester/">Leicester</a>
+      </div>
+    </div>
+    <a href="/what-to-expect/">What to Expect</a>
+    <a href="/group-bookings/">Group Bookings</a>
+    <a href="/faqs/">FAQs</a>
+    <a href="/blog/why-daytime-discos-are-popular/">Blog</a>
+    <hr style="border-color:rgba(255,255,255,.08);margin:12px 0">
+    <a href="/#tickets" style="color:hsl(47,96%,53%);font-weight:600">Book Tickets</a>
+  </div>
+</header>
 
-<main>
-  <div class="card card-accent">
-    <h1>Daytime Disco in Luton</h1>
-    <p style="font-size:1.25rem; color: hsl(var(--muted-foreground)); font-weight: 500;">
-      Have you heard? Luton's got a new Saturday afternoon.
-    </p>
+<!-- Main Content -->
+<main class="container mx-auto max-w-4xl px-4 py-12 pt-24">
+
+  <!-- Hero Card -->
+  <div class="bg-card rounded-2xl shadow-xl p-8 md:p-12 mb-8 border-l-8 border-primary">
+    <h1 class="font-bebas text-4xl md:text-5xl text-card-foreground mb-4">Daytime Disco in Luton</h1>
+    <p class="text-xl text-muted-foreground font-medium">Have you heard? Luton's got a new Saturday afternoon.</p>
   </div>
 
-  <div class="card">
-    <p style="font-size:1.125rem;">
+  <!-- Intro -->
+  <div class="bg-card rounded-xl shadow-lg p-8 mb-8">
+    <p class="text-lg leading-relaxed text-card-foreground">
       Have you heard about THE 2PM CLUB? Luton's debut was a sell-out, and the demand was two to three times what the venue could hold. That kind of response doesn't happen by accident. Hat Factory Arts Centre on Bute Street is the home for Luton events, and it's a brilliant space: central, characterful, and perfectly sized for the kind of atmosphere that makes a 2PM CLUB afternoon unforgettable. Night-out energy in the afternoon, right in the heart of town. Confetti cannons, singalongs, and the kind of buzz that has people messaging their mates before they've even left the building. Home by 7, no Sunday regrets, and a Saturday afternoon that actually delivers on the group chat promise. If you missed the first one, here's your chance. If you were there, you already know what's coming.
     </p>
   </div>
 
-  <div class="card card-secondary">
-    <h2>Upcoming Events in Luton</h2>
+  <div class="space-y-8">
 
-    <div class="event-card">
-      <div class="event-info">
-        <h3>THE 2PM CLUB at Hat Factory</h3>
-        <p>Saturday 7th February 2026 | 2pm - 6pm</p>
-        <p>Hat Factory Arts Centre, 65-67 Bute Street, Luton, LU1 2EY</p>
+    <!-- Upcoming Events -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Upcoming Events in Luton</h2>
+
+      <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary mb-4">
+        <h3 class="font-bebas text-xl text-primary mb-2">THE 2PM CLUB at Hat Factory</h3>
+        <p class="text-muted-foreground mb-1">Saturday 7th February 2026 | 2pm - 6pm</p>
+        <p class="text-muted-foreground mb-3">Hat Factory Arts Centre, 65-67 Bute Street, Luton, LU1 2EY</p>
+        <p class="text-primary font-bold text-lg mb-3">From &pound;8.50</p>
+        <a href="/#tickets" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 transition-colors">Book Tickets</a>
       </div>
-      <div><span class="event-price">From &pound;8.50</span></div>
-    </div>
 
-    <div class="event-card">
-      <div class="event-info">
-        <h3>THE 2PM CLUB at Hat Factory (Summer)</h3>
-        <p>Saturday 23rd May 2026 | 2pm - 6pm</p>
-        <p>Hat Factory Arts Centre, 65-67 Bute Street, Luton, LU1 2EY</p>
+      <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-primary">
+        <h3 class="font-bebas text-xl text-primary mb-2">THE 2PM CLUB at Hat Factory (Summer)</h3>
+        <p class="text-muted-foreground mb-1">Saturday 23rd May 2026 | 2pm - 6pm</p>
+        <p class="text-muted-foreground mb-3">Hat Factory Arts Centre, 65-67 Bute Street, Luton, LU1 2EY</p>
+        <p class="text-primary font-bold text-lg mb-3">From &pound;12.00</p>
+        <a href="/#tickets" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 transition-colors">Book Tickets</a>
       </div>
-      <div><span class="event-price">From &pound;12.00</span></div>
     </div>
 
-    <div style="margin-top: 1.5rem; text-align: center;">
-      <a href="/#tickets" class="btn-primary" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Book Luton Tickets</a>
+    <!-- Venue Details -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">The Venue: Hat Factory Arts Centre</h2>
+      <p class="text-card-foreground leading-relaxed mb-4">
+        The Hat Factory is one of Luton's most distinctive venues. A converted hat factory (the clue's in the name) on Bute Street, it's been reimagined as a creative arts space with a proper events room that's ideal for a 2PM CLUB afternoon. The sound is excellent, the space has real character, and its central location makes it easy to reach from anywhere in town. The bar serves a solid selection throughout, and the staff know how to run an event. It's intimate enough to feel the energy from every corner of the room, which is exactly what you want when the confetti drops.
+      </p>
+      <p class="text-card-foreground leading-relaxed">
+        <strong>Address:</strong> 65-67 Bute Street, Luton, LU1 2EY
+      </p>
     </div>
+
+    <!-- Testimonials -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">What Luton Says</h2>
+      <blockquote class="border-l-4 border-primary pl-6 my-4">
+        <p class="text-card-foreground leading-relaxed italic">"Finally able to get all my friends together, when's the next one?"</p>
+        <cite class="block mt-2 text-primary font-semibold not-italic">Marie T, Luton</cite>
+      </blockquote>
+    </div>
+
+    <!-- FAQ -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-secondary">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-button" onclick="toggleFaq(this)">
+          Where do I park for the Hat Factory?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="text-card-foreground leading-relaxed">The Hat Factory is in Luton town centre. The Galaxy Centre multi-storey car park is a 5-minute walk away, and there is also on-street parking on surrounding roads.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-button" onclick="toggleFaq(this)">
+          Is there a bar?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="text-card-foreground leading-relaxed">Yes. The Hat Factory has a fully licensed bar open throughout the event.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-button" onclick="toggleFaq(this)">
+          Can I get there by train?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="text-card-foreground leading-relaxed">Yes. Luton station is about a 10-minute walk from the venue. It's on the Thameslink line, making it easy to reach from London, Bedford, and surrounding areas.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-button" onclick="toggleFaq(this)">
+          Will it sell out again?
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="text-card-foreground leading-relaxed">The debut sold out with demand far exceeding capacity. We'd strongly recommend booking early. The get-together that actually happens only works if you've got a ticket.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-city links -->
+    <div class="bg-card rounded-xl shadow-lg p-8 border-l-4 border-accent">
+      <h2 class="font-bebas text-2xl text-card-foreground mb-4">THE 2PM CLUB in Other Cities</h2>
+      <p class="text-card-foreground leading-relaxed mb-4">We're bringing the party to towns across the Midlands and beyond.</p>
+      <div class="flex flex-wrap gap-3">
+        <a href="/hubs/northampton/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Northampton</a>
+        <a href="/hubs/bedford/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Bedford</a>
+        <a href="/hubs/coventry/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Coventry</a>
+        <a href="/hubs/milton-keynes/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Milton Keynes</a>
+        <a href="/hubs/leicester/" class="inline-block px-4 py-2 border-2 border-primary rounded-full text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Leicester</a>
+      </div>
+    </div>
+
   </div>
 
-  <div class="card card-primary">
-    <h2>The Venue: Hat Factory Arts Centre</h2>
-    <p>
-      The Hat Factory is one of Luton's most distinctive venues. A converted hat factory (the clue's in the name) on Bute Street, it's been reimagined as a creative arts space with a proper events room that's ideal for a 2PM CLUB afternoon. The sound is excellent, the space has real character, and its central location makes it easy to reach from anywhere in town. The bar serves a solid selection throughout, and the staff know how to run an event. It's intimate enough to feel the energy from every corner of the room, which is exactly what you want when the confetti drops.
-    </p>
-    <p>
-      <strong>Address:</strong> 65-67 Bute Street, Luton, LU1 2EY
-    </p>
+  <!-- CTA Section -->
+  <div class="text-center mt-12 mb-8">
+    <a href="/#tickets" class="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full text-xl font-bold hover:bg-primary/90 transition-colors shadow-lg">
+      Book Your Luton Tickets
+    </a>
   </div>
 
-  <div class="card">
-    <h2>What Luton Says</h2>
-    <div class="testimonial">
-      <p>"Finally able to get all my friends together, when's the next one?"</p>
-      <cite>Marie T, Luton</cite>
+  <!-- Social Share -->
+  <div class="bg-card rounded-xl shadow-lg p-6 text-center">
+    <h3 class="font-bebas text-lg mb-4 text-card-foreground">Share this page</h3>
+    <div class="share-icons">
+      <button class="icon-btn whatsapp" onclick="handleWhatsAppShare()">
+        <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/bb7f178c-1cf5-4ce2-a752-a39c92c097f7_cbk3z9.png" alt="WhatsApp" width="24" height="24">
+      </button>
+      <button class="icon-btn facebook" onclick="handleFacebookShare()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </button>
+      <button class="icon-btn copy" onclick="handleCopyLink()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </button>
     </div>
+    <div class="__share-toast">Link copied to clipboard!</div>
   </div>
 
-  <div class="card card-secondary">
-    <h2>Frequently Asked Questions</h2>
+  <script>
+    function handleWhatsAppShare() { const url = window.location.href; const text = document.title; window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank'); }
+    function handleFacebookShare() { const url = window.location.href; window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, 'facebook-share', 'width=580,height=296'); }
+    function handleCopyLink() { const url = window.location.href; navigator.clipboard.writeText(url).then(() => { const toast = document.querySelector('.__share-toast'); toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000); }).catch(() => { const t = document.createElement('textarea'); t.value = url; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); const toast = document.querySelector('.__share-toast'); toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000); }); }
+    function toggleFaq(button) { const answer = button.nextElementSibling; const isOpen = button.classList.contains('active'); document.querySelectorAll('.faq-button.active').forEach(btn => { btn.classList.remove('active'); btn.nextElementSibling.style.maxHeight = null; }); if (!isOpen) { button.classList.add('active'); answer.style.maxHeight = answer.scrollHeight + 'px'; } }
+  </script>
 
-    <div class="faq-item">
-      <h3>Where do I park for the Hat Factory?</h3>
-      <p>The Hat Factory is in Luton town centre. The Galaxy Centre multi-storey car park is a 5-minute walk away, and there is also on-street parking on surrounding roads.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Is there a bar?</h3>
-      <p>Yes. The Hat Factory has a fully licensed bar open throughout the event.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Can I get there by train?</h3>
-      <p>Yes. Luton station is about a 10-minute walk from the venue. It's on the Thameslink line, making it easy to reach from London, Bedford, and surrounding areas.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Will it sell out again?</h3>
-      <p>The debut sold out with demand far exceeding capacity. We'd strongly recommend booking early. The get-together that actually happens only works if you've got a ticket.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>THE 2PM CLUB in Other Cities</h2>
-    <p>We're bringing the party to towns across the Midlands and beyond.</p>
-    <div class="city-links">
-      <a href="/hubs/northampton/" class="city-link">Northampton</a>
-      <a href="/hubs/bedford/" class="city-link">Bedford</a>
-      <a href="/hubs/coventry/" class="city-link">Coventry</a>
-      <a href="/hubs/milton-keynes/" class="city-link">Milton Keynes</a>
-      <a href="/hubs/leicester/" class="city-link">Leicester</a>
-    </div>
-  </div>
-
-  <div class="cta-section">
-    <a href="/#tickets" class="cta-btn">Book Your Luton Tickets</a>
-  </div>
 </main>
 
-<footer>
-  <div class="container" style="padding: 0 1rem;">
-    <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" alt="THE 2PM CLUB Logo">
-    <p>&copy; 2025 Boombastic Events Ltd. All rights reserved.</p>
-    <div class="links">
-      <a href="/">Home</a>
-      <a href="/#tickets">Events</a>
-      <a href="/faqs/">FAQs</a>
-      <a href="/blog/why-daytime-discos-are-popular/">Blog</a>
-      <a href="/why-2pm/">Why 2PM</a>
+<!-- Footer -->
+<footer class="bg-card border-t border-border" style="padding:3rem 0;margin-top:4rem">
+  <div class="container mx-auto px-4">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" alt="Boombastic Events" style="height:48px;width:auto;margin-bottom:16px" loading="lazy">
+        <a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" class="text-muted-foreground" style="display:flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:16px">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zM4 7.5l8 5 8-5V6H4v1.5z"/></svg>
+          hello@boomevents.co.uk
+        </a>
+        <div style="display:flex;gap:16px">
+          <a href="https://www.facebook.com/boombastic.eventsuk" class="text-muted-foreground" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow" style="text-decoration:none">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor"><path d="M13.5 22v-8h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.6-1.5H17V4.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h3.1v8h2.4z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/boombastic.eventsuk" class="text-muted-foreground" aria-label="Instagram" target="_blank" rel="noopener noreferrer nofollow" style="text-decoration:none">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:12px;color:hsl(47,96%,53%)">Explore</h4>
+        <a href="/what-to-expect/" class="text-muted-foreground footer-link">What to Expect</a>
+        <a href="/group-bookings/" class="text-muted-foreground footer-link">Group Bookings</a>
+        <a href="/faqs/" class="text-muted-foreground footer-link">FAQs</a>
+        <a href="/blog/why-daytime-discos-are-popular/" class="text-muted-foreground footer-link">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4 style="font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:12px;color:hsl(47,96%,53%)">Cities</h4>
+        <a href="/hubs/northampton/" class="text-muted-foreground footer-link">Northampton</a>
+        <a href="/hubs/bedford/" class="text-muted-foreground footer-link">Bedford</a>
+        <a href="/hubs/milton-keynes/" class="text-muted-foreground footer-link">Milton Keynes</a>
+        <a href="/hubs/coventry/" class="text-muted-foreground footer-link">Coventry</a>
+        <a href="/hubs/luton/" class="text-muted-foreground footer-link">Luton</a>
+        <a href="/hubs/leicester/" class="text-muted-foreground footer-link">Leicester</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid hsl(217.2,32.6%,17.5%);margin-top:2rem;padding-top:1.5rem;text-align:center">
+      <p class="text-muted-foreground" style="font-size:0.875rem">&copy; 2026 Boombastic Events Ltd. All rights reserved.</p>
     </div>
   </div>
 </footer>
