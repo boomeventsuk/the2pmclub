@@ -1,71 +1,55 @@
 
 
-# Create Shared CSS and Reference HTML Snippets
+# Fix Layout Inconsistencies Across Static Pages
 
-## Summary
+## The Core Problem
 
-Create three files that centralise the design system for all static HTML pages, eliminating duplicated inline `<style>` blocks.
+All 13 static HTML pages use **Tailwind CSS utility classes** (`text-4xl`, `mb-4`, `space-y-8`, `rounded-xl`, `shadow-lg`, `p-8`, `border-l-4`, `leading-relaxed`, `bg-gradient-to-r`, etc.) throughout their content. But these pages only load `shared-styles.css`, which has **no Tailwind**. The React homepage works because Vite processes Tailwind at build time. The static pages get none of that -- so spacing, font sizes, borders, shadows, padding, and gradients are all broken on the live site.
 
-## Files to Create
+This is why the static pages look unprofessional compared to the homepage and ticket pages.
 
-### 1. `public/shared-styles.css`
+## What Needs to Change
 
-Extract and consolidate all styles currently duplicated across static pages (sourced from `public/faqs/index.html` lines 9-370 and `index.html` lines 368-449). Contents:
+### 1. Add Tailwind utility classes to `shared-styles.css`
 
-- **Google Fonts import** (Poppins + Inter)
-- **CSS custom properties** (`:root` block with all design tokens)
-- **Reset/base** (`box-sizing`, `body` styles)
-- **Typography** (`h1`, `h2`, `h3`, `p`, `li`, `a` styles with resolved values)
-- **Layout** (`.container` class)
-- **Components**: `.glass-card`, `.card`, `.btn-primary`, `.btn-large`
-- **Text utilities**: `.text-muted`, `.text-primary`, `.text-secondary`
-- **Header**: `.site-header`, `.header-inner`, `.primary-nav`, `.header-actions`, `.header-icons`, `.nav-toggle`, `.locations-dropdown` (hover + `.open` class), `.locations-trigger`, `.locations-dropdown-menu`, `.locations-dropdown-item`
-- **Mobile menu**: `.mobile-menu`, `body.nav-open` toggle, mobile-specific link/button styles, `.locations-sub`
-- **Footer**: `.site-footer`, `.footer-grid` (3-col with mobile stack), `.footer-heading`, `.footer-link`, `.footer-copyright`, `.footer-socials`
-- **FAQ accordion**: `.faq-item`, `.faq-question` (with `+`/`-` pseudo-element), `.faq-answer` (max-height transition), `.faq-item.open` states
-- **Photo grid**: `.photo-grid-3`, `.photo-grid-2` responsive rules
-- **Share icons**: `.share-icons`, `.icon-btn`
-- **Header spacer**: `.header-spacer` (height matching fixed header)
-- **Responsive breakpoints**: 900px (mobile nav), 768px (footer stack), 600px (photo grids)
+Add resolved CSS for every utility class used across the static pages. Based on scanning all 13 files, the classes needed are:
 
-All values resolved to plain CSS -- no Tailwind, no `@apply`.
+**Typography**: `text-4xl`, `text-3xl`, `text-2xl`, `text-xl`, `text-lg`, `text-sm`, `text-base`, `font-medium`, `font-semibold`, `font-bold`, `italic`, `not-italic`, `underline`, `leading-relaxed`
 
-### 2. `public/shared-header.html`
+**Spacing**: `mb-1` through `mb-8`, `mt-2`, `mt-4`, `mt-8`, `mt-12`, `p-4`, `p-6`, `p-8`, `px-4`, `py-2`, `py-3`, `py-12`, `pt-24`, `pl-4`, `pl-6`, `pb-2`, `space-y-3`, `space-y-4`, `space-y-5`, `space-y-8`, `gap-3`, `gap-10`
 
-Reference HTML snippet showing the exact header structure:
-- `<header class="site-header">` with `.header-inner` wrapper
-- Logo linking to `/`
-- `<nav class="primary-nav">` with: Events (`/#tickets`), Locations dropdown (6 hub links), What to Expect, Group Bookings, FAQs
-- `.header-actions` with Book Tickets CTA
-- `.header-icons` with Instagram, Facebook, Email SVGs
-- `.nav-toggle` hamburger button
-- `#mobile-menu` with accordion Locations section
-- Inline `<script>` for hamburger toggle + locations accordion (vanilla JS)
-- `<div class="header-spacer"></div>` after header
+**Layout**: `flex`, `flex-wrap`, `inline-flex`, `inline-block`, `block`, `items-center`, `justify-center`, `justify-between`, `text-center`, `text-left`, `w-full`, `max-w-4xl`, `mx-auto`
 
-### 3. `public/shared-footer.html`
+**Visual**: `rounded-xl`, `rounded-md`, `rounded-full`, `shadow-lg`, `border-l-4`, `border-primary`, `border-secondary`, `border-accent`, `bg-gradient-to-r`, `from-primary`, `to-secondary`
 
-Reference HTML snippet showing the footer structure:
-- `<footer class="site-footer">`
-- `.footer-grid` with 3 columns:
-  - **Col 1**: Boombastic logo, email link, Facebook + Instagram SVG icons
-  - **Col 2 "Explore"**: What to Expect, Group Bookings, FAQs, Blog
-  - **Col 3 "Locations"**: 6 hub links
-- `.footer-copyright` with dynamic year via inline `<script>`
+**Colour**: `text-primary`, `text-primary-foreground`, `text-muted-foreground`, `border-primary`, `border-secondary`, `border-accent`, `bg-primary`, `hover:bg-primary`, `hover:text-primary`, `hover:text-primary-foreground`
 
-## Usage
+**Responsive**: `md:text-5xl`, `md:text-3xl`
 
-Static pages replace their inline `<style>` block with:
-```html
-<link rel="stylesheet" href="/shared-styles.css">
-```
-And copy the header/footer HTML from the reference files.
+### 2. Fix dropdown class name mismatch in `Header.tsx`
+
+`Header.tsx` uses `cities-dropdown`, `cities-dropdown-trigger`, `cities-dropdown-menu`, `cities-dropdown-item`. The CSS in `index.html` matches these. But `shared-styles.css` defines `locations-dropdown` variants.
+
+Rename the 4 class references in `Header.tsx` to `locations-dropdown`, `locations-trigger`, `locations-dropdown-menu`, `locations-dropdown-item`.
+
+### 3. Update `index.html` inline CSS
+
+Rename the `.cities-dropdown*` selectors (lines 395-410) to `.locations-dropdown*` to match.
+
+### 4. Rename "Cities" to "Locations" in `Footer.tsx`
+
+Line 63: `<h3>Cities</h3>` becomes `<h3>Locations</h3>`.
 
 ## Files Modified
 
-| File | Action |
+| File | Change |
 |------|--------|
-| `public/shared-styles.css` | Create -- complete design system CSS |
-| `public/shared-header.html` | Create -- header HTML reference snippet |
-| `public/shared-footer.html` | Create -- footer HTML reference snippet |
+| `public/shared-styles.css` | Add ~80 Tailwind utility classes as resolved CSS |
+| `src/components/Header.tsx` | Rename 4 `cities-*` class references to `locations-*` |
+| `src/components/Footer.tsx` | "Cities" to "Locations" |
+| `index.html` | Rename `.cities-dropdown*` CSS selectors to `.locations-*` |
+
+## Result
+
+Every static page will render with correct spacing, typography, cards, borders, gradients, and shadows -- matching the quality of the React homepage and ticket pages. The Locations dropdown will work consistently everywhere.
 
