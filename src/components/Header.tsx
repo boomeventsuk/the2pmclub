@@ -110,13 +110,13 @@ const Header = () => {
           
           {/* Cities accordion */}
           <button 
-            onClick={() => setCitiesOpen(!citiesOpen)}
+            onClick={() => setLocationsOpen(!locationsOpen)}
             className="text-white hover:text-primary text-lg py-3 w-full text-left transition-colors flex items-center justify-between"
           >
-            Cities
-            <span className="text-sm opacity-60">{citiesOpen ? '▲' : '▼'}</span>
+            Locations
+            <span className="text-sm opacity-60">{locationsOpen ? '▲' : '▼'}</span>
           </button>
-          {citiesOpen && (
+          {locationsOpen && (
             <div className="pl-4 pb-2">
               <a href="/hubs/northampton/" onClick={closeMobileMenu} className="text-muted-foreground hover:text-primary text-base py-2 block transition-colors">Northampton</a>
               <a href="/hubs/bedford/" onClick={closeMobileMenu} className="text-muted-foreground hover:text-primary text-base py-2 block transition-colors">Bedford</a>
