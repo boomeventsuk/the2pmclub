@@ -542,3 +542,83 @@ a.button:focus, button:focus {
   .md\:text-5xl { font-size: 3rem; line-height: 1; }
   .md\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
 }
+
+/* ============================================
+   EVENT CARDS (homepage-matching design)
+   ============================================ */
+.event-card {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  background: #13131A;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 18px 20px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.event-card-image {
+  position: relative;
+  width: 200px;
+  height: 140px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.event-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.event-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: hsl(142 76% 36%);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.event-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+.event-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.event-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: hsl(0 0% 70%);
+  font-size: 0.875rem;
+}
+.event-meta-item svg {
+  flex-shrink: 0;
+  stroke: hsl(328 100% 54%);
+}
+.event-card-btn {
+  align-self: center;
+}
+@media (max-width: 768px) {
+  .event-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .event-card-image {
+    width: 100%;
+    height: 200px;
+  }
+  .event-card-btn {
+    justify-self: center;
+  }
+}
