@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-03-30T09:05:20.946Z",
+    "priceLastSync": "2026-03-30T14:58:41.113Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -56,7 +56,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-03-30T09:05:21.473Z",
+    "priceLastSync": "2026-03-30T14:58:41.649Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
@@ -93,7 +93,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-03-30T09:05:22.055Z",
+    "priceLastSync": "2026-03-30T14:58:42.183Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -129,7 +129,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-03-30T09:05:22.619Z",
+    "priceLastSync": "2026-03-30T14:58:42.751Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
@@ -168,7 +168,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-03-30T09:05:23.180Z",
+    "priceLastSync": "2026-03-30T14:58:43.309Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
@@ -207,7 +207,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-03-30T09:05:23.730Z",
+    "priceLastSync": "2026-03-30T14:58:43.914Z",
     "statusLabel": "75% sold",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -244,7 +244,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-03-30T09:05:24.280Z",
+    "priceLastSync": "2026-03-30T14:58:44.532Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -279,7 +279,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-03-30T09:05:24.812Z",
+    "priceLastSync": "2026-03-30T14:58:45.098Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
@@ -314,7 +314,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-03-30T09:05:25.317Z",
+    "priceLastSync": "2026-03-30T14:58:45.674Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -349,7 +349,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-03-30T09:05:25.848Z",
+    "priceLastSync": "2026-03-30T14:58:46.230Z",
     "statusLabel": "Just announced",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
@@ -384,7 +384,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-03-30T09:05:26.366Z",
+    "priceLastSync": "2026-03-30T14:58:46.740Z",
     "statusLabel": "Just announced",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -415,17 +415,20 @@
     "highlights": "🎤 ICONIC ANTHEMS. NONSTOP ENERGY: Wall-to-wall 80s, 90s and 00s. Belting out lyrics with other people who know every word too. That moment when the whole room feels like family – that's what you're booking.|🕺 DAYTIME PARTY, NIGHT-OUT VIBES: Same Boombastic team, Club-level production and confetti moments – just at people-friendly hours. Dance freely, laugh loudly, and still be home by 7pm.|👯 THE 'NIGHT OUT' EVERYONE SAYS YES TO: No more 47-message threads. No more \"maybe next time.\" Four hours where everyone actually makes it.|😎 NO SUNDAY REGRETS - JUST A GLOW: Perfect Sunday! You'll still be buzzing after a full night's sleep. A hoarse voice from belting out all the bangers is the only hangover we're talking about.|🏆 TRUST THE LEGACY: Created by Boombastic Events – 10+ years of consistent sell-outs across the UK because we know how to create moments that matter.",
     "status": "just-announced",
     "accentColor": "coral",
-    "price": 9,
+    "price": 12,
     "priceCurrency": "GBP",
-    "priceLabel": "From £9.00",
+    "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-03-30T09:05:26.879Z",
+    "priceLastSync": "2026-03-30T14:58:47.275Z",
     "statusLabel": "Just announced",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
       "postalCode": "MK11 3LH",
       "addressCountry": "GB"
-    }
+    },
+    "tierLabels": [
+      "Early Release Ticket sold out"
+    ]
   }
 ]
