@@ -1,0 +1,171 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "THE 2PM CLUB Events API",
+    "description": "Machine-readable event data for THE 2PM CLUB daytime disco series by Boombastic Events Ltd. Provides upcoming events across 6 cities in the Midlands and East of England.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Boombastic Events",
+      "email": "hello@boomevents.co.uk",
+      "url": "https://www.the2pmclub.co.uk/for-ai"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://www.the2pmclub.co.uk",
+      "description": "THE 2PM CLUB production site"
+    }
+  ],
+  "paths": {
+    "/events.json": {
+      "get": {
+        "operationId": "listEvents",
+        "summary": "List all upcoming events",
+        "description": "Returns a JSON array of all upcoming THE 2PM CLUB daytime disco events. Includes full event details: title, date, venue, city, pricing, availability, booking URL, and hero image.",
+        "responses": {
+          "200": {
+            "description": "Array of event objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{slug}/index.json": {
+      "get": {
+        "operationId": "getEvent",
+        "summary": "Get a single event by slug",
+        "description": "Returns full details for a single event identified by its slug.",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "Event slug, e.g. northampton-2pm-club-june-2026",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Internal event ID"
+          },
+          "slug": {
+            "type": "string",
+            "description": "URL-safe event identifier, e.g. 060626-2PM-NPTON"
+          },
+          "eventType": {
+            "type": "string",
+            "description": "Event brand, always 2PM for this site"
+          },
+          "cityCode": {
+            "type": "string",
+            "description": "Short city code, e.g. NPTON, BED, MK, COV, LUT, LCSTR"
+          },
+          "title": {
+            "type": "string",
+            "description": "Full event title"
+          },
+          "location": {
+            "type": "string",
+            "description": "Venue name and city"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 event start time with timezone offset"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 event end time with timezone offset"
+          },
+          "bookUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Booking URL on the2pmclub.co.uk (use this, not the raw Eventbrite URL)"
+          },
+          "image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Hero image URL from CDN"
+          },
+          "description": {
+            "type": "string",
+            "description": "Short event description"
+          },
+          "subtitle": {
+            "type": "string",
+            "description": "Event subtitle / strapline"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["on-sale", "selling-fast", "last-tickets", "sold-out"],
+            "description": "Current ticket availability status"
+          },
+          "statusLabel": {
+            "type": "string",
+            "description": "Human-readable status label"
+          },
+          "price": {
+            "type": "number",
+            "description": "Lowest available ticket price in GBP"
+          },
+          "priceCurrency": {
+            "type": "string",
+            "description": "Currency code, always GBP"
+          },
+          "priceLabel": {
+            "type": "string",
+            "description": "Human-readable price label, e.g. From £9.50"
+          },
+          "venueAddress": {
+            "type": "object",
+            "description": "Schema.org PostalAddress format",
+            "properties": {
+              "streetAddress": {"type": "string"},
+              "addressLocality": {"type": "string"},
+              "postalCode": {"type": "string"},
+              "addressCountry": {"type": "string"}
+            }
+          },
+          "tierLabels": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of sold-out ticket tier labels"
+          }
+        },
+        "required": ["slug", "title", "location", "start", "end", "bookUrl", "status", "price"]
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://www.the2pmclub.co.uk/events.json",
+      "service-desc": [
+        {
+          "href": "https://www.the2pmclub.co.uk/openapi.json",
+          "type": "application/vnd.oai.openapi+json;version=3.1"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://www.the2pmclub.co.uk/for-ai",
+          "type": "text/html"
+        }
+      ],
+      "describedby": [
+        {
+          "href": "https://www.the2pmclub.co.uk/.well-known/agent-skills/index.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

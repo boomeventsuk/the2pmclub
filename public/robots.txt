@@ -12,5 +12,30 @@ User-agent: CCBot
 Allow: /
 User-agent: ClaudeBot
 Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: Anthropic-ai
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: PerplexityUser
+Allow: /
+User-agent: GoogleOther
+Allow: /
+User-agent: cohere-ai
+Allow: /
+User-agent: DiffBot
+Allow: /
+User-agent: FacebookBot
+Allow: /
+
+# Content use declarations
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 Sitemap: https://www.the2pmclub.co.uk/sitemap.xml

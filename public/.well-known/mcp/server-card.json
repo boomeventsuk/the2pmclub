@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "serverInfo": {
+    "name": "THE 2PM CLUB",
+    "version": "1.0.0",
+    "description": "THE 2PM CLUB daytime disco event series by Boombastic Events Ltd. Provides access to upcoming event listings across Northampton, Milton Keynes, Coventry, Bedford, Luton, and Leicester.",
+    "url": "https://www.the2pmclub.co.uk",
+    "contact": "hello@boomevents.co.uk"
+  },
+  "capabilities": {
+    "resources": [
+      {
+        "name": "events",
+        "description": "All upcoming 2PM Club daytime disco events with dates, venues, prices, and availability",
+        "url": "https://www.the2pmclub.co.uk/events.json",
+        "type": "application/json"
+      },
+      {
+        "name": "event-detail",
+        "description": "Individual event details by slug",
+        "url": "https://www.the2pmclub.co.uk/events/{slug}/index.json",
+        "type": "application/json"
+      }
+    ],
+    "tools": []
+  },
+  "transport": null,
+  "notes": "No live MCP transport is currently active. Agents should use the JSON feeds directly. Ticket purchases must be completed by the user on the event page."
+}
