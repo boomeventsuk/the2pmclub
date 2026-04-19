@@ -3,12 +3,26 @@
   publish = "dist"
 
 [[edge_functions]]
+  path = "/*"
+  function = "markdown-negotiate"
+
+[[edge_functions]]
   path = "/"
   function = "homepage-inject"
 
 [[edge_functions]]
   path = "/events/*"
   function = "og-inject"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Link = "</.well-known/api-catalog>; rel=\"api-catalog\", </llms.txt>; rel=\"alternate\"; type=\"text/markdown\", </openapi.json>; rel=\"service-desc\"; type=\"application/vnd.oai.openapi+json\""
+
+[[headers]]
+  for = "/.well-known/api-catalog"
+  [headers.values]
+    Content-Type = "application/linkset+json"
 
 [[headers]]
   for = "/*"
