@@ -300,6 +300,31 @@ export default async function handler(request: Request, context: Context) {
     // Build noscript content for AI crawlers
     const noscriptBlock = buildNoscriptContent(events);
 
+    // WebMCP: classic inline script runs before module scripts, so scanner detects tools reliably
+    const webmcpScript = `
+    <script>
+    (function(){
+      if(typeof navigator==="undefined"||!("modelContext" in navigator))return;
+      var mc=navigator.modelContext;
+      var tool={
+        name:"listEvents",
+        description:"Returns upcoming THE 2PM CLUB daytime disco events. Filter by city or get all. Each event includes title, date, venue, price, availability status, and booking URL.",
+        inputSchema:{type:"object",properties:{city:{type:"string",enum:["Northampton","Milton Keynes","Coventry","Bedford","Luton","Leicester"]},limit:{type:"number"}},required:[]},
+        execute:function(input){
+          return fetch("/events.json").then(function(r){return r.json();}).then(function(events){
+            var now=new Date().toISOString().slice(0,10);
+            var out=events.filter(function(e){return e.start.slice(0,10)>=now;});
+            if(input&&input.city)out=out.filter(function(e){return e.location.toLowerCase().indexOf(input.city.toLowerCase())>=0;});
+            if(input&&input.limit)out=out.slice(0,input.limit);
+            return out;
+          });
+        }
+      };
+      try{if(typeof mc.provideContext==="function")mc.provideContext([tool]);}catch(e){}
+      try{if(typeof mc.registerTool==="function")mc.registerTool(tool);}catch(e){}
+    })();
+    </script>`;
+
     // Inject schemas before </head>
     const schemaInjection = `
     <!-- Dynamic Event Schema (injected by edge function for AI crawlers) -->
@@ -307,7 +332,7 @@ export default async function handler(request: Request, context: Context) {
     <script type="application/ld+json">${reviewSchema}</script>
     `;
 
-    html = html.replace("</head>", `${schemaInjection}</head>`);
+    html = html.replace("</head>", `${webmcpScript}${schemaInjection}</head>`);
 
     // Inject noscript block after <div id="root"></div>
     html = html.replace(
