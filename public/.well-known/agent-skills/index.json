@@ -3,10 +3,10 @@
   "skills": [
     {
       "name": "list-events",
-      "type": "data",
-      "description": "Returns all upcoming THE 2PM CLUB daytime disco events as a JSON array. Each event includes title, date, venue, city, price, availability, booking URL, and image.",
-      "url": "https://www.the2pmclub.co.uk/events.json",
-      "sha256": "ae0b0a8559f3220a9d81fd4895ca2e5951c561ebaaac1de2d07542574a7c8cab"
+      "type": "skill-md",
+      "description": "Fetch upcoming THE 2PM CLUB daytime disco events. Returns JSON with title, date, venue, price, availability, and booking URL for all 6 Midlands cities.",
+      "url": "https://www.the2pmclub.co.uk/.well-known/agent-skills/list-events/SKILL.md",
+      "digest": "sha256:8202615ae08676d6482a7f8f9e1db7408f87180e5408e10e591bf3677ccf79c1"
     }
   ]
 }
