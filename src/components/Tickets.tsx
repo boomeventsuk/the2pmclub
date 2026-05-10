@@ -147,46 +147,60 @@ const Tickets = () => {
       });
   }, []);
 
+  // Mockup shows 6 cards on the homepage; rest live behind "View all dates"
+  const visibleEvents = events.slice(0, 6);
+
   return (
-    <section id="tickets" className="py-12 md:py-20 bg-background">
+    <section id="tickets" className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2 className="font-poppins text-4xl md:text-5xl font-bold text-foreground uppercase">
-            Upcoming <span className="text-primary">Events</span>
-          </h2>
+        <div className="flex items-end justify-between mb-8 md:mb-10">
+          <div>
+            <p className="font-poppins text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-2">
+              The dancefloor opens at 2.
+            </p>
+            <h2 className="font-poppins text-3xl md:text-5xl font-bold text-foreground">
+              Upcoming dates
+            </h2>
+          </div>
+          <a
+            href="/#tickets-list"
+            className="hidden md:inline-flex items-center gap-2 text-primary text-sm font-semibold uppercase tracking-wider hover:gap-3 transition-all"
+          >
+            View all dates →
+          </a>
         </div>
-        
-        {/* Facebook Group Banner */}
-        <a 
-          href="https://www.facebook.com/groups/the2pmclub" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="block mb-8 bg-primary/20 border border-primary/40 rounded-xl px-6 py-4 text-center hover:bg-primary/30 transition-colors"
+
+        <div
+          id="tickets-list"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
-          <p className="font-poppins text-foreground">
-            Join the conversation in our official <span className="text-primary font-semibold">Facebook Group</span>
-          </p>
-        </a>
-        
-        <div className="space-y-6" id="tickets-list">
           {loading ? (
-            <div className="text-center py-12">
+            <div className="col-span-full text-center py-12">
               <p className="text-muted-foreground">Loading events...</p>
             </div>
-          ) : events.length === 0 ? (
-            <div className="text-center py-12">
+          ) : visibleEvents.length === 0 ? (
+            <div className="col-span-full text-center py-12">
               <p className="text-muted-foreground">No upcoming events at the moment.</p>
             </div>
           ) : (
-            events.map((event) => (
-              <EventCard 
-                key={event.slug}
-                {...event} 
-              />
+            visibleEvents.map((event) => (
+              <EventCard key={event.slug} variant="square" {...event} />
             ))
           )}
         </div>
-        
+
+        {/* Request a city CTA */}
+        <div className="mt-12 md:mt-16 max-w-2xl mx-auto text-center">
+          <p className="font-poppins text-base md:text-lg text-muted-foreground">
+            Can't see your city?
+          </p>
+          <a
+            href="mailto:hello@boomevents.co.uk?subject=Bring%20THE%202PM%20CLUB%20to%20my%20city&body=Hi%20%E2%80%94%20I%27d%20love%20to%20see%20a%202PM%20CLUB%20event%20in..."
+            className="inline-flex items-center gap-2 mt-2 font-poppins text-base md:text-lg font-semibold text-primary hover:gap-3 transition-all"
+          >
+            Request a 2PM CLUB near you →
+          </a>
+        </div>
       </div>
     </section>
   );

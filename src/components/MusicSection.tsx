@@ -5,6 +5,9 @@ const MusicSection = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(328_100%_54%_/_0.08)_0%,_transparent_60%)]" />
       
       <div className="container mx-auto max-w-4xl text-center relative z-10">
+        <p className="font-poppins text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
+          Loud enough to feel it in your chest
+        </p>
         <h2 className="font-poppins text-3xl md:text-4xl font-bold text-foreground mb-4 uppercase">
           Every Song A Banger. <span className="text-primary">Zero Filler.</span>
         </h2>

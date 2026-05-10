@@ -16,13 +16,21 @@ const Header = () => {
     <>
       <header className="site-header fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4 header-inner">
-          {/* Logo */}
-          <a href="/" className="site-logo">
-            <img 
+          {/* Logo lockup: roundel + wordmark + tagline */}
+          <a href="/" className="site-logo flex items-center gap-3">
+            <img
               src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png"
-              alt="The 2 PM Club logo"
-              className="h-10 w-auto"
+              alt="THE 2PM CLUB Daytime Disco logo"
+              className="h-11 w-auto"
             />
+            <span className="hidden sm:flex flex-col leading-none border-l border-foreground/15 pl-3">
+              <span className="font-poppins font-extrabold text-foreground text-[15px] tracking-tight">
+                THE 2PM CLUB
+              </span>
+              <span className="font-poppins text-[10px] uppercase tracking-[0.18em] text-primary mt-1">
+                Daytime Disco
+              </span>
+            </span>
           </a>
           
           {/* Navigation */}

@@ -29,23 +29,35 @@ export default function HomeFaq() {
     {
       question: "What time do doors open and when does it finish?",
       answer: "Doors open at 2pm. Event runs until 6pm. You can arrive anytime after 2pm."
+    },
+    {
+      question: "Can I bring my kids?",
+      answer: "No, this one's strictly 18+. The whole point is grown-ups getting an afternoon to themselves. We do run separate Family Silent Disco events if you want to bring the kids along to a different event."
+    },
+    {
+      question: "Will there be food and drink?",
+      answer: "Yes. The venue bar will be open throughout, and most of our venues serve food. We'll always confirm the specifics in your booking confirmation so you know what's available on the day."
+    },
+    {
+      question: "Do I need to print my ticket?",
+      answer: "No need. Just have the e-ticket on your phone, ready to scan at the door. We'll email it the moment you book."
     }
   ];
 
   return (
-    <section aria-labelledby="home-faq-title" className="py-16 md:py-20 bg-card/20">
+    <section aria-labelledby="home-faq-title" className="section-cream py-14 md:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          <h2 id="home-faq-title" className="font-bebas text-3xl md:text-4xl text-foreground mb-8 text-center">
-            Questions People Ask Before They Book
+          <h2 id="home-faq-title" className="font-poppins text-2xl md:text-3xl font-bold text-foreground mb-6">
+            FAQ
           </h2>
-          <Accordion type="single" collapsible className="space-y-3">
+          <Accordion type="single" collapsible className="divide-y divide-[hsl(var(--cream-border))] border-y border-[hsl(var(--cream-border))]">
             {faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="bg-card/60 border border-border/40 rounded-xl px-4">
-                <AccordionTrigger className="text-left font-medium py-4 hover:no-underline">
+              <AccordionItem key={i} value={`faq-${i}`} className="border-0">
+                <AccordionTrigger className="text-left font-poppins text-sm md:text-base font-medium py-4 hover:no-underline text-foreground">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-4">
+                <AccordionContent className="text-muted-foreground pb-4 text-sm">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
