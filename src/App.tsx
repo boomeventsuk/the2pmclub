@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import EventPage from "./pages/EventPage";
+import EventPageV2 from "./pages/EventPageV2";
 import NotFound from "./pages/NotFound";
 import DevEventsIndex from "./pages/DevEventsIndex";
 import SiteFaqs from "./pages/SiteFaqs";
@@ -33,7 +34,8 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/events/:slug/*" element={<EventPage />} />
+              <Route path="/events/:slug/*" element={<EventPageV2 />} />
+              <Route path="/events-v2/:slug" element={<EventPageV2 />} />
               <Route path="/faqs/" element={<SiteFaqs />} />
               <Route path="/blog/" element={<BlogIndex />} />
               <Route path="/blog/why-daytime-discos-are-popular/" element={<WhyDaytimeDiscosArePopular />} />
