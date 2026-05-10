@@ -1,73 +1,81 @@
-import { Facebook, Instagram } from "lucide-react";
+import { Mail, Facebook, Instagram } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer id="contact" className="bg-[hsl(270_45%_10%)] border-t border-foreground/10 py-10">
+    <footer id="contact" className="bg-card border-t border-border py-lg">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-start">
-          {/* Logo */}
-          <div className="col-span-2 md:col-span-1">
-            <a href="/" className="inline-flex items-center gap-2">
-              <img
-                src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png"
-                alt="THE 2PM CLUB Daytime Disco logo"
-                className="h-10 w-auto"
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+          {/* Column 1: Logo + Contact + Social */}
+          <div className="text-center md:text-left">
+            <div className="mb-6 flex justify-center md:justify-start">
+              <img 
+                src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/57926c83-5a73-43e4-b501-9f9c758534fd_fs7hwi.png" 
+                alt="Boombastic Events Logo" 
+                className="h-16 w-auto"
                 loading="lazy"
+                decoding="async"
               />
-            </a>
-          </div>
-
-          {/* Explore */}
-          <div>
-            <h3 className="font-poppins text-[11px] uppercase tracking-widest text-foreground/55 mb-3">Explore</h3>
-            <ul className="space-y-2">
-              <li><a href="/" className="font-poppins text-sm text-foreground/85 hover:text-primary transition-colors">Home</a></li>
-              <li><a href="/#tickets" className="font-poppins text-sm text-foreground/85 hover:text-primary transition-colors">Upcoming Dates</a></li>
-              <li><a href="/what-to-expect/" className="font-poppins text-sm text-foreground/85 hover:text-primary transition-colors">About Us</a></li>
-              <li><a href="/#social-proof" className="font-poppins text-sm text-foreground/85 hover:text-primary transition-colors">Gallery</a></li>
-              <li><a href="/faqs/" className="font-poppins text-sm text-foreground/85 hover:text-primary transition-colors">FAQ</a></li>
-            </ul>
-          </div>
-
-          {/* Info */}
-          <div>
-            <h3 className="font-poppins text-[11px] uppercase tracking-widest text-foreground/55 mb-3">Info</h3>
-            <ul className="space-y-2">
-              <li><a href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query" className="font-poppins text-sm text-foreground/85 hover:text-primary transition-colors">Contact Us</a></li>
-              <li><a href="/terms" className="font-poppins text-sm text-foreground/85 hover:text-primary transition-colors">Terms &amp; Conditions</a></li>
-              <li><a href="/privacy" className="font-poppins text-sm text-foreground/85 hover:text-primary transition-colors">Privacy Policy</a></li>
-            </ul>
-          </div>
-
-          {/* Follow Us */}
-          <div>
-            <h3 className="font-poppins text-[11px] uppercase tracking-widest text-foreground/55 mb-3">Follow Us</h3>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://www.facebook.com/boombastic.eventsuk"
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-                aria-label="Boombastic Events on Facebook"
-                className="w-9 h-9 rounded-full bg-foreground/10 hover:bg-primary/30 flex items-center justify-center text-foreground transition-colors"
+            </div>
+            <div className="flex items-center justify-center md:justify-start mb-6">
+              <a 
+                href="mailto:hello@boomevents.co.uk?subject=The%202PM%20CLUB%20query"
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
               >
-                <Facebook className="w-4 h-4" />
+                <Mail className="w-5 h-5" />
+                <span className="font-poppins">hello@boomevents.co.uk</span>
               </a>
-              <a
-                href="https://www.instagram.com/boombastic.eventsuk"
+            </div>
+            <div className="flex items-center justify-center md:justify-start gap-6">
+              <a 
+                href="https://www.facebook.com/boombastic.eventsuk"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Boombastic Events on Facebook"
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                aria-label="Boombastic Events on Instagram"
-                className="w-9 h-9 rounded-full bg-foreground/10 hover:bg-primary/30 flex items-center justify-center text-foreground transition-colors"
               >
-                <Instagram className="w-4 h-4" />
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a 
+                href="https://www.instagram.com/boombastic.eventsuk"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Boombastic Events on Instagram"
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+              >
+                <Instagram className="w-6 h-6" />
               </a>
             </div>
           </div>
+
+          {/* Column 2: Explore */}
+          <div className="text-center md:text-left">
+            <h3 className="font-poppins font-semibold text-foreground mb-4">Explore</h3>
+            <ul className="space-y-3">
+              <li><a href="/what-to-expect/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">What to Expect</a></li>
+              <li><a href="/group-bookings/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Group Bookings</a></li>
+              <li><a href="/faqs/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">FAQs</a></li>
+              <li><a href="/blog/why-daytime-discos-are-popular/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Cities */}
+          <div className="text-center md:text-left">
+            <h3 className="font-poppins font-semibold text-foreground mb-4">Locations</h3>
+            <ul className="space-y-3">
+              <li><a href="/hubs/northampton/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Northampton</a></li>
+              <li><a href="/hubs/bedford/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Bedford</a></li>
+              <li><a href="/hubs/milton-keynes/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Milton Keynes</a></li>
+              <li><a href="/hubs/coventry/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Coventry</a></li>
+              <li><a href="/hubs/luton/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Luton</a></li>
+              <li><a href="/hubs/leicester/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Leicester</a></li>
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-8 pt-5 border-t border-foreground/10 text-center">
-          <p className="font-poppins text-xs text-foreground/55">
-            © {new Date().getFullYear()} THE 2PM CLUB Daytime Disco. All rights reserved.
+        {/* Copyright */}
+        <div className="mt-12 pt-8 border-t border-border text-center">
+          <p className="font-poppins text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Boombastic Events Ltd. All rights reserved.
           </p>
         </div>
       </div>

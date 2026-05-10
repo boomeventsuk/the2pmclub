@@ -23,76 +23,19 @@ interface EventCardProps {
   soldOut?: boolean;
   urgencyText?: string;
   urgencyColor?: string;
-  variant?: "tall" | "square";
 }
 
-// Strip generic prefix so the card can show the city only ("Northampton")
-const deriveCityFromTitle = (title: string, fallback: string) => {
-  const cleaned = title
-    .replace(/THE 2PM CLUB/i, "")
-    .replace(/Daytime Disco/i, "")
-    .replace(/[—\-:]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-  // Drop anything after a comma or " - " e.g. "Northampton Christmas Special"
-  const firstWord = cleaned.split(/[,\s]+/)[0];
-  return firstWord || fallback;
-};
-
-const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor, variant = "tall" }: EventCardProps) => {
+const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
   const navigate = useNavigate();
 
   const handleBookNow = () => {
     // Fire InitiateCheckout via centralized dataLayer (includes Meta Pixel)
     trackBookClick(slug, title);
-
+    
     // Navigate to event page
     navigate(`/events/${slug}/`);
   };
 
-  if (variant === "square") {
-    const displayCity = deriveCityFromTitle(title, city);
-    return (
-      <article
-        className="event-square"
-        data-ticket-card
-        data-date-iso={dateIso}
-        data-event-slug={slug}
-      >
-        <div className="poster-square">
-          <img
-            src={poster}
-            alt={`${title} event poster`}
-            loading="lazy"
-            decoding="async"
-          />
-          {urgencyText && (
-            <div className={`urgency-strip ${
-              urgencyColor === "green" ? "urgency-strip-green" :
-              urgencyColor === "amber" ? "urgency-strip-amber" : ""
-            }`}>
-              <span>{urgencyText}</span>
-            </div>
-          )}
-        </div>
-        <div className="p-6 md:p-7 flex flex-col flex-1">
-          <h3 className="font-poppins text-2xl font-bold text-foreground leading-tight">
-            {soldOut && <span className="text-destructive">Sold Out — </span>}
-            {displayCity}
-          </h3>
-          <p className="font-poppins text-sm text-muted-foreground mt-1">{venue}</p>
-          <p className="font-poppins text-sm text-muted-foreground mt-3">{date}</p>
-          <Button
-            onClick={handleBookNow}
-            className="mt-5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold uppercase tracking-wide text-sm rounded-full py-6"
-            data-event-slug={slug}
-          >
-            {soldOut ? "Waiting List" : "Book Now"}
-          </Button>
-        </div>
-      </article>
-    );
-  }
 
   return (
     <article 

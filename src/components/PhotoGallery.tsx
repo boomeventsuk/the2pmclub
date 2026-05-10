@@ -1,38 +1,37 @@
 const PhotoGallery = () => {
-  // Mockup: 5 crowd photos in a row under "The 2PM CLUB crowd"
   const photos = [
     "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_1_ndjab4.jpg",
     "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_2_qedzzq.jpg",
     "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_3_nuwrvk.jpg",
     "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_4_j87ixj.jpg",
     "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_5_eln7gp.jpg",
+    "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_6_bjt6h7.jpg",
+    "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_7_jl6yvd.jpg",
   ];
 
-  return (
-    <section className="section-cream py-14 md:py-20 px-4">
-      <div className="container mx-auto">
-        <p className="font-poppins text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
-          Real Saturdays, real people
-        </p>
-        <h2 className="font-poppins text-2xl md:text-4xl font-bold text-foreground mb-8">
-          The <span className="text-primary">2PM CLUB</span> crowd
-        </h2>
+  // Duplicate for seamless infinite scroll
+  const allPhotos = [...photos, ...photos];
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
-          {photos.map((photo, index) => (
-            <div
-              key={index}
-              className="aspect-[4/3] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-            >
-              <img
-                src={photo}
-                alt={`THE 2PM CLUB crowd ${index + 1}`}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          ))}
-        </div>
+  return (
+    <section className="py-8 md:py-12 overflow-hidden bg-background relative">
+      {/* Gradient overlays for fade effect */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      
+      <div className="flex gap-4 md:gap-6 animate-scroll">
+        {allPhotos.map((photo, index) => (
+          <div
+            key={index}
+            className="flex-shrink-0 w-48 md:w-72 aspect-[4/3] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+          >
+            <img
+              src={photo}
+              alt={`THE 2PM CLUB party atmosphere ${(index % photos.length) + 1}`}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        ))}
       </div>
     </section>
   );
