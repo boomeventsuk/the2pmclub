@@ -264,9 +264,9 @@ const EventPageV2 = () => {
                 {/* Right card: locked 3-line header + facts + CTA */}
                 <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-7 space-y-5">
                   {isSellingFast && (
-                    <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 rounded-full px-3 py-1">
-                      <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                      <span className="font-poppins font-semibold text-xs md:text-sm text-primary tracking-wide uppercase">
+                    <div className="inline-flex items-center gap-2.5 bg-primary/15 border border-primary/30 rounded-full px-4 py-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+                      <span className="font-poppins font-bold text-base text-primary tracking-wide uppercase">
                         {event.statusLabel || 'Selling fast'}
                       </span>
                     </div>
