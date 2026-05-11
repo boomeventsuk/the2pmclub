@@ -12,5 +12,15 @@ https://the2pmclub.co.uk/*   https://www.the2pmclub.co.uk/:splat  301!
 /blog/hen-do-daytime-disco/*          /blog/hen-do-daytime-disco/index.html      200
 /events/250726-2PM-NPTON-80S/*        /events/250726-2PM-NPTON/                 301!
 
-# SPA fallback (everything else)
-/*                           /index.html                          200
+# SPA routes — explicit React Router paths only, so unknown URLs fall through to 404
+/                      /index.html  200
+/events/*              /index.html  200
+/events-v2/*           /index.html  200
+/faqs                  /index.html  200
+/blog                  /index.html  200
+/blog/                 /index.html  200
+/blog/why-daytime-discos-are-popular/   /index.html  200
+/blog/why-2pm-works/   /index.html  200
+
+# Catch-all 404 for genuinely unknown URLs — must be LAST
+/*                     /404.html    404

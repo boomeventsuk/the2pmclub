@@ -7,7 +7,6 @@ import EventbriteEmbed from '@/components/EventbriteEmbed';
 import { Calendar, MapPin, Clock, Ticket, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
-import { trackBookClick, trackEventPageView } from '@/lib/dataLayer';
 
 // Hero reel URLs on Bunny CDN.
 // Per-city cuts live at hero-1x1-{cityCode}.mp4 (NPTON, BED, COV, MK, LUT, LEIC).
@@ -35,11 +34,6 @@ interface EventJson {
   status?: string;
   statusLabel?: string;
   urgencyLabel?: string;
-  editionLabel?: string;
-  heroSubtitle?: string;
-  musicDescription?: string;
-  soundtrackLine?: string;
-  heroMedia?: 'video' | 'image';
   accentColor?: string;
   price?: number;
   legacyLine?: string;
@@ -61,11 +55,6 @@ interface EventData {
   status?: string;
   statusLabel?: string;
   urgencyLabel?: string;
-  editionLabel?: string;
-  heroSubtitle?: string;
-  musicDescription?: string;
-  soundtrackLine?: string;
-  heroMedia?: 'video' | 'image';
   price?: number;
   legacyLine?: string;
 }
@@ -127,11 +116,6 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         status: event.status,
         statusLabel: event.statusLabel,
         urgencyLabel: event.urgencyLabel,
-        editionLabel: event.editionLabel,
-        heroSubtitle: event.heroSubtitle,
-        musicDescription: event.musicDescription,
-        soundtrackLine: event.soundtrackLine,
-        heroMedia: event.heroMedia,
         price: event.price,
         legacyLine: event.legacyLine,
       };
@@ -148,8 +132,8 @@ const EventPageV2 = () => {
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
   const [reelSrc, setReelSrc] = useState<string>(HERO_REEL_MASTER);
+  const [showCheckout, setShowCheckout] = useState(false);
   const checkoutRef = useRef<HTMLDivElement>(null);
-  const checkoutIntentTracked = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -170,30 +154,8 @@ const EventPageV2 = () => {
     }
   };
 
-  const getTrackingContext = (source?: string) => {
-    if (!event) return {};
-    return {
-      eventbriteId: event.eventbriteId,
-      city: event.city,
-      venue: event.venue,
-      date: event.date,
-      startIso: event.startIso,
-      status: event.status,
-      price: event.price,
-      source
-    };
-  };
-
-  useEffect(() => {
-    if (!event) return;
-    trackEventPageView(event.slug, event.title, getTrackingContext('event_page'));
-  }, [event?.slug]);
-
-  const scrollToCheckout = (source = 'ticket_button') => {
-    if (event && !checkoutIntentTracked.current) {
-      checkoutIntentTracked.current = true;
-      trackBookClick(event.slug, event.title, getTrackingContext(source));
-    }
+  const scrollToCheckout = () => {
+    setShowCheckout(true);
     checkoutRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -213,34 +175,11 @@ const EventPageV2 = () => {
     );
   }
 
-  const musicDescription = event.musicDescription || 'Iconic 80s, 90s and 00s anthems.';
-  const isEightiesEdition = event.editionLabel === '80s Edition';
-  const faqs = isEightiesEdition ? [
-    {
-      q: "Is this different to the normal 2PM Club?",
-      a: "Yes. Same daytime disco format, but this date is 80s-only for one afternoon."
-    },
-    {
-      q: "Is it fancy dress?",
-      a: "Come as dressed-up or dressed-down as you like. The 80s are in the music, not a costume requirement."
-    },
-    {
-      q: "What time does it finish?",
-      a: "Last song is 6pm. Plenty of time to go for food, carry on somewhere else, or be home by 7."
-    },
-    {
-      q: "Who is it for?",
-      a: "Grown-ups who want a proper Saturday dance without giving Sunday away."
-    },
-    {
-      q: "Are tickets refundable?",
-      a: "Tickets are non-refundable unless the event is cancelled."
-    },
-  ] : [
+  const faqs = [
     { q: "Is it really like a night out clubbing in the afternoon?",
       a: "Yes. Proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing." },
     { q: "What music will be played?",
-      a: musicDescription },
+      a: "80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. Whitney, Wham!, Spice Girls, Beyoncé, Take That, The Killers, Oasis." },
     { q: "Why do you start at 2pm?",
       a: "Because the best part of any night out happens early. Doors at 2, finish by 6. You get the night out, you keep your evening, you keep your Sunday." },
     { q: "Do you offer group tickets?",
@@ -256,62 +195,16 @@ const EventPageV2 = () => {
   const isLastTickets = event.status === 'last-tickets';
   const isSoldOut = event.status === 'sold-out';
   const isSellingFast = event.status === 'selling-fast';
-  const isAmberUrgency = event.status === 'selling-fast-amber';
-  const isJustAnnounced = event.status === 'just-announced' || event.status === 'new-date';
-  const useImageHero = event.heroMedia === 'image';
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
-  const canonicalUrl = `https://www.the2pmclub.co.uk/events/${event.slug}/`;
-  const eventSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'DanceEvent',
-    name: event.title,
-    description: `THE 2PM CLUB Daytime Disco in ${event.city}. ${musicDescription} ${event.timeDisplay}.`,
-    image: event.squareImg,
-    startDate: event.startIso,
-    eventStatus: 'https://schema.org/EventScheduled',
-    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    url: canonicalUrl,
-    location: {
-      '@type': 'Place',
-      name: event.venue,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: event.city,
-        addressCountry: 'GB'
-      }
-    },
-    organizer: {
-      '@type': 'Organization',
-      name: 'THE 2PM CLUB',
-      url: 'https://www.the2pmclub.co.uk/'
-    },
-    offers: {
-      '@type': 'Offer',
-      url: canonicalUrl,
-      price: event.price,
-      priceCurrency: 'GBP',
-      availability: isSoldOut ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock'
-    },
-    identifier: event.eventbriteId
-  };
 
   return (
     <>
       <Helmet>
-        <title>{event.editionLabel ? `The 2PM Club ${event.editionLabel} — ${event.city}` : `The 2PM Club — ${event.city} — ${event.date}`}</title>
-        <meta name="description" content={event.heroSubtitle || `THE 2PM CLUB Daytime Disco. ${event.city}, ${event.date}. ${musicDescription} Sing your heart out. Home by 7.`} />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={event.editionLabel ? `The 2PM Club ${event.editionLabel} — ${event.city}` : `The 2PM Club — ${event.city} — ${event.date}`} />
-        <meta property="og:description" content={event.heroSubtitle || `Sing your heart out. Home by 7. ${musicDescription}`} />
+        <title>The 2PM Club — {event.city} — {event.date}</title>
+        <meta name="description" content={`THE 2PM CLUB Daytime Disco. ${event.city}, ${event.date}. Iconic 80s, 90s and 00s anthems. Sing your heart out. Home by 7.`} />
+        <meta property="og:title" content={`The 2PM Club — ${event.city} — ${event.date}`} />
+        <meta property="og:description" content="Sing your heart out. Home by 7. Iconic 80s, 90s and 00s anthems." />
         <meta property="og:image" content={event.squareImg} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta name="eventbrite:id" content={event.eventbriteId} />
-        <meta name="event:city" content={event.city} />
-        <meta name="event:venue" content={event.venue} />
-        <meta name="event:start_time" content={event.startIso} />
-        {event.price && <meta name="product:price:amount" content={String(event.price)} />}
-        <meta name="product:price:currency" content="GBP" />
-        <script type="application/ld+json">{JSON.stringify(eventSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background pb-20 md:pb-0">
@@ -339,31 +232,21 @@ const EventPageV2 = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
               <div className="grid md:grid-cols-2 gap-6 items-start">
-                {/* Hero media */}
+                {/* Hero video */}
                 <div className="flex justify-center md:justify-start">
                   <div className="relative w-full max-w-md aspect-square rounded-xl overflow-hidden shadow-2xl shadow-primary/20 bg-black">
-                    {useImageHero ? (
-                      <img
-                        src={event.squareImg}
-                        alt={`${event.title} event artwork`}
-                        className="w-full h-full object-cover"
-                        loading="eager"
-                        decoding="async"
-                      />
-                    ) : (
-                      <video
-                        key={reelSrc}
-                        src={reelSrc}
-                        poster={event.squareImg}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        onError={handleReelError}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
+                    <video
+                      key={reelSrc}
+                      src={reelSrc}
+                      poster={event.squareImg}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      onError={handleReelError}
+                      className="w-full h-full object-cover"
+                    />
                     {/* CSS overlay: city + date badge, low contrast, bottom area, clears the baked-in logo */}
                     <div className="absolute top-3 left-3 right-3 flex justify-between items-start pointer-events-none">
                       <div className="bg-black/40 backdrop-blur-sm rounded-md px-2.5 py-1">
@@ -382,11 +265,11 @@ const EventPageV2 = () => {
 
                 {/* Right card: locked 3-line header + facts + CTA */}
                 <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-7 space-y-5">
-                  {(isSellingFast || isAmberUrgency || isJustAnnounced) && (
+                  {isSellingFast && (
                     <div className="inline-flex items-center gap-2.5 bg-primary/15 border border-primary/30 rounded-full px-4 py-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
                       <span className="font-poppins font-bold text-base text-primary tracking-wide uppercase">
-                        {event.statusLabel || (isJustAnnounced ? 'Just announced' : 'Selling fast')}
+                        {event.statusLabel || 'Selling fast'}
                       </span>
                     </div>
                   )}
@@ -396,19 +279,13 @@ const EventPageV2 = () => {
                       <br />
                       <span className="text-foreground/90">Daytime Disco</span>
                       <br />
-                      {event.editionLabel && (
-                        <>
-                          <span className="text-foreground/90">{event.editionLabel}</span>
-                          <br />
-                        </>
-                      )}
                       <span className="text-primary">{event.city}</span>
                     </h1>
                     <p className="font-poppins text-lg md:text-xl text-foreground/85 mt-3 font-medium">
-                      {event.heroSubtitle || 'Your best night out. In the middle of the afternoon.'}
+                      Your best night out. In the middle of the afternoon.
                     </p>
                     <p className="font-poppins text-base md:text-lg text-foreground/70 mt-1">
-                      {musicDescription}
+                      Iconic 80s, 90s and 00s anthems.
                     </p>
                   </div>
 
@@ -444,7 +321,7 @@ const EventPageV2 = () => {
                   </div>
 
                   <Button
-                    onClick={() => scrollToCheckout('hero_button')}
+                    onClick={scrollToCheckout}
                     size="lg"
                     className="w-full font-poppins font-semibold text-lg"
                   >
@@ -515,7 +392,7 @@ const EventPageV2 = () => {
                 Your Soundtrack
               </p>
               <p className="font-poppins text-xl md:text-2xl text-foreground/90 leading-relaxed">
-                {event.soundtrackLine || 'Spice Girls. Oasis. Whitney. ABBA. Bon Jovi. Take That. Beyoncé.'}
+                Spice Girls. Oasis. Whitney. ABBA. Bon Jovi. Take That. Beyoncé.
                 <br className="hidden md:block" />
                 {' '}Every chorus you still know by heart.
               </p>
@@ -537,14 +414,34 @@ const EventPageV2 = () => {
                   </p>
                 </div>
                 <div className="bg-card/50 rounded-xl overflow-hidden">
-                  <EventbriteEmbed
-                    eventbriteId={event.eventbriteId}
-                    eventSlug={event.slug}
-                    containerId={`eventbrite-widget-v2-${event.slug}`}
-                    height={650}
-                    promoCode={event.promoCode}
-                    eventTitle={event.title}
-                  />
+                  {showCheckout ? (
+                    <EventbriteEmbed
+                      eventbriteId={event.eventbriteId}
+                      eventSlug={event.slug}
+                      containerId={`eventbrite-widget-v2-${event.slug}`}
+                      height={650}
+                      promoCode={event.promoCode}
+                      eventTitle={event.title}
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-center px-6 py-10 md:py-14">
+                      <p className="font-poppins text-sm md:text-base text-foreground/70 mb-5">
+                        Tap below to load the secure Eventbrite checkout.
+                      </p>
+                      <Button
+                        size="lg"
+                        onClick={() => setShowCheckout(true)}
+                        className="font-poppins font-bold uppercase tracking-wide"
+                        aria-label={`Load Eventbrite checkout for ${event.title}`}
+                      >
+                        <Ticket className="w-5 h-5 mr-2" />
+                        {isSoldOut ? 'Join the Waiting List' : 'Book Tickets'}
+                      </Button>
+                      <p className="font-poppins text-xs text-foreground/50 mt-4">
+                        Secure checkout powered by Eventbrite. Loads on tap to keep the page fast.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -560,7 +457,7 @@ const EventPageV2 = () => {
               </h2>
               <div className="grid gap-3 md:grid-cols-2">
                 {[
-                  { emoji: "🎤", title: "The Room Where Everyone Knows Every Word", body: musicDescription },
+                  { emoji: "🎤", title: "The Room Where Everyone Knows Every Word", body: "Wall-to-wall 80s, 90s and 00s. Confetti, lights, and the moment the whole room sings together." },
                   { emoji: "🕺", title: "Night-Out Energy. Afternoon Timing.", body: "Same atmosphere you remember from your best nights out. Dance freely, and still be home by 7pm." },
                   { emoji: "👯", title: "The One Plan That Doesn't Fall Apart", body: "2pm Saturday works for everyone. No babysitter dramas, no late-night worries. One link. One plan." },
                   { emoji: "😎", title: "All The Fun. Still Buzzing By Wednesday.", body: "You walked out last time saying \"Let's do it again!\" This is the time to do it." },

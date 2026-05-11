@@ -17,13 +17,14 @@ const MusicSection = () => {
         </p>
         
         <div className="max-w-lg mx-auto rounded-xl overflow-hidden shadow-[0_0_40px_hsl(328_100%_54%_/_0.15)]">
-          <iframe 
-            src="https://open.spotify.com/embed/playlist/6e7znhSoj4DbYlTdXaxoDW?utm_source=generator&theme=0" 
-            width="100%" 
-            height="352" 
-            frameBorder="0" 
+          <iframe
+            title="THE 2PM CLUB Spotify playlist preview"
+            src="https://open.spotify.com/embed/playlist/6e7znhSoj4DbYlTdXaxoDW?utm_source=generator&theme=0"
+            width="100%"
+            height="352"
+            frameBorder="0"
             allowFullScreen
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
             className="rounded-xl"
           ></iframe>

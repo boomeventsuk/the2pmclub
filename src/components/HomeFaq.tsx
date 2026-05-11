@@ -4,7 +4,7 @@ export default function HomeFaq() {
   const faqs = [
     {
       question: "Is it really like a night out clubbing in the afternoon?",
-      answer: "Yes. Club-level production, proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing."
+      answer: "Yes. Same energy as a night out. You're done by 6pm and you'll actually feel good the next day. Better timing, same buzz."
     },
     {
       question: "What music will be played?",

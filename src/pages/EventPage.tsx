@@ -272,7 +272,7 @@ const EventPage = () => {
   // FAQs data
   const faqs = [{
     question: "Is it really like a night out clubbing in the afternoon?",
-    answer: "Yes. Club-level production, proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing."
+    answer: "Yes. Same energy as a night out. You're done by 6pm and you'll actually feel good the next day. Better timing, same buzz."
   }, {
     question: "What music will be played?",
     answer: "80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. The DJ builds the energy across the afternoon—starting with solid, accessible tracks and building toward peak moments. Think Whitney, Wham!, Spice Girls, Beyoncé, Take That, The Killers, Oasis."

@@ -175,14 +175,14 @@ function buildReviewSchema(): string {
       },
       {
         "@type": "Review",
-        author: { "@type": "Person", name: "Claire W" },
+        author: { "@type": "Person", name: "Verified attendee" },
         reviewRating: {
           "@type": "Rating",
           ratingValue: "5",
           bestRating: "5",
         },
         reviewBody:
-          "The confetti cannons, the singalongs, the energy in the room. Haven't felt that alive in years.",
+          "It felt like 2am not 2pm!",
       },
     ],
   });
@@ -233,7 +233,7 @@ function buildNoscriptContent(events: EventData[]): string {
       <h2>Frequently Asked Questions</h2>
       <dl>
         <dt>Is it really like a night out clubbing in the afternoon?</dt>
-        <dd>Yes. Club-level production, proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing.</dd>
+        <dd>Yes. Same energy as a night out, just at a time that actually works. You're done by 6pm and you'll actually feel good the next day. Better timing.</dd>
 
         <dt>What music will be played?</dt>
         <dd>80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. The DJ builds the energy across the afternoon. Think Whitney, Wham!, Spice Girls, Beyonce, Take That, The Killers, Oasis.</dd>
@@ -256,7 +256,7 @@ function buildNoscriptContent(events: EventData[]): string {
 
       <h2>About THE 2PM CLUB</h2>
       <p>THE 2PM CLUB is a daytime disco created by Boombastic Events, running sell-out events across Northampton, Bedford, Milton Keynes, Coventry, Luton, and Leicester. Founded on the principle that the best time to party is the afternoon: same energy, better timing, no regrets. Part of Boombastic Events, which has been running sell-out events across the Midlands for over 12 years.</p>
-      <p>Events feature wall-to-wall 80s, 90s and 00s anthems with club-level production, confetti cannons, massive screens, and dazzling lights. Tickets typically start from £10-15.</p>
+      <p>Wall-to-wall 80s, 90s and 00s anthems. Night-out energy in the afternoon. Tickets typically start from £10-15.</p>
       <p>Contact: hello@boomevents.co.uk</p>
       <p>Cities: Northampton, Bedford, Milton Keynes, Coventry, Luton, Leicester</p>
 

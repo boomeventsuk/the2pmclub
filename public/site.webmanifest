@@ -1,0 +1,23 @@
+{
+  "name": "THE 2PM CLUB",
+  "short_name": "2PM CLUB",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0B0B0F",
+  "theme_color": "#FF1493",
+  "description": "THE 2PM CLUB Daytime Disco. Night-out energy in the afternoon. Home by 7.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
