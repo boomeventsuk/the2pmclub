@@ -245,7 +245,8 @@
     "priceLabel": "From £15.00",
     "availability": "https://schema.org/InStock",
     "priceLastSync": "2026-05-11T10:55:31.474Z",
-    "statusLabel": "Selling fast",
+    "statusLabel": "Final release, 100 left",
+    "statusLabelOverride": "Final release, 100 left",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -319,7 +320,8 @@
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/InStock",
     "priceLastSync": "2026-05-11T10:55:32.622Z",
-    "statusLabel": "Selling fast",
+    "statusLabel": "Final release, 50 left",
+    "statusLabelOverride": "Final release, 50 left",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",

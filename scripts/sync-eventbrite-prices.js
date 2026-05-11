@@ -225,7 +225,16 @@ async function main() {
         event.priceCurrency = priceData.public.priceCurrency;
         event.priceLabel = priceData.public.priceLabel;
         event.availability = priceData.public.availability;
-        event.statusLabel = priceData.public.statusLabel;
+        // Manual override: if event.statusLabelOverride is set, the sync will
+        // not touch event.statusLabel. Use this when a label has been hand-set
+        // by JD (e.g. "Final release, 100 left") and should not be reverted to
+        // the computed label on the next sync run.
+        if (event.statusLabelOverride && String(event.statusLabelOverride).trim().length > 0) {
+          event.statusLabel = event.statusLabelOverride;
+          console.log(`    NOTE: statusLabel override in effect ("${event.statusLabelOverride}"), computed label "${priceData.public.statusLabel}" not applied`);
+        } else {
+          event.statusLabel = priceData.public.statusLabel;
+        }
         if (priceData.public.tierLabels) {
           event.tierLabels = priceData.public.tierLabels;
         } else {
