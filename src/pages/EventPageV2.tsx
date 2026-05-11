@@ -276,6 +276,8 @@ const EventPageV2 = () => {
                       The 2PM Club
                       <br />
                       <span className="text-foreground/90">Daytime Disco</span>
+                      <br />
+                      <span className="text-primary">{event.city}</span>
                     </h1>
                     <p className="font-poppins text-lg md:text-xl text-foreground/85 mt-3 font-medium">
                       Sing your heart out. Home by 7.
