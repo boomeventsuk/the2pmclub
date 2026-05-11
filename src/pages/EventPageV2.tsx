@@ -280,7 +280,7 @@ const EventPageV2 = () => {
                       <span className="text-primary">{event.city}</span>
                     </h1>
                     <p className="font-poppins text-lg md:text-xl text-foreground/85 mt-3 font-medium">
-                      Sing your heart out. Home by 7.
+                      Your best night out. In the middle of the afternoon.
                     </p>
                     <p className="font-poppins text-base md:text-lg text-foreground/70 mt-1">
                       Iconic 80s, 90s and 00s anthems.
