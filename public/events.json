@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-05-22T16:19:44.605Z",
+    "priceLastSync": "2026-05-23T09:45:33.429Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -56,7 +56,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-05-22T16:19:45.196Z",
+    "priceLastSync": "2026-05-23T09:45:33.952Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
@@ -93,7 +93,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-05-22T16:19:46.189Z",
+    "priceLastSync": "2026-05-23T09:45:34.483Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -129,7 +129,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-05-22T16:19:46.835Z",
+    "priceLastSync": "2026-05-23T09:45:35.037Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
@@ -168,7 +168,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-05-22T16:19:47.410Z",
+    "priceLastSync": "2026-05-23T09:45:35.688Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
@@ -207,7 +207,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-05-22T16:19:47.958Z",
+    "priceLastSync": "2026-05-23T09:45:36.238Z",
     "statusLabel": "75% sold",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -244,7 +244,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £15.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-05-22T16:19:48.509Z",
+    "priceLastSync": "2026-05-23T09:45:36.790Z",
     "statusLabel": "Final release, 100 left",
     "statusLabelOverride": "Final release, 100 left",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
@@ -279,12 +279,12 @@
     "highlights": "🎤 ICONIC ANTHEMS. NONSTOP ENERGY: Wall-to-wall classics from Wham! to Whitney, Bon Jovi to Beyoncé. You WILL do the moves. You WILL lose your voice. You WILL text each other about it for weeks.|🕺 DAYTIME PARTY, NIGHT-OUT VIBES: Same Boombastic team. Club-level production, massive screens, dazzling lights, and confetti explosions - just at people-friendly hours. Dance freely, laugh loudly, and still be home by 7pm.|👯 FINALLY, A PLAN NOBODY BAILS ON: This is the plan that will escape the group chat. Four hours where everyone actually makes it - no babysitter dramas, no late-night worries. Adulting can wait.|😎 ALL THE FUN. STILL BUZZING BY WEDNESDAY: Last time, you walked out saying \"Let's do it again!\" This is the time to do it. This is your plan.|🏆 TRUST THE LEGACY: Created by Boombastic Events - 10+ years of consistent sell-outs across the UK because we know how to create moments that matter.",
     "status": "selling-fast",
     "accentColor": "coral",
-    "price": 12,
+    "price": 10,
     "priceCurrency": "GBP",
-    "priceLabel": "From £12.00",
+    "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-05-22T16:19:49.068Z",
-    "statusLabel": "Final tickets",
+    "priceLastSync": "2026-05-23T09:45:37.324Z",
+    "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -292,7 +292,9 @@
       "addressCountry": "GB"
     },
     "tierLabels": [
-      "Early Release Ticket sold out"
+      "Early Release Ticket sold out",
+      "General Release Ticket sold out",
+      "Group Ticket for 4 People sold out"
     ],
     "priceFrom": 12
   },
@@ -319,7 +321,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-05-22T16:19:49.612Z",
+    "priceLastSync": "2026-05-23T09:45:37.880Z",
     "statusLabel": "Final release, 50 left",
     "statusLabelOverride": "Final release, 50 left",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
@@ -358,7 +360,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-05-22T16:19:50.186Z",
+    "priceLastSync": "2026-05-23T09:45:38.428Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
@@ -396,7 +398,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-05-22T16:19:50.775Z",
+    "priceLastSync": "2026-05-23T09:45:38.936Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -431,7 +433,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-05-22T16:19:51.355Z",
+    "priceLastSync": "2026-05-23T09:45:39.457Z",
     "statusLabel": "Just announced",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
