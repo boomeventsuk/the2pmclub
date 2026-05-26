@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { isConsentGranted } from '@/lib/cookieConsent';
 import { trackPurchase, trackAddToCart, trackCheckoutInteraction } from '@/lib/dataLayer';
 
 interface EventbriteModalProps {
@@ -21,6 +20,18 @@ declare global {
 
 const EventbriteModal = ({ eventbriteId, triggerId, eventSlug, eventTitle, promoCode, onOrderComplete }: EventbriteModalProps) => {
   const hasTrackedInteraction = useRef(false);
+  const trackingContext = {
+    eventbriteId,
+    source: 'eventbrite_modal'
+  };
+
+  const normaliseEventbriteValue = (order: any): number | undefined => {
+    const rawValue = order?.gross_total?.major_value ?? order?.gross_total?.value;
+    if (rawValue === undefined || rawValue === null) return undefined;
+    const numericValue = Number(rawValue);
+    if (Number.isNaN(numericValue)) return undefined;
+    return numericValue > 1000 ? numericValue / 100 : numericValue;
+  };
 
   useEffect(() => {
     // Load Eventbrite widget script if not already loaded
@@ -45,12 +56,15 @@ const EventbriteModal = ({ eventbriteId, triggerId, eventSlug, eventTitle, promo
           modalTriggerElementId: triggerId,
           ...(promoCode && { promoCode }),
           onOrderComplete: (order: any) => {
-            const value = order?.gross_total?.value || 0;
+            const value = normaliseEventbriteValue(order);
             const orderId = order?.id;
             
             // Track purchase via centralized dataLayer (includes Meta Pixel)
             if (eventSlug) {
-              trackPurchase(eventSlug, eventTitle || '', value, orderId);
+              trackPurchase(eventSlug, eventTitle || '', value, orderId, {
+                ...trackingContext,
+                source: 'eventbrite_modal_order_complete'
+              });
             }
             
             if (onOrderComplete) {
@@ -73,13 +87,19 @@ const EventbriteModal = ({ eventbriteId, triggerId, eventSlug, eventTitle, promo
         if (data.type === 'ticket_selected' || data.event === 'ticket_selected') {
           if (!hasTrackedInteraction.current && eventSlug) {
             hasTrackedInteraction.current = true;
-            trackAddToCart(eventSlug, eventTitle || '');
+            trackAddToCart(eventSlug, eventTitle || '', {
+              ...trackingContext,
+              source: 'eventbrite_modal_ticket_selected'
+            });
           }
         }
         
         if (data.type === 'checkout_started' || data.event === 'checkout_started') {
           if (eventSlug) {
-            trackCheckoutInteraction(eventSlug, eventTitle || '');
+            trackCheckoutInteraction(eventSlug, eventTitle || '', {
+              ...trackingContext,
+              source: 'eventbrite_modal_checkout_started'
+            });
           }
         }
       } catch (e) {

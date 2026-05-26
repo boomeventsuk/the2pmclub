@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { isConsentGranted } from '@/lib/cookieConsent';
 import { trackPurchase, trackAddToCart, trackCheckoutInteraction } from '@/lib/dataLayer';
 
 interface EventbriteEmbedProps {
@@ -22,6 +21,18 @@ declare global {
 
 const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, promoCode, eventTitle, onOrderComplete }: EventbriteEmbedProps) => {
   const hasTrackedInteraction = useRef(false);
+  const trackingContext = {
+    eventbriteId,
+    source: 'eventbrite_embed'
+  };
+
+  const normaliseEventbriteValue = (order: any): number | undefined => {
+    const rawValue = order?.gross_total?.major_value ?? order?.gross_total?.value;
+    if (rawValue === undefined || rawValue === null) return undefined;
+    const numericValue = Number(rawValue);
+    if (Number.isNaN(numericValue)) return undefined;
+    return numericValue > 1000 ? numericValue / 100 : numericValue;
+  };
 
   useEffect(() => {
     // Load Eventbrite widget script if not already loaded
@@ -46,11 +57,14 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
           iframeContainerHeight: height,
           ...(promoCode && { promoCode }),
           onOrderComplete: (order: any) => {
-            const value = order?.gross_total?.value || 0;
+            const value = normaliseEventbriteValue(order);
             const orderId = order?.id;
             
             // Track purchase via centralized dataLayer (includes Meta Pixel)
-            trackPurchase(eventSlug, eventTitle || '', value, orderId);
+            trackPurchase(eventSlug, eventTitle || '', value, orderId, {
+              ...trackingContext,
+              source: 'eventbrite_order_complete'
+            });
             
             if (onOrderComplete) {
               onOrderComplete();
@@ -95,7 +109,10 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
           // Fire AddToCart on ticket selection if not already tracked
           if (!hasTrackedInteraction.current) {
             hasTrackedInteraction.current = true;
-            trackAddToCart(eventSlug, eventTitle || '');
+            trackAddToCart(eventSlug, eventTitle || '', {
+              ...trackingContext,
+              source: 'eventbrite_ticket_selected'
+            });
             if (isDebugMode()) {
               console.log('[EB Debug] AddToCart tracked via postMessage');
             }
@@ -103,7 +120,10 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
         }
         
         if (data.type === 'checkout_started' || data.event === 'checkout_started') {
-          trackCheckoutInteraction(eventSlug, eventTitle || '');
+          trackCheckoutInteraction(eventSlug, eventTitle || '', {
+            ...trackingContext,
+            source: 'eventbrite_checkout_started'
+          });
           if (isDebugMode()) {
             console.log('[EB Debug] Checkout interaction tracked via postMessage');
           }
@@ -135,12 +155,18 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
         }
         
         // Track checkout interaction
-        trackCheckoutInteraction(eventSlug, eventTitle || '');
+        trackCheckoutInteraction(eventSlug, eventTitle || '', {
+          ...trackingContext,
+          source: 'eventbrite_iframe_focus'
+        });
         
         // Fire AddToCart only once per session
         if (!hasTrackedInteraction.current) {
           hasTrackedInteraction.current = true;
-          trackAddToCart(eventSlug, eventTitle || '');
+          trackAddToCart(eventSlug, eventTitle || '', {
+            ...trackingContext,
+            source: 'eventbrite_iframe_focus'
+          });
           if (isDebugMode()) {
             console.log('[EB Debug] AddToCart tracked via iframe focus');
           }
