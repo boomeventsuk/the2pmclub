@@ -7,6 +7,7 @@ import EventbriteEmbed from '@/components/EventbriteEmbed';
 import { Calendar, MapPin, Clock, Ticket, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import { trackBookClick, trackEventPageView } from '@/lib/dataLayer';
 
 // Hero reel URLs on Bunny CDN.
 // Per-city cuts live at hero-1x1-{cityCode}.mp4 (NPTON, BED, COV, MK, LUT, LEIC).
@@ -133,6 +134,7 @@ const EventPageV2 = () => {
   const [loading, setLoading] = useState(true);
   const [reelSrc, setReelSrc] = useState<string>(HERO_REEL_MASTER);
   const checkoutRef = useRef<HTMLDivElement>(null);
+  const checkoutIntentTracked = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -153,7 +155,30 @@ const EventPageV2 = () => {
     }
   };
 
-  const scrollToCheckout = () => {
+  const getTrackingContext = (source?: string) => {
+    if (!event) return {};
+    return {
+      eventbriteId: event.eventbriteId,
+      city: event.city,
+      venue: event.venue,
+      date: event.date,
+      startIso: event.startIso,
+      status: event.status,
+      price: event.price,
+      source
+    };
+  };
+
+  useEffect(() => {
+    if (!event) return;
+    trackEventPageView(event.slug, event.title, getTrackingContext('event_page'));
+  }, [event?.slug]);
+
+  const scrollToCheckout = (source = 'ticket_button') => {
+    if (event && !checkoutIntentTracked.current) {
+      checkoutIntentTracked.current = true;
+      trackBookClick(event.slug, event.title, getTrackingContext(source));
+    }
     checkoutRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -194,15 +219,58 @@ const EventPageV2 = () => {
   const isSoldOut = event.status === 'sold-out';
   const isSellingFast = event.status === 'selling-fast';
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
+  const canonicalUrl = `https://www.the2pmclub.co.uk/events/${event.slug}/`;
+  const eventSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'DanceEvent',
+    name: event.title,
+    description: `THE 2PM CLUB Daytime Disco in ${event.city}. Iconic 80s, 90s and 00s anthems from ${event.timeDisplay}.`,
+    image: event.squareImg,
+    startDate: event.startIso,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    url: canonicalUrl,
+    location: {
+      '@type': 'Place',
+      name: event.venue,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: event.city,
+        addressCountry: 'GB'
+      }
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'THE 2PM CLUB',
+      url: 'https://www.the2pmclub.co.uk/'
+    },
+    offers: {
+      '@type': 'Offer',
+      url: canonicalUrl,
+      price: event.price,
+      priceCurrency: 'GBP',
+      availability: isSoldOut ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock'
+    },
+    identifier: event.eventbriteId
+  };
 
   return (
     <>
       <Helmet>
         <title>The 2PM Club — {event.city} — {event.date}</title>
         <meta name="description" content={`THE 2PM CLUB Daytime Disco. ${event.city}, ${event.date}. Iconic 80s, 90s and 00s anthems. Sing your heart out. Home by 7.`} />
+        <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={`The 2PM Club — ${event.city} — ${event.date}`} />
         <meta property="og:description" content="Sing your heart out. Home by 7. Iconic 80s, 90s and 00s anthems." />
         <meta property="og:image" content={event.squareImg} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta name="eventbrite:id" content={event.eventbriteId} />
+        <meta name="event:city" content={event.city} />
+        <meta name="event:venue" content={event.venue} />
+        <meta name="event:start_time" content={event.startIso} />
+        {event.price && <meta name="product:price:amount" content={String(event.price)} />}
+        <meta name="product:price:currency" content="GBP" />
+        <script type="application/ld+json">{JSON.stringify(eventSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background pb-20 md:pb-0">
@@ -319,7 +387,7 @@ const EventPageV2 = () => {
                   </div>
 
                   <Button
-                    onClick={scrollToCheckout}
+                    onClick={() => scrollToCheckout('hero_button')}
                     size="lg"
                     className="w-full font-poppins font-semibold text-lg"
                   >
