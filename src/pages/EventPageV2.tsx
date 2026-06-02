@@ -35,6 +35,10 @@ interface EventJson {
   status?: string;
   statusLabel?: string;
   urgencyLabel?: string;
+  editionLabel?: string;
+  heroSubtitle?: string;
+  musicDescription?: string;
+  soundtrackLine?: string;
   accentColor?: string;
   price?: number;
   legacyLine?: string;
@@ -56,6 +60,10 @@ interface EventData {
   status?: string;
   statusLabel?: string;
   urgencyLabel?: string;
+  editionLabel?: string;
+  heroSubtitle?: string;
+  musicDescription?: string;
+  soundtrackLine?: string;
   price?: number;
   legacyLine?: string;
 }
@@ -117,6 +125,10 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         status: event.status,
         statusLabel: event.statusLabel,
         urgencyLabel: event.urgencyLabel,
+        editionLabel: event.editionLabel,
+        heroSubtitle: event.heroSubtitle,
+        musicDescription: event.musicDescription,
+        soundtrackLine: event.soundtrackLine,
         price: event.price,
         legacyLine: event.legacyLine,
       };
@@ -198,11 +210,12 @@ const EventPageV2 = () => {
     );
   }
 
+  const musicDescription = event.musicDescription || 'Iconic 80s, 90s and 00s anthems.';
   const faqs = [
     { q: "Is it really like a night out clubbing in the afternoon?",
       a: "Yes. Proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing." },
     { q: "What music will be played?",
-      a: "80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. Whitney, Wham!, Spice Girls, Beyoncé, Take That, The Killers, Oasis." },
+      a: musicDescription },
     { q: "Why do you start at 2pm?",
       a: "Because the best part of any night out happens early. Doors at 2, finish by 6. You get the night out, you keep your evening, you keep your Sunday." },
     { q: "Do you offer group tickets?",
@@ -218,13 +231,15 @@ const EventPageV2 = () => {
   const isLastTickets = event.status === 'last-tickets';
   const isSoldOut = event.status === 'sold-out';
   const isSellingFast = event.status === 'selling-fast';
+  const isAmberUrgency = event.status === 'selling-fast-amber';
+  const isJustAnnounced = event.status === 'just-announced' || event.status === 'new-date';
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
   const canonicalUrl = `https://www.the2pmclub.co.uk/events/${event.slug}/`;
   const eventSchema = {
     '@context': 'https://schema.org',
     '@type': 'DanceEvent',
     name: event.title,
-    description: `THE 2PM CLUB Daytime Disco in ${event.city}. Iconic 80s, 90s and 00s anthems from ${event.timeDisplay}.`,
+    description: `THE 2PM CLUB Daytime Disco in ${event.city}. ${musicDescription} ${event.timeDisplay}.`,
     image: event.squareImg,
     startDate: event.startIso,
     eventStatus: 'https://schema.org/EventScheduled',
@@ -257,11 +272,11 @@ const EventPageV2 = () => {
   return (
     <>
       <Helmet>
-        <title>The 2PM Club — {event.city} — {event.date}</title>
-        <meta name="description" content={`THE 2PM CLUB Daytime Disco. ${event.city}, ${event.date}. Iconic 80s, 90s and 00s anthems. Sing your heart out. Home by 7.`} />
+        <title>{event.editionLabel ? `The 2PM Club ${event.editionLabel} — ${event.city}` : `The 2PM Club — ${event.city} — ${event.date}`}</title>
+        <meta name="description" content={event.heroSubtitle || `THE 2PM CLUB Daytime Disco. ${event.city}, ${event.date}. ${musicDescription} Sing your heart out. Home by 7.`} />
         <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={`The 2PM Club — ${event.city} — ${event.date}`} />
-        <meta property="og:description" content="Sing your heart out. Home by 7. Iconic 80s, 90s and 00s anthems." />
+        <meta property="og:title" content={event.editionLabel ? `The 2PM Club ${event.editionLabel} — ${event.city}` : `The 2PM Club — ${event.city} — ${event.date}`} />
+        <meta property="og:description" content={event.heroSubtitle || `Sing your heart out. Home by 7. ${musicDescription}`} />
         <meta property="og:image" content={event.squareImg} />
         <meta property="og:url" content={canonicalUrl} />
         <meta name="eventbrite:id" content={event.eventbriteId} />
@@ -331,11 +346,11 @@ const EventPageV2 = () => {
 
                 {/* Right card: locked 3-line header + facts + CTA */}
                 <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-7 space-y-5">
-                  {isSellingFast && (
+                  {(isSellingFast || isAmberUrgency || isJustAnnounced) && (
                     <div className="inline-flex items-center gap-2.5 bg-primary/15 border border-primary/30 rounded-full px-4 py-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
                       <span className="font-poppins font-bold text-base text-primary tracking-wide uppercase">
-                        {event.statusLabel || 'Selling fast'}
+                        {event.statusLabel || (isJustAnnounced ? 'Just announced' : 'Selling fast')}
                       </span>
                     </div>
                   )}
@@ -345,13 +360,19 @@ const EventPageV2 = () => {
                       <br />
                       <span className="text-foreground/90">Daytime Disco</span>
                       <br />
+                      {event.editionLabel && (
+                        <>
+                          <span className="text-foreground/90">{event.editionLabel}</span>
+                          <br />
+                        </>
+                      )}
                       <span className="text-primary">{event.city}</span>
                     </h1>
                     <p className="font-poppins text-lg md:text-xl text-foreground/85 mt-3 font-medium">
-                      Your best night out. In the middle of the afternoon.
+                      {event.heroSubtitle || 'Your best night out. In the middle of the afternoon.'}
                     </p>
                     <p className="font-poppins text-base md:text-lg text-foreground/70 mt-1">
-                      Iconic 80s, 90s and 00s anthems.
+                      {musicDescription}
                     </p>
                   </div>
 
@@ -458,7 +479,7 @@ const EventPageV2 = () => {
                 Your Soundtrack
               </p>
               <p className="font-poppins text-xl md:text-2xl text-foreground/90 leading-relaxed">
-                Spice Girls. Oasis. Whitney. ABBA. Bon Jovi. Take That. Beyoncé.
+                {event.soundtrackLine || 'Spice Girls. Oasis. Whitney. ABBA. Bon Jovi. Take That. Beyoncé.'}
                 <br className="hidden md:block" />
                 {' '}Every chorus you still know by heart.
               </p>
@@ -503,7 +524,7 @@ const EventPageV2 = () => {
               </h2>
               <div className="grid gap-3 md:grid-cols-2">
                 {[
-                  { emoji: "🎤", title: "The Room Where Everyone Knows Every Word", body: "Wall-to-wall 80s, 90s and 00s. Confetti, lights, and the moment the whole room sings together." },
+                  { emoji: "🎤", title: "The Room Where Everyone Knows Every Word", body: musicDescription },
                   { emoji: "🕺", title: "Night-Out Energy. Afternoon Timing.", body: "Same atmosphere you remember from your best nights out. Dance freely, and still be home by 7pm." },
                   { emoji: "👯", title: "The One Plan That Doesn't Fall Apart", body: "2pm Saturday works for everyone. No babysitter dramas, no late-night worries. One link. One plan." },
                   { emoji: "😎", title: "All The Fun. Still Buzzing By Wednesday.", body: "You walked out last time saying \"Let's do it again!\" This is the time to do it." },
