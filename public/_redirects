@@ -10,6 +10,7 @@ https://the2pmclub.co.uk/*   https://www.the2pmclub.co.uk/:splat  301!
 /hubs/:splat        /hubs/:splat                 200
 /blog/what-is-a-daytime-disco/*       /blog/what-is-a-daytime-disco/index.html   200
 /blog/hen-do-daytime-disco/*          /blog/hen-do-daytime-disco/index.html      200
+/events/250726-2PM-NPTON-80S/*        /events/250726-2PM-NPTON/                 301!
 
 # SPA fallback (everything else)
 /*                           /index.html                          200

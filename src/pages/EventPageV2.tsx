@@ -39,6 +39,7 @@ interface EventJson {
   heroSubtitle?: string;
   musicDescription?: string;
   soundtrackLine?: string;
+  heroMedia?: 'video' | 'image';
   accentColor?: string;
   price?: number;
   legacyLine?: string;
@@ -64,6 +65,7 @@ interface EventData {
   heroSubtitle?: string;
   musicDescription?: string;
   soundtrackLine?: string;
+  heroMedia?: 'video' | 'image';
   price?: number;
   legacyLine?: string;
 }
@@ -129,6 +131,7 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         heroSubtitle: event.heroSubtitle,
         musicDescription: event.musicDescription,
         soundtrackLine: event.soundtrackLine,
+        heroMedia: event.heroMedia,
         price: event.price,
         legacyLine: event.legacyLine,
       };
@@ -233,6 +236,7 @@ const EventPageV2 = () => {
   const isSellingFast = event.status === 'selling-fast';
   const isAmberUrgency = event.status === 'selling-fast-amber';
   const isJustAnnounced = event.status === 'just-announced' || event.status === 'new-date';
+  const useImageHero = event.heroMedia === 'image';
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
   const canonicalUrl = `https://www.the2pmclub.co.uk/events/${event.slug}/`;
   const eventSchema = {
@@ -313,21 +317,31 @@ const EventPageV2 = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
               <div className="grid md:grid-cols-2 gap-6 items-start">
-                {/* Hero video */}
+                {/* Hero media */}
                 <div className="flex justify-center md:justify-start">
                   <div className="relative w-full max-w-md aspect-square rounded-xl overflow-hidden shadow-2xl shadow-primary/20 bg-black">
-                    <video
-                      key={reelSrc}
-                      src={reelSrc}
-                      poster={event.squareImg}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      onError={handleReelError}
-                      className="w-full h-full object-cover"
-                    />
+                    {useImageHero ? (
+                      <img
+                        src={event.squareImg}
+                        alt={`${event.title} event artwork`}
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    ) : (
+                      <video
+                        key={reelSrc}
+                        src={reelSrc}
+                        poster={event.squareImg}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        onError={handleReelError}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                     {/* CSS overlay: city + date badge, low contrast, bottom area, clears the baked-in logo */}
                     <div className="absolute top-3 left-3 right-3 flex justify-between items-start pointer-events-none">
                       <div className="bg-black/40 backdrop-blur-sm rounded-md px-2.5 py-1">
