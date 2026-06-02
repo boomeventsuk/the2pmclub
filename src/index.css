@@ -134,32 +134,31 @@ a.button:focus, button:focus {
 
 /* Urgency strips for event cards */
 .urgency-strip {
-  position: absolute;
-  top: 12px;
-  right: -8px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 0.75rem;
   background: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 72% 51%));
   color: white;
-  padding: 4px 12px 4px 16px;
-  font-size: 12px;
-  font-weight: 700;
+  border-radius: 999px;
+  padding: 6px 11px;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.15;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transform: skew(-8deg);
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
-  z-index: 10;
-  animation: urgency-pulse 2s ease-in-out infinite;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 14px rgba(220, 38, 38, 0.18);
 }
 
 .urgency-strip-green {
   background: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 71% 31%)) !important;
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4) !important;
-  animation: urgency-pulse-green 2s ease-in-out infinite !important;
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.18) !important;
 }
 
 .urgency-strip-amber {
   background: linear-gradient(135deg, hsl(38 92% 50%), hsl(32 95% 44%)) !important;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4) !important;
-  animation: urgency-pulse-amber 2s ease-in-out infinite !important;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.18) !important;
 }
 
 @keyframes urgency-pulse-amber {
@@ -172,7 +171,6 @@ a.button:focus, button:focus {
 }
 
 .urgency-strip span {
-  transform: skew(8deg);
   display: block;
 }
 

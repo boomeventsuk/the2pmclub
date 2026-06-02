@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { trackBookClick } from "@/lib/dataLayer";
@@ -55,17 +54,17 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
           height="1200"
           style={{ aspectRatio: '2 / 3', objectFit: 'cover' }}
         />
+      </div>
+
+      <div className="meta">
         {urgencyText && (
           <div className={`urgency-strip ${
-            urgencyColor === 'green' ? 'urgency-strip-green' : 
+            urgencyColor === 'green' ? 'urgency-strip-green' :
             urgencyColor === 'amber' ? 'urgency-strip-amber' : ''
           }`}>
             <span>{urgencyText}</span>
           </div>
         )}
-      </div>
-      
-      <div className="meta">
         <h3 className="font-poppins text-2xl font-bold text-foreground mb-3 leading-tight">
           {soldOut && <span className="text-destructive font-bold">Sold Out - </span>}
           {title}
