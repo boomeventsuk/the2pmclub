@@ -29,9 +29,31 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
 
   const handleBookNow = () => {
     // Fire InitiateCheckout via centralized dataLayer (includes Meta Pixel)
-    trackBookClick(slug, title);
+    trackBookClick(slug, title, {
+      eventbriteId,
+      city,
+      venue,
+      date,
+      startIso: start,
+      eventType,
+      source: 'event_card_button',
+    });
     
     // Navigate to event page
+    navigate(`/events/${slug}/`);
+  };
+
+  const handleImageClick = () => {
+    trackBookClick(slug, title, {
+      eventbriteId,
+      city,
+      venue,
+      date,
+      startIso: start,
+      eventType,
+      source: 'event_card_image',
+    });
+
     navigate(`/events/${slug}/`);
   };
 
@@ -43,7 +65,14 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
       data-date-iso={dateIso} 
       data-event-slug={slug}
     >
-      <div className="poster relative">
+      <button
+        type="button"
+        onClick={handleImageClick}
+        className="poster relative block w-full p-0 border-0 bg-transparent cursor-pointer text-left overflow-hidden"
+        aria-label={`View tickets for ${title}`}
+        data-event-slug={slug}
+        data-click-source="event-card-image"
+      >
         <img 
           src={poster}
           alt={`${title} event poster`}
@@ -54,7 +83,7 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
           height="1200"
           style={{ aspectRatio: '2 / 3', objectFit: 'cover' }}
         />
-      </div>
+      </button>
 
       <div className="meta">
         {urgencyText && (
