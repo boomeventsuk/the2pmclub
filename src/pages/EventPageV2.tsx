@@ -214,7 +214,29 @@ const EventPageV2 = () => {
   }
 
   const musicDescription = event.musicDescription || 'Iconic 80s, 90s and 00s anthems.';
-  const faqs = [
+  const isEightiesEdition = event.editionLabel === '80s Edition';
+  const faqs = isEightiesEdition ? [
+    {
+      q: "Is this different to the normal 2PM Club?",
+      a: "Yes. Same daytime disco format, but this date is 80s-only for one afternoon."
+    },
+    {
+      q: "Is it fancy dress?",
+      a: "Come as dressed-up or dressed-down as you like. The 80s are in the music, not a costume requirement."
+    },
+    {
+      q: "What time does it finish?",
+      a: "Last song is 6pm. Plenty of time to go for food, carry on somewhere else, or be home by 7."
+    },
+    {
+      q: "Who is it for?",
+      a: "Grown-ups who want a proper Saturday dance without giving Sunday away."
+    },
+    {
+      q: "Are tickets refundable?",
+      a: "Tickets are non-refundable unless the event is cancelled."
+    },
+  ] : [
     { q: "Is it really like a night out clubbing in the afternoon?",
       a: "Yes. Proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing." },
     { q: "What music will be played?",
