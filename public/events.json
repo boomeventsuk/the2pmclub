@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-02T18:01:50.378Z",
+    "priceLastSync": "2026-06-03T12:37:07.711Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -56,7 +56,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-02T18:01:51.151Z",
+    "priceLastSync": "2026-06-03T12:37:08.299Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
@@ -93,7 +93,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-02T18:01:51.795Z",
+    "priceLastSync": "2026-06-03T12:37:08.831Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -129,7 +129,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-02T18:01:52.445Z",
+    "priceLastSync": "2026-06-03T12:37:09.403Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
@@ -168,7 +168,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-02T18:01:53.100Z",
+    "priceLastSync": "2026-06-03T12:37:09.997Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
@@ -207,7 +207,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-02T18:01:53.859Z",
+    "priceLastSync": "2026-06-03T12:37:10.519Z",
     "statusLabel": "75% sold",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -245,7 +245,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-02T18:01:54.845Z",
+    "priceLastSync": "2026-06-03T12:37:11.098Z",
     "statusLabel": "This Saturday, 10 left",
     "statusLabelOverride": "This Saturday, 10 left",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
@@ -257,7 +257,8 @@
     },
     "tierLabels": [
       "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out"
+      "Group Ticket for 4 People sold out",
+      "Final Release Group Ticket for 4 People sold out"
     ]
   },
   {
@@ -283,7 +284,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-02T18:01:55.535Z",
+    "priceLastSync": "2026-06-03T12:37:11.666Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
@@ -322,7 +323,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-02T18:01:57.223Z",
+    "priceLastSync": "2026-06-03T12:37:12.211Z",
     "statusLabel": "15 tickets left",
     "statusLabelOverride": "15 tickets left",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
@@ -361,7 +362,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-02T18:01:57.853Z",
+    "priceLastSync": "2026-06-03T12:37:12.759Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
@@ -400,7 +401,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-02T18:01:58.459Z",
+    "priceLastSync": "2026-06-03T12:37:13.380Z",
     "statusLabel": "This Saturday",
     "statusLabelOverride": "This Saturday",
     "venueAddress": {
@@ -442,7 +443,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-02T18:01:59.138Z",
+    "priceLastSync": "2026-06-03T12:37:13.952Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -482,7 +483,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-03T12:00:00.000Z",
+    "priceLastSync": "2026-06-03T12:37:14.491Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -522,7 +523,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-03T12:00:00.000Z",
+    "priceLastSync": "2026-06-03T12:37:15.089Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -561,8 +562,8 @@
     "price": 12,
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
-    "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-02T18:01:59.138Z",
+    "availability": "https://schema.org/InStock",
+    "priceLastSync": "2026-06-03T12:37:15.651Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -571,6 +572,9 @@
       "addressLocality": "Milton Keynes",
       "postalCode": "MK11 3LH",
       "addressCountry": "GB"
-    }
+    },
+    "tierLabels": [
+      "Early Release Ticket sold out"
+    ]
   }
 ]
