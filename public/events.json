@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-04T16:48:59.845Z",
+    "priceLastSync": "2026-06-05T11:20:54.866Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -56,7 +56,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-04T16:49:00.405Z",
+    "priceLastSync": "2026-06-05T11:20:55.398Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
@@ -93,7 +93,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-04T16:49:01.065Z",
+    "priceLastSync": "2026-06-05T11:20:55.980Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -129,7 +129,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-04T16:49:01.624Z",
+    "priceLastSync": "2026-06-05T11:20:56.570Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
@@ -168,7 +168,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-04T16:49:02.206Z",
+    "priceLastSync": "2026-06-05T11:20:57.152Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
@@ -207,7 +207,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-04T16:49:02.774Z",
+    "priceLastSync": "2026-06-05T11:20:57.681Z",
     "statusLabel": "75% sold",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -245,7 +245,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-04T16:49:03.337Z",
+    "priceLastSync": "2026-06-05T11:20:58.252Z",
     "statusLabel": "This Saturday, 10 left",
     "statusLabelOverride": "This Saturday, 10 left",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
@@ -258,7 +258,8 @@
     "tierLabels": [
       "General Release Ticket sold out",
       "Group Ticket for 4 People sold out",
-      "Final Release Group Ticket for 4 People sold out"
+      "Final Release Group Ticket for 4 People sold out",
+      "Final Release Ticket sold out"
     ]
   },
   {
@@ -284,7 +285,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-04T16:49:03.900Z",
+    "priceLastSync": "2026-06-05T11:20:58.824Z",
     "statusLabel": "Final 25 tickets",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
@@ -323,7 +324,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-04T16:49:04.500Z",
+    "priceLastSync": "2026-06-05T11:20:59.346Z",
     "statusLabel": "15 tickets left",
     "statusLabelOverride": "15 tickets left",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
@@ -336,7 +337,8 @@
     "tierLabels": [
       "Early Release Ticket sold out",
       "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out"
+      "Group Ticket for 4 People sold out",
+      "Final Release Group Ticket for 4 People sold out"
     ]
   },
   {
@@ -362,7 +364,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-04T16:49:05.096Z",
+    "priceLastSync": "2026-06-05T11:20:59.923Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
@@ -401,7 +403,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-04T16:49:05.637Z",
+    "priceLastSync": "2026-06-05T11:21:00.451Z",
     "statusLabel": "This Saturday",
     "statusLabelOverride": "This Saturday",
     "venueAddress": {
@@ -443,7 +445,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-04T16:49:06.211Z",
+    "priceLastSync": "2026-06-05T11:21:01.006Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -483,7 +485,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-04T16:49:06.771Z",
+    "priceLastSync": "2026-06-05T11:21:01.532Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -523,7 +525,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-04T16:49:07.325Z",
+    "priceLastSync": "2026-06-05T11:21:02.074Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -563,7 +565,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-04T16:49:07.897Z",
+    "priceLastSync": "2026-06-05T11:21:02.606Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
