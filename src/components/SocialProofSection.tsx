@@ -25,7 +25,7 @@ const SocialProofSection = () => {
       <div className="container mx-auto max-w-6xl">
         <h2 
           ref={titleRef}
-          className={`font-poppins text-3xl md:text-5xl font-bold text-foreground text-center mb-12 uppercase transition-all duration-700 ${
+          className={`font-bebas text-4xl md:text-6xl text-foreground text-center mb-12 tracking-wide transition-all duration-700 ${
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >

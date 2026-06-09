@@ -28,7 +28,7 @@ const FinalCta = () => {
       />
       <div className="container mx-auto relative z-10">
         <div className="max-w-2xl">
-          <h2 className="font-poppins text-3xl md:text-5xl font-extrabold text-foreground leading-tight">
+          <h2 className="font-bebas text-4xl md:text-6xl text-foreground leading-tight tracking-wide">
             Sort the <span className="text-primary">group chat</span>
             <br />
             before it goes quiet again.

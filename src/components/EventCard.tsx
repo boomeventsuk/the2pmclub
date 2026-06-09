@@ -116,18 +116,32 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
               <span className="font-poppins font-semibold">{priceLabel}</span>
             </div>
           )}
-          {tierLabels && tierLabels.length > 0 && (
-            <p className="font-poppins text-sm text-muted-foreground pt-1">
-              {tierLabels.join(" · ")}
-            </p>
-          )}
+          {tierLabels && tierLabels.length > 0 && (() => {
+            // Compact tier ladder: never a wall of "sold out" repeats.
+            const sold = tierLabels.filter(t => /sold out/i.test(t));
+            const live = tierLabels.filter(t => !/sold out/i.test(t));
+            return (
+              <div className="pt-1 space-y-0.5">
+                {sold.length > 0 && !soldOut && (
+                  <p className="font-poppins text-sm text-amber-400/90 font-medium">
+                    {sold.length === 1
+                      ? `${sold[0].replace(/ sold out/i, '')} sold out`
+                      : `${sold.length} earlier releases sold out`}
+                  </p>
+                )}
+                {live.map((t, i) => (
+                  <p key={i} className="font-poppins text-sm text-muted-foreground">{t}</p>
+                ))}
+              </div>
+            );
+          })()}
         </div>
       </div>
       
       <div className="actions">
         <Button 
           onClick={handleBookNow}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn shadow-[0_0_20px_hsl(328_100%_54%_/_0.3)] hover:shadow-[0_0_25px_hsl(328_100%_54%_/_0.4)]"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn"
           data-event-slug={slug}
         >
           {soldOut ? 'Waiting List' : 'Book Now'}

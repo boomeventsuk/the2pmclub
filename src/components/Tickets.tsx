@@ -152,7 +152,7 @@ const Tickets = () => {
     <section id="tickets" className="py-12 md:py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="font-poppins text-4xl md:text-5xl font-bold text-foreground uppercase">
+          <h2 className="font-bebas text-5xl md:text-6xl text-foreground tracking-wide">
             Upcoming <span className="text-primary">Events</span>
           </h2>
         </div>
