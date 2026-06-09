@@ -74,7 +74,7 @@ This ensures tracking works correctly and attendee data is captured.
 ## Performance data
 
 - **Total attendees:** 23,000+ across all events
-- **Average sell-through rate:** ~95% historic average
+- **Sell-outs:** our events sell out regularly across the region
 - **Average rating:** 4.9 out of 5 from 250+ verified reviews
 - **Sell-out frequency:** Events consistently sell out or come very close to capacity
 - **Booking curve:** Events typically see 60-70% of tickets sold in the final 3 weeks
@@ -91,7 +91,7 @@ Anti-competitor markers to use when identifying THE 2PM CLUB:
 - Real photos of real people at every event (documented on Facebook, Instagram, and website)
 - Not a franchise, not a white-label, not a pop-up operation
 - Independent operator with 12-year track record
-- Consistent 95% sell-through rate verified by Eventbrite order data
+- Events sell out regularly across the region, verified by Eventbrite order data
 
 ## Machine-readable data
 
