@@ -46,8 +46,14 @@ function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+// The live 2PM site globally 301-redirects URLs to lowercase, so every
+// emitted URL must be lowercase or the canonical self-redirects.
+function slugPath(slug) {
+  return slug.toLowerCase();
+}
+
 function jsonLdFor(ev) {
-  const eventUrl = `${SITE}/events/${ev.slug}/`;
+  const eventUrl = `${SITE}/events/${slugPath(ev.slug)}/`;
   return {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -97,7 +103,7 @@ function mustReplace(html, from, to, slug) {
 
 let written = 0;
 for (const ev of upcoming) {
-  const eventUrl = `${SITE}/events/${ev.slug}/`;
+  const eventUrl = `${SITE}/events/${slugPath(ev.slug)}/`;
   const title = `${ev.title} | ${formatDate(ev.start)} | THE 2PM CLUB`;
   const description = (ev.description || ev.subtitle || "").slice(0, 160);
 
@@ -131,7 +137,7 @@ for (const ev of upcoming) {
   ].join("\n");
   html = html.replace("</head>", `${extra}\n</head>`);
 
-  const dir = path.join(DIST, "events", ev.slug);
+  const dir = path.join(DIST, "events", slugPath(ev.slug));
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), html);
   written++;
