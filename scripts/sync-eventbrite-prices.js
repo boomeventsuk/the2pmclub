@@ -198,11 +198,45 @@ function extractPriceData(ticketClasses, eventDate) {
   };
 }
 
+// ============================================================
+// Em dash sanitisation (house rule: no em dashes anywhere).
+// Event titles and copy must never contain U+2014. Titles get
+// ": " (reads as a subtitle separator); all other strings get
+// " - ". Applied to every string field on every sync run so
+// nothing upstream can reintroduce them.
+// ============================================================
+
+function sanitiseString(value, isTitle) {
+  if (!value.includes('—')) return value;
+  let out = value;
+  if (isTitle) out = out.replace(/\s*—\s*/, ': '); // first em dash becomes the subtitle separator
+  return out.replace(/\s*—\s*/g, ' - ');
+}
+
+function sanitiseEmDashes(node, key, counter) {
+  if (typeof node === 'string') {
+    const clean = sanitiseString(node, key === 'title');
+    if (clean !== node) counter.count++;
+    return clean;
+  }
+  if (Array.isArray(node)) return node.map(v => sanitiseEmDashes(v, key, counter));
+  if (node && typeof node === 'object') {
+    for (const k of Object.keys(node)) node[k] = sanitiseEmDashes(node[k], k, counter);
+  }
+  return node;
+}
+
 async function main() {
   const token = loadToken();
   console.log('Eventbrite price sync starting...');
 
   const events = JSON.parse(readFileSync(EVENTS_PATH, 'utf-8'));
+
+  const sanitised = { count: 0 };
+  sanitiseEmDashes(events, null, sanitised);
+  if (sanitised.count > 0) {
+    console.log(`Sanitised em dashes in ${sanitised.count} field(s).`);
+  }
   const internalData = {};
   let updated = 0;
   let errors = 0;
