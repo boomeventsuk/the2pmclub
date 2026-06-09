@@ -25,3 +25,5 @@ dist-ssr
 
 # Internal ticket data (real numbers, never public)
 scripts/.ticket-data-internal.json
+.stfolder/
+.netlify/
