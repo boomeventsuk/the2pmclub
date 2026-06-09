@@ -136,6 +136,7 @@ const EventPageV2 = () => {
   const [reelSrc, setReelSrc] = useState<string>(HERO_REEL_MASTER);
   const [showCheckout, setShowCheckout] = useState(false);
   const checkoutRef = useRef<HTMLDivElement>(null);
+  const autoLoadedRef = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -167,7 +168,11 @@ const EventPageV2 = () => {
   // InitiateCheckout fires when the Eventbrite widget actually loads,
   // not on a card click two pages earlier.
   useEffect(() => {
-    if (showCheckout && event && event.status !== 'sold-out') {
+    // Only fire InitiateCheckout for user-initiated loads (button tap / header
+    // Book click). Scroll-proximity auto-loads are convenience, not intent;
+    // genuine intent still fires inside EventbriteEmbed (AddToCart on
+    // ticket_selected, checkout interaction on iframe focus).
+    if (showCheckout && event && event.status !== 'sold-out' && !autoLoadedRef.current) {
       trackBookClick(event.slug, event.title, {
         eventbriteId: event.eventbriteId,
         city: event.city,
@@ -178,6 +183,27 @@ const EventPageV2 = () => {
       });
     }
   }, [showCheckout, event]);
+
+  // Auto-load the checkout as the visitor scrolls towards it: page stays
+  // light on load, but a buyer never has to tap a gate. The gate UI below
+  // remains as the instant fallback while the widget initialises.
+  useEffect(() => {
+    if (!event || event.status === 'sold-out' || showCheckout) return;
+    const target = checkoutRef.current;
+    if (!target || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some(e => e.isIntersecting)) {
+          autoLoadedRef.current = true;
+          setShowCheckout(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '600px 0px' }
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [event, showCheckout]);
 
   const handleReelError = () => {
     if (reelSrc !== HERO_REEL_MASTER) {
@@ -509,22 +535,53 @@ const EventPageV2 = () => {
                       eventTitle={event.title}
                     />
                   ) : (
-                    <div className="flex flex-col items-center justify-center text-center px-6 py-10 md:py-14">
-                      <p className="font-poppins text-sm md:text-base text-foreground/70 mb-5">
-                        Tap below to load the secure Eventbrite checkout.
-                      </p>
-                      <Button
-                        size="lg"
-                        onClick={() => setShowCheckout(true)}
-                        className="font-poppins font-bold uppercase tracking-wide"
-                        aria-label={`Load Eventbrite checkout for ${event.title}`}
-                      >
-                        <Ticket className="w-5 h-5 mr-2" />
-                        Book Tickets
-                      </Button>
-                      <p className="font-poppins text-xs text-foreground/50 mt-4">
-                        Secure checkout powered by Eventbrite. Loads on tap to keep the page fast.
-                      </p>
+                    <div className="relative px-6 py-8 md:py-10">
+                      {/* Ghost checkout: faded mock of the ticket selector so it
+                          reads as "the checkout is right here", not a wall */}
+                      <div aria-hidden="true" className="space-y-3 opacity-30 blur-[1.5px] pointer-events-none select-none">
+                        <div className="rounded-lg border border-foreground/20 bg-background/60 p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="space-y-2">
+                              <div className="h-3.5 w-36 rounded bg-foreground/30" />
+                              <div className="h-3 w-24 rounded bg-foreground/20" />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="h-8 w-8 rounded-full bg-foreground/20" />
+                              <div className="h-4 w-4 rounded bg-foreground/25" />
+                              <div className="h-8 w-8 rounded-full bg-primary/50" />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="rounded-lg border border-foreground/20 bg-background/60 p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="space-y-2">
+                              <div className="h-3.5 w-44 rounded bg-foreground/30" />
+                              <div className="h-3 w-20 rounded bg-foreground/20" />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="h-8 w-8 rounded-full bg-foreground/20" />
+                              <div className="h-4 w-4 rounded bg-foreground/25" />
+                              <div className="h-8 w-8 rounded-full bg-primary/50" />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="h-10 rounded-lg bg-primary/40" />
+                      </div>
+                      {/* Overlay CTA */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+                        <Button
+                          size="lg"
+                          onClick={() => setShowCheckout(true)}
+                          className="font-poppins font-bold uppercase tracking-wide shadow-lg"
+                          aria-label={`Load Eventbrite checkout for ${event.title}`}
+                        >
+                          <Ticket className="w-5 h-5 mr-2" />
+                          Book Tickets Here
+                        </Button>
+                        <p className="font-poppins text-xs text-foreground/60 mt-3">
+                          Secure checkout powered by Eventbrite.
+                        </p>
+                      </div>
                     </div>
                   )}
                 </div>
