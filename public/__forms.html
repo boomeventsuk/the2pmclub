@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- Static form definitions for Netlify build-time form detection.
+     The live forms are rendered by React (EventPageV2.tsx); Netlify only
+     registers forms it finds in static HTML at deploy, so this file must
+     mirror the form names and fields exactly. Not linked from anywhere. -->
+<html>
+  <head><meta name="robots" content="noindex" /><title>forms</title></head>
+  <body>
+    <form name="event-waitlist" netlify netlify-honeypot="bot-field" action="/thanks.html" method="POST" hidden>
+      <input type="hidden" name="form-name" value="event-waitlist" />
+      <input type="text" name="bot-field" />
+      <input type="email" name="email" />
+      <input type="text" name="slug" />
+      <input type="text" name="city" />
+    </form>
+  </body>
+</html>
