@@ -14,7 +14,7 @@ const NewHero = () => {
   };
   return <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-0">
       {/* Background Image */}
-      <img src="https://boombastic-events.b-cdn.net/Boombastic%20Events/event%20photos/2PM/280226-2PM-NPTON-confetti-cannon-rainbow-lighting-crowd.jpeg?width=1280&quality=75" alt="THE 2PM CLUB crowd with confetti cannons and rainbow lighting at a daytime disco party" className="absolute inset-0 w-full h-full object-cover object-[center_30%]" />
+      <img src="https://boombastic-events.b-cdn.net/Boombastic%20Events/event%20photos/2PM/280226-2PM-NPTON-confetti-cannon-rainbow-lighting-crowd.jpeg?width=1280&quality=75" srcSet="https://boombastic-events.b-cdn.net/Boombastic%20Events/event%20photos/2PM/280226-2PM-NPTON-confetti-cannon-rainbow-lighting-crowd.jpeg?width=768&quality=75 768w, https://boombastic-events.b-cdn.net/Boombastic%20Events/event%20photos/2PM/280226-2PM-NPTON-confetti-cannon-rainbow-lighting-crowd.jpeg?width=1280&quality=75 1280w, https://boombastic-events.b-cdn.net/Boombastic%20Events/event%20photos/2PM/280226-2PM-NPTON-confetti-cannon-rainbow-lighting-crowd.jpeg?width=1920&quality=75 1920w" sizes="100vw" fetchPriority="high" decoding="async" alt="THE 2PM CLUB crowd with confetti cannons and rainbow lighting at a daytime disco party" className="absolute inset-0 w-full h-full object-cover object-[center_30%]" />
       
       {/* Gradient overlay - much lighter to show crowd energy */}
       <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/15 to-transparent" />

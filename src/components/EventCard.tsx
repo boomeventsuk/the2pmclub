@@ -3,6 +3,10 @@ import { Calendar, MapPin, Clock, Ticket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { trackEventPageView } from "@/lib/dataLayer";
 
+// Bunny Optimizer params for CDN-hosted images
+const optimised = (url: string, width: number) =>
+  url.includes("b-cdn.net") ? `${url}${url.includes("?") ? "&" : "?"}width=${width}&quality=75` : url;
+
 interface EventCardProps {
   id?: number;
   slug: string;
@@ -66,7 +70,9 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
         data-click-source="event-card-image"
       >
         <img 
-          src={poster}
+          src={optimised(poster, 800)}
+          srcSet={`${optimised(poster, 400)} 400w, ${optimised(poster, 800)} 800w`}
+          sizes="(max-width: 768px) 100vw, 33vw"
           alt={`${title} event poster`}
           className="w-full h-full object-cover"
           loading="lazy"
