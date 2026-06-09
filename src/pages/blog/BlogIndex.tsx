@@ -2,57 +2,62 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 
 const BlogIndex = () => {
   const publishedPosts = [
     {
+      slug: "what-is-a-daytime-disco",
+      title: "What Is a Daytime Disco?",
+      excerpt: "Everything you need to know about daytime discos: what they are, who goes, and why they sell out.",
+      image: "https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/280226-2PM-NPTON-confetti-cannon-rainbow-lighting-crowd.jpeg?width=600&quality=75",
+      readTime: "5 min read",
+      date: "15 Aug 2024",
+      published: true,
+      isStatic: true
+    },
+    {
+      slug: "hen-do-daytime-disco",
+      title: "Hen Do Daytime Disco: The Afternoon Alternative",
+      excerpt: "Why a daytime disco hen party is the plan everyone actually says yes to.",
+      image: "https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/070326-2PM-COV-woman-gold-dress-arms-wide-dancing-crowd.jpeg?width=600&quality=75",
+      readTime: "4 min read",
+      date: "1 Sep 2024",
+      published: true,
+      isStatic: true
+    },
+    {
+      slug: "hen-party-ideas-northampton",
+      title: "Hen Party Ideas in Northampton",
+      excerpt: "The best hen party ideas in Northampton, from afternoon discos to cocktail classes.",
+      image: "https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/280226-2PM-NPTON-confetti-cannon-rainbow-lighting-crowd.jpeg?width=600&quality=75",
+      readTime: "5 min read",
+      date: "10 Sep 2024",
+      published: true,
+      isStatic: true
+    },
+    {
+      slug: "birthday-party-ideas-northampton-adults",
+      title: "Birthday Party Ideas for Adults in Northampton",
+      excerpt: "Grown-up birthday ideas that actually work: daytime discos, group experiences, and more.",
+      image: "https://boombastic-events.b-cdn.net/EVENT%20PHOTOS/2PM/070326-2PM-COV-crowd-confetti-cannon-arms-raised-stage.jpeg?width=600&quality=75",
+      readTime: "5 min read",
+      date: "15 Sep 2024",
+      published: true,
+      isStatic: true
+    },
+    {
       slug: "why-daytime-discos-are-popular",
-      title: "Why 2PM is the New 2AM",
-      excerpt: "We cracked the code on perfect party timing. Discover why afternoon events sell out while evening ones struggle.",
+      title: "Why Daytime Discos Are So Popular",
+      excerpt: "The rise of the afternoon party: why daytime events sell out while evening ones struggle.",
       image: "https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg",
       readTime: "4 min read",
       date: "20 Sep 2024",
-      published: true
-    },
-    {
-      slug: "why-2pm-works",
-      title: "Why 2PM Works: The Evidence",
-      excerpt: "The data behind THE 2PM CLUB's daytime format: attendance patterns, availability research, and recovery science.",
-      image: "https://boombastic-events.b-cdn.net/The2PMCLUB-Website/28aa6d32-e3e7-4056-a5ca-26471fab5532_igct7w.jpg",
-      readTime: "5 min read",
-      date: "25 Sep 2024",
-      published: true
+      published: true,
+      isStatic: true
     }
   ];
 
-  const comingSoonPosts = [
-    {
-      title: "Songs We Love",
-      excerpt: "From Donna Summer to Dua Lipa—the iconic anthems that make every 2PM Club event unforgettable.",
-      readTime: "5 min read",
-      category: "Music"
-    },
-    {
-      title: "The Science of Sleep After a Party",
-      excerpt: "Why finishing by 6pm means you wake up Sunday feeling human. The biology behind smart timing.",
-      readTime: "6 min read",
-      category: "Wellness"
-    },
-    {
-      title: "Why Daytime Parties Are Perfect for Groups",
-      excerpt: "No babysitter negotiations. No work-night anxiety. Finally, timing that works for humans with responsibilities.",
-      readTime: "4 min read",
-      category: "Lifestyle"
-    },
-    {
-      title: "The Ultimate Saturday Playlist",
-      excerpt: "4 hours of iconic 80s, 90s & 00s anthems. Every track chosen to keep the energy high and the singalongs loud.",
-      readTime: "3 min read",
-      category: "Music"
-    }
-  ];
 
   return (
     <>
@@ -133,48 +138,6 @@ const BlogIndex = () => {
                       </CardContent>
                     </Card>
                   </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Coming Soon Posts */}
-        <section className="py-12 md:py-16 bg-card/20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="font-bebas text-3xl md:text-4xl text-foreground mb-8 text-center">
-                Coming Soon
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {comingSoonPosts.map((post, index) => (
-                  <Card 
-                    key={index}
-                    className="bg-card/40 border-border/50 relative overflow-hidden opacity-75"
-                  >
-                    <div className="absolute top-4 right-4 z-10">
-                      <Badge variant="secondary" className="bg-secondary/20 text-secondary-foreground border-secondary/30">
-                        Coming Soon
-                      </Badge>
-                    </div>
-                    <CardHeader className="space-y-3 pt-6">
-                      <Badge variant="outline" className="w-fit border-primary/30 text-primary">
-                        {post.category}
-                      </Badge>
-                      <CardTitle className="text-lg">
-                        {post.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-muted-foreground/70 mb-3">
-                        {post.excerpt}
-                      </CardDescription>
-                      <span className="text-sm text-muted-foreground flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {post.readTime}
-                      </span>
-                    </CardContent>
-                  </Card>
                 ))}
               </div>
             </div>

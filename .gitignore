@@ -27,3 +27,4 @@ dist-ssr
 scripts/.ticket-data-internal.json
 .stfolder/
 .netlify/
+.stignore

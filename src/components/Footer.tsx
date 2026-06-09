@@ -54,7 +54,7 @@ const Footer = () => {
               <li><a href="/what-to-expect/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">What to Expect</a></li>
               <li><a href="/group-bookings/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Group Bookings</a></li>
               <li><a href="/faqs/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">FAQs</a></li>
-              <li><a href="/blog/why-daytime-discos-are-popular/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
+              <li><a href="/blog/" className="font-poppins text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
             </ul>
           </div>
 

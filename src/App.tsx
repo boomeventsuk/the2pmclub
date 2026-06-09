@@ -10,11 +10,13 @@ import EventPage from "./pages/EventPage";
 import EventPageV2 from "./pages/EventPageV2";
 import NotFound from "./pages/NotFound";
 import DevEventsIndex from "./pages/DevEventsIndex";
+import EventsIndex from "./pages/EventsIndex";
 import SiteFaqs from "./pages/SiteFaqs";
 import BlogIndex from "./pages/blog/BlogIndex";
 import WhyDaytimeDiscosArePopular from "./pages/blog/WhyDaytimeDiscosArePopular";
 import WhyTwoPmWorks from "./pages/blog/WhyTwoPmWorks";
 import CookieConsent from "./components/CookieConsent";
+import RouteChangeTracker from "./components/RouteChangeTracker";
 import { initConsentOnLoad } from "./lib/cookieConsent";
 
 const queryClient = new QueryClient();
@@ -32,8 +34,10 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <RouteChangeTracker />
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/events/" element={<EventsIndex />} />
               <Route path="/events/:slug/*" element={<EventPageV2 />} />
               <Route path="/events-v2/:slug" element={<EventPageV2 />} />
               <Route path="/faqs/" element={<SiteFaqs />} />
