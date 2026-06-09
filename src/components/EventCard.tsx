@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Clock } from "lucide-react";
+import { Calendar, MapPin, Clock, Ticket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { trackBookClick } from "@/lib/dataLayer";
+import { trackEventPageView } from "@/lib/dataLayer";
 
 interface EventCardProps {
   id?: number;
@@ -22,45 +22,37 @@ interface EventCardProps {
   soldOut?: boolean;
   urgencyText?: string;
   urgencyColor?: string;
+  priceLabel?: string;
+  tierLabels?: string[];
 }
 
-const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor }: EventCardProps) => {
+const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor, priceLabel, tierLabels }: EventCardProps) => {
   const navigate = useNavigate();
 
-  const handleBookNow = () => {
-    // Fire InitiateCheckout via centralized dataLayer (includes Meta Pixel)
-    trackBookClick(slug, title, {
+  const goToEventPage = (source: string) => {
+    // Card clicks are interest, not checkout intent: fire ViewContent only.
+    // InitiateCheckout now fires when the Eventbrite widget loads on the event page.
+    trackEventPageView(slug, title, {
       eventbriteId,
       city,
       venue,
       date,
       startIso: start,
       eventType,
-      source: 'event_card_button',
-    });
-    
-    // Navigate to event page
-    navigate(`/events/${slug}/`);
-  };
-
-  const handleImageClick = () => {
-    trackBookClick(slug, title, {
-      eventbriteId,
-      city,
-      venue,
-      date,
-      startIso: start,
-      eventType,
-      source: 'event_card_image',
+      source,
     });
 
     navigate(`/events/${slug}/`);
   };
+
+  const handleBookNow = () => goToEventPage('event_card_button');
+
+  const handleImageClick = () => goToEventPage('event_card_image');
 
 
   return (
-    <article 
-      className={`ticket-card bg-card/80 backdrop-blur-md border rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-[0_0_30px_hsl(328_100%_54%_/_0.15)] transition-all duration-300 ${urgencyColor === 'red' ? 'card-urgency-glow border-red-500' : 'border-border/50'}`}
+    <article
+      className="ticket-card bg-card/80 backdrop-blur-md border border-border/50 rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-[0_0_30px_hsl(328_100%_54%_/_0.15)] transition-all duration-300"
       data-ticket-card 
       data-date-iso={dateIso} 
       data-event-slug={slug}
@@ -112,6 +104,17 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
             <Clock className="w-4 h-4 mr-2 text-primary" />
             <span className="font-poppins">{time}</span>
           </div>
+          {priceLabel && (
+            <div className="flex items-center text-foreground">
+              <Ticket className="w-4 h-4 mr-2 text-primary" />
+              <span className="font-poppins font-semibold">{priceLabel}</span>
+            </div>
+          )}
+          {tierLabels && tierLabels.length > 0 && (
+            <p className="font-poppins text-sm text-muted-foreground pt-1">
+              {tierLabels.join(" · ")}
+            </p>
+          )}
         </div>
       </div>
       

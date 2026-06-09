@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import NewHero from "@/components/NewHero";
+import TrustStrip from "@/components/TrustStrip";
+import MobileBookBar from "@/components/MobileBookBar";
 import Tickets from "@/components/Tickets";
 import PhotoGallery from "@/components/PhotoGallery";
 import WhySection from "@/components/WhySection";
@@ -13,6 +15,7 @@ const Index = () => {
     <main id="main-content" className="min-h-screen">
       <Header />
       <NewHero />
+      <TrustStrip />
       <Tickets />
       <PhotoGallery />
       <WhySection />
@@ -20,6 +23,7 @@ const Index = () => {
       <MusicSection />
       <HomeFaq />
       <Footer />
+      <MobileBookBar />
     </main>
   );
 };

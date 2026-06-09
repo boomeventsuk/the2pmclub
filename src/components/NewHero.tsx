@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import NextEventStrip from "@/components/NextEventStrip";
 const NewHero = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -23,11 +24,10 @@ const NewHero = () => {
       
       {/* Content - tighter padding, bigger text */}
       <div className="relative z-10 text-center w-full px-3 sm:px-6 py-8 md:py-12">
-        <h1 className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-2 uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
-          THE 2PM CLUB
+        <h1 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2 uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">
+          THE 2PM CLUB DAYTIME DISCO
         </h1>
-        <p className="font-poppins text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-2 uppercase tracking-wide drop-shadow-[0_6px_40px_rgba(0,0,0,1)]">DAYTIME DISCO</p>
-        <p className="font-poppins text-3xl md:text-5xl lg:text-5xl font-bold text-primary mb-6 uppercase tracking-wide drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+        <p className="font-poppins text-2xl md:text-4xl lg:text-5xl font-bold text-primary mb-6 uppercase tracking-wide drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
           YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON.
         </p>
         
@@ -41,6 +41,11 @@ const NewHero = () => {
           <Button onClick={() => scrollToSection('tickets')} size="lg" className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-10 py-6 shadow-[0_0_30px_hsl(328_100%_54%_/_0.4)] hover:shadow-[0_0_40px_hsl(328_100%_54%_/_0.5)] transition-all uppercase tracking-wide">
             BOOK YOUR TICKETS
           </Button>
+        </div>
+
+        {/* Next event above the fold */}
+        <div className="mt-2">
+          <NextEventStrip />
         </div>
       </div>
     </section>;

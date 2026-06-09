@@ -17,8 +17,11 @@ interface EventJson {
   image: string;
   description: string;
   status?: "sold-out" | "selling-fast" | "selling-fast-amber" | "last-tickets" | "new-date" | "just-announced";
+  statusLabel?: string;
   promoCode?: string;
   urgencyLabel?: string;
+  priceLabel?: string;
+  tierLabels?: string[];
   isHidden?: boolean;
 }
 
@@ -40,6 +43,8 @@ interface MappedEvent {
   urgencyColor?: string;
   soldOut: boolean;
   dateIso: string;
+  priceLabel?: string;
+  tierLabels?: string[];
 }
 
 // Parse location string into venue and city
@@ -68,24 +73,18 @@ const formatTime = (start: string, end: string): string => {
   return `${startTime}–${endTime}`;
 };
 
-// Map status to urgency display props
-const mapStatus = (status?: string, urgencyLabel?: string): { urgencyText?: string; urgencyColor?: string; soldOut: boolean } => {
-  switch (status) {
-    case "sold-out":
-      return { urgencyText: "SOLD OUT", urgencyColor: undefined, soldOut: true };
-    case "selling-fast":
-      return { urgencyText: "SELLING FAST", urgencyColor: undefined, soldOut: false };
-    case "selling-fast-amber":
-      return { urgencyText: urgencyLabel || "TICKETS SELLING FAST", urgencyColor: "amber", soldOut: false };
-    case "last-tickets":
-      return { urgencyText: urgencyLabel || "LAST TICKETS", urgencyColor: undefined, soldOut: false };
-    case "new-date":
-      return { urgencyText: "NEW DATE", urgencyColor: "green", soldOut: false };
-    case "just-announced":
-      return { urgencyText: "JUST ANNOUNCED", urgencyColor: "green", soldOut: false };
-    default:
-      return { urgencyText: undefined, urgencyColor: undefined, soldOut: false };
+// Honest urgency only: sold-out gets a SOLD OUT badge, anything else
+// shows the synced statusLabel verbatim (specific, from the live pipeline)
+// or nothing at all. No blanket SELLING FAST mapping.
+const mapStatus = (status?: string, statusLabel?: string): { urgencyText?: string; urgencyColor?: string; soldOut: boolean } => {
+  if (status === "sold-out") {
+    return { urgencyText: "SOLD OUT", urgencyColor: undefined, soldOut: true };
   }
+  if (statusLabel) {
+    const color = status === "new-date" || status === "just-announced" ? "green" : "amber";
+    return { urgencyText: statusLabel, urgencyColor: color, soldOut: false };
+  }
+  return { urgencyText: undefined, urgencyColor: undefined, soldOut: false };
 };
 
 // Get ISO date string for schema markup
@@ -115,8 +114,8 @@ const Tickets = () => {
         // Map to EventCard props
         const mapped: MappedEvent[] = futureEvents.map((e) => {
           const { venue, city } = parseLocation(e.location);
-          const statusProps = mapStatus(e.status, e.urgencyLabel);
-          
+          const statusProps = mapStatus(e.status, e.statusLabel);
+
           return {
             slug: e.slug,
             eventType: e.eventType,
@@ -135,6 +134,8 @@ const Tickets = () => {
             urgencyColor: statusProps.urgencyColor,
             soldOut: statusProps.soldOut,
             dateIso: getDateIso(e.start),
+            priceLabel: e.priceLabel,
+            tierLabels: e.tierLabels,
           };
         });
 

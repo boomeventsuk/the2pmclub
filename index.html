@@ -195,6 +195,14 @@
     
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
+
+    <!-- Hidden static form so Netlify detects the SPA event waitlist at deploy time -->
+    <form name="event-waitlist" data-netlify="true" hidden>
+      <input type="hidden" name="form-name" value="event-waitlist" />
+      <input type="hidden" name="slug" />
+      <input type="hidden" name="city" />
+      <input type="email" name="email" />
+    </form>
+
   </body>
 </html>
