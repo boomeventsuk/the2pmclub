@@ -141,7 +141,10 @@ const EventPageV2 = () => {
     let cancelled = false;
     loadEventData().then(data => {
       if (cancelled) return;
-      const ev = slug ? data[slug] || null : null;
+      // URLs are served lowercase (Netlify 301s uppercase to the lowercase
+      // shell) but events.json slugs are uppercase: normalise before lookup.
+      const normalizedSlug = slug?.toUpperCase().replace(/\/$/, "");
+      const ev = normalizedSlug ? data[normalizedSlug] || null : null;
       setEvent(ev);
       // Try city-specific reel first; onError handler will swap to master if 404.
       setReelSrc(ev?.cityCode ? cityReelUrl(ev.cityCode) : HERO_REEL_MASTER);

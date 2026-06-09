@@ -67,8 +67,10 @@ function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+// The live site 301-redirects URLs to lowercase, so every emitted URL must be
+// lowercase or sitemap/JSON-LD URLs redirect away from the canonical.
 function eventUrl(ev) {
-  return `${SITE}/events/${ev.slug}/`;
+  return `${SITE}/events/${ev.slug.toLowerCase()}/`;
 }
 
 /* ---------- hub event card ---------- */
@@ -97,8 +99,8 @@ function eventCard(ev) {
             </div>`
       : "";
   const cta = soldOut
-    ? `<a href="/events/${ev.slug}/" class="btn-primary event-card-btn" style="opacity:.7">Sold out: join the waitlist</a>`
-    : `<a href="/events/${ev.slug}/" class="btn-primary event-card-btn">Book Now</a>`;
+    ? `<a href="/events/${ev.slug.toLowerCase()}/" class="btn-primary event-card-btn" style="opacity:.7">Sold out: join the waitlist</a>`
+    : `<a href="/events/${ev.slug.toLowerCase()}/" class="btn-primary event-card-btn">Book Now</a>`;
 
   return `      <article class="event-card">
         <div class="event-card-image">
@@ -236,7 +238,7 @@ function generateHub(hub) {
   html = replaceBetween(html, M.cardsStart, M.cardsEnd, cards, "CARDS", file);
 
   const cta = hasEvents
-    ? `    <a href="/events/${cityEvents[0].slug}/" class="btn-primary btn-large">\n      Book Your ${hub.city} Tickets\n    </a>`
+    ? `    <a href="/events/${cityEvents[0].slug.toLowerCase()}/" class="btn-primary btn-large">\n      Book Your ${hub.city} Tickets\n    </a>`
     : `    <a href="/#tickets" class="btn-primary btn-large">\n      See All Upcoming Events\n    </a>`;
   html = replaceBetween(html, M.ctaStart, M.ctaEnd, cta, "CTA", file);
 
