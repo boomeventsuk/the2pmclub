@@ -133,12 +133,48 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
   }
 };
 
+// Faded mock of the ticket selector. Used as the pre-tap gate background and
+// as the loading underlay while the Eventbrite script boots, so the slot
+// always reads as "the checkout is right here", never a blank box.
+const GhostCheckout = () => (
+  <div aria-hidden="true" className="space-y-3 opacity-30 blur-[1.5px] pointer-events-none select-none">
+    <div className="rounded-lg border border-foreground/20 bg-background/60 p-4">
+      <div className="flex items-center justify-between">
+        <div className="space-y-2">
+          <div className="h-3.5 w-36 rounded bg-foreground/30" />
+          <div className="h-3 w-24 rounded bg-foreground/20" />
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-full bg-foreground/20" />
+          <div className="h-4 w-4 rounded bg-foreground/25" />
+          <div className="h-8 w-8 rounded-full bg-primary/50" />
+        </div>
+      </div>
+    </div>
+    <div className="rounded-lg border border-foreground/20 bg-background/60 p-4">
+      <div className="flex items-center justify-between">
+        <div className="space-y-2">
+          <div className="h-3.5 w-44 rounded bg-foreground/30" />
+          <div className="h-3 w-20 rounded bg-foreground/20" />
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-full bg-foreground/20" />
+          <div className="h-4 w-4 rounded bg-foreground/25" />
+          <div className="h-8 w-8 rounded-full bg-primary/50" />
+        </div>
+      </div>
+    </div>
+    <div className="h-10 rounded-lg bg-primary/40" />
+  </div>
+);
+
 const EventPageV2 = () => {
   const { slug } = useParams<{ slug: string }>();
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
   const [reelSrc, setReelSrc] = useState<string>(HERO_REEL_MASTER);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [widgetReady, setWidgetReady] = useState(false);
   const checkoutRef = useRef<HTMLDivElement>(null);
   const autoLoadedRef = useRef(false);
 
@@ -225,6 +261,48 @@ const EventPageV2 = () => {
     }
     return cleanup;
   }, [event, showCheckout]);
+
+  // Keep the ghost + spinner under the embed container until an iframe
+  // actually appears inside it (the Eventbrite script can take 1-3s on 4G).
+  // MutationObserver is primary, a poll backs it up, and a hard stop clears
+  // the underlay after 20s so a failed script never leaves a stuck spinner.
+  useEffect(() => {
+    if (!showCheckout || widgetReady || !event || event.status === 'sold-out') return;
+    const containerId = `eventbrite-widget-v2-${event.slug}`;
+    let done = false;
+    let observer: MutationObserver | undefined;
+
+    const hasIframe = () =>
+      !!document.getElementById(containerId)?.querySelector('iframe');
+
+    const finish = () => {
+      if (done) return;
+      done = true;
+      observer?.disconnect();
+      window.clearInterval(poll);
+      window.clearTimeout(stop);
+      setWidgetReady(true);
+    };
+
+    if (hasIframe()) {
+      setWidgetReady(true);
+      return;
+    }
+
+    const container = document.getElementById(containerId);
+    if (container && typeof MutationObserver !== 'undefined') {
+      observer = new MutationObserver(() => { if (hasIframe()) finish(); });
+      observer.observe(container, { childList: true, subtree: true });
+    }
+    const poll = window.setInterval(() => { if (hasIframe()) finish(); }, 250);
+    const stop = window.setTimeout(finish, 20000);
+
+    return () => {
+      observer?.disconnect();
+      window.clearInterval(poll);
+      window.clearTimeout(stop);
+    };
+  }, [showCheckout, widgetReady, event]);
 
   // Header "Book Tickets" on event pages dispatches 2pm:book-intent and
   // scrolls here itself; we just mount the widget. Explicit tap = real
@@ -564,49 +642,36 @@ const EventPageV2 = () => {
                       </p>
                     </form>
                   ) : showCheckout ? (
-                    <div className="min-h-[650px]">
-                      <EventbriteEmbed
-                        eventbriteId={event.eventbriteId}
-                        eventSlug={event.slug}
-                        containerId={`eventbrite-widget-v2-${event.slug}`}
-                        height={650}
-                        promoCode={event.promoCode}
-                        eventTitle={event.title}
-                      />
+                    <div className="relative min-h-[650px]">
+                      {/* Loading underlay: ghost mock + spinner stay UNDER the
+                          embed container, removed once an iframe appears in it */}
+                      {!widgetReady && (
+                        <div className="absolute inset-0 z-0 flex flex-col justify-center px-6 py-8 md:py-10 pointer-events-none" aria-hidden="true">
+                          <GhostCheckout />
+                          <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <div className="h-9 w-9 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+                            <p className="font-poppins text-xs text-foreground/60 mt-3">
+                              Loading secure checkout
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      <div className="relative z-10 min-h-[650px]">
+                        <EventbriteEmbed
+                          eventbriteId={event.eventbriteId}
+                          eventSlug={event.slug}
+                          containerId={`eventbrite-widget-v2-${event.slug}`}
+                          height={650}
+                          promoCode={event.promoCode}
+                          eventTitle={event.title}
+                        />
+                      </div>
                     </div>
                   ) : (
                     <div className="relative flex flex-col justify-center min-h-[650px] px-6 py-8 md:py-10">
                       {/* Ghost checkout: faded mock of the ticket selector so it
                           reads as "the checkout is right here", not a wall */}
-                      <div aria-hidden="true" className="space-y-3 opacity-30 blur-[1.5px] pointer-events-none select-none">
-                        <div className="rounded-lg border border-foreground/20 bg-background/60 p-4">
-                          <div className="flex items-center justify-between">
-                            <div className="space-y-2">
-                              <div className="h-3.5 w-36 rounded bg-foreground/30" />
-                              <div className="h-3 w-24 rounded bg-foreground/20" />
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <div className="h-8 w-8 rounded-full bg-foreground/20" />
-                              <div className="h-4 w-4 rounded bg-foreground/25" />
-                              <div className="h-8 w-8 rounded-full bg-primary/50" />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="rounded-lg border border-foreground/20 bg-background/60 p-4">
-                          <div className="flex items-center justify-between">
-                            <div className="space-y-2">
-                              <div className="h-3.5 w-44 rounded bg-foreground/30" />
-                              <div className="h-3 w-20 rounded bg-foreground/20" />
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <div className="h-8 w-8 rounded-full bg-foreground/20" />
-                              <div className="h-4 w-4 rounded bg-foreground/25" />
-                              <div className="h-8 w-8 rounded-full bg-primary/50" />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="h-10 rounded-lg bg-primary/40" />
-                      </div>
+                      <GhostCheckout />
                       {/* Overlay CTA */}
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
                         <Button
