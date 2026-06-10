@@ -48,6 +48,13 @@ interface EventData {
   };
 }
 
+// Ticket links always point at the site event page (pixels must fire),
+// never Eventbrite, and always lowercase (uppercase slugs 301 away from
+// the canonical). Never emit event.bookUrl here.
+function eventPageUrl(event: EventData): string {
+  return `https://www.the2pmclub.co.uk/events/${event.slug.toLowerCase()}/`;
+}
+
 function buildEventSchema(events: EventData[]): string {
   const now = new Date().toISOString().slice(0, 10);
   const upcoming = events.filter(e => e.start.slice(0, 10) >= now);
@@ -92,7 +99,7 @@ function buildEventSchema(events: EventData[]): string {
     if (event.price && event.priceCurrency) {
       schema.offers = {
         "@type": "Offer",
-        url: event.bookUrl,
+        url: eventPageUrl(event),
         price: event.price.toFixed(2),
         priceCurrency: event.priceCurrency,
         availability: event.availability || "https://schema.org/InStock",
@@ -101,7 +108,7 @@ function buildEventSchema(events: EventData[]): string {
     } else {
       schema.offers = {
         "@type": "Offer",
-        url: event.bookUrl,
+        url: eventPageUrl(event),
       };
     }
 
@@ -202,7 +209,7 @@ function buildNoscriptContent(events: EventData[]): string {
         year: "numeric",
       });
       const price = e.priceLabel || "";
-      return `<li><strong>${e.title}</strong> - ${date} at ${e.location}. ${price}. <a href="${e.bookUrl}">Book tickets</a></li>`;
+      return `<li><strong>${e.title}</strong> - ${date} at ${e.location}. ${price}. <a href="${eventPageUrl(e)}">Book tickets</a></li>`;
     })
     .join("\n        ");
 
