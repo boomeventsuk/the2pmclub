@@ -367,6 +367,14 @@ async function main() {
         } else {
           delete event.tierLabels;
         }
+        // In count mode or sold out, the sync owns the hero urgency banner
+        // too: it must never disagree with the badge (JD caught "LAST 15
+        // TICKETS" surviving while the badge said 10).
+        if (priceData.public.statusLabel.startsWith('Final release:') ||
+            priceData.public.statusLabel === 'Last few tickets' ||
+            priceData.public.statusLabel === 'Join waiting list') {
+          event.urgencyLabel = priceData.public.statusLabel;
+        }
         if (priceData.public.groupTicket) {
           event.groupTicket = priceData.public.groupTicket;
         } else {
