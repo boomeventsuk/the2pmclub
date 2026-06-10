@@ -382,6 +382,42 @@ async function main() {
     await new Promise(r => setTimeout(r, 200));
   }
 
+  // ============================================================
+  // Past-event hygiene: the feed is advertised in llms.txt and AI
+  // agents read it unfiltered, so a past event must never carry a
+  // live-sounding label. Events whose start date is more than 7
+  // days past lose their marketing fields and keep the factual
+  // record (title, date, venue, price) with SoldOut availability.
+  // ============================================================
+  const ARCHIVE_AFTER_MS = 7 * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  let archived = 0;
+  for (const event of events) {
+    if (!event.start) continue;
+    const start = new Date(event.start).getTime();
+    if (Number.isNaN(start) || now - start <= ARCHIVE_AFTER_MS) continue;
+    const hadMarketing =
+      event.statusLabel !== undefined ||
+      event.statusLabelOverride !== undefined ||
+      event.urgencyLabel !== undefined ||
+      event.tierLabels !== undefined ||
+      event.groupTicket !== undefined ||
+      event.availability !== 'https://schema.org/SoldOut';
+    delete event.statusLabel;
+    delete event.statusLabelOverride;
+    delete event.urgencyLabel;
+    delete event.tierLabels;
+    delete event.groupTicket;
+    event.availability = 'https://schema.org/SoldOut';
+    if (hadMarketing) {
+      archived++;
+      console.log(`  ARCHIVED: ${event.title} (started ${event.start}): marketing fields stripped`);
+    }
+  }
+  if (archived > 0) {
+    console.log(`Past-event hygiene: stripped marketing fields from ${archived} event(s).`);
+  }
+
   // Write public data
   writeFileSync(EVENTS_PATH, JSON.stringify(events, null, 2) + '\n');
 

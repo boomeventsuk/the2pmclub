@@ -20,18 +20,14 @@
     "price": 9.5,
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
-    "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T08:59:20.873Z",
-    "statusLabel": "Selling fast",
+    "availability": "https://schema.org/SoldOut",
+    "priceLastSync": "2026-06-10T10:01:12.876Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
-    },
-    "tierLabels": [
-      "Early Release Ticket sold out"
-    ]
+    }
   },
   {
     "id": 105,
@@ -51,24 +47,17 @@
     "fullDescription": "LET YOUR HAIR DOWN. THIS SATURDAY! 🎉\n\nOnly 25 tickets left for this Saturday's Daytime Disco in Luton!\n\nRemember when going OUT OUT didn't require a week's recovery? When you could sing every word, lose your voice, and still feel human the next day?\n\nThe 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more \"maybe next time.\" Everyone says yes to this one.\n\nThis Saturday. 2pm. The Hat Factory, Luton. Don't miss it!",
     "highlights": "🎤 ICONIC ANTHEMS. NONSTOP ENERGY: Wall-to-wall 80s, 90s and 00s. Belting out lyrics with other people who know every word too. That moment when the whole room feels like family – that's what you're booking.|🕺 DAYTIME PARTY, NIGHT-OUT VIBES: Same Boombastic team, Club-level production and confetti moments – just at people-friendly hours. Dance freely, laugh loudly, and still be home by 7pm.|👯 THE 'NIGHT OUT' EVERYONE SAYS YES TO: No more 47-message threads. No more \"maybe next time.\" Four hours where everyone actually makes it.|😎 NO SUNDAY REGRETS - JUST A GLOW: Perfect Sunday! You'll still be buzzing after a full night's sleep. A hoarse voice from belting out all the bangers is the only hangover we're talking about. Get all the buzz of a massive night out, but wake up fresh.|🏆 TRUST THE LEGACY: Created by Boombastic Events – 10+ years of consistent sell-outs across the UK because we know how to create moments that matter.",
     "status": "last-tickets",
-    "urgencyLabel": "LAST 25 TICKETS",
     "price": 8.5,
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
-    "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-10T08:59:21.453Z",
-    "statusLabel": "75% sold",
+    "availability": "https://schema.org/SoldOut",
+    "priceLastSync": "2026-06-10T10:01:13.523Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
       "postalCode": "LU1 2EY",
       "addressCountry": "GB"
-    },
-    "tierLabels": [
-      "Early Release Ticket sold out",
-      "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out"
-    ]
+    }
   },
   {
     "id": 110,
@@ -88,24 +77,17 @@
     "fullDescription": "LET YOUR HAIR DOWN. PROPERLY\n\nOnly 50 tickets left - just two weeks to go!\n\nRemember when going OUT OUT didn't require a week's recovery? When you could sing every word, lose your voice, and still feel human the next day?\n\nThe 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more \"maybe next time.\" Everyone says yes to this one.\n\nValentine's Day Saturday. 2pm. Bedford Esquires. Your mates are already booking!",
     "highlights": "🎤 ICONIC ANTHEMS. NONSTOP ENERGY: Wall-to-wall 80s, 90s and 00s. Belting out lyrics with other people who know every word too. That moment when the whole room feels like family – that's what you're booking.|🕺 DAYTIME PARTY, NIGHT-OUT VIBES: Same Boombastic team, Club-level production and confetti moments – just at people-friendly hours. Dance freely, laugh loudly, and still be home by 7pm.|👯 THE 'NIGHT OUT' EVERYONE SAYS YES TO: No more 47-message threads. No more \"maybe next time.\" Four hours where everyone actually makes it.|😎 NO SUNDAY REGRETS - JUST A GLOW: Perfect Sunday! You'll still be buzzing after a full night's sleep. A hoarse voice from belting out all the bangers is the only hangover we're talking about. Get all the buzz of a massive night out, but wake up fresh.|🏆 TRUST THE LEGACY: Created by Boombastic Events – 10+ years of consistent sell-outs across the UK because we know how to create moments that matter.",
     "status": "last-tickets",
-    "urgencyLabel": "LAST 50 TICKETS",
     "price": 8.5,
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
-    "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-10T08:59:22.025Z",
-    "statusLabel": "75% sold",
+    "availability": "https://schema.org/SoldOut",
+    "priceLastSync": "2026-06-10T10:01:14.166Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
-    },
-    "tierLabels": [
-      "Early Release Ticket sold out",
-      "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out"
-    ]
+    }
   },
   {
     "id": 111,
@@ -129,21 +111,13 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T08:59:22.570Z",
-    "statusLabel": "Join waiting list",
+    "priceLastSync": "2026-06-10T10:01:14.798Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
       "postalCode": "MK11 3LH",
       "addressCountry": "GB"
-    },
-    "tierLabels": [
-      "Early Release Ticket sold out",
-      "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out",
-      "Final Release Ticket sold out",
-      "Final Release Ticket for 2 sold out"
-    ]
+    }
   },
   {
     "id": 112,
@@ -163,26 +137,17 @@
     "fullDescription": "LET YOUR HAIR DOWN. PROPERLY\n\nRemember when going OUT OUT didn't require a week's recovery? When you could sing every word, lose your voice, and still feel human the next day?\n\nThe 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more \"maybe next time.\" Everyone says yes to this one.",
     "highlights": "🎤 ICONIC ANTHEMS. NONSTOP ENERGY: Wall-to-wall 80s, 90s and 00s. Belting out lyrics with other people who know every word too. That moment when the whole room feels like family – that's what you're booking.|🕺 DAYTIME PARTY, NIGHT-OUT VIBES: Same Boombastic team, Club-level production and confetti moments – just at people-friendly hours. Dance freely, laugh loudly, and still be home by 7pm.|👯 THE 'NIGHT OUT' EVERYONE SAYS YES TO: No more 47-message threads. No more \"maybe next time.\" Four hours where everyone actually makes it.|😎 NO SUNDAY REGRETS - JUST A GLOW: Perfect Sunday! You'll still be buzzing after a full night's sleep. A hoarse voice from belting out all the bangers is the only hangover we're talking about. Get all the buzz of a massive night out, but wake up fresh.|🏆 TRUST THE LEGACY: Created by Boombastic Events – 10+ years of consistent sell-outs across the UK because we know how to create moments that matter.",
     "status": "sold-out",
-    "urgencyLabel": "SOLD OUT",
     "price": 7.5,
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T08:59:23.126Z",
-    "statusLabel": "Join waiting list",
+    "priceLastSync": "2026-06-10T10:01:15.480Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
       "postalCode": "NN1 4BN",
       "addressCountry": "GB"
-    },
-    "tierLabels": [
-      "Early Release Ticket sold out",
-      "General Release Ticket sold out",
-      "Final Release Group Ticket for 4 People sold out",
-      "Final Release Ticket sold out",
-      "Final Release Ticket for 2 People sold out"
-    ]
+    }
   },
   {
     "id": 113,
@@ -202,24 +167,17 @@
     "fullDescription": "LET YOUR HAIR DOWN. PROPERLY\n\nRemember when going OUT OUT didn't require a week's recovery? When you could sing every word, lose your voice, and still feel human the next day?\n\nThe 2PM Club is the night out that never gets cancelled. No more 47-message group chats. No more \"maybe next time.\" Everyone says yes to this one.",
     "highlights": "🎤 ICONIC ANTHEMS. NONSTOP ENERGY: Wall-to-wall 80s, 90s and 00s. Belting out lyrics with other people who know every word too. That moment when the whole room feels like family – that's what you're booking.|🕺 DAYTIME PARTY, NIGHT-OUT VIBES: Same Boombastic team, Club-level production and confetti moments – just at people-friendly hours. Dance freely, laugh loudly, and still be home by 7pm.|👯 THE 'NIGHT OUT' EVERYONE SAYS YES TO: No more 47-message threads. No more \"maybe next time.\" Four hours where everyone actually makes it.|😎 NO SUNDAY REGRETS - JUST A GLOW: Perfect Sunday! You'll still be buzzing after a full night's sleep. A hoarse voice from belting out all the bangers is the only hangover we're talking about. Get all the buzz of a massive night out, but wake up fresh.|🏆 TRUST THE LEGACY: Created by Boombastic Events – 10+ years of consistent sell-outs across the UK because we know how to create moments that matter.",
     "status": "last-tickets",
-    "urgencyLabel": "LAST 75 TICKETS",
     "price": 8.5,
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
-    "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-10T08:59:23.708Z",
-    "statusLabel": "75% sold",
+    "availability": "https://schema.org/SoldOut",
+    "priceLastSync": "2026-06-10T10:01:16.099Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
-    },
-    "tierLabels": [
-      "Early Release Ticket sold out",
-      "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out"
-    ]
+    }
   },
   {
     "id": 114,
@@ -245,7 +203,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-10T08:59:24.281Z",
+    "priceLastSync": "2026-06-10T10:01:16.783Z",
     "statusLabel": "This Saturday, 10 left",
     "statusLabelOverride": "This Saturday, 10 left",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
@@ -284,20 +242,14 @@
     "price": 10,
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
-    "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-10T08:59:24.843Z",
-    "statusLabel": "75% sold",
+    "availability": "https://schema.org/SoldOut",
+    "priceLastSync": "2026-06-10T10:01:17.528Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
       "postalCode": "LU1 2EY",
       "addressCountry": "GB"
     },
-    "tierLabels": [
-      "Early Release Ticket sold out",
-      "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out"
-    ],
     "priceFrom": 12
   },
   {
@@ -324,7 +276,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-10T08:59:25.382Z",
+    "priceLastSync": "2026-06-10T10:01:18.144Z",
     "statusLabel": "Final release: 15 left",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
@@ -363,20 +315,13 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T08:59:26.004Z",
-    "statusLabel": "Join waiting list",
+    "priceLastSync": "2026-06-10T10:01:18.774Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
       "postalCode": "LE2 7TR",
       "addressCountry": "GB"
-    },
-    "tierLabels": [
-      "Early Release Ticket sold out",
-      "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out",
-      "Final Release Ticket sold out"
-    ]
+    }
   },
   {
     "id": 118,
@@ -402,7 +347,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T08:59:26.547Z",
+    "priceLastSync": "2026-06-10T10:01:19.372Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -443,7 +388,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T08:59:27.114Z",
+    "priceLastSync": "2026-06-10T10:01:20.044Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -486,7 +431,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T08:59:27.661Z",
+    "priceLastSync": "2026-06-10T10:01:20.709Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -526,7 +471,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T08:59:28.207Z",
+    "priceLastSync": "2026-06-10T10:01:21.320Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -566,7 +511,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T08:59:28.776Z",
+    "priceLastSync": "2026-06-10T10:01:21.992Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
