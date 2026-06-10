@@ -144,3 +144,102 @@ for (const ev of upcoming) {
 }
 
 console.log(`prerender-events: wrote ${written} event shells to dist/events/`);
+
+/* ---------- index shells: /events/ and /blog/ ---------- */
+// Both URLs are in the sitemap but previously served the homepage head
+// (homepage title + canonical = soft duplicate signals) with no crawlable
+// content. Each gets a real prerendered shell: unique title, canonical,
+// meta description and visible content inside #root. The SPA mounts over
+// #root on hydration, so the static content is only the pre-JS view.
+
+function indexShell({ urlPath, title, description, bodyHtml }) {
+  const pageUrl = `${SITE}${urlPath}`;
+  let html = template;
+  html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`);
+  html = mustReplace(html, '<link rel="canonical" href="https://www.the2pmclub.co.uk/">', `<link rel="canonical" href="${pageUrl}">`, urlPath);
+  html = mustReplace(html, '<meta property="og:url" content="https://www.the2pmclub.co.uk/" />', `<meta property="og:url" content="${pageUrl}" />`, urlPath);
+  html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(description)}">`);
+  html = html.replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${esc(title)}">`);
+  html = html.replace(/<meta name="twitter:title" content="[^"]*">/, `<meta name="twitter:title" content="${esc(title)}">`);
+  html = html.replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${esc(description)}">`);
+  html = html.replace(/<meta name="twitter:description" content="[^"]*">/, `<meta name="twitter:description" content="${esc(description)}">`);
+  html = mustReplace(html, '<div id="root"></div>', `<div id="root">${bodyHtml}</div>`, urlPath);
+  return html;
+}
+
+/* /events/ index: upcoming events from events.json with site links */
+const eventItems = upcoming
+  .slice()
+  .sort((a, b) => new Date(a.start) - new Date(b.start))
+  .map((ev) => {
+    const soldOut = ev.status === "sold-out";
+    const extra = soldOut
+      ? "Sold out: join the waitlist"
+      : ev.priceLabel || "";
+    return `<li style="margin:0 0 16px;padding:0 0 16px;border-bottom:1px solid rgba(255,255,255,.12)">
+        <a href="/events/${slugPath(ev.slug)}/" style="color:inherit;font-weight:600;text-decoration:underline">${esc(ev.title)}</a><br>
+        <span>${esc(formatDate(ev.start))}, ${esc(ev.location)}${extra ? `. ${esc(extra)}` : ""}</span>
+      </li>`;
+  })
+  .join("\n      ");
+
+const eventsIndexBody = `<main id="main-content" style="max-width:760px;margin:0 auto;padding:48px 20px 64px;font-family:Poppins,Inter,system-ui,sans-serif">
+    <h1 style="font-size:2rem;line-height:1.2;margin:0 0 10px">Upcoming Daytime Disco Events</h1>
+    <p style="margin:0 0 28px">All upcoming THE 2PM CLUB dates across the Midlands. Iconic 80s, 90s and 00s anthems, 2pm to 6pm, home by 7. Book via the event pages below.</p>
+    <ul style="list-style:none;margin:0;padding:0">
+      ${eventItems}
+    </ul>
+    <p style="margin:28px 0 0"><a href="/" style="color:inherit;text-decoration:underline">THE 2PM CLUB home</a></p>
+  </main>`;
+
+fs.writeFileSync(
+  path.join(DIST, "events", "index.html"),
+  indexShell({
+    urlPath: "/events/",
+    title: "Upcoming Daytime Disco Events | THE 2PM CLUB",
+    description:
+      "All upcoming THE 2PM CLUB daytime disco events across the Midlands. Book your tickets for Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester.",
+    bodyHtml: eventsIndexBody,
+  })
+);
+console.log(`prerender-events: wrote events index shell (${upcoming.length} events)`);
+
+/* /blog/ index: the five static posts (mirrors src/pages/blog/BlogIndex.tsx) */
+const blogPosts = [
+  { slug: "what-is-a-daytime-disco", title: "What Is a Daytime Disco?", excerpt: "Everything you need to know about daytime discos: what they are, who goes, and why they sell out." },
+  { slug: "hen-do-daytime-disco", title: "Hen Do Daytime Disco: The Afternoon Alternative", excerpt: "Why a daytime disco hen party is the plan everyone actually says yes to." },
+  { slug: "hen-party-ideas-northampton", title: "Hen Party Ideas in Northampton", excerpt: "The best hen party ideas in Northampton, from afternoon discos to cocktail classes." },
+  { slug: "birthday-party-ideas-northampton-adults", title: "Birthday Party Ideas for Adults in Northampton", excerpt: "Grown-up birthday ideas that actually work: daytime discos, group experiences, and more." },
+  { slug: "why-daytime-discos-are-popular", title: "Why Daytime Discos Are So Popular", excerpt: "The rise of the afternoon party: why daytime events sell out while evening ones struggle." },
+];
+
+const blogItems = blogPosts
+  .map(
+    (p) => `<li style="margin:0 0 16px;padding:0 0 16px;border-bottom:1px solid rgba(255,255,255,.12)">
+        <a href="/blog/${p.slug}/" style="color:inherit;font-weight:600;text-decoration:underline">${esc(p.title)}</a><br>
+        <span>${esc(p.excerpt)}</span>
+      </li>`
+  )
+  .join("\n      ");
+
+const blogIndexBody = `<main id="main-content" style="max-width:760px;margin:0 auto;padding:48px 20px 64px;font-family:Poppins,Inter,system-ui,sans-serif">
+    <h1 style="font-size:2rem;line-height:1.2;margin:0 0 10px">THE 2PM CLUB Blog</h1>
+    <p style="margin:0 0 28px">Stories, science, and the soundtrack to your Saturday.</p>
+    <ul style="list-style:none;margin:0;padding:0">
+      ${blogItems}
+    </ul>
+    <p style="margin:28px 0 0"><a href="/" style="color:inherit;text-decoration:underline">THE 2PM CLUB home</a></p>
+  </main>`;
+
+fs.mkdirSync(path.join(DIST, "blog"), { recursive: true });
+fs.writeFileSync(
+  path.join(DIST, "blog", "index.html"),
+  indexShell({
+    urlPath: "/blog/",
+    title: "Blog | THE 2PM CLUB",
+    description:
+      "Stories, science, and the soundtrack to your Saturday. Discover why afternoon parties work, the music we love, and the culture of daytime disco.",
+    bodyHtml: blogIndexBody,
+  })
+);
+console.log(`prerender-events: wrote blog index shell (${blogPosts.length} posts)`);

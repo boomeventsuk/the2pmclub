@@ -43,7 +43,7 @@ export default function EventsIndex() {
   return (
     <>
       <Helmet>
-        <title>Upcoming Events | THE 2PM CLUB</title>
+        <title>Upcoming Daytime Disco Events | THE 2PM CLUB</title>
         <meta name="description" content="All upcoming THE 2PM CLUB daytime disco events across the Midlands. Book your tickets for Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester." />
         <link rel="canonical" href="https://www.the2pmclub.co.uk/events/" />
       </Helmet>
