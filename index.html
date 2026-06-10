@@ -133,9 +133,15 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('consent', 'revoke');
+    // Restore consent synchronously from localStorage. A grant queued later
+    // through the stub (React useEffect) is not applied by fbevents.js on
+    // takeover, which left returning visitors sending no pixel events at all.
+    var consentGranted = false;
+    try { consentGranted = localStorage.getItem('cookie_consent') === 'granted'; } catch (e) {}
+    fbq('consent', consentGranted ? 'grant' : 'revoke');
     fbq('init', '2629470400739413');
-    // PageView will be fired by cookieConsent.ts after user grants consent
+    // PageView for first-time visitors is fired by cookieConsent.ts after the
+    // banner grant; for returning consented visitors by initConsentOnLoad.
     </script>
     <!-- End Meta Pixel Code -->
 
