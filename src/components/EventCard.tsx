@@ -3,8 +3,8 @@ import { Calendar, MapPin, Clock, Ticket, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { trackEventPageView } from "@/lib/dataLayer";
 
-// Bunny Optimizer params for CDN-hosted images
-const optimised = (url: string, width: number) =>
+// Bunny Optimizer params for CDN-hosted images (shared with EventPageV2)
+export const optimised = (url: string, width: number) =>
   url.includes("b-cdn.net") ? `${url}${url.includes("?") ? "&" : "?"}width=${width}&quality=75` : url;
 
 interface EventCardProps {

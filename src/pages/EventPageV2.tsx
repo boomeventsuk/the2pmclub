@@ -10,6 +10,7 @@ import { Calendar, MapPin, Clock, Ticket, CheckCircle2, Users } from 'lucide-rea
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { trackEventPageView, trackBookClick } from '@/lib/dataLayer';
+import { optimised } from '@/components/EventCard';
 
 // Hero reel URLs on Bunny CDN.
 // Per-city cuts live at hero-1x1-{cityCode}.mp4 (NPTON, BED, COV, MK, LUT, LEIC).
@@ -173,9 +174,12 @@ const EventPageV2 = () => {
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
   const [reelSrc, setReelSrc] = useState<string>(HERO_REEL_MASTER);
+  const [reelActive, setReelActive] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [widgetReady, setWidgetReady] = useState(false);
   const checkoutRef = useRef<HTMLDivElement>(null);
+  const reelWrapRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const autoLoadedRef = useRef(false);
 
   useEffect(() => {
@@ -304,6 +308,71 @@ const EventPageV2 = () => {
     };
   }, [showCheckout, widgetReady, event]);
 
+  // Hero reel media diet: the reel is ~3MB, so it must never be part of the
+  // initial page weight. The <video> mounts with no src (preload="none") and
+  // the event poster showing; once the page has finished loading AND the reel
+  // is near the viewport (IntersectionObserver), the src is set and the reel
+  // streams in. The reel itself is brand-critical and stays.
+  useEffect(() => {
+    if (!event || reelActive) return;
+    let cancelled = false;
+    let observer: IntersectionObserver | undefined;
+    let fallback: number | undefined;
+
+    const activate = () => {
+      if (cancelled) return;
+      setReelActive(true);
+      observer?.disconnect();
+      window.clearTimeout(fallback);
+    };
+
+    const arm = () => {
+      if (cancelled) return;
+      const target = reelWrapRef.current;
+      if (!target || typeof IntersectionObserver === 'undefined') {
+        activate();
+        return;
+      }
+      observer = new IntersectionObserver(
+        (entries) => { if (entries.some(e => e.isIntersecting)) activate(); },
+        { rootMargin: '300px 0px' }
+      );
+      observer.observe(target);
+      // IO delivery pauses in hidden tabs and some in-app webviews (a lot
+      // of ad traffic): the reel is brand-critical, so a timer guarantees
+      // it still arrives shortly after load.
+      fallback = window.setTimeout(activate, 2500);
+    };
+
+    if (document.readyState === 'complete') {
+      arm();
+    } else {
+      window.addEventListener('load', arm, { once: true });
+    }
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', arm);
+      observer?.disconnect();
+      window.clearTimeout(fallback);
+    };
+  }, [event, reelActive]);
+
+  // Kick playback once the deferred src lands (the autoplay attribute alone
+  // is not reliable when src is attached after mount, and an immediate
+  // play() gets interrupted by the load the new src triggers).
+  useEffect(() => {
+    if (!reelActive) return;
+    const v = videoRef.current;
+    if (!v) return;
+    const tryPlay = () => { v.play().catch(() => {}); };
+    if (v.readyState >= 3) {
+      tryPlay();
+      return;
+    }
+    v.addEventListener('canplay', tryPlay, { once: true });
+    return () => v.removeEventListener('canplay', tryPlay);
+  }, [reelActive, reelSrc]);
+
   // Header "Book Tickets" on event pages dispatches 2pm:book-intent and
   // scrolls here itself; we just mount the widget. Explicit tap = real
   // intent, so autoLoadedRef stays false and InitiateCheckout fires.
@@ -404,16 +473,17 @@ const EventPageV2 = () => {
               <div className="grid md:grid-cols-2 gap-6 items-start">
                 {/* Hero video */}
                 <div className="flex justify-center md:justify-start">
-                  <div className="relative w-full max-w-md aspect-square rounded-xl overflow-hidden shadow-2xl shadow-primary/20 bg-black">
+                  <div ref={reelWrapRef} className="relative w-full max-w-md aspect-square rounded-xl overflow-hidden shadow-2xl shadow-primary/20 bg-black">
                     <video
                       key={reelSrc}
-                      src={reelSrc}
-                      poster={event.squareImg}
+                      ref={videoRef}
+                      src={reelActive ? reelSrc : undefined}
+                      poster={optimised(event.squareImg, 800)}
                       autoPlay
                       muted
                       loop
                       playsInline
-                      preload="metadata"
+                      preload="none"
                       onError={handleReelError}
                       className="w-full h-full object-cover"
                     />
@@ -553,22 +623,18 @@ const EventPageV2 = () => {
         <section className="py-6 md:py-8 overflow-hidden">
           <div className="relative">
             <div className="flex gap-4 animate-scroll">
-              {[
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_1_ndjab4.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_2_qedzzq.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_3_nuwrvk.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_4_j87ixj.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_5_eln7gp.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_6_bjt6h7.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_7_jl6yvd.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_1_ndjab4.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_2_qedzzq.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_3_nuwrvk.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_4_j87ixj.jpg",
-                "https://boombastic-events.b-cdn.net/2PM%20Web%20Images/2pm_web_5_eln7gp.jpg",
-              ].map((img, i) => (
+              {/* Self-hosted optimised WebPs (45-70KB each), same set as the
+                  homepage gallery: ~300KB-per-image CDN JPEGs were the bulk of
+                  the old page weight */}
+              {[1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5].map((n, i) => (
                 <div key={i} className="flex-shrink-0 w-56 md:w-72">
-                  <img src={img} alt="2PM Club event moment" className="w-full h-44 md:h-52 object-cover rounded-xl shadow-lg" loading="lazy" />
+                  <img
+                    src={`/img/gallery/2pm-crowd-${n}.webp`}
+                    alt="2PM Club event moment"
+                    className="w-full h-44 md:h-52 object-cover rounded-xl shadow-lg"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
               ))}
             </div>
