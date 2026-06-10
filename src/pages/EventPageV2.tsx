@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import EventbriteEmbed from '@/components/EventbriteEmbed';
+import EventMobileBookBar from '@/components/EventMobileBookBar';
 import TrustStrip from '@/components/TrustStrip';
 import { Calendar, MapPin, Clock, Ticket, CheckCircle2, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -690,6 +691,15 @@ const EventPageV2 = () => {
         </section>
 
         <Footer />
+
+        {/* Mobile sticky book bar: fills the pb-20 slot reserved below */}
+        <EventMobileBookBar
+          shortDate={event.shortDate}
+          venue={event.venue}
+          statusLabel={event.statusLabel}
+          isSoldOut={isSoldOut}
+          onBook={scrollToCheckout}
+        />
       </div>
     </>
   );
