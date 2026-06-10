@@ -7,6 +7,9 @@ interface EventbriteEmbedProps {
   containerId: string;
   height?: number;
   promoCode?: string;
+  /** Eventbrite affiliate code for order-level attribution (e.g. BoomWebGrp
+      for the group page variant). Omitted = Eventbrite default handling. */
+  affiliateCode?: string;
   eventTitle?: string;
   onOrderComplete?: () => void;
 }
@@ -19,7 +22,7 @@ declare global {
   }
 }
 
-const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, promoCode, eventTitle, onOrderComplete }: EventbriteEmbedProps) => {
+const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, promoCode, affiliateCode, eventTitle, onOrderComplete }: EventbriteEmbedProps) => {
   const hasTrackedInteraction = useRef(false);
   const trackingContext = {
     eventbriteId,
@@ -56,6 +59,7 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
           iframeContainerId: containerId,
           iframeContainerHeight: height,
           ...(promoCode && { promoCode }),
+          ...(affiliateCode && { affiliateCode }),
           onOrderComplete: (order: any) => {
             const value = normaliseEventbriteValue(order);
             const orderId = order?.id;

@@ -7,6 +7,9 @@ interface EventMobileBookBarProps {
   venue: string;
   statusLabel?: string;
   isSoldOut: boolean;
+  /** Override for the book button label (group page variant passes
+      "Book for the Group"). Default stays "Book Tickets". */
+  ctaLabel?: string;
   onBook: () => void;
 }
 
@@ -18,7 +21,7 @@ interface EventMobileBookBarProps {
  * Sold out events get a "Join Waiting List" label; the same scroll target
  * renders the waitlist form in that state.
  */
-const EventMobileBookBar = ({ shortDate, venue, statusLabel, isSoldOut, onBook }: EventMobileBookBarProps) => {
+const EventMobileBookBar = ({ shortDate, venue, statusLabel, isSoldOut, ctaLabel = "Book Tickets", onBook }: EventMobileBookBarProps) => {
   const [pastHero, setPastHero] = useState(false);
   const [consentResolved, setConsentResolved] = useState(() => hasConsentBeenGiven());
   const [checkoutInView, setCheckoutInView] = useState(false);
@@ -74,7 +77,7 @@ const EventMobileBookBar = ({ shortDate, venue, statusLabel, isSoldOut, onBook }
           onClick={onBook}
           className="rounded-full font-poppins font-semibold uppercase tracking-wide text-xs px-4 shrink-0 shadow-[0_6px_20px_hsl(328_100%_54%_/_0.45)]"
         >
-          {isSoldOut ? "Join Waiting List" : "Book Tickets"}
+          {isSoldOut ? "Join Waiting List" : ctaLabel}
         </Button>
       </div>
     </div>

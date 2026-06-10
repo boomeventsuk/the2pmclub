@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
@@ -9,7 +9,7 @@ import TrustStrip from '@/components/TrustStrip';
 import { Calendar, MapPin, Clock, Ticket, CheckCircle2, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
-import { trackEventPageView, trackBookClick } from '@/lib/dataLayer';
+import { trackEventPageView, trackBookClick, pushToDataLayer } from '@/lib/dataLayer';
 import { optimised } from '@/components/EventCard';
 
 // Hero reel URLs on Bunny CDN.
@@ -167,13 +167,29 @@ const CITY_QUOTES: Record<string, Quote[]> = {
   ],
 };
 
-const quotesForCity = (city: string): Quote[] => {
+// Group-relevant quotes from the approved bank (group view leads with one).
+// Exact verbatim matches against the entries above, never new copy.
+const GROUP_QUOTE_TEXTS = new Set([
+  "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", // Jacqui, Northampton
+  "Finally able to get all my friends together, when's the next one?", // Marie T (general fallback)
+]);
+
+const quotesForCity = (city: string, groupFirst = false): Quote[] => {
   const merged = [...(CITY_QUOTES[city] || [])].slice(0, 3);
   for (const q of GENERAL_QUOTES) {
     if (merged.length >= 3) break;
     if (!merged.some(m => m.quote === q.quote)) merged.push(q);
   }
-  return merged.slice(0, 3);
+  const standard = merged.slice(0, 3);
+  if (!groupFirst) return standard;
+  // Group view: lead with the most group-relevant approved quote. The city's
+  // own group quote wins; the general group quote (Marie T) is the fallback.
+  // Same dedupe rule applies: a quote never appears twice on a page.
+  const lead =
+    (CITY_QUOTES[city] || []).find(q => GROUP_QUOTE_TEXTS.has(q.quote)) ||
+    GENERAL_QUOTES.find(q => GROUP_QUOTE_TEXTS.has(q.quote));
+  if (!lead) return standard;
+  return [lead, ...standard.filter(q => q.quote !== lead.quote)].slice(0, 3);
 };
 
 // Faded mock of the ticket selector. Used as the pre-tap gate background and
@@ -213,6 +229,14 @@ const GhostCheckout = () => (
 
 const EventPageV2 = () => {
   const { slug } = useParams<{ slug: string }>();
+  // Group buyer variant (?v=group): a parameterised view of this same page,
+  // driven entirely by event.groupTicket in events.json. No new route, no
+  // duplicate page. If the param is present but groupTicket is absent (sold
+  // through / never existed), the standard page renders exactly as-is, so
+  // the URL never 404s and never shows a dead offer. The statusLabel ladder
+  // is never overridden: the variant owns framing only, never state.
+  const [searchParams] = useSearchParams();
+  const isGroupParam = searchParams.get('v') === 'group';
   const [event, setEvent] = useState<EventData | null>(null);
   const [loading, setLoading] = useState(true);
   const [reelSrc, setReelSrc] = useState<string>(HERO_REEL_MASTER);
@@ -250,6 +274,20 @@ const EventPageV2 = () => {
     });
     return () => { cancelled = true; };
   }, [slug]);
+
+  // Group variant render marker. Fires only when group mode actually renders
+  // (param present AND groupTicket live AND not sold out), so dataLayer
+  // reflects what the visitor saw, not what the URL asked for. The existing
+  // ViewContent/InitiateCheckout flow is unchanged.
+  useEffect(() => {
+    if (event && isGroupParam && event.groupTicket && event.status !== 'sold-out') {
+      pushToDataLayer({
+        event: 'page_variant_view',
+        variant: 'group',
+        slug: event.slug,
+      });
+    }
+  }, [event, isGroupParam]);
 
   // InitiateCheckout fires when the Eventbrite widget actually loads,
   // not on a card click two pages earlier.
@@ -472,10 +510,32 @@ const EventPageV2 = () => {
   const isSoldOut = event.status === 'sold-out';
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
 
-  // WhatsApp share: site event page link, never Eventbrite (item 19)
+  // GROUP MODE: only when the param asks for it AND the offer is live.
+  // Sold out or no groupTicket = silent fallback to the standard page.
+  const groupMode = isGroupParam && !isSoldOut && !!event.groupTicket;
+
+  // Per-head maths for the promoted group fact row, computed from the live
+  // groupTicket data (never hand-written): £40 / 4 = "£10 each".
+  const perHead = event.groupTicket
+    ? formatPrice(event.groupTicket.price / event.groupTicket.size)
+    : '';
+  const sizeWords: Record<number, string> = { 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six' };
+  const sizeWord = event.groupTicket
+    ? (sizeWords[event.groupTicket.size] || String(event.groupTicket.size))
+    : '';
+
+  // Group view pins the group FAQ first; standard order is untouched.
+  const groupFaqIndex = faqs.findIndex(f => f.q === 'Do you offer group tickets?');
+  const orderedFaqs = groupMode && groupFaqIndex > 0
+    ? [faqs[groupFaqIndex], ...faqs.filter((_, i) => i !== groupFaqIndex)]
+    : faqs;
+
+  // WhatsApp share: site event page link, never Eventbrite (item 19).
+  // Group view shares the group URL so the chat lands on the same framing.
   const eventUrl = `https://www.the2pmclub.co.uk/events/${event.slug}/`;
+  const shareUrl = groupMode ? `${eventUrl}?v=group` : eventUrl;
   const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(
-    `The 2PM Club, ${event.city}, ${event.date}. Daytime disco, home by 7. Who's in? ${eventUrl}`
+    `The 2PM Club, ${event.city}, ${event.date}. Daytime disco, home by 7. Who's in? ${shareUrl}`
   )}`;
 
   return (
@@ -564,7 +624,9 @@ const EventPageV2 = () => {
                       <span className="text-primary">{event.city}</span>
                     </h1>
                     <p className="font-poppins text-lg md:text-xl text-foreground/85 mt-3 font-medium">
-                      Your best night out. In the middle of the afternoon.
+                      {groupMode
+                        ? 'Round up the group. The afternoon out everyone can actually make.'
+                        : 'Your best night out. In the middle of the afternoon.'}
                     </p>
                     <p className="font-poppins text-base md:text-lg text-foreground/70 mt-1">
                       Iconic 80s, 90s and 00s anthems.
@@ -572,6 +634,21 @@ const EventPageV2 = () => {
                   </div>
 
                   <div className="flex flex-col gap-2 pt-2 border-t border-border/40">
+                    {/* Group view: group ticket promoted to the first fact row,
+                        with per-head maths computed from groupTicket data */}
+                    {groupMode && event.groupTicket && (
+                      <div className="flex items-start gap-2">
+                        <Users className="w-5 h-5 text-primary mt-0.5" />
+                        <div>
+                          <span className="font-poppins font-semibold text-base block">
+                            {event.groupTicket.label}
+                          </span>
+                          <span className="font-poppins text-sm text-foreground/70 block">
+                            {perHead} each for {sizeWord} of you
+                          </span>
+                        </div>
+                      </div>
+                    )}
                     <div className="flex items-center gap-2">
                       <Calendar className="w-5 h-5 text-primary" />
                       <span className="font-poppins font-medium text-base">{event.date}</span>
@@ -592,7 +669,9 @@ const EventPageV2 = () => {
                         </span>
                       </div>
                     )}
-                    {!isSoldOut && event.groupTicket?.label && (
+                    {/* Standard view keeps the group line in its usual slot;
+                        group view already shows it as row 1 (never twice) */}
+                    {!groupMode && !isSoldOut && event.groupTicket?.label && (
                       <div className="flex items-center gap-2">
                         <Users className="w-5 h-5 text-primary" />
                         <span className="font-poppins font-medium text-base">
@@ -615,20 +694,25 @@ const EventPageV2 = () => {
                     size="lg"
                     className="w-full font-poppins font-semibold text-lg"
                   >
-                    {isSoldOut ? 'Join Waiting List' : 'Book Tickets'}
+                    {isSoldOut ? 'Join Waiting List' : groupMode ? 'Book for the Group' : 'Book Tickets'}
                   </Button>
 
+                  {/* WhatsApp share sits directly under the CTA. Group view
+                      promotes it (the organiser's actual job: drop the link in
+                      the chat) and shares the ?v=group URL */}
                   <a
                     href={whatsappShareUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full border border-border/60 rounded-md py-3 font-poppins font-medium text-sm text-foreground/85 hover:border-[#25D366] hover:text-foreground transition-colors"
+                    className={groupMode
+                      ? 'flex items-center justify-center gap-2 w-full border-2 border-[#25D366]/70 rounded-md py-3 font-poppins font-semibold text-base text-foreground hover:border-[#25D366] hover:bg-[#25D366]/10 transition-colors'
+                      : 'flex items-center justify-center gap-2 w-full border border-border/60 rounded-md py-3 font-poppins font-medium text-sm text-foreground/85 hover:border-[#25D366] hover:text-foreground transition-colors'}
                     aria-label="Share this event on WhatsApp"
                   >
                     <svg viewBox="0 0 24 24" className="w-4 h-4 fill-[#25D366]" aria-hidden="true">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.668-1.612-.916-2.207-.241-.579-.486-.5-.668-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.075-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.064 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                     </svg>
-                    Share on WhatsApp
+                    {groupMode ? 'Send this to the group chat' : 'Share on WhatsApp'}
                   </a>
                 </div>
               </div>
@@ -642,7 +726,7 @@ const EventPageV2 = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {quotesForCity(event.city).map((t, i) => (
+                {quotesForCity(event.city, groupMode).map((t, i) => (
                   <div key={i} className="bg-primary/5 border border-border/30 rounded-xl p-5">
                     <div className="flex mb-2 text-yellow-400 text-sm">★★★★★</div>
                     <p className="font-poppins text-base md:text-lg font-semibold text-foreground/90 mb-3 leading-snug">
@@ -706,7 +790,7 @@ const EventPageV2 = () => {
               <div className="bg-primary/10 border border-primary/30 rounded-2xl p-5 md:p-7">
                 <div className="text-center mb-5">
                   <h2 className="font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 text-foreground uppercase">
-                    {isSoldOut ? 'Join the Waiting List' : isLastTickets ? (event.urgencyLabel || 'Last Tickets') : 'Book Your Tickets'}
+                    {isSoldOut ? 'Join the Waiting List' : isLastTickets ? (event.urgencyLabel || 'Last Tickets') : groupMode ? 'Book the Group In' : 'Book Your Tickets'}
                   </h2>
                   <p className="font-poppins text-sm md:text-base text-foreground/70">
                     {isSoldOut
@@ -768,6 +852,7 @@ const EventPageV2 = () => {
                           containerId={`eventbrite-widget-v2-${event.slug}`}
                           height={650}
                           promoCode={event.promoCode}
+                          affiliateCode={groupMode ? 'BoomWebGrp' : undefined}
                           eventTitle={event.title}
                         />
                       </div>
@@ -836,7 +921,7 @@ const EventPageV2 = () => {
                   Questions People Ask Before They Book
                 </h2>
                 <Accordion type="single" collapsible className="w-full">
-                  {faqs.map((f, i) => (
+                  {orderedFaqs.map((f, i) => (
                     <AccordionItem key={i} value={`faq-${i}`} className="border-border/30">
                       <AccordionTrigger className="text-left font-poppins font-medium text-foreground hover:no-underline text-base md:text-lg uppercase">
                         {f.q}
@@ -868,6 +953,7 @@ const EventPageV2 = () => {
           venue={event.venue}
           statusLabel={event.statusLabel}
           isSoldOut={isSoldOut}
+          ctaLabel={groupMode ? 'Book for the Group' : undefined}
           onBook={scrollToCheckout}
         />
       </div>
