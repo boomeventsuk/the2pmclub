@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import EventbriteEmbed from '@/components/EventbriteEmbed';
 import TrustStrip from '@/components/TrustStrip';
-import { Calendar, MapPin, Clock, Ticket, CheckCircle2 } from 'lucide-react';
+import { Calendar, MapPin, Clock, Ticket, CheckCircle2, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { trackEventPageView, trackBookClick } from '@/lib/dataLayer';
@@ -39,6 +39,7 @@ interface EventJson {
   accentColor?: string;
   price?: number;
   legacyLine?: string;
+  groupTicket?: { size: number; price: number; label: string };
 }
 
 interface EventData {
@@ -59,6 +60,7 @@ interface EventData {
   urgencyLabel?: string;
   price?: number;
   legacyLine?: string;
+  groupTicket?: { size: number; price: number; label: string };
 }
 
 const parseLocation = (location: string): { venue: string; city: string } => {
@@ -120,6 +122,7 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         urgencyLabel: event.urgencyLabel,
         price: event.price,
         legacyLine: event.legacyLine,
+        groupTicket: event.groupTicket,
       };
     });
     return out;
@@ -385,7 +388,15 @@ const EventPageV2 = () => {
                       <div className="flex items-center gap-2">
                         <Ticket className="w-5 h-5 text-primary" />
                         <span className="font-poppins font-medium text-base">
-                          Tickets from {formatPrice(event.price)} (+ bf) Group offers available
+                          Tickets from {formatPrice(event.price)}
+                        </span>
+                      </div>
+                    )}
+                    {!isSoldOut && event.groupTicket?.label && (
+                      <div className="flex items-center gap-2">
+                        <Users className="w-5 h-5 text-primary" />
+                        <span className="font-poppins font-medium text-base">
+                          {event.groupTicket.label}
                         </span>
                       </div>
                     )}

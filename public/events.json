@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-09T21:32:22.589Z",
+    "priceLastSync": "2026-06-10T08:54:38.327Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -56,8 +56,8 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-09T21:32:23.239Z",
-    "statusLabel": "Final 25 tickets",
+    "priceLastSync": "2026-06-10T08:54:38.954Z",
+    "statusLabel": "75% sold",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -93,8 +93,8 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-09T21:32:23.880Z",
-    "statusLabel": "Final 25 tickets",
+    "priceLastSync": "2026-06-10T08:54:39.566Z",
+    "statusLabel": "75% sold",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -129,7 +129,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-09T21:32:24.544Z",
+    "priceLastSync": "2026-06-10T08:54:40.197Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
@@ -168,7 +168,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-09T21:32:25.185Z",
+    "priceLastSync": "2026-06-10T08:54:40.922Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
@@ -207,7 +207,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-09T21:32:25.812Z",
+    "priceLastSync": "2026-06-10T08:54:41.539Z",
     "statusLabel": "75% sold",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -245,7 +245,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-09T21:32:26.448Z",
+    "priceLastSync": "2026-06-10T08:54:42.137Z",
     "statusLabel": "This Saturday, 10 left",
     "statusLabelOverride": "This Saturday, 10 left",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
@@ -285,8 +285,8 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-09T21:32:27.115Z",
-    "statusLabel": "Final 25 tickets",
+    "priceLastSync": "2026-06-10T08:54:42.803Z",
+    "statusLabel": "75% sold",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -324,9 +324,8 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-09T21:32:27.762Z",
-    "statusLabel": "15 tickets left",
-    "statusLabelOverride": "15 tickets left",
+    "priceLastSync": "2026-06-10T08:54:43.441Z",
+    "statusLabel": "Final release: 15 left",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -364,7 +363,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-09T21:32:28.379Z",
+    "priceLastSync": "2026-06-10T08:54:44.062Z",
     "statusLabel": "Join waiting list",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
@@ -403,9 +402,8 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-09T21:32:28.987Z",
-    "statusLabel": "This Saturday",
-    "statusLabelOverride": "This Saturday",
+    "priceLastSync": "2026-06-10T08:54:44.678Z",
+    "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -445,7 +443,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-09T21:32:29.653Z",
+    "priceLastSync": "2026-06-10T08:54:45.296Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -488,7 +486,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-09T21:32:30.279Z",
+    "priceLastSync": "2026-06-10T08:54:45.923Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -528,7 +526,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-09T21:32:30.908Z",
+    "priceLastSync": "2026-06-10T08:54:46.501Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -568,7 +566,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-09T21:32:31.534Z",
+    "priceLastSync": "2026-06-10T08:54:47.115Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -580,6 +578,11 @@
     },
     "tierLabels": [
       "Early Release Ticket sold out"
-    ]
+    ],
+    "groupTicket": {
+      "size": 4,
+      "price": 40,
+      "label": "Group of 4: £40 (save £8)"
+    }
   }
 ]

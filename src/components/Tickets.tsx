@@ -22,6 +22,7 @@ interface EventJson {
   urgencyLabel?: string;
   priceLabel?: string;
   tierLabels?: string[];
+  groupTicket?: { size: number; price: number; label: string };
   isHidden?: boolean;
 }
 
@@ -45,6 +46,7 @@ interface MappedEvent {
   dateIso: string;
   priceLabel?: string;
   tierLabels?: string[];
+  groupTicket?: { size: number; price: number; label: string };
 }
 
 // Parse location string into venue and city
@@ -136,6 +138,7 @@ const Tickets = () => {
             dateIso: getDateIso(e.start),
             priceLabel: e.priceLabel,
             tierLabels: e.tierLabels,
+            groupTicket: e.groupTicket,
           };
         });
 

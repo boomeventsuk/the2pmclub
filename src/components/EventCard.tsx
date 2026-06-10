@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Clock, Ticket } from "lucide-react";
+import { Calendar, MapPin, Clock, Ticket, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { trackEventPageView } from "@/lib/dataLayer";
 
@@ -28,9 +28,10 @@ interface EventCardProps {
   urgencyColor?: string;
   priceLabel?: string;
   tierLabels?: string[];
+  groupTicket?: { size: number; price: number; label: string };
 }
 
-const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor, priceLabel, tierLabels }: EventCardProps) => {
+const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor, priceLabel, tierLabels, groupTicket }: EventCardProps) => {
   const navigate = useNavigate();
 
   const goToEventPage = (source: string) => {
@@ -114,6 +115,12 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
             <div className="flex items-center text-foreground">
               <Ticket className="w-4 h-4 mr-2 text-primary" />
               <span className="font-poppins font-semibold">{priceLabel}</span>
+            </div>
+          )}
+          {groupTicket?.label && (
+            <div className="flex items-center text-foreground/90">
+              <Users className="w-4 h-4 mr-2 text-primary" />
+              <span className="font-poppins">{groupTicket.label}</span>
             </div>
           )}
           {tierLabels && tierLabels.length > 0 && (() => {

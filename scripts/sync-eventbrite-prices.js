@@ -49,7 +49,30 @@ async function fetchTicketClasses(eventbriteId, token) {
   return data.ticket_classes || [];
 }
 
-function extractPriceData(ticketClasses, eventDate) {
+// ============================================================
+// Per-venue count rules (JD, 2026-06-10).
+// countFrom = the singles-remaining level at which the badge may
+// start showing a number. Bigger rooms earn their counts later.
+// ============================================================
+const VENUE_COUNT_RULES = [
+  { match: /hmv empire/i, countFrom: 100 },
+  { match: /picturedrome/i, countFrom: 50 },
+  { match: /esquires/i, countFrom: 50 },
+  { match: /mk11/i, countFrom: 50 },
+];
+const DEFAULT_COUNT_FROM = 100;
+
+function venueCountFrom(location) {
+  const rule = VENUE_COUNT_RULES.find(r => r.match.test(location || ''));
+  return rule ? rule.countFrom : DEFAULT_COUNT_FROM;
+}
+
+// £40 not £40.00, but £12.50 keeps its pennies
+function fmtPounds(value) {
+  return Number.isInteger(value) ? `£${value}` : `£${value.toFixed(2)}`;
+}
+
+function extractPriceData(ticketClasses, eventDate, location) {
   if (!ticketClasses || ticketClasses.length === 0) return null;
 
   // Filter to admission tickets only (ignore donations, etc.)
@@ -121,19 +144,49 @@ function extractPriceData(ticketClasses, eventDate) {
   }
 
   // ============================================================
-  // JD's urgency curve (v3)
+  // JD's urgency curve (v4, locked 2026-06-10)
   //
-  // Phase 1: "Just announced"      - early days, low sales
-  // Phase 2: "Selling fast"        - 15%+ sold, building momentum
-  // Phase 3: "75% sold"            - really at 67% (1/3 left)
-  // Phase 4: "Final 50 tickets"    - really 70 attendees left
-  // Phase 5: "Final 25 tickets"    - really 40 attendees left
-  // Phase 6: "Final tickets"       - event week fallback
-  // Phase 7: "Join waiting list"   - sold out
+  // The two mechanics never fight: a count never sits next to a
+  // group invitation.
   //
-  // Numbered callouts (4/5) take priority over event-week (6).
-  // All thresholds based on ATTENDEE count, not ticket count.
+  // Phase 1: "Just announced"          - early days, low sales
+  // Phase 2: "Selling fast"            - 15%+ sold
+  // Phase 3: "75% sold"                - really at 67% (1/3 left)
+  // Phase 4: "Final tickets"           - event week fallback
+  // Phase 5: "Final release"           - final tier on sale, NO count
+  //          (groups may still be on sale; group line shows)
+  // Phase 6: "Final release: N left"   - count mode. ONLY when
+  //          singles are the only thing on sale AND remaining
+  //          singles <= the venue's countFrom. N rounds DOWN:
+  //          100..25 -> nearest 25, 24..10 -> nearest 5,
+  //          under 10 -> "Last few tickets". Never exact.
+  // Phase 7: "Join waiting list"       - sold out
   // ============================================================
+
+  const groupTiersAvailable = tiers.filter(
+    t => t.attendeesPerTicket > 1 && t.status === 'AVAILABLE'
+  );
+  const singleTiersAvailable = tiers.filter(
+    t => t.attendeesPerTicket === 1 && t.status === 'AVAILABLE'
+  );
+  const singlesRemaining = singleTiersAvailable.reduce(
+    (sum, t) => sum + ((t.ticketCapacity || 0) - (t.ticketSold || 0)), 0
+  );
+  const finalPhase = tiers.some(
+    t => /final/i.test(t.name) && t.status === 'AVAILABLE'
+  );
+  const countFrom = venueCountFrom(location);
+  const countMode =
+    finalPhase &&
+    groupTiersAvailable.length === 0 &&
+    singleTiersAvailable.length > 0 &&
+    singlesRemaining <= countFrom;
+
+  function roundedCountLabel(n) {
+    if (n < 10) return 'Last few tickets';
+    if (n < 25) return `Final release: ${Math.floor(n / 5) * 5} left`;
+    return `Final release: ${Math.floor(n / 25) * 25} left`;
+  }
 
   let statusLabel;
   let schemaAvailability;
@@ -141,13 +194,11 @@ function extractPriceData(ticketClasses, eventDate) {
   if (allSoldOut || totalAttendeeRemaining === 0) {
     statusLabel = 'Join waiting list';
     schemaAvailability = 'https://schema.org/SoldOut';
-  } else if (totalAttendeeRemaining <= 40) {
-    // Reality: 40 attendees left. Say: final 25
-    statusLabel = 'Final 25 tickets';
+  } else if (countMode) {
+    statusLabel = roundedCountLabel(singlesRemaining);
     schemaAvailability = 'https://schema.org/LimitedAvailability';
-  } else if (totalAttendeeRemaining <= 70) {
-    // Reality: 70 attendees left. Say: final 50
-    statusLabel = 'Final 50 tickets';
+  } else if (finalPhase) {
+    statusLabel = 'Final release';
     schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (isEventWeek) {
     // Event week, plenty of stock: generic urgency
@@ -175,6 +226,26 @@ function extractPriceData(ticketClasses, eventDate) {
     .filter(t => t.status === 'SOLD_OUT')
     .map(t => `${t.name} sold out`);
 
+  // ============================================================
+  // Group pricing (JD, 2026-06-10): if a group ticket is on sale,
+  // surface it with the saving vs singles. If not, say nothing.
+  // ============================================================
+  let groupTicket;
+  if (groupTiersAvailable.length > 0) {
+    const g = [...groupTiersAvailable].sort((a, b) => a.price - b.price)[0];
+    const cheapestSingle = [...singleTiersAvailable].sort((a, b) => a.price - b.price)[0];
+    const saving = cheapestSingle
+      ? Math.round((cheapestSingle.price * g.attendeesPerTicket - g.price) * 100) / 100
+      : 0;
+    groupTicket = {
+      size: g.attendeesPerTicket,
+      price: g.price,
+      label:
+        `Group of ${g.attendeesPerTicket}: ${fmtPounds(g.price)}` +
+        (saving > 0 ? ` (save ${fmtPounds(saving)})` : '')
+    };
+  }
+
   return {
     // Public fields (written to events.json)
     public: {
@@ -183,7 +254,8 @@ function extractPriceData(ticketClasses, eventDate) {
       priceLabel: `From ${cheapest.cost.display}`,
       availability: schemaAvailability,
       statusLabel,
-      tierLabels: tierLabels.length > 0 ? tierLabels : undefined
+      tierLabels: tierLabels.length > 0 ? tierLabels : undefined,
+      groupTicket
     },
     // Internal fields (written to .ticket-data-internal.json only)
     internal: {
@@ -251,7 +323,7 @@ async function main() {
 
     try {
       const ticketClasses = await fetchTicketClasses(event.eventbriteId, token);
-      const priceData = extractPriceData(ticketClasses, event.start);
+      const priceData = extractPriceData(ticketClasses, event.start, event.location);
 
       if (priceData) {
         // Public fields only in events.json
@@ -273,6 +345,11 @@ async function main() {
           event.tierLabels = priceData.public.tierLabels;
         } else {
           delete event.tierLabels;
+        }
+        if (priceData.public.groupTicket) {
+          event.groupTicket = priceData.public.groupTicket;
+        } else {
+          delete event.groupTicket;
         }
         event.priceLastSync = new Date().toISOString();
 
