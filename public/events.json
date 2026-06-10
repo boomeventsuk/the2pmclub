@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T12:58:17.208Z",
+    "priceLastSync": "2026-06-10T22:45:30.843Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T12:58:17.751Z",
+    "priceLastSync": "2026-06-10T22:45:31.473Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T12:58:18.292Z",
+    "priceLastSync": "2026-06-10T22:45:32.142Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T12:58:18.878Z",
+    "priceLastSync": "2026-06-10T22:45:32.814Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T12:58:19.462Z",
+    "priceLastSync": "2026-06-10T22:45:33.472Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T12:58:19.987Z",
+    "priceLastSync": "2026-06-10T22:45:34.099Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -203,7 +203,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-10T12:58:20.952Z",
+    "priceLastSync": "2026-06-10T22:45:34.738Z",
     "statusLabel": "This Saturday, 10 left",
     "statusLabelOverride": "This Saturday, 10 left",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
@@ -215,7 +215,6 @@
     },
     "tierLabels": [
       "General Release Ticket sold out",
-      "Group Ticket for 4 People sold out",
       "Final Release Group Ticket for 4 People sold out",
       "Final Release Ticket sold out"
     ]
@@ -243,7 +242,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T12:58:21.486Z",
+    "priceLastSync": "2026-06-10T22:45:35.357Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -276,8 +275,8 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-10T12:58:22.074Z",
-    "statusLabel": "Final release: 15 left",
+    "priceLastSync": "2026-06-10T22:45:35.988Z",
+    "statusLabel": "Final release: 10 left",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -315,7 +314,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-10T12:58:22.599Z",
+    "priceLastSync": "2026-06-10T22:45:36.601Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -347,7 +346,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T12:58:23.144Z",
+    "priceLastSync": "2026-06-10T22:45:37.225Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -387,10 +386,9 @@
     "price": 12,
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
-    "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T12:58:23.714Z",
-    "statusLabel": "80s Edition - Early Release now on sale",
-    "statusLabelOverride": "80s Edition - Early Release now on sale",
+    "availability": "https://schema.org/LimitedAvailability",
+    "priceLastSync": "2026-06-10T22:45:37.847Z",
+    "statusLabel": "Early release sold out",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
@@ -431,7 +429,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T12:58:24.654Z",
+    "priceLastSync": "2026-06-10T22:45:38.640Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -471,7 +469,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T12:58:25.183Z",
+    "priceLastSync": "2026-06-10T22:45:39.222Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -510,8 +508,8 @@
     "price": 12,
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
-    "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-10T12:58:25.704Z",
+    "availability": "https://schema.org/LimitedAvailability",
+    "priceLastSync": "2026-06-10T22:45:39.852Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",

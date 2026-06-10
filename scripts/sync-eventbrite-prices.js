@@ -200,6 +200,10 @@ function extractPriceData(ticketClasses, eventDate, location) {
   } else if (finalPhase) {
     statusLabel = 'Final release';
     schemaAvailability = 'https://schema.org/LimitedAvailability';
+  } else if (tiers.some(t => /early/i.test(t.name) && t.status === 'SOLD_OUT') && anyAvailable) {
+    // Early tier gone, later tiers live: the honest FOMO state
+    statusLabel = 'Early release sold out';
+    schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (isEventWeek) {
     // Event week, plenty of stock: generic urgency
     statusLabel = 'Final tickets';
@@ -335,7 +339,24 @@ async function main() {
         // not touch event.statusLabel. Use this when a label has been hand-set
         // by JD (e.g. "Final release, 100 left") and should not be reverted to
         // the computed label on the next sync run.
-        if (event.statusLabelOverride && String(event.statusLabelOverride).trim().length > 0) {
+        // Override safety: a hand-set label is dropped the moment the ticket
+        // data contradicts it (e.g. override says "Early Release now on sale"
+        // while the Early Release tier is SOLD_OUT). Stale FOMO is a lie; the
+        // computed ladder takes over and the override is deleted for good.
+        const overrideContradicted = (() => {
+          const ov = String(event.statusLabelOverride || '').toLowerCase();
+          if (!ov) return false;
+          const soldOutTiers = (priceData.internal.tiers || []).filter(t => t.status === 'SOLD_OUT');
+          return soldOutTiers.some(t => {
+            const tier = String(t.name || '').toLowerCase().replace(/\s*tickets?\s*$/, '');
+            return tier && ov.includes(tier);
+          });
+        })();
+        if (overrideContradicted) {
+          console.log(`    OVERRIDE DROPPED: "${event.statusLabelOverride}" contradicted by sold-out tier; using computed "${priceData.public.statusLabel}"`);
+          delete event.statusLabelOverride;
+          event.statusLabel = priceData.public.statusLabel;
+        } else if (event.statusLabelOverride && String(event.statusLabelOverride).trim().length > 0) {
           event.statusLabel = event.statusLabelOverride;
           console.log(`    NOTE: statusLabel override in effect ("${event.statusLabelOverride}"), computed label "${priceData.public.statusLabel}" not applied`);
         } else {
