@@ -63,6 +63,10 @@ const CookieConsent = () => {
               <a href="/privacy/" className="underline underline-offset-2 hover:text-primary transition-colors">
                 Privacy policy
               </a>
+              {' · '}
+              <a href="/terms/" className="underline underline-offset-2 hover:text-primary transition-colors">
+                Terms
+              </a>
             </p>
             <div className="flex flex-col gap-2 shrink-0 md:items-end">
               <div className="flex gap-2 w-full md:w-auto">

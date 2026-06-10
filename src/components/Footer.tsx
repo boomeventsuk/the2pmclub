@@ -72,10 +72,15 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright */}
+        {/* Copyright + legal */}
         <div className="mt-12 pt-8 border-t border-border text-center">
           <p className="font-poppins text-sm text-muted-foreground">
             © {new Date().getFullYear()} Boombastic Events Ltd. All rights reserved.
+          </p>
+          <p className="font-poppins text-sm text-muted-foreground mt-2">
+            <a href="/privacy/" className="hover:text-primary transition-colors underline underline-offset-2">Privacy Policy</a>
+            <span className="mx-2">·</span>
+            <a href="/terms/" className="hover:text-primary transition-colors underline underline-offset-2">Terms &amp; Conditions</a>
           </p>
         </div>
       </div>

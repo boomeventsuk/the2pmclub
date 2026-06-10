@@ -262,6 +262,8 @@ function generateSitemap() {
     [`${SITE}/faqs/`, "monthly", "0.6"],
     [`${SITE}/events/`, "daily", "0.8"],
     [`${SITE}/for-ai/`, "monthly", "0.3"],
+    [`${SITE}/privacy/`, "yearly", "0.3"],
+    [`${SITE}/terms/`, "yearly", "0.3"],
   ];
 
   const eventPages = upcoming.map((ev, i) => [eventUrl(ev), "weekly", i === 0 ? "0.9" : "0.8"]);
