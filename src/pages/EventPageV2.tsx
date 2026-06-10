@@ -187,22 +187,39 @@ const EventPageV2 = () => {
   // Auto-load the checkout as the visitor scrolls towards it: page stays
   // light on load, but a buyer never has to tap a gate. The gate UI below
   // remains as the instant fallback while the widget initialises.
+  // IntersectionObserver is primary; a passive scroll listener backs it up
+  // (IO delivery pauses in hidden tabs and some in-app webviews).
   useEffect(() => {
     if (!event || event.status === 'sold-out' || showCheckout) return;
     const target = checkoutRef.current;
-    if (!target || typeof IntersectionObserver === 'undefined') return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some(e => e.isIntersecting)) {
-          autoLoadedRef.current = true;
-          setShowCheckout(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '600px 0px' }
-    );
-    observer.observe(target);
-    return () => observer.disconnect();
+    if (!target) return;
+
+    const trigger = () => {
+      autoLoadedRef.current = true;
+      setShowCheckout(true);
+      cleanup();
+    };
+
+    const nearCheckout = () =>
+      target.getBoundingClientRect().top < window.innerHeight + 600;
+
+    const onScroll = () => { if (nearCheckout()) trigger(); };
+
+    let observer: IntersectionObserver | undefined;
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => { if (entries.some(e => e.isIntersecting)) trigger(); },
+        { rootMargin: '600px 0px' }
+      );
+      observer.observe(target);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    function cleanup() {
+      observer?.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    }
+    return cleanup;
   }, [event, showCheckout]);
 
   const handleReelError = () => {
@@ -526,16 +543,18 @@ const EventPageV2 = () => {
                       </p>
                     </form>
                   ) : showCheckout ? (
-                    <EventbriteEmbed
-                      eventbriteId={event.eventbriteId}
-                      eventSlug={event.slug}
-                      containerId={`eventbrite-widget-v2-${event.slug}`}
-                      height={650}
-                      promoCode={event.promoCode}
-                      eventTitle={event.title}
-                    />
+                    <div className="min-h-[650px]">
+                      <EventbriteEmbed
+                        eventbriteId={event.eventbriteId}
+                        eventSlug={event.slug}
+                        containerId={`eventbrite-widget-v2-${event.slug}`}
+                        height={650}
+                        promoCode={event.promoCode}
+                        eventTitle={event.title}
+                      />
+                    </div>
                   ) : (
-                    <div className="relative px-6 py-8 md:py-10">
+                    <div className="relative flex flex-col justify-center min-h-[650px] px-6 py-8 md:py-10">
                       {/* Ghost checkout: faded mock of the ticket selector so it
                           reads as "the checkout is right here", not a wall */}
                       <div aria-hidden="true" className="space-y-3 opacity-30 blur-[1.5px] pointer-events-none select-none">
