@@ -2033,15 +2033,15 @@ const EventPage = () => {
                   {[
                     {
                       quote: "Brilliant music, not just clubbing anthems the whole time",
-                      author: "Josie L, Northampton"
+                      author: "Attendee, Northampton"
                     },
                     {
                       quote: "Finally able to get all my friends together, when's the next one?",
-                      author: "Marie T, Coventry"
+                      author: "Attendee, Northampton"
                     },
                     {
                       quote: "Don't think I've danced and laughed so much in a long time. Thank you!",
-                      author: "Tracey M, Bedford"
+                      author: "Attendee, Bedford"
                     }
                   ].map((testimonial, index) => (
                     <div key={index} className="bg-primary/5 border border-border/30 rounded-xl p-4">

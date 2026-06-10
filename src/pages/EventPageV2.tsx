@@ -145,33 +145,33 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
 interface Quote { quote: string; author: string }
 
 const GENERAL_QUOTES: Quote[] = [
-  { quote: "Brilliant music, not just clubbing anthems the whole time", author: "Josie L, Northampton" },
-  { quote: "Finally able to get all my friends together, when's the next one?", author: "Marie T, Coventry" },
-  { quote: "Don't think I've danced and laughed so much in a long time. Thank you!", author: "Tracey M, Bedford" },
+  { quote: "Brilliant music, not just clubbing anthems the whole time", author: "Attendee, Northampton" },
+  { quote: "Finally able to get all my friends together, when's the next one?", author: "Attendee, Northampton" },
+  { quote: "Don't think I've danced and laughed so much in a long time. Thank you!", author: "Attendee, Bedford" },
 ];
 
 const CITY_QUOTES: Record<string, Quote[]> = {
   "Northampton": [
     { quote: "It felt like 2am not 2pm!", author: "Lorne, Northampton" },
-    { quote: "To be in a club that felt safe and full of music from my youth took me back. I have been trying to do this again for years! I felt liberated!", author: "Emma, Northampton" },
-    { quote: "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", author: "Jacqui, Northampton" },
-    { quote: "Second time we've gone and bloody love it!", author: "Daventry customer, Northampton" },
+    { quote: "To be in a club that felt safe and full of music from my youth took me back. I have been trying to do this again for years! I felt liberated!", author: "Emma S, Northampton" },
+    { quote: "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", author: "Jacqui M, Northampton" },
+    { quote: "Second time we've gone and bloody love it!", author: "Attendee, Northampton" },
   ],
   "Coventry": [
-    { quote: "Absolutely brilliant, the best day/evening I have ever had out!", author: "Coventry customer" },
-    { quote: "Daytime singing and dancing, with like minded people, just brilliant.", author: "Coventry customer" },
-    { quote: "Still able to leave the place whilst its still light and feel safe walking to the car", author: "Julie, Coventry" },
+    { quote: "Absolutely brilliant, the best day/evening I have ever had out!", author: "AL, Coventry" },
+    { quote: "Daytime singing and dancing, with like minded people, just brilliant.", author: "Alison M, Coventry" },
+    { quote: "Still able to leave the place whilst its still light and feel safe walking to the car", author: "Julie D, Coventry" },
   ],
   "Milton Keynes": [
-    { quote: "Just not what I expected so much more than we imagined.", author: "Milton Keynes customer" },
+    { quote: "Just not what I expected so much more than we imagined.", author: "AO, Milton Keynes" },
   ],
 };
 
 // Group-relevant quotes from the approved bank (group view leads with one).
 // Exact verbatim matches against the entries above, never new copy.
 const GROUP_QUOTE_TEXTS = new Set([
-  "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", // Jacqui, Northampton
-  "Finally able to get all my friends together, when's the next one?", // Marie T (general fallback)
+  "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", // Jacqui M, Northampton
+  "Finally able to get all my friends together, when's the next one?", // Attendee, Northampton (general fallback)
 ]);
 
 const quotesForCity = (city: string, groupFirst = false): Quote[] => {
@@ -183,7 +183,7 @@ const quotesForCity = (city: string, groupFirst = false): Quote[] => {
   const standard = merged.slice(0, 3);
   if (!groupFirst) return standard;
   // Group view: lead with the most group-relevant approved quote. The city's
-  // own group quote wins; the general group quote (Marie T) is the fallback.
+  // own group quote wins; the general group quote is the fallback.
   // Same dedupe rule applies: a quote never appears twice on a page.
   const lead =
     (CITY_QUOTES[city] || []).find(q => GROUP_QUOTE_TEXTS.has(q.quote)) ||

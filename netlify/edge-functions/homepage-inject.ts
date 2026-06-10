@@ -138,7 +138,7 @@ function buildReviewSchema(): string {
     review: [
       {
         "@type": "Review",
-        author: { "@type": "Person", name: "Josie L" },
+        author: { "@type": "Person", name: "Attendee, Northampton" },
         reviewRating: {
           "@type": "Rating",
           ratingValue: "5",
@@ -149,7 +149,7 @@ function buildReviewSchema(): string {
       },
       {
         "@type": "Review",
-        author: { "@type": "Person", name: "Marie T" },
+        author: { "@type": "Person", name: "Attendee, Northampton" },
         reviewRating: {
           "@type": "Rating",
           ratingValue: "5",
@@ -160,7 +160,7 @@ function buildReviewSchema(): string {
       },
       {
         "@type": "Review",
-        author: { "@type": "Person", name: "Tracey M" },
+        author: { "@type": "Person", name: "Attendee, Bedford" },
         reviewRating: {
           "@type": "Rating",
           ratingValue: "5",
@@ -171,7 +171,7 @@ function buildReviewSchema(): string {
       },
       {
         "@type": "Review",
-        author: { "@type": "Person", name: "Sarah K" },
+        author: { "@type": "Person", name: "Attendee, Northampton" },
         reviewRating: {
           "@type": "Rating",
           ratingValue: "5",
@@ -182,7 +182,7 @@ function buildReviewSchema(): string {
       },
       {
         "@type": "Review",
-        author: { "@type": "Person", name: "Verified attendee" },
+        author: { "@type": "Person", name: "Lorne, Northampton" },
         reviewRating: {
           "@type": "Rating",
           ratingValue: "5",
@@ -233,9 +233,9 @@ function buildNoscriptContent(events: EventData[]): string {
       </ul>
 
       <h2>What People Say</h2>
-      <blockquote>"Brilliant music, not just clubbing anthems the whole time (just the right mix) loved the big singalong moments" - Josie L, Northampton</blockquote>
-      <blockquote>"Finally able to get all my friends together, when's the next one?" - Marie T, Coventry</blockquote>
-      <blockquote>"Don't think I've danced and laughed so much in a long time. Thank you!" - Tracey M, Bedford</blockquote>
+      <blockquote>"Brilliant music, not just clubbing anthems the whole time (just the right mix) loved the big singalong moments" - Attendee, Northampton</blockquote>
+      <blockquote>"Finally able to get all my friends together, when's the next one?" - Attendee, Northampton</blockquote>
+      <blockquote>"Don't think I've danced and laughed so much in a long time. Thank you!" - Attendee, Bedford</blockquote>
 
       <h2>Frequently Asked Questions</h2>
       <dl>

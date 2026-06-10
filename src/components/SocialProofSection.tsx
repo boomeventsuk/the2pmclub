@@ -8,15 +8,15 @@ const SocialProofSection = () => {
   const testimonials = [
     {
       quote: "Brilliant music, not just clubbing anthems the whole time (just the right mix) loved the big singalong moments",
-      author: "JOSIE L, NORTHAMPTON"
+      author: "ATTENDEE, NORTHAMPTON"
     },
     {
       quote: "Finally able to get all my friends together, when's the next one?",
-      author: "MARIE T, COVENTRY"
+      author: "ATTENDEE, NORTHAMPTON"
     },
     {
       quote: "Don't think I've danced and laughed so much in a long time. Thank you!",
-      author: "TRACEY M, BEDFORD"
+      author: "ATTENDEE, BEDFORD"
     }
   ];
 
