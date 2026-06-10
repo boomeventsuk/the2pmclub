@@ -134,6 +134,48 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
   }
 };
 
+// ============================================================
+// Customer quotes, verbatim from the approved bank
+// (Boombastic competitive-intel/CUSTOMER-FEEDBACK-ANALYSIS.md).
+// JD-approved attributions only: never trim or paraphrase, never
+// introduce new real names, never show the same quote twice on a
+// page. City pages lead with their own city's quotes and top up
+// from the general set.
+// ============================================================
+interface Quote { quote: string; author: string }
+
+const GENERAL_QUOTES: Quote[] = [
+  { quote: "Brilliant music, not just clubbing anthems the whole time", author: "Josie L, Northampton" },
+  { quote: "Finally able to get all my friends together, when's the next one?", author: "Marie T, Coventry" },
+  { quote: "Don't think I've danced and laughed so much in a long time. Thank you!", author: "Tracey M, Bedford" },
+];
+
+const CITY_QUOTES: Record<string, Quote[]> = {
+  "Northampton": [
+    { quote: "It felt like 2am not 2pm!", author: "Lorne, Northampton" },
+    { quote: "To be in a club that felt safe and full of music from my youth took me back. I have been trying to do this again for years! I felt liberated!", author: "Emma, Northampton" },
+    { quote: "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", author: "Jacqui, Northampton" },
+    { quote: "Second time we've gone and bloody love it!", author: "Daventry customer, Northampton" },
+  ],
+  "Coventry": [
+    { quote: "Absolutely brilliant, the best day/evening I have ever had out!", author: "Coventry customer" },
+    { quote: "Daytime singing and dancing, with like minded people, just brilliant.", author: "Coventry customer" },
+    { quote: "Still able to leave the place whilst its still light and feel safe walking to the car", author: "Julie, Coventry" },
+  ],
+  "Milton Keynes": [
+    { quote: "Just not what I expected so much more than we imagined.", author: "Milton Keynes customer" },
+  ],
+};
+
+const quotesForCity = (city: string): Quote[] => {
+  const merged = [...(CITY_QUOTES[city] || [])].slice(0, 3);
+  for (const q of GENERAL_QUOTES) {
+    if (merged.length >= 3) break;
+    if (!merged.some(m => m.quote === q.quote)) merged.push(q);
+  }
+  return merged.slice(0, 3);
+};
+
 // Faded mock of the ticket selector. Used as the pre-tap gate background and
 // as the loading underlay while the Eventbrite script boots, so the slot
 // always reads as "the checkout is right here", never a blank box.
@@ -594,23 +636,20 @@ const EventPageV2 = () => {
           </div>
         </section>
 
-        {/* SOCIAL PROOF: 3 quotes lifted up before the widget */}
+        {/* SOCIAL PROOF: 3 quotes lifted up before the widget, city-matched
+            where the approved bank has quotes for this city */}
         <section className="py-8 md:py-10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {[
-                  { quote: "Brilliant music, not just clubbing anthems the whole time", author: "Josie L, Northampton" },
-                  { quote: "Finally able to get all my friends together, when's the next one?", author: "Marie T, Coventry" },
-                  { quote: "Don't think I've danced and laughed so much in a long time. Thank you!", author: "Tracey M, Bedford" },
-                ].map((t, i) => (
+                {quotesForCity(event.city).map((t, i) => (
                   <div key={i} className="bg-primary/5 border border-border/30 rounded-xl p-5">
                     <div className="flex mb-2 text-yellow-400 text-sm">★★★★★</div>
                     <p className="font-poppins text-base md:text-lg font-semibold text-foreground/90 mb-3 leading-snug">
                       "{t.quote}"
                     </p>
                     <p className="font-poppins text-xs text-muted-foreground font-medium uppercase">
-                      — {t.author}
+                      {t.author}
                     </p>
                   </div>
                 ))}
