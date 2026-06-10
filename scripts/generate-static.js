@@ -173,7 +173,7 @@ function jsonLdFor(cityEvents) {
         "https://www.instagram.com/boombastic.eventsuk",
       ],
     },
-    description: ev.description,
+    description: `${ev.title}. 4 hours of iconic 80s, 90s & 00s anthems at ${(ev.location || "").split(", ").slice(0, -1).join(", ") || ev.location}. All the fun of a proper night out, home by 7-ish.`,
   }));
   const payload = blocks.length === 1 ? blocks[0] : blocks;
   return `<script type="application/ld+json">\n${JSON.stringify(payload, null, 2)}\n</script>`;
