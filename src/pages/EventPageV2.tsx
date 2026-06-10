@@ -225,6 +225,15 @@ const EventPageV2 = () => {
     return cleanup;
   }, [event, showCheckout]);
 
+  // Header "Book Tickets" on event pages dispatches 2pm:book-intent and
+  // scrolls here itself; we just mount the widget. Explicit tap = real
+  // intent, so autoLoadedRef stays false and InitiateCheckout fires.
+  useEffect(() => {
+    const onBookIntent = () => setShowCheckout(true);
+    window.addEventListener('2pm:book-intent', onBookIntent);
+    return () => window.removeEventListener('2pm:book-intent', onBookIntent);
+  }, []);
+
   const handleReelError = () => {
     if (reelSrc !== HERO_REEL_MASTER) {
       setReelSrc(HERO_REEL_MASTER);

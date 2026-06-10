@@ -12,6 +12,21 @@ const Header = () => {
     document.body.classList.remove('nav-open');
   };
 
+  // Context-aware Book CTA: on an event page, scroll the buyer to the
+  // checkout instead of navigating them away to the homepage ticket list.
+  // EventPageV2 listens for 2pm:book-intent and mounts the Eventbrite widget.
+  const handleBookClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (window.location.pathname.startsWith('/events/')) {
+      const checkout = document.getElementById('checkout-section');
+      if (checkout) {
+        e.preventDefault();
+        closeMobileMenu();
+        window.dispatchEvent(new CustomEvent('2pm:book-intent'));
+        checkout.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
   return (
     <>
       <header className="site-header fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-border">
@@ -70,7 +85,7 @@ const Header = () => {
 
           {/* Book Tickets CTA */}
           <div className="header-actions">
-            <a href="/#tickets">
+            <a href="/#tickets" onClick={handleBookClick}>
               <Button size="sm" className="font-poppins font-semibold">
                 Book Tickets
               </Button>
