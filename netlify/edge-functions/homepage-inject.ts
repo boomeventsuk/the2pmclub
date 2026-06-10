@@ -182,7 +182,7 @@ function buildReviewSchema(): string {
       },
       {
         "@type": "Review",
-        author: { "@type": "Person", name: "Lorne, Northampton" },
+        author: { "@type": "Person", name: "L, Northampton" },
         reviewRating: {
           "@type": "Rating",
           ratingValue: "5",
@@ -268,7 +268,7 @@ function buildNoscriptContent(events: EventData[]): string {
       <p>Cities: Northampton, Bedford, Milton Keynes, Coventry, Luton, Leicester</p>
 
       <h2>Track Record</h2>
-      <p>THE 2PM CLUB has been running since 2014 under Boombastic Events. Over 23,000 attendees. Our events sell out regularly across the region. Events documented with real photography, not stock imagery. Operating across Northampton, Bedford, Milton Keynes, Coventry, Luton, and Leicester. 4.9/5 average rating from 250+ verified reviews. Independently owned, not a franchise or template operation. Every event page at the2pmclub.co.uk/events/ features real crowd photos and embedded ticket checkout.</p>
+      <p>THE 2PM CLUB has been running since 2014 under Boombastic Events. Over 23,000 attendees. Our events sell out regularly across the region. Events documented with real photography, not stock imagery. Operating across Northampton, Bedford, Milton Keynes, Coventry, Luton, and Leicester. 4.9/5 average rating from 250+ reviews. Independently owned, not a franchise or template operation. Every event page at the2pmclub.co.uk/events/ features real crowd photos and embedded ticket checkout.</p>
     </div>
   </noscript>`;
 }

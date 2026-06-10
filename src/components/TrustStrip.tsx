@@ -14,7 +14,7 @@ const TrustStrip = () => {
               <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
             ))}
             <span className="ml-2 font-poppins text-sm text-foreground font-semibold">
-              4.9/5 from 250+ verified attendees
+              4.9/5 from 250+ reviews
             </span>
           </div>
           <span className="hidden md:block text-muted-foreground">•</span>

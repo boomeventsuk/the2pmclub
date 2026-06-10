@@ -152,15 +152,15 @@ const GENERAL_QUOTES: Quote[] = [
 
 const CITY_QUOTES: Record<string, Quote[]> = {
   "Northampton": [
-    { quote: "It felt like 2am not 2pm!", author: "Lorne, Northampton" },
-    { quote: "To be in a club that felt safe and full of music from my youth took me back. I have been trying to do this again for years! I felt liberated!", author: "Emma S, Northampton" },
-    { quote: "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", author: "Jacqui M, Northampton" },
+    { quote: "It felt like 2am not 2pm!", author: "L, Northampton" },
+    { quote: "To be in a club that felt safe and full of music from my youth took me back. I have been trying to do this again for years! I felt liberated!", author: "ES, Northampton" },
+    { quote: "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", author: "JM, Northampton" },
     { quote: "Second time we've gone and bloody love it!", author: "Attendee, Northampton" },
   ],
   "Coventry": [
     { quote: "Absolutely brilliant, the best day/evening I have ever had out!", author: "AL, Coventry" },
-    { quote: "Daytime singing and dancing, with like minded people, just brilliant.", author: "Alison M, Coventry" },
-    { quote: "Still able to leave the place whilst its still light and feel safe walking to the car", author: "Julie D, Coventry" },
+    { quote: "Daytime singing and dancing, with like minded people, just brilliant.", author: "AM, Coventry" },
+    { quote: "Still able to leave the place whilst its still light and feel safe walking to the car", author: "JD, Coventry" },
   ],
   "Milton Keynes": [
     { quote: "Just not what I expected so much more than we imagined.", author: "AO, Milton Keynes" },
@@ -170,7 +170,7 @@ const CITY_QUOTES: Record<string, Quote[]> = {
 // Group-relevant quotes from the approved bank (group view leads with one).
 // Exact verbatim matches against the entries above, never new copy.
 const GROUP_QUOTE_TEXTS = new Set([
-  "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", // Jacqui M, Northampton
+  "Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!", // JM, Northampton
   "Finally able to get all my friends together, when's the next one?", // Attendee, Northampton (general fallback)
 ]);
 
