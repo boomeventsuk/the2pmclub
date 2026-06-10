@@ -3,6 +3,15 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { hasConsentBeenGiven, grantConsent, denyConsent } from '@/lib/cookieConsent';
 
+/**
+ * Non-blocking cookie banner.
+ * Fixed to the bottom of the viewport: the page stays fully visible and
+ * scrollable behind it, no overflow lock, no backdrop. Accept and Reject are
+ * equal-weight one-tap actions; granular toggles live behind the smaller
+ * "Manage preferences" link. Consent gating is unchanged: tracking stays
+ * revoked until grantConsent() runs, and the decision persists in
+ * localStorage via the cookieConsent lib.
+ */
 const CookieConsent = () => {
   const [showBanner, setShowBanner] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
@@ -13,20 +22,19 @@ const CookieConsent = () => {
     const timer = setTimeout(() => {
       if (!hasConsentBeenGiven()) {
         setShowBanner(true);
-        // Prevent body scroll when modal is open
-        document.body.style.overflow = 'hidden';
       }
     }, 500);
-    return () => {
-      clearTimeout(timer);
-      document.body.style.overflow = '';
-    };
+    return () => clearTimeout(timer);
   }, []);
 
-  const handleAcceptAll = () => {
+  const handleAccept = () => {
     grantConsent();
     setShowBanner(false);
-    document.body.style.overflow = '';
+  };
+
+  const handleReject = () => {
+    denyConsent();
+    setShowBanner(false);
   };
 
   const handleSavePreferences = () => {
@@ -36,48 +44,57 @@ const CookieConsent = () => {
       denyConsent();
     }
     setShowBanner(false);
-    document.body.style.overflow = '';
   };
 
   if (!showBanner) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl animate-in zoom-in-95 duration-300">
+    <div
+      role="region"
+      aria-label="Cookie consent"
+      className="fixed bottom-0 inset-x-0 z-[60] p-3 md:p-4 pointer-events-none animate-in slide-in-from-bottom-4 fade-in duration-300"
+    >
+      <div className="pointer-events-auto mx-auto w-full max-w-3xl bg-card border border-border rounded-xl shadow-2xl p-4 md:p-5">
         {!showPreferences ? (
-          // Main consent view
-          <div className="p-6 md:p-8">
-            <h2 className="text-xl md:text-2xl font-bold text-foreground font-poppins mb-3">
-              Your Privacy Matters
-            </h2>
-            <p className="text-sm md:text-base text-foreground/80 font-poppins mb-6 leading-relaxed">
-              We use cookies to personalise your experience and show you relevant content. 
-              You can manage your preferences anytime.
+          // Main banner view
+          <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-5">
+            <p className="font-poppins text-sm text-foreground/80 leading-relaxed flex-1">
+              We use cookies for analytics and marketing. Essential cookies are always on.{' '}
+              <a href="/privacy/" className="underline underline-offset-2 hover:text-primary transition-colors">
+                Privacy policy
+              </a>
             </p>
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
+            <div className="flex flex-col gap-2 shrink-0 md:items-end">
+              <div className="flex gap-2 w-full md:w-auto">
+                <Button
+                  variant="secondary"
+                  onClick={handleReject}
+                  className="flex-1 md:flex-none md:min-w-28 text-sm font-semibold"
+                >
+                  Reject
+                </Button>
+                <Button
+                  onClick={handleAccept}
+                  className="flex-1 md:flex-none md:min-w-28 text-sm bg-primary hover:bg-primary/90 font-semibold"
+                >
+                  Accept
+                </Button>
+              </div>
+              <button
                 onClick={() => setShowPreferences(true)}
-                className="text-sm text-muted-foreground border-muted-foreground/30 hover:bg-muted/50"
+                className="font-poppins text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors self-center md:self-end"
               >
-                Manage Preferences
-              </Button>
-              <Button
-                onClick={handleAcceptAll}
-                className="flex-1 text-sm bg-primary hover:bg-primary/90 font-semibold"
-              >
-                Accept All
-              </Button>
+                Manage preferences
+              </button>
             </div>
           </div>
         ) : (
           // Preferences view
-          <div className="p-6 md:p-8">
-            <h2 className="text-xl font-bold text-foreground font-poppins mb-4">
+          <div>
+            <h2 className="font-poppins text-base font-bold text-foreground mb-3">
               Cookie Preferences
             </h2>
-            
-            <div className="space-y-4 mb-6">
+            <div className="space-y-2 mb-4">
               {/* Essential cookies - always on */}
               <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                 <div>
@@ -86,21 +103,19 @@ const CookieConsent = () => {
                 </div>
                 <Switch checked={true} disabled className="opacity-50" />
               </div>
-              
               {/* Analytics & Marketing */}
               <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                 <div>
                   <p className="text-sm font-medium text-foreground">Analytics & Marketing</p>
                   <p className="text-xs text-muted-foreground">Help us improve your experience</p>
                 </div>
-                <Switch 
-                  checked={analyticsEnabled} 
+                <Switch
+                  checked={analyticsEnabled}
                   onCheckedChange={setAnalyticsEnabled}
                 />
               </div>
             </div>
-            
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <Button
                 variant="outline"
                 onClick={() => setShowPreferences(false)}

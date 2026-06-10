@@ -18,6 +18,8 @@ export const getConsentStatus = (): ConsentStatus => {
 export const setConsentStatus = (status: 'granted' | 'denied'): void => {
   if (typeof window === 'undefined') return;
   localStorage.setItem(CONSENT_KEY, status);
+  // Let listeners (e.g. the mobile book bar) know the banner is resolved.
+  window.dispatchEvent(new CustomEvent('cookie-consent-changed', { detail: status }));
 };
 
 export const hasConsentBeenGiven = (): boolean => {
