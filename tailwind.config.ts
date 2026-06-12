@@ -19,9 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'poppins': ['Poppins', 'sans-serif'],
+				'poppins': ['Poppins', 'Poppins Fallback', 'sans-serif'],
 				'inter': ['Inter', 'sans-serif'],
-				'bebas': ['Bebas Neue', 'sans-serif'],
+				'bebas': ['"Bebas Neue"', '"Bebas Neue Fallback"', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

@@ -33,10 +33,12 @@ const Header = () => {
         <div className="container mx-auto px-4 py-4 header-inner">
           {/* Logo */}
           <a href="/" className="site-logo">
-            <img 
+            <img
               src="https://boombastic-events.b-cdn.net/The2PMCLUB-Website/9681c1c5-9af2-40fa-9e7f-0af6361274fc_k2q7ot.png"
               alt="The 2 PM Club logo"
               className="h-10 w-auto"
+              width="60"
+              height="40"
             />
           </a>
           
