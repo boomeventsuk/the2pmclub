@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:52.287Z",
+    "priceLastSync": "2026-06-12T08:25:35.090Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:52.935Z",
+    "priceLastSync": "2026-06-12T08:25:35.615Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:53.484Z",
+    "priceLastSync": "2026-06-12T08:25:36.158Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:54.126Z",
+    "priceLastSync": "2026-06-12T08:25:36.731Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:54.702Z",
+    "priceLastSync": "2026-06-12T08:25:37.272Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:55.259Z",
+    "priceLastSync": "2026-06-12T08:25:37.849Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -203,7 +203,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-11T18:38:55.847Z",
+    "priceLastSync": "2026-06-12T08:25:38.395Z",
     "statusLabel": "This Saturday, 10 left",
     "statusLabelOverride": "This Saturday, 10 left",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
@@ -242,7 +242,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:56.793Z",
+    "priceLastSync": "2026-06-12T08:25:38.953Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -269,14 +269,14 @@
     "fullDescription": "SOLD OUT\n\nTHE 2PM CLUB Bedford is now sold out for Sat 13th June at Bedford Esquires.\n\nThank you so much. We're looking forward to seeing you all tomorrow for four hours of iconic 80s, 90s and 00s anthems.\n\nIf you missed out, join the waiting list and we'll contact you if any returned tickets become available.",
     "highlights": "🎤 ICONIC ANTHEMS. NONSTOP ENERGY: Wall-to-wall classics from Wham! to Whitney, Bon Jovi to Beyoncé. You WILL do the moves. You WILL lose your voice. You WILL text each other about it for weeks.|🕺 DAYTIME PARTY, NIGHT-OUT VIBES: Same Boombastic team. Club-level production, massive screens, dazzling lights, and confetti explosions - just at people-friendly hours. Dance freely, laugh loudly, and still be home by 7pm.|👯 FINALLY, A PLAN NOBODY BAILS ON: This is the plan that will escape the group chat. Four hours where everyone actually makes it - no babysitter dramas, no late-night worries. Adulting can wait.|😎 ALL THE FUN. STILL BUZZING BY WEDNESDAY: Last time, you walked out saying \"Let's do it again!\" This is the time to do it. This is your plan.|🏆 TRUST THE LEGACY: Created by Boombastic Events - 10+ years of consistent sell-outs across the UK because we know how to create moments that matter.",
     "status": "sold-out",
-    "urgencyLabel": "Sold out",
+    "urgencyLabel": "Join waiting list",
     "accentColor": "coral",
-    "price": 12.5,
+    "price": 9,
     "priceCurrency": "GBP",
-    "priceLabel": "From £12.50",
+    "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:57.277Z",
-    "statusLabel": "Sold out - join the waiting list",
+    "priceLastSync": "2026-06-12T08:25:39.496Z",
+    "statusLabel": "Join waiting list",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -288,7 +288,8 @@
       "Early Release Ticket sold out",
       "General Release Ticket sold out",
       "Group Ticket for 4 People sold out",
-      "Final Release Group Ticket for 4 People sold out"
+      "Final Release Group Ticket for 4 People sold out",
+      "Final Release Ticket sold out"
     ]
   },
   {
@@ -314,7 +315,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-11T18:38:57.896Z",
+    "priceLastSync": "2026-06-12T08:25:40.455Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -346,7 +347,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-11T18:38:58.561Z",
+    "priceLastSync": "2026-06-12T08:25:41.048Z",
     "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -387,7 +388,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-11T18:38:59.123Z",
+    "priceLastSync": "2026-06-12T08:25:41.607Z",
     "statusLabel": "Early release sold out",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -429,7 +430,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-11T18:38:59.666Z",
+    "priceLastSync": "2026-06-12T08:25:42.156Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -469,7 +470,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-11T18:39:00.259Z",
+    "priceLastSync": "2026-06-12T08:25:42.691Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -509,7 +510,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-11T18:39:00.925Z",
+    "priceLastSync": "2026-06-12T08:25:43.299Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
