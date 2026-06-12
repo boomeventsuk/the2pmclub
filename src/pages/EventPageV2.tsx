@@ -555,7 +555,7 @@ const EventPageV2 = () => {
         {isSoldOut && (
           <div className="bg-muted text-foreground py-3 text-center">
             <p className="font-poppins font-bold text-sm md:text-base tracking-wide uppercase">
-              Sold Out. Join the Waiting List
+              Sold Out For This Event. Join The Waiting List
             </p>
           </div>
         )}
@@ -790,11 +790,11 @@ const EventPageV2 = () => {
               <div className="bg-primary/10 border border-primary/30 rounded-2xl p-5 md:p-7">
                 <div className="text-center mb-5">
                   <h2 className="font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 text-foreground uppercase">
-                    {isSoldOut ? 'Join the Waiting List' : isLastTickets ? (event.urgencyLabel || 'Last Tickets') : groupMode ? 'Book the Group In' : 'Book Your Tickets'}
+                    {isSoldOut ? 'Sold Out' : isLastTickets ? (event.urgencyLabel || 'Last Tickets') : groupMode ? 'Book the Group In' : 'Book Your Tickets'}
                   </h2>
                   <p className="font-poppins text-sm md:text-base text-foreground/70">
                     {isSoldOut
-                      ? `${event.date}, ${event.venue}, ${event.city} is sold out.`
+                      ? 'This event is sold out. Join the waiting list and we will contact you if tickets become available.'
                       : `${event.date}, ${event.venue}, ${event.city}. Pick your tickets.`}
                   </p>
                 </div>
@@ -811,7 +811,7 @@ const EventPageV2 = () => {
                       <input type="hidden" name="slug" value={event.slug} />
                       <input type="hidden" name="city" value={event.city} />
                       <p className="font-poppins text-base md:text-lg text-foreground/85 mb-5 max-w-md">
-                        Join the list, returned tickets and the next {event.city} date first.
+                        Join the waiting list for returned tickets for this event.
                       </p>
                       <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
                         <input
@@ -823,7 +823,7 @@ const EventPageV2 = () => {
                           className="flex-1 rounded-md border border-border/60 bg-background px-4 py-3 font-poppins text-sm text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-primary"
                         />
                         <Button type="submit" size="lg" className="font-poppins font-bold uppercase tracking-wide">
-                          Join the List
+                          Join the Waiting List
                         </Button>
                       </div>
                       <p className="font-poppins text-xs text-foreground/50 mt-4">

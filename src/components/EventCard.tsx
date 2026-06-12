@@ -111,13 +111,13 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
             <Clock className="w-4 h-4 mr-2 text-primary" />
             <span className="font-poppins">{time}</span>
           </div>
-          {priceLabel && (
+          {priceLabel && !soldOut && (
             <div className="flex items-center text-foreground">
               <Ticket className="w-4 h-4 mr-2 text-primary" />
               <span className="font-poppins font-semibold">{priceLabel}</span>
             </div>
           )}
-          {groupTicket?.label && (
+          {groupTicket?.label && !soldOut && (
             <div className="flex items-center text-foreground/90">
               <Users className="w-4 h-4 mr-2 text-primary" />
               <span className="font-poppins">{groupTicket.label}</span>
@@ -151,7 +151,7 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn"
           data-event-slug={slug}
         >
-          {soldOut ? 'Waiting List' : 'Book Now'}
+          {soldOut ? 'Join Waiting List' : 'Book Now'}
         </Button>
       </div>
     </article>

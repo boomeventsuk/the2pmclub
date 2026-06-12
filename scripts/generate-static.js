@@ -237,8 +237,11 @@ function generateHub(hub) {
     : waitlistBlock(hub.city);
   html = replaceBetween(html, M.cardsStart, M.cardsEnd, cards, "CARDS", file);
 
-  const cta = hasEvents
-    ? `    <a href="/events/${cityEvents[0].slug.toLowerCase()}/" class="btn-primary btn-large">\n      Book Your ${hub.city} Tickets\n    </a>`
+  const firstBookable = cityEvents.find((ev) => ev.status !== "sold-out");
+  const cta = firstBookable
+    ? `    <a href="/events/${firstBookable.slug.toLowerCase()}/" class="btn-primary btn-large">\n      Book Your ${hub.city} Tickets\n    </a>`
+    : hasEvents
+      ? `    <a href="/events/${cityEvents[0].slug.toLowerCase()}/" class="btn-primary btn-large">\n      Join The ${hub.city} Waiting List\n    </a>`
     : `    <a href="/#tickets" class="btn-primary btn-large">\n      See All Upcoming Events\n    </a>`;
   html = replaceBetween(html, M.ctaStart, M.ctaEnd, cta, "CTA", file);
 

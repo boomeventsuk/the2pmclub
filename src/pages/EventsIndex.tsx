@@ -86,7 +86,7 @@ export default function EventsIndex() {
                     </div>
                     <div className="flex-shrink-0">
                       {isSoldOut ? (
-                        <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-muted text-muted-foreground">Sold out</span>
+                        <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-muted text-muted-foreground">Join waitlist</span>
                       ) : (
                         <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary text-primary-foreground">Book now</span>
                       )}
