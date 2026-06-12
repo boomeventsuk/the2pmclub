@@ -241,6 +241,7 @@ const EventPageV2 = () => {
   const [loading, setLoading] = useState(true);
   const [reelSrc, setReelSrc] = useState<string>(HERO_REEL_MASTER);
   const [reelActive, setReelActive] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [widgetReady, setWidgetReady] = useState(false);
   const checkoutRef = useRef<HTMLDivElement>(null);
@@ -576,18 +577,28 @@ const EventPageV2 = () => {
                 {/* Hero video */}
                 <div className="flex justify-center md:justify-start">
                   <div ref={reelWrapRef} className="relative w-full max-w-md aspect-square rounded-xl overflow-hidden shadow-2xl shadow-primary/20 bg-black">
+                    {/* Poster img is the LCP element — loads immediately at 73KB optimised */}
+                    <img
+                      src={optimised(event.squareImg, 800)}
+                      alt={`${event.title} event poster`}
+                      width={800}
+                      height={800}
+                      decoding="async"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    {/* Video fades in over the poster once it can play */}
                     <video
                       key={reelSrc}
                       ref={videoRef}
                       src={reelActive ? reelSrc : undefined}
-                      poster={optimised(event.squareImg, 800)}
                       autoPlay
                       muted
                       loop
                       playsInline
                       preload="none"
+                      onCanPlayThrough={() => setVideoReady(true)}
                       onError={handleReelError}
-                      className="w-full h-full object-cover"
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
                     />
                     {/* CSS overlay: city + date badge, low contrast, bottom area, clears the baked-in logo */}
                     <div className="absolute top-3 left-3 right-3 flex justify-between items-start pointer-events-none">
