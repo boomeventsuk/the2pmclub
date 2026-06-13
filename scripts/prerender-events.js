@@ -24,6 +24,14 @@ const template = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 const events = JSON.parse(
   fs.readFileSync(path.join(ROOT, "public", "events.json"), "utf8")
 );
+const EIGHTIES_EVENT_SLUGS = new Set([
+  "250726-2PM-NPTON",
+  "120926-2PM-BED",
+  "190926-2PM-COV",
+  "260926-2PM-MK",
+  "031026-2PM-LUT",
+]);
+const EIGHTIES_MUSIC_FAQ = "80s anthems. Wall-to-wall songs you know every word to. Think Whitney, Wham!, Madonna, Bon Jovi, Queen, Cyndi Lauper and A-ha.";
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -47,6 +55,8 @@ function esc(s) {
 }
 
 function isEightiesEdition(ev) {
+  if (ev.slug && EIGHTIES_EVENT_SLUGS.has(ev.slug.toUpperCase())) return true;
+
   const searchable = [
     ev.eventType,
     ev.title,
@@ -68,6 +78,28 @@ function displayTitle(ev) {
 function displayDescription(ev) {
   if (!isEightiesEdition(ev)) return (ev.description || ev.subtitle || "").slice(0, 160);
   return "Your best 80s night out. In the middle of the afternoon.";
+}
+
+function eventShellCopy(html, ev) {
+  if (!isEightiesEdition(ev)) return html;
+
+  return html
+    .replace(
+      `"description":"THE 2PM CLUB is the Midlands' original daytime disco. 4 hours of 80s, 90s and 00s anthems, every Saturday afternoon, 2pm to 6pm. Home by 7.",`,
+      `"description":"THE 2PM CLUB is the Midlands' original daytime disco by Boombastic Events. Daytime dancefloor energy from 2pm to 6pm. Home by 7.",`
+    )
+    .replace(
+      `"80s 90s 00s music events"`,
+      `"80s music events"`
+    )
+    .replace(
+      `<meta name="keywords" content="daytime disco, over 25s events, afternoon party, 80s 90s 00s music, Midlands events, wake up fresh, daytime clubbing, adult entertainment">`,
+      `<meta name="keywords" content="daytime disco, over 25s events, afternoon party, 80s music, Midlands events, wake up fresh, daytime clubbing, adult entertainment">`
+    )
+    .replace(
+      `"text":"80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. The DJ builds the energy across the afternoon. Think Whitney, Wham!, Spice Girls, Beyonce, Take That, The Killers, Oasis."`,
+      `"text":"${EIGHTIES_MUSIC_FAQ}"`
+    );
 }
 
 // The live 2PM site globally 301-redirects URLs to lowercase, so every
@@ -132,6 +164,7 @@ for (const ev of upcoming) {
   const description = displayDescription(ev);
 
   let html = template;
+  html = eventShellCopy(html, ev);
 
   // Unique title
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`);

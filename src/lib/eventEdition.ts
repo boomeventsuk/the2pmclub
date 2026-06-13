@@ -10,10 +10,18 @@ export interface EventEditionInput {
 }
 
 const EIGHTIES_PATTERN = /80s edition|2pm80s|2pm-80s|goes full-on 80s|your best 80s night out/i;
+const EIGHTIES_EVENT_SLUGS = new Set([
+  "250726-2PM-NPTON",
+  "120926-2PM-BED",
+  "190926-2PM-COV",
+  "260926-2PM-MK",
+  "031026-2PM-LUT",
+]);
 
 export const isEightiesEditionEvent = (event?: EventEditionInput | null): boolean => {
   if (!event) return false;
   if (event.isEightiesEdition) return true;
+  if (event.slug && EIGHTIES_EVENT_SLUGS.has(event.slug.toUpperCase())) return true;
 
   const searchable = [
     event.eventType,
@@ -33,6 +41,7 @@ export const EIGHTIES_MUSIC_LINE = "Iconic 80s anthems.";
 export const EIGHTIES_MUSIC_FAQ = "80s anthems. Wall-to-wall songs you know every word to. Think Whitney, Wham!, Madonna, Bon Jovi, Queen, Cyndi Lauper and A-ha.";
 export const EIGHTIES_WHY_BODY = "Wall-to-wall 80s. Confetti, lights, and the moment the whole room sings together.";
 export const EIGHTIES_SOUNDTRACK_LINE = "Madonna. Wham!. Whitney. Queen. Bon Jovi. Cyndi Lauper. A-ha. Every chorus you still know by heart.";
+export const EVENT_COPY_REVISION = "2026-06-13-80s-event-pages-v2";
 
 export const GENERIC_EVENT_SUBLINE = "Your best night out. In the middle of the afternoon.";
 export const GENERIC_MUSIC_LINE = "Iconic 80s, 90s and 00s anthems.";
