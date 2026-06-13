@@ -43,16 +43,16 @@ export default function EventsIndex() {
   return (
     <>
       <Helmet>
-        <title>Upcoming Daytime Disco Events | THE 2PM CLUB</title>
-        <meta name="description" content="All upcoming THE 2PM CLUB daytime disco events across the Midlands. Book your tickets for Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester." />
+        <title>Upcoming 80s Edition Daytime Disco Events | THE 2PM CLUB</title>
+        <meta name="description" content="All upcoming THE 2PM CLUB 80s Edition daytime disco events across the Midlands. Book your tickets for Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester." />
         <link rel="canonical" href="https://www.the2pmclub.co.uk/events/" />
       </Helmet>
       <main id="main-content" className="min-h-screen">
         <Header />
         <section className="pt-32 pb-16">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h1 className="font-bebas text-4xl md:text-6xl text-foreground mb-4 text-center">Upcoming Events</h1>
-            <p className="text-center text-muted-foreground mb-10 text-lg">All upcoming THE 2PM CLUB dates. Book via site pages to guarantee your spot.</p>
+            <h1 className="font-bebas text-4xl md:text-6xl text-foreground mb-4 text-center">Upcoming 80s Edition Events</h1>
+            <p className="text-center text-muted-foreground mb-10 text-lg">All upcoming THE 2PM CLUB 80s Edition dates. Book via site pages to guarantee your spot.</p>
 
             {events.length === 0 && (
               <p className="text-center text-muted-foreground py-12">Loading events...</p>

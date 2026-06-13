@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import NextEventStrip from "@/components/NextEventStrip";
+import { EIGHTIES_HERO_LINE } from "@/lib/eventEdition";
 const NewHero = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -38,7 +39,7 @@ const NewHero = () => {
         </p>
         
         <p className="font-poppins text-lg sm:text-xl md:text-2xl text-foreground mb-6 leading-relaxed max-w-2xl mx-auto drop-shadow-[0_4px_20px_rgba(0,0,0,1)]">
-          4 hours of iconic 80s 90s 00s anthems. Home by 7ish. No Sunday regrets.
+          {EIGHTIES_HERO_LINE}
         </p>
         
         <div className="relative inline-block">
