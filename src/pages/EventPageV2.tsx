@@ -11,6 +11,14 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { trackEventPageView, trackBookClick, pushToDataLayer } from '@/lib/dataLayer';
 import { optimised } from '@/components/EventCard';
+import {
+  eventSublineForEvent,
+  isEightiesEditionEvent,
+  musicFaqForEvent,
+  musicLineForEvent,
+  soundtrackLineForEvent,
+  whyBodyForEvent,
+} from '@/lib/eventEdition';
 
 // Hero reel URLs on Bunny CDN.
 // Per-city cuts live at hero-1x1-{cityCode}.mp4 (NPTON, BED, COV, MK, LUT, LEIC).
@@ -42,6 +50,7 @@ interface EventJson {
   price?: number;
   legacyLine?: string;
   groupTicket?: { size: number; price: number; label: string };
+  isEightiesEdition: boolean;
 }
 
 interface EventData {
@@ -125,6 +134,7 @@ const loadEventData = async (): Promise<Record<string, EventData>> => {
         price: event.price,
         legacyLine: event.legacyLine,
         groupTicket: event.groupTicket,
+        isEightiesEdition: isEightiesEditionEvent(event),
       };
     });
     return out;
@@ -494,7 +504,7 @@ const EventPageV2 = () => {
     { q: "Is it really like a night out clubbing in the afternoon?",
       a: "Yes. Proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing." },
     { q: "What music will be played?",
-      a: "80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. Whitney, Wham!, Spice Girls, Beyoncé, Take That, The Killers, Oasis." },
+      a: musicFaqForEvent(event) },
     { q: "Why do you start at 2pm?",
       a: "Because the best part of any night out happens early. Doors at 2, finish by 6. You get the night out, you keep your evening, you keep your Sunday." },
     { q: "Do you offer group tickets?",
@@ -510,6 +520,15 @@ const EventPageV2 = () => {
   const isLastTickets = event.status === 'last-tickets';
   const isSoldOut = event.status === 'sold-out';
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
+  const eventMusicLine = musicLineForEvent(event);
+  const eventSubline = eventSublineForEvent(event);
+  const eventSoundtrackLine = soundtrackLineForEvent(event);
+  const eventTitle = event.isEightiesEdition
+    ? `The 2PM Club 80s Edition - ${event.city} - ${event.date}`
+    : `The 2PM Club - ${event.city} - ${event.date}`;
+  const eventMetaDescription = event.isEightiesEdition
+    ? `THE 2PM CLUB 80s Edition. ${event.city}, ${event.date}. Iconic 80s anthems. Sing your heart out. Home by 7.`
+    : `THE 2PM CLUB Daytime Disco. ${event.city}, ${event.date}. ${eventMusicLine} Sing your heart out. Home by 7.`;
 
   // GROUP MODE: only when the param asks for it AND the offer is live.
   // Sold out or no groupTicket = silent fallback to the standard page.
@@ -542,10 +561,10 @@ const EventPageV2 = () => {
   return (
     <>
       <Helmet>
-        <title>The 2PM Club — {event.city} — {event.date}</title>
-        <meta name="description" content={`THE 2PM CLUB Daytime Disco. ${event.city}, ${event.date}. Iconic 80s, 90s and 00s anthems. Sing your heart out. Home by 7.`} />
-        <meta property="og:title" content={`The 2PM Club — ${event.city} — ${event.date}`} />
-        <meta property="og:description" content="Sing your heart out. Home by 7. Iconic 80s, 90s and 00s anthems." />
+        <title>{eventTitle}</title>
+        <meta name="description" content={eventMetaDescription} />
+        <meta property="og:title" content={eventTitle} />
+        <meta property="og:description" content={`Sing your heart out. Home by 7. ${eventMusicLine}`} />
         <meta property="og:image" content={event.squareImg} />
       </Helmet>
 
@@ -630,17 +649,17 @@ const EventPageV2 = () => {
                     <h1 className="font-poppins text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight uppercase leading-tight">
                       The 2PM Club
                       <br />
-                      <span className="text-foreground/90">Daytime Disco</span>
+                      <span className="text-foreground/90">{event.isEightiesEdition ? '80s Edition Daytime Disco' : 'Daytime Disco'}</span>
                       <br />
                       <span className="text-primary">{event.city}</span>
                     </h1>
                     <p className="font-poppins text-lg md:text-xl text-foreground/85 mt-3 font-medium">
                       {groupMode
                         ? 'Round up the group. The afternoon out everyone can actually make.'
-                        : 'Your best night out. In the middle of the afternoon.'}
+                        : eventSubline}
                     </p>
                     <p className="font-poppins text-base md:text-lg text-foreground/70 mt-1">
-                      Iconic 80s, 90s and 00s anthems.
+                      {eventMusicLine}
                     </p>
                   </div>
 
@@ -783,9 +802,7 @@ const EventPageV2 = () => {
                 Your Soundtrack
               </p>
               <p className="font-poppins text-xl md:text-2xl text-foreground/90 leading-relaxed">
-                Spice Girls. Oasis. Whitney. ABBA. Bon Jovi. Take That. Beyoncé.
-                <br className="hidden md:block" />
-                {' '}Every chorus you still know by heart.
+                {eventSoundtrackLine}
               </p>
             </div>
           </div>
@@ -905,7 +922,7 @@ const EventPageV2 = () => {
               </h2>
               <div className="grid gap-3 md:grid-cols-2">
                 {[
-                  { emoji: "🎤", title: "The Room Where Everyone Knows Every Word", body: "Wall-to-wall 80s, 90s and 00s. Confetti, lights, and the moment the whole room sings together." },
+                  { emoji: "🎤", title: "The Room Where Everyone Knows Every Word", body: whyBodyForEvent(event) },
                   { emoji: "🕺", title: "Night-Out Energy. Afternoon Timing.", body: "Same atmosphere you remember from your best nights out. Dance freely, and still be home by 7pm." },
                   { emoji: "👯", title: "The One Plan That Doesn't Fall Apart", body: "2pm Saturday works for everyone. No babysitter dramas, no late-night worries. One link. One plan." },
                   { emoji: "😎", title: "All The Fun. Still Buzzing By Wednesday.", body: "You walked out last time saying \"Let's do it again!\" This is the time to do it." },
