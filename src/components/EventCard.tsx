@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Clock, Ticket, Users } from "lucide-react";
+import { type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { trackEventPageView } from "@/lib/dataLayer";
 
@@ -31,8 +30,9 @@ interface EventCardProps {
   groupTicket?: { size: number; price: number; label: string };
 }
 
-const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor, priceLabel, tierLabels, groupTicket }: EventCardProps) => {
+const EventCard = ({ slug, eventType, eventbriteId, title, date, venue, city, poster, dateIso, start, soldOut, urgencyText, priceLabel, groupTicket }: EventCardProps) => {
   const navigate = useNavigate();
+  const displayPrice = priceLabel?.replace(/\.00\b/g, "");
 
   const goToEventPage = (source: string) => {
     // Card clicks are interest, not checkout intent: fire ViewContent only.
@@ -50,110 +50,68 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
     navigate(`/events/${slug}/`);
   };
 
-  const handleBookNow = () => goToEventPage('event_card_button');
-
-  const handleImageClick = () => goToEventPage('event_card_image');
-
+  const handleCardClick = (event: MouseEvent<HTMLButtonElement>) => {
+    const target = event.target as HTMLElement;
+    const source = target.closest("[data-card-cta]") ? "event_card_button" : "event_card_image";
+    goToEventPage(source);
+  };
 
   return (
     <article
-      className="ticket-card bg-card/80 backdrop-blur-md border border-border/50 rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-[0_0_30px_hsl(328_100%_54%_/_0.15)] transition-all duration-300"
+      className="min-w-0"
       data-ticket-card 
       data-date-iso={dateIso} 
       data-event-slug={slug}
     >
       <button
         type="button"
-        onClick={handleImageClick}
-        className="poster relative block w-full p-0 border-0 bg-transparent cursor-pointer text-left overflow-hidden"
-        aria-label={`View tickets for ${title}`}
+        onClick={handleCardClick}
+        className="group relative block aspect-square w-full overflow-hidden rounded-xl border border-border bg-card p-0 text-left shadow-sm transition-shadow hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        aria-label={`${title}, ${date}, ${venue}, ${city}${soldOut ? ", sold out, join the waiting list" : ""}`}
         data-event-slug={slug}
-        data-click-source="event-card-image"
+        data-click-source="event-card"
       >
         <img 
           src={optimised(poster, 800)}
           srcSet={`${optimised(poster, 400)} 400w, ${optimised(poster, 800)} 800w`}
-          sizes="(max-width: 768px) 100vw, 33vw"
+          sizes="(max-width: 768px) 50vw, 33vw"
           alt={`${title} event poster`}
-          className="w-full h-full object-cover"
+          className={`absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 ${soldOut ? "grayscale" : ""}`}
           loading="lazy"
           decoding="async"
           width="800"
-          height="1200"
-          style={{ aspectRatio: '2 / 3', objectFit: 'cover' }}
+          height="800"
         />
-      </button>
 
-      <div className="meta">
+        <h3 className="sr-only">{title}</h3>
+
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-1.5 p-2">
         {urgencyText && (
-          <div className={`urgency-strip ${
-            urgencyColor === 'green' ? 'urgency-strip-green' :
-            urgencyColor === 'amber' ? 'urgency-strip-amber' : ''
-          }`}>
-            <span>{urgencyText}</span>
-          </div>
-        )}
-        <h3 className="font-poppins text-2xl font-bold text-foreground mb-3 leading-tight">
-          {soldOut && <span className="text-destructive font-bold">Sold Out - </span>}
-          {title}
-        </h3>
-        
-        <div className="space-y-2">
-          <div className="flex items-center text-muted-foreground">
-            <Calendar className="w-4 h-4 mr-2 text-primary" />
-            <span className="font-poppins">{date}</span>
-          </div>
-          <div className="flex items-center text-muted-foreground">
-            <MapPin className="w-4 h-4 mr-2 text-primary" />
-            <span className="font-poppins">{venue}, {city}</span>
-          </div>
-          <div className="flex items-center text-muted-foreground">
-            <Clock className="w-4 h-4 mr-2 text-primary" />
-            <span className="font-poppins">{time}</span>
-          </div>
-          {priceLabel && !soldOut && (
-            <div className="flex items-center text-foreground">
-              <Ticket className="w-4 h-4 mr-2 text-primary" />
-              <span className="font-poppins font-semibold">{priceLabel}</span>
-            </div>
+            <span className={`min-w-0 max-w-[68%] rounded-full px-2.5 py-1 text-[9px] font-bold leading-tight shadow-md sm:text-xs ${soldOut ? "bg-red-600 text-white" : "bg-primary text-primary-foreground"}`}>
+              {urgencyText}
+            </span>
           )}
-          {groupTicket?.label && !soldOut && (
-            <div className="flex items-center text-foreground/90">
-              <Users className="w-4 h-4 mr-2 text-primary" />
-              <span className="font-poppins">{groupTicket.label}</span>
-            </div>
+          {displayPrice && !soldOut && (
+            <span className="shrink-0 whitespace-nowrap rounded-full bg-black/70 px-2.5 py-1 text-[9px] font-semibold leading-tight text-white shadow-md backdrop-blur-sm sm:text-xs">
+              {displayPrice}
+            </span>
           )}
-          {tierLabels && tierLabels.length > 0 && (() => {
-            // Compact tier ladder: never a wall of "sold out" repeats.
-            const sold = tierLabels.filter(t => /sold out/i.test(t));
-            const live = tierLabels.filter(t => !/sold out/i.test(t));
-            return (
-              <div className="pt-1 space-y-0.5">
-                {sold.length > 0 && !soldOut && (
-                  <p className="font-poppins text-sm text-amber-400/90 font-medium">
-                    {sold.length === 1
-                      ? `${sold[0].replace(/ sold out/i, '')} sold out`
-                      : `${sold.length} earlier releases sold out`}
-                  </p>
-                )}
-                {live.map((t, i) => (
-                  <p key={i} className="font-poppins text-sm text-muted-foreground">{t}</p>
-                ))}
-              </div>
-            );
-          })()}
         </div>
-      </div>
-      
-      <div className="actions">
-        <Button 
-          onClick={handleBookNow}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn"
-          data-event-slug={slug}
-        >
-          {soldOut ? 'Join Waiting List' : 'Book Now'}
-        </Button>
-      </div>
+
+        <div className="absolute inset-x-0 bottom-0 flex h-[38%] min-h-[92px] flex-col justify-end bg-gradient-to-t from-black/95 via-black/65 to-transparent px-3 pb-2.5 sm:px-4 sm:pb-3">
+          <p className="font-poppins text-xs font-semibold leading-tight text-white sm:text-sm">
+            {date} · {city}
+          </p>
+          {!soldOut && groupTicket?.label && (
+            <p className="mt-0.5 font-poppins text-[10px] leading-tight text-white/80 sm:text-xs">
+              {groupTicket.label}
+            </p>
+          )}
+          <p data-card-cta className="mt-1 font-poppins text-xs font-bold leading-tight text-white/80 transition-colors group-hover:text-white group-active:text-white sm:text-sm">
+            {soldOut ? "Join the waiting list" : "Book tickets ->"}
+          </p>
+        </div>
+      </button>
     </article>
   );
 };

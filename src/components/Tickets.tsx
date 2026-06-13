@@ -58,12 +58,22 @@ const parseLocation = (location: string): { venue: string; city: string } => {
   };
 };
 
-// Format ISO date to "Sat 6 Dec 2025"
+// Format ISO date to "Sat 6th Dec 2025"
 const formatDate = (isoDate: string): string => {
   const date = new Date(isoDate);
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+  const day = date.getDate();
+  const suffix = day % 100 >= 11 && day % 100 <= 13
+    ? "th"
+    : day % 10 === 1
+      ? "st"
+      : day % 10 === 2
+        ? "nd"
+        : day % 10 === 3
+          ? "rd"
+          : "th";
+  return `${days[date.getDay()]} ${day}${suffix} ${months[date.getMonth()]} ${date.getFullYear()}`;
 };
 
 // Format start/end to "14:00–18:00"
@@ -80,7 +90,7 @@ const formatTime = (start: string, end: string): string => {
 // or nothing at all. No blanket SELLING FAST mapping.
 const mapStatus = (status?: string, statusLabel?: string): { urgencyText?: string; urgencyColor?: string; soldOut: boolean } => {
   if (status === "sold-out") {
-    return { urgencyText: "SOLD OUT", urgencyColor: undefined, soldOut: true };
+    return { urgencyText: statusLabel || "Sold out", urgencyColor: undefined, soldOut: true };
   }
   if (statusLabel) {
     const color = status === "new-date" || status === "just-announced" ? "green" : "amber";
@@ -172,13 +182,13 @@ const Tickets = () => {
           </p>
         </a>
         
-        <div className="space-y-6" id="tickets-list">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 md:gap-6" id="tickets-list">
           {loading ? (
-            <div className="text-center py-12">
+            <div className="col-span-2 text-center py-12 md:col-span-3">
               <p className="text-muted-foreground">Loading events...</p>
             </div>
           ) : events.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="col-span-2 text-center py-12 md:col-span-3">
               <p className="text-muted-foreground">No upcoming events at the moment.</p>
             </div>
           ) : (
