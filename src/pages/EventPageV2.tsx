@@ -13,6 +13,7 @@ import { trackEventPageView, trackBookClick, pushToDataLayer } from '@/lib/dataL
 import { optimised } from '@/components/EventCard';
 import {
   eventSublineForEvent,
+  EVENT_COPY_REVISION,
   isEightiesEditionEvent,
   musicFaqForEvent,
   musicLineForEvent,
@@ -566,6 +567,7 @@ const EventPageV2 = () => {
         <meta property="og:title" content={eventTitle} />
         <meta property="og:description" content={`Sing your heart out. Home by 7. ${eventMusicLine}`} />
         <meta property="og:image" content={event.squareImg} />
+        <meta name="x-2pm-event-copy-revision" content={EVENT_COPY_REVISION} />
       </Helmet>
 
       <div className="min-h-screen bg-background pb-20 md:pb-0">
