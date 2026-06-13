@@ -217,7 +217,7 @@ function buildNoscriptContent(events: EventData[]): string {
   <noscript>
     <div style="max-width:800px;margin:0 auto;padding:40px 20px;font-family:sans-serif;color:#fff;background:#0B0B0F;">
       <h1>THE 2PM CLUB - Daytime Disco</h1>
-      <p>Your best 80s night out, right in the middle of the afternoon. THE 2PM CLUB is the Midlands' original daytime disco by Boombastic Events. 4 hours of 80s anthems every Saturday afternoon, 2pm to 6pm. Home by 7-ish.</p>
+      <p>Your best night out, right in the middle of the afternoon. THE 2PM CLUB is the Midlands' original daytime disco by Boombastic Events. 4 hours of 80s, 90s and 00s anthems every Saturday afternoon, 2pm to 6pm. Home by 7-ish.</p>
 
       <h2>Upcoming Events</h2>
       <ul>
@@ -228,7 +228,7 @@ function buildNoscriptContent(events: EventData[]): string {
       <ul>
         <li><strong>Home by 7-ish</strong> - Dance your heart out, still catch Strictly.</li>
         <li><strong>The Group Chat Finally Agrees</strong> - No babysitter battles. No "I'm too tired" texts. Just a date everyone can actually make.</li>
-        <li><strong>Every Song a Banger</strong> - 80s anthems. You'll know every single word.</li>
+        <li><strong>Every Song a Banger</strong> - 80s, 90s and 00s anthems. You'll know every single word.</li>
         <li><strong>Wake Up Fresh (And Smug)</strong> - All the joy of a big night out. None of the next-day fear. You've won at the weekend.</li>
       </ul>
 
@@ -243,7 +243,7 @@ function buildNoscriptContent(events: EventData[]): string {
         <dd>Yes. Same energy as a night out, just at a time that actually works. You're done by 6pm and you'll actually feel good the next day. Better timing.</dd>
 
         <dt>What music will be played?</dt>
-        <dd>80s anthems. Wall-to-wall songs you know every word to. Think Whitney, Wham!, Madonna, Bon Jovi, Queen, Cyndi Lauper and A-ha.</dd>
+        <dd>80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. The DJ builds the energy across the afternoon. Think Whitney, Wham!, Spice Girls, Beyonce, Take That, The Killers, Oasis.</dd>
 
         <dt>Why do you start at 2pm?</dt>
         <dd>Because it actually works with real life. You can have lunch with friends, run errands, whatever. You're done by 6pm, home by 7pm. You get a proper night out without sacrificing your Sunday or disrupting your week.</dd>
@@ -263,7 +263,7 @@ function buildNoscriptContent(events: EventData[]): string {
 
       <h2>About THE 2PM CLUB</h2>
       <p>THE 2PM CLUB is a daytime disco created by Boombastic Events, running sell-out events across Northampton, Bedford, Milton Keynes, Coventry, Luton, and Leicester. Founded on the principle that the best time to party is the afternoon: same energy, better timing, no regrets. Part of Boombastic Events, which has been running sell-out events across the Midlands for over 12 years.</p>
-      <p>Wall-to-wall 80s anthems. Night-out energy in the afternoon. Tickets typically start from £10-15.</p>
+      <p>Wall-to-wall 80s, 90s and 00s anthems. Night-out energy in the afternoon. Tickets typically start from £10-15.</p>
       <p>Contact: hello@boomevents.co.uk</p>
       <p>Cities: Northampton, Bedford, Milton Keynes, Coventry, Luton, Leicester</p>
 

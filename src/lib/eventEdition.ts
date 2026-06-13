@@ -12,7 +12,6 @@ export interface EventEditionInput {
 }
 
 const EIGHTIES_PATTERN = /80s edition|2pm80s|2pm-80s|goes full-on 80s|your best 80s night out/i;
-const CURRENT_EIGHTIES_CAMPAIGN_START = new Date("2026-06-13T00:00:00").getTime();
 
 export const isEightiesEditionEvent = (event?: EventEditionInput | null): boolean => {
   if (!event) return false;
@@ -28,12 +27,6 @@ export const isEightiesEditionEvent = (event?: EventEditionInput | null): boolea
     event.image,
   ].filter(Boolean).join(" ");
 
-  const startValue = event.start || event.startIso;
-  const startTime = startValue ? new Date(startValue).getTime() : Number.NaN;
-  if (/2pm/i.test(searchable) && Number.isFinite(startTime) && startTime >= CURRENT_EIGHTIES_CAMPAIGN_START) {
-    return true;
-  }
-
   return EIGHTIES_PATTERN.test(searchable);
 };
 
@@ -43,11 +36,11 @@ export const EIGHTIES_MUSIC_LINE = "Iconic 80s anthems.";
 export const EIGHTIES_MUSIC_FAQ = "80s anthems. Wall-to-wall songs you know every word to. Think Whitney, Wham!, Madonna, Bon Jovi, Queen, Cyndi Lauper and A-ha.";
 export const EIGHTIES_WHY_BODY = "Wall-to-wall 80s. Confetti, lights, and the moment the whole room sings together.";
 
-export const GENERIC_HERO_LINE = EIGHTIES_HERO_LINE;
-export const GENERIC_EVENT_SUBLINE = EIGHTIES_EVENT_SUBLINE;
-export const GENERIC_MUSIC_LINE = EIGHTIES_MUSIC_LINE;
-export const GENERIC_MUSIC_FAQ = EIGHTIES_MUSIC_FAQ;
-export const GENERIC_WHY_BODY = EIGHTIES_WHY_BODY;
+export const GENERIC_HERO_LINE = "4 hours of iconic 80s 90s 00s anthems. Home by 7ish. No Sunday regrets.";
+export const GENERIC_EVENT_SUBLINE = "Your best night out. In the middle of the afternoon.";
+export const GENERIC_MUSIC_LINE = "Iconic 80s, 90s and 00s anthems.";
+export const GENERIC_MUSIC_FAQ = "80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. Whitney, Wham!, Spice Girls, Beyonce, Take That, The Killers, Oasis.";
+export const GENERIC_WHY_BODY = "Wall-to-wall 80s, 90s and 00s. Confetti, lights, and the moment the whole room sings together.";
 
 export const musicLineForEvent = (event?: EventEditionInput | null) =>
   isEightiesEditionEvent(event) ? EIGHTIES_MUSIC_LINE : GENERIC_MUSIC_LINE;
