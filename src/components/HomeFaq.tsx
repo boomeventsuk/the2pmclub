@@ -1,5 +1,4 @@
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
-import { EIGHTIES_MUSIC_FAQ } from '@/lib/eventEdition';
 
 export default function HomeFaq() {
   const faqs = [
@@ -9,7 +8,7 @@ export default function HomeFaq() {
     },
     {
       question: "What music will be played?",
-      answer: EIGHTIES_MUSIC_FAQ
+      answer: "80s, 90s and 00s anthems. Wall-to-wall songs you know every word to. The DJ builds the energy across the afternoon—starting with solid, accessible tracks and building toward peak moments. Think Whitney, Wham!, Spice Girls, Beyoncé, Take That, The Killers, Oasis."
     },
     {
       question: "Why do you start at 2pm?",

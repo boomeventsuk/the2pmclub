@@ -46,8 +46,6 @@ function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-const CURRENT_EIGHTIES_CAMPAIGN_START = new Date("2026-06-13T00:00:00").getTime();
-
 function isEightiesEdition(ev) {
   const searchable = [
     ev.eventType,
@@ -58,9 +56,7 @@ function isEightiesEdition(ev) {
     ev.description,
     ev.image,
   ].filter(Boolean).join(" ");
-  const startTime = ev.start ? new Date(ev.start).getTime() : Number.NaN;
-  return /80s edition|2pm80s|2pm-80s|goes full-on 80s|your best 80s night out/i.test(searchable)
-    || (/2pm/i.test(searchable) && Number.isFinite(startTime) && startTime >= CURRENT_EIGHTIES_CAMPAIGN_START);
+  return /80s edition|2pm80s|2pm-80s|goes full-on 80s|your best 80s night out/i.test(searchable);
 }
 
 function displayTitle(ev) {
@@ -154,6 +150,10 @@ for (const ev of upcoming) {
   html = html.replace(/<meta property="og:image:width" content="[^"]*" \/>/, '<meta property="og:image:width" content="1080" />');
   html = html.replace(/<meta property="og:image:height" content="[^"]*" \/>/, '<meta property="og:image:height" content="1080" />');
   html = html.replace(/<meta property="og:image:alt" content="[^"]*" \/>/, `<meta property="og:image:alt" content="${esc(displayTitle(ev))}" />`);
+  html = html.replace(/<meta property="og:title" content="[^"]*"\s*\/?>/g, `<meta property="og:title" content="${esc(title)}" />`);
+  html = html.replace(/<meta property="og:description" content="[^"]*"\s*\/?>/g, `<meta property="og:description" content="${esc(description)}" />`);
+  html = html.replace(/<meta name="twitter:title" content="[^"]*"\s*\/?>/g, `<meta name="twitter:title" content="${esc(title)}" />`);
+  html = html.replace(/<meta name="twitter:description" content="[^"]*"\s*\/?>/g, `<meta name="twitter:description" content="${esc(description)}" />`);
 
   // Per-event OG title/description + Event JSON-LD before </head>
   const extra = [
@@ -212,8 +212,8 @@ const eventItems = upcoming
   .join("\n      ");
 
 const eventsIndexBody = `<main id="main-content" style="max-width:760px;margin:0 auto;padding:48px 20px 64px;font-family:Poppins,Inter,system-ui,sans-serif">
-    <h1 style="font-size:2rem;line-height:1.2;margin:0 0 10px">Upcoming 80s Edition Daytime Disco Events</h1>
-    <p style="margin:0 0 28px">All upcoming THE 2PM CLUB 80s Edition dates across the Midlands. Iconic 80s anthems, 2pm to 6pm, home by 7. Book via the event pages below.</p>
+    <h1 style="font-size:2rem;line-height:1.2;margin:0 0 10px">Upcoming Daytime Disco Events</h1>
+    <p style="margin:0 0 28px">All upcoming THE 2PM CLUB dates across the Midlands. Iconic 80s, 90s and 00s anthems, 2pm to 6pm, home by 7. Book via the event pages below.</p>
     <ul style="list-style:none;margin:0;padding:0">
       ${eventItems}
     </ul>
@@ -224,9 +224,9 @@ fs.writeFileSync(
   path.join(DIST, "events", "index.html"),
   indexShell({
     urlPath: "/events/",
-    title: "Upcoming 80s Edition Daytime Disco Events | THE 2PM CLUB",
+    title: "Upcoming Daytime Disco Events | THE 2PM CLUB",
     description:
-      "All upcoming THE 2PM CLUB 80s Edition daytime disco events across the Midlands. Book your tickets for Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester.",
+      "All upcoming THE 2PM CLUB daytime disco events across the Midlands. Book your tickets for Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester.",
     bodyHtml: eventsIndexBody,
   })
 );
