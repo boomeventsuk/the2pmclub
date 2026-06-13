@@ -1,11 +1,10 @@
 import { MapPin, Music, Sun } from "lucide-react";
-import { EIGHTIES_MUSIC_LINE } from "@/lib/eventEdition";
 
 const About = () => {
   const highlights = [
     {
       icon: Music,
-      text: `Wall-to-wall ${EIGHTIES_MUSIC_LINE.toLowerCase().replace(".", "")} from 2PM-6PM`
+      text: "Wall-to-wall 80s, 90s & 00s anthems from 2PM–6PM"
     },
     {
       icon: MapPin,

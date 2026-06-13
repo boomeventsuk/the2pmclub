@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
+import EventPage from "./pages/EventPage";
 import EventPageV2 from "./pages/EventPageV2";
 import NotFound from "./pages/NotFound";
 import DevEventsIndex from "./pages/DevEventsIndex";
