@@ -60,8 +60,16 @@ export default async function handler(request: Request, context: Context) {
 
     // Build OG meta tags
     const city = event.location.split(',').pop()?.trim() || event.cityCode;
-    const ogTitle = `THE 2PM CLUB Daytime Disco - ${city} | ${formattedDate}`;
-    const ogDescription = event.subtitle || event.description || "4 hours of iconic 80s, 90s & 00s anthems. All the fun of a proper night out, home by 7-ish.";
+    const searchable = [event.eventType, event.title, event.slug, event.subtitle, event.description, event.image, event.statusLabel].filter(Boolean).join(" ");
+    const startTime = event.start ? new Date(event.start).getTime() : Number.NaN;
+    const isEighties = /80s edition|2PM80s|2PM-80s|goes full-on 80s|your best 80s night out/i.test(searchable)
+      || (/2pm/i.test(searchable) && Number.isFinite(startTime) && startTime >= new Date("2026-06-13T00:00:00").getTime());
+    const ogTitle = isEighties
+      ? `THE 2PM CLUB 80s Edition - ${city} | ${formattedDate}`
+      : `THE 2PM CLUB Daytime Disco - ${city} | ${formattedDate}`;
+    const ogDescription = isEighties
+      ? "Your best 80s night out. In the middle of the afternoon."
+      : event.subtitle || event.description || "4 hours of iconic 80s anthems. All the fun of a proper night out, home by 7-ish.";
     const ogImage = event.image || "https://www.the2pmclub.co.uk/lovable-uploads/070226_2PM_LUT_ANNSQ.jpg";
     const ogUrl = `https://www.the2pmclub.co.uk/events/${event.slug}/`;
 
