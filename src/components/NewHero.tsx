@@ -16,17 +16,14 @@ const NewHero = () => {
       {/* Instant blurred placeholder: the hero is never a black void while the photo arrives */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-cover bg-[center_30%]"
-        style={{ backgroundImage: "url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAVACADASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAABAAFAwb/xAAfEAABAwUBAQEAAAAAAAAAAAACAAEDBBESITETBSL/xAAXAQADAQAAAAAAAAAAAAAAAAABAgME/8QAHBEBAQACAgMAAAAAAAAAAAAAAQACERIhAzFB/9oADAMBAAIRAxEAPwDJpKQibW1SQEJ2wu6b8yQQf9umZwlI56dJ483kiVddWSFK5jodo1TTuL2tteji88nJrc4satmb2LFbeInUpiPuHFMWSdDcibbspSzkPl3kJ4pRxfqKYiZlduqUq7YX/9k=')" }}
+        className="absolute inset-0 bg-cover bg-[center_40%]"
+        style={{ backgroundImage: "url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAVACADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABAAFBv/EACAQAAICAgICAwAAAAAAAAAAAAECAAMEERIhEzEFMnH/xAAYAQACAwAAAAAAAAAAAAAAAAABAwIEBf/EABsRAQEAAgMBAAAAAAAAAAAAAAEAETECAxIh/9oADAMBAAIRAxEAPwDNw8JiOpW0Mr64bMf8VaqfcxnOlrC/Ri+vsTkiTU+YshMVnXQXuFy8Uo2tdzpKvHzLDX5MXPvHnbjNDznUDiO2HTa3L3HVElx2ZSlYoupFhNdq8T7hnrV3YkSlG5cQv//Z')" }}
       />
       {/* Background Image: self-hosted WebP, 86% lighter than the old CDN JPEG */}
-      <img src="/img/hero-confetti-1280.webp" srcSet="/img/hero-confetti-768.webp 768w, /img/hero-confetti-1280.webp 1280w, /img/hero-confetti-1920.webp 1920w" sizes="100vw" fetchPriority="high" decoding="async" alt="THE 2PM CLUB crowd with confetti cannons and rainbow lighting at a daytime disco party" className="absolute inset-0 w-full h-full object-cover object-[center_30%]" />
+      <img src="/img/hero-confetti-1280.webp" srcSet="/img/hero-confetti-768.webp 768w, /img/hero-confetti-1280.webp 1280w, /img/hero-confetti-1920.webp 1920w" sizes="100vw" fetchPriority="high" decoding="async" alt="THE 2PM CLUB crowd with confetti cannons and rainbow lighting at a daytime disco party" className="absolute inset-0 w-full h-full object-cover object-[center_40%]" />
       
       {/* Gradient overlay - much lighter to show crowd energy */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/15 to-transparent" />
-      
-      {/* Subtle radial glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(328_100%_54%_/_0.2)_0%,_transparent_70%)]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background/55 via-background/10 to-transparent" />
       
       {/* Content - tighter padding, bigger text */}
       <div className="relative z-10 text-center w-full px-3 sm:px-6 py-8 md:py-12">
