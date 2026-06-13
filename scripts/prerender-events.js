@@ -46,6 +46,34 @@ function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+const CURRENT_EIGHTIES_CAMPAIGN_START = new Date("2026-06-13T00:00:00").getTime();
+
+function isEightiesEdition(ev) {
+  const searchable = [
+    ev.eventType,
+    ev.title,
+    ev.slug,
+    ev.statusLabel,
+    ev.subtitle,
+    ev.description,
+    ev.image,
+  ].filter(Boolean).join(" ");
+  const startTime = ev.start ? new Date(ev.start).getTime() : Number.NaN;
+  return /80s edition|2pm80s|2pm-80s|goes full-on 80s|your best 80s night out/i.test(searchable)
+    || (/2pm/i.test(searchable) && Number.isFinite(startTime) && startTime >= CURRENT_EIGHTIES_CAMPAIGN_START);
+}
+
+function displayTitle(ev) {
+  if (!isEightiesEdition(ev)) return ev.title;
+  const city = (ev.location || "").split(", ").pop() || ev.cityCode || "";
+  return `THE 2PM CLUB 80s Edition ${city}`.trim();
+}
+
+function displayDescription(ev) {
+  if (!isEightiesEdition(ev)) return (ev.description || ev.subtitle || "").slice(0, 160);
+  return "Your best 80s night out. In the middle of the afternoon.";
+}
+
 // The live 2PM site globally 301-redirects URLs to lowercase, so every
 // emitted URL must be lowercase or the canonical self-redirects.
 function slugPath(slug) {
@@ -57,7 +85,7 @@ function jsonLdFor(ev) {
   return {
     "@context": "https://schema.org",
     "@type": "Event",
-    name: ev.title,
+    name: displayTitle(ev),
     startDate: ev.start,
     endDate: ev.end,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -90,7 +118,7 @@ function jsonLdFor(ev) {
         "https://www.instagram.com/boombastic.eventsuk",
       ],
     },
-    description: ev.description,
+    description: displayDescription(ev),
   };
 }
 
@@ -104,8 +132,8 @@ function mustReplace(html, from, to, slug) {
 let written = 0;
 for (const ev of upcoming) {
   const eventUrl = `${SITE}/events/${slugPath(ev.slug)}/`;
-  const title = `${ev.title} | ${formatDate(ev.start)} | THE 2PM CLUB`;
-  const description = (ev.description || ev.subtitle || "").slice(0, 160);
+  const title = `${displayTitle(ev)} | ${formatDate(ev.start)} | THE 2PM CLUB`;
+  const description = displayDescription(ev);
 
   let html = template;
 
@@ -125,7 +153,7 @@ for (const ev of upcoming) {
   html = html.replace(/(<meta name="twitter:image" content=")[^"]*(">)/, `$1${esc(ev.image)}$2`);
   html = html.replace(/<meta property="og:image:width" content="[^"]*" \/>/, '<meta property="og:image:width" content="1080" />');
   html = html.replace(/<meta property="og:image:height" content="[^"]*" \/>/, '<meta property="og:image:height" content="1080" />');
-  html = html.replace(/<meta property="og:image:alt" content="[^"]*" \/>/, `<meta property="og:image:alt" content="${esc(ev.title)}" />`);
+  html = html.replace(/<meta property="og:image:alt" content="[^"]*" \/>/, `<meta property="og:image:alt" content="${esc(displayTitle(ev))}" />`);
 
   // Per-event OG title/description + Event JSON-LD before </head>
   const extra = [
@@ -177,15 +205,15 @@ const eventItems = upcoming
       ? "Sold out: join the waitlist"
       : ev.priceLabel || "";
     return `<li style="margin:0 0 16px;padding:0 0 16px;border-bottom:1px solid rgba(255,255,255,.12)">
-        <a href="/events/${slugPath(ev.slug)}/" style="color:inherit;font-weight:600;text-decoration:underline">${esc(ev.title)}</a><br>
+        <a href="/events/${slugPath(ev.slug)}/" style="color:inherit;font-weight:600;text-decoration:underline">${esc(displayTitle(ev))}</a><br>
         <span>${esc(formatDate(ev.start))}, ${esc(ev.location)}${extra ? `. ${esc(extra)}` : ""}</span>
       </li>`;
   })
   .join("\n      ");
 
 const eventsIndexBody = `<main id="main-content" style="max-width:760px;margin:0 auto;padding:48px 20px 64px;font-family:Poppins,Inter,system-ui,sans-serif">
-    <h1 style="font-size:2rem;line-height:1.2;margin:0 0 10px">Upcoming Daytime Disco Events</h1>
-    <p style="margin:0 0 28px">All upcoming THE 2PM CLUB dates across the Midlands. Iconic 80s, 90s and 00s anthems, 2pm to 6pm, home by 7. Book via the event pages below.</p>
+    <h1 style="font-size:2rem;line-height:1.2;margin:0 0 10px">Upcoming 80s Edition Daytime Disco Events</h1>
+    <p style="margin:0 0 28px">All upcoming THE 2PM CLUB 80s Edition dates across the Midlands. Iconic 80s anthems, 2pm to 6pm, home by 7. Book via the event pages below.</p>
     <ul style="list-style:none;margin:0;padding:0">
       ${eventItems}
     </ul>
@@ -196,9 +224,9 @@ fs.writeFileSync(
   path.join(DIST, "events", "index.html"),
   indexShell({
     urlPath: "/events/",
-    title: "Upcoming Daytime Disco Events | THE 2PM CLUB",
+    title: "Upcoming 80s Edition Daytime Disco Events | THE 2PM CLUB",
     description:
-      "All upcoming THE 2PM CLUB daytime disco events across the Midlands. Book your tickets for Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester.",
+      "All upcoming THE 2PM CLUB 80s Edition daytime disco events across the Midlands. Book your tickets for Northampton, Bedford, Milton Keynes, Coventry, Luton and Leicester.",
     bodyHtml: eventsIndexBody,
   })
 );

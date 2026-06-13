@@ -67,6 +67,36 @@ function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+const CURRENT_EIGHTIES_CAMPAIGN_START = new Date("2026-06-13T00:00:00").getTime();
+
+function isEightiesEdition(ev) {
+  const searchable = [
+    ev.eventType,
+    ev.title,
+    ev.slug,
+    ev.statusLabel,
+    ev.subtitle,
+    ev.description,
+    ev.image,
+  ].filter(Boolean).join(" ");
+  const startTime = ev.start ? new Date(ev.start).getTime() : Number.NaN;
+  return /80s edition|2pm80s|2pm-80s|goes full-on 80s|your best 80s night out/i.test(searchable)
+    || (/2pm/i.test(searchable) && Number.isFinite(startTime) && startTime >= CURRENT_EIGHTIES_CAMPAIGN_START);
+}
+
+function displayTitle(ev) {
+  if (!isEightiesEdition(ev)) return ev.title;
+  const city = (ev.location || "").split(", ").pop() || ev.cityCode || "";
+  return `THE 2PM CLUB 80s Edition ${city}`.trim();
+}
+
+function displayDescription(ev) {
+  if (!isEightiesEdition(ev)) {
+    return `${ev.title}. 4 hours of iconic 80s anthems at ${(ev.location || "").split(", ").slice(0, -1).join(", ") || ev.location}. All the fun of a proper night out, home by 7-ish.`;
+  }
+  return "Your best 80s night out. In the middle of the afternoon.";
+}
+
 // The live site 301-redirects URLs to lowercase, so every emitted URL must be
 // lowercase or sitemap/JSON-LD URLs redirect away from the canonical.
 function eventUrl(ev) {
@@ -104,10 +134,10 @@ function eventCard(ev) {
 
   return `      <article class="event-card">
         <div class="event-card-image">
-          <img src="${esc(ev.image)}?width=600&quality=75" alt="${esc(ev.title)}" loading="lazy">${badge ? `\n          <span class="event-badge">${badge}</span>` : ""}
+          <img src="${esc(ev.image)}?width=600&quality=75" alt="${esc(displayTitle(ev))}" loading="lazy">${badge ? `\n          <span class="event-badge">${badge}</span>` : ""}
         </div>
         <div class="event-card-content">
-          <h3 class="event-card-title">${esc(ev.title)}</h3>
+          <h3 class="event-card-title">${esc(displayTitle(ev))}</h3>
           <div class="event-card-meta">
             <div class="event-meta-item">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -141,7 +171,7 @@ function jsonLdFor(cityEvents) {
   const blocks = cityEvents.map((ev) => ({
     "@context": "https://schema.org",
     "@type": "Event",
-    name: ev.title,
+    name: displayTitle(ev),
     startDate: ev.start,
     endDate: ev.end,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -173,7 +203,7 @@ function jsonLdFor(cityEvents) {
         "https://www.instagram.com/boombastic.eventsuk",
       ],
     },
-    description: `${ev.title}. 4 hours of iconic 80s, 90s & 00s anthems at ${(ev.location || "").split(", ").slice(0, -1).join(", ") || ev.location}. All the fun of a proper night out, home by 7-ish.`,
+    description: displayDescription(ev),
   }));
   const payload = blocks.length === 1 ? blocks[0] : blocks;
   return `<script type="application/ld+json">\n${JSON.stringify(payload, null, 2)}\n</script>`;
