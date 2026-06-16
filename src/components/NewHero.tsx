@@ -34,7 +34,7 @@ const NewHero = () => {
           THE 2PM CLUB DAYTIME DISCO
         </h1>
         <p className="font-bebas text-3xl md:text-5xl lg:text-6xl text-primary mb-6 tracking-wide drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
-          YOUR BEST NIGHT OUT IS NOW IN THE AFTERNOON.
+          YOUR BEST NIGHT OUT. IN THE MIDDLE OF THE AFTERNOON.
         </p>
         
         <p className="font-poppins text-lg sm:text-xl md:text-2xl text-foreground mb-6 leading-relaxed max-w-2xl mx-auto drop-shadow-[0_4px_20px_rgba(0,0,0,1)]">
