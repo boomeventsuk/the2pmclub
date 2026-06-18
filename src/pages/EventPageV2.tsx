@@ -29,6 +29,14 @@ const HERO_REEL_BASE = 'https://boombastic-events.b-cdn.net/web%20hero';
 const HERO_REEL_MASTER = `${HERO_REEL_BASE}/hero-1x1.mp4`;
 const cityReelUrl = (cityCode: string) => `${HERO_REEL_BASE}/hero-1x1-${cityCode}.mp4`;
 
+// Hero poster delivery. Sharp poster as WebP (~120KB vs ~180KB JPEG); a tiny
+// ~5KB blurred version shows instantly behind it so the hero is NEVER a black
+// box while the sharp image loads, on any connection. Bunny resize is live.
+const cdnParam = (url: string, params: string) =>
+  url.includes('b-cdn.net') ? `${url}${url.includes('?') ? '&' : '?'}${params}` : url;
+const heroPosterWebp = (url: string) => cdnParam(url, 'width=800&quality=72&format=webp');
+const heroPosterBlur = (url: string) => cdnParam(url, 'width=24&quality=30');
+
 interface EventJson {
   id: number;
   slug: string;
@@ -598,13 +606,22 @@ const EventPageV2 = () => {
                 {/* Hero video */}
                 <div className="flex justify-center md:justify-start">
                   <div ref={reelWrapRef} className="relative w-full max-w-md aspect-square rounded-xl overflow-hidden shadow-2xl shadow-primary/20 bg-black">
-                    {/* Poster img is the LCP element — loads immediately at 73KB optimised */}
+                    {/* Blur-up placeholder: ~5KB, loads instantly so the hero is
+                        never a black box while the sharp poster streams in. */}
                     <img
-                      src={optimised(event.squareImg, 800)}
+                      src={heroPosterBlur(event.squareImg)}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl"
+                    />
+                    {/* Sharp poster (WebP), paints over the blur when ready. */}
+                    <img
+                      src={heroPosterWebp(event.squareImg)}
                       alt={`${event.title} event poster`}
                       width={800}
                       height={800}
                       decoding="async"
+                      fetchPriority="high"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                     {/* Video fades in over the poster once it can play */}
