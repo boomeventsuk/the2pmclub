@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:48.993Z",
+    "priceLastSync": "2026-06-18T18:19:34.806Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:49.623Z",
+    "priceLastSync": "2026-06-18T18:19:35.403Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:50.224Z",
+    "priceLastSync": "2026-06-18T18:19:35.955Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:50.838Z",
+    "priceLastSync": "2026-06-18T18:19:36.504Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:51.443Z",
+    "priceLastSync": "2026-06-18T18:19:37.132Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:52.046Z",
+    "priceLastSync": "2026-06-18T18:19:37.699Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:52.803Z",
+    "priceLastSync": "2026-06-18T18:19:38.321Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:53.470Z",
+    "priceLastSync": "2026-06-18T18:19:38.974Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -267,7 +267,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:54.074Z",
+    "priceLastSync": "2026-06-18T18:19:39.580Z",
     "statusLabel": "Join waiting list",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
@@ -300,7 +300,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:54.663Z",
+    "priceLastSync": "2026-06-18T18:19:40.149Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -331,7 +331,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-18T12:54:55.253Z",
+    "priceLastSync": "2026-06-18T18:19:40.737Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -364,12 +364,12 @@
     "status": "selling-fast-amber",
     "urgencyLabel": "80S EDITION - EARLY RELEASE NOW ON SALE",
     "accentColor": "coral",
-    "price": 12,
+    "price": 10,
     "priceCurrency": "GBP",
-    "priceLabel": "From £12.00",
-    "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-18T12:54:55.856Z",
-    "statusLabel": "Selling fast",
+    "priceLabel": "From £10.00",
+    "availability": "https://schema.org/InStock",
+    "priceLastSync": "2026-06-18T18:19:41.301Z",
+    "statusLabel": "Just announced",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
@@ -407,7 +407,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-18T12:54:56.495Z",
+    "priceLastSync": "2026-06-18T18:19:41.872Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -451,7 +451,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-18T12:54:57.087Z",
+    "priceLastSync": "2026-06-18T18:19:42.399Z",
     "statusLabel": "80s Edition - Early Release now on sale",
     "statusLabelOverride": "80s Edition - Early Release now on sale",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -491,7 +491,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-18T12:54:57.703Z",
+    "priceLastSync": "2026-06-18T18:19:42.965Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -545,6 +545,6 @@
       "postalCode": "LU1 2EY",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-06-18T12:54:58.417Z"
+    "priceLastSync": "2026-06-18T18:19:43.516Z"
   }
 ]
