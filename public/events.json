@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:51.215Z",
+    "priceLastSync": "2026-06-24T12:20:21.404Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:51.809Z",
+    "priceLastSync": "2026-06-24T12:20:22.052Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:52.404Z",
+    "priceLastSync": "2026-06-24T12:20:22.638Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:53.015Z",
+    "priceLastSync": "2026-06-24T12:20:23.300Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:53.638Z",
+    "priceLastSync": "2026-06-24T12:20:23.943Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:54.246Z",
+    "priceLastSync": "2026-06-24T12:20:24.701Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:54.970Z",
+    "priceLastSync": "2026-06-24T12:20:25.457Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:55.557Z",
+    "priceLastSync": "2026-06-24T12:20:26.086Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -266,7 +266,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:56.609Z",
+    "priceLastSync": "2026-06-24T12:20:26.718Z",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -298,7 +298,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:57.186Z",
+    "priceLastSync": "2026-06-24T12:20:27.412Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -329,7 +329,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-06-24T07:39:57.818Z",
+    "priceLastSync": "2026-06-24T12:20:28.149Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -366,7 +366,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-24T07:39:58.522Z",
+    "priceLastSync": "2026-06-24T12:20:28.905Z",
     "statusLabel": "Just announced",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -405,7 +405,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-24T07:39:59.111Z",
+    "priceLastSync": "2026-06-24T12:20:29.500Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -445,19 +445,23 @@
     "status": "selling-fast-amber",
     "urgencyLabel": "80S EDITION - EARLY RELEASE NOW ON SALE",
     "accentColor": "coral",
-    "price": 10,
+    "price": 12,
     "priceCurrency": "GBP",
-    "priceLabel": "From £10.00",
-    "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-06-24T07:39:59.774Z",
-    "statusLabel": "80s Edition - Early Release now on sale",
-    "statusLabelOverride": "80s Edition - Early Release now on sale",
+    "priceLabel": "From £12.00",
+    "availability": "https://schema.org/LimitedAvailability",
+    "priceLastSync": "2026-06-24T12:20:30.136Z",
+    "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
+    },
+    "groupTicket": {
+      "size": 4,
+      "price": 40,
+      "label": "Group of 4 for £40"
     }
   },
   {
@@ -489,7 +493,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-06-24T07:40:00.381Z",
+    "priceLastSync": "2026-06-24T12:20:30.776Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -543,6 +547,11 @@
       "postalCode": "LU1 2EY",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-06-24T07:40:00.971Z"
+    "priceLastSync": "2026-06-24T12:20:31.406Z",
+    "groupTicket": {
+      "size": 4,
+      "price": 40,
+      "label": "Group of 4 for £40"
+    }
   }
 ]
