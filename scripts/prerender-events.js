@@ -25,7 +25,7 @@ const events = JSON.parse(
   fs.readFileSync(path.join(ROOT, "public", "events.json"), "utf8")
 );
 const EIGHTIES_EVENT_SLUGS = new Set([
-  "250726-2PM-NPTON",
+  "031026-2PM-NPTON",
   "120926-2PM-BED",
   "190926-2PM-COV",
   "260926-2PM-MK",

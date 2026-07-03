@@ -11,7 +11,7 @@ export interface EventEditionInput {
 
 const EIGHTIES_PATTERN = /80s edition|2pm80s|2pm-80s|goes full-on 80s|your best 80s night out/i;
 const EIGHTIES_EVENT_SLUGS = new Set([
-  "250726-2PM-NPTON",
+  "031026-2PM-NPTON",
   "120926-2PM-BED",
   "190926-2PM-COV",
   "260926-2PM-MK",

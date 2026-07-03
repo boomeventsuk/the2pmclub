@@ -12,7 +12,13 @@ https://the2pmclub.co.uk/*   https://www.the2pmclub.co.uk/:splat  301!
 /blog/hen-do-daytime-disco/*          /blog/hen-do-daytime-disco/index.html      200
 /blog/hen-party-ideas-northampton/*   /blog/hen-party-ideas-northampton/index.html   200
 /blog/birthday-party-ideas-northampton-adults/*   /blog/birthday-party-ideas-northampton-adults/index.html   200
-/events/250726-2PM-NPTON-80S/*        /events/250726-2PM-NPTON/                 301!
+/events/250726-2PM-NPTON              /events/031026-2PM-NPTON/                 301!
+/events/250726-2PM-NPTON/             /events/031026-2PM-NPTON/                 301!
+/events/250726-2PM-NPTON/*            /events/031026-2PM-NPTON/:splat           301!
+/events/250726-2pm-npton              /events/031026-2pm-npton/                 301!
+/events/250726-2pm-npton/             /events/031026-2pm-npton/                 301!
+/events/250726-2pm-npton/*            /events/031026-2pm-npton/:splat           301!
+/events/250726-2PM-NPTON-80S/*        /events/031026-2PM-NPTON/                 301!
 
 # SPA routes — explicit React Router paths only, so unknown URLs fall through to 404
 /                      /index.html  200
