@@ -239,8 +239,10 @@
       }
     </style>
 
-    <!-- Perf hints: preload LCP hero, preconnect to third-party origins -->
-    <link rel="preload" as="image" href="/img/hero-confetti-1280.webp" imagesrcset="/img/hero-confetti-768.webp 768w, /img/hero-confetti-1280.webp 1280w, /img/hero-confetti-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
+    <!-- Perf hints: preconnect to third-party origins. The homepage LCP hero
+         preload is injected per-route via React Helmet in src/pages/Index.tsx
+         so event/hub pages don't waste bandwidth preloading an image they
+         never render, competing with the JS bundle. -->
     <link rel="preconnect" href="https://boombastic-events.b-cdn.net" crossorigin>
     <link rel="preconnect" href="https://www.eventbrite.co.uk" crossorigin>
     <link rel="dns-prefetch" href="https://www.eventbrite.co.uk">
