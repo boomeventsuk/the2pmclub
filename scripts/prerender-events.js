@@ -54,6 +54,89 @@ function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+// Emoji ranges + ZWJ/variation selectors. Feed copy (description/highlights)
+// carries emoji; the pre-JS shell is plain text so strip them defensively.
+const EMOJI_RE =
+  /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{FE00}-\u{FE0F}\u{200D}\u{20E3}]/gu;
+function plain(s) {
+  return String(s || "").replace(EMOJI_RE, "").replace(/\s{2,}/g, " ").trim();
+}
+
+// Bunny CDN delivery, mirroring src/pages/EventPageV2.tsx: a sharp WebP poster
+// plus a tiny blurred layer painted behind it so the hero is NEVER a black box
+// while the sharp image streams in (esp. mobile 4G). Only b-cdn.net URLs get params.
+function cdnParam(url, params) {
+  return url && url.includes("b-cdn.net")
+    ? `${url}${url.includes("?") ? "&" : "?"}${params}`
+    : url;
+}
+const heroPosterWebp = (url) => cdnParam(url, "width=800&quality=72&format=webp");
+const heroPosterBlur = (url) => cdnParam(url, "width=24&quality=30");
+
+// "From £10.00" -> "From £10" (keeps non-zero pence, e.g. "From £12.50")
+function cleanPrice(label) {
+  return label ? String(label).replace(/\.00\b/, "") : "";
+}
+
+// events.json carries "Venue, City" in location; the React page splits the same way.
+function parseLocation(location) {
+  const parts = String(location || "").split(", ");
+  return { venue: parts[0] || location || "", city: parts[parts.length - 1] || "" };
+}
+
+// Visible above-fold hero injected inside <div id="root"> so slow connections
+// see the artwork and event facts instead of a blank dark screen while the
+// ~135KB JS bundle + events.json load. main.tsx uses createRoot().render(),
+// which REPLACES the container's children on mount, so this static content is
+// wiped and swapped for the React hero with no duplicate H1 and no flash. Kept
+// visually close to the EventPageV2 hero (artwork left, facts card right) so
+// the swap is seamless. Inline styles only: no dependency on app CSS classes.
+function shellHeroHtml(ev) {
+  const { venue, city } = parseLocation(ev.location);
+  const eighties = isEightiesEdition(ev);
+  const soldOut = ev.status === "sold-out";
+  const price = cleanPrice(ev.priceLabel);
+  const badge = !soldOut && ev.statusLabel ? plain(ev.statusLabel) : "";
+  const group = ev.groupTicket && ev.groupTicket.label ? plain(ev.groupTicket.label) : "";
+  const subline = plain(ev.heroSubtitle || ev.subtitle || "");
+  const line2 = eighties ? "80s Edition Daytime Disco" : "Daytime Disco";
+  const img = esc(ev.image || "");
+
+  const fontStack = "Poppins,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif";
+  const factRow = (text) =>
+    `<p style="margin:0;color:rgba(255,255,255,0.82);font-size:1rem;line-height:1.4;">${text}</p>`;
+
+  return [
+    `<div style="min-height:100vh;background:#0B0B0F;color:#fff;font-family:${fontStack};">`,
+    `<div style="max-width:1024px;margin:0 auto;padding:96px 20px 48px;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;">`,
+
+    // Artwork: blur-up layer + sharp WebP poster
+    `<div style="position:relative;flex:1 1 320px;max-width:440px;width:100%;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:#000;">`,
+    img ? `<img src="${heroPosterBlur(img)}" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.1);filter:blur(20px);">` : "",
+    img ? `<img src="${heroPosterWebp(img)}" alt="${esc(displayTitle(ev))} event poster" width="800" height="800" fetchpriority="high" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">` : "",
+    `</div>`,
+
+    // Facts card
+    `<div style="flex:1 1 320px;min-width:280px;">`,
+    badge
+      ? `<p style="display:inline-block;background:rgba(255,60,172,0.15);border:1px solid rgba(255,60,172,0.35);border-radius:999px;padding:7px 16px;margin:0 0 14px;color:#FF3CAC;font-weight:700;font-size:0.8rem;letter-spacing:0.04em;text-transform:uppercase;">${esc(badge)}</p>`
+      : "",
+    `<h1 style="margin:0;font-weight:700;text-transform:uppercase;line-height:1.1;letter-spacing:-0.01em;font-size:clamp(1.75rem,6vw,3rem);">THE 2PM CLUB<br><span style="color:rgba(255,255,255,0.9);">${esc(line2)}</span><br><span style="color:#FF3CAC;">${esc(city)}</span></h1>`,
+    subline ? `<p style="margin:14px 0 0;color:rgba(255,255,255,0.85);font-size:1.1rem;font-weight:500;line-height:1.4;">${esc(subline)}</p>` : "",
+    `<div style="margin:20px 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,0.14);display:flex;flex-direction:column;gap:8px;">`,
+    factRow(esc(formatDate(ev.start))),
+    factRow(`${esc(venue)}, ${esc(city)}`),
+    price ? factRow(`<span style="font-weight:600;">Tickets ${esc(price.replace(/^From\s+/i, "from "))}</span>`) : "",
+    group ? factRow(esc(group)) : "",
+    `</div>`,
+    `<a href="#checkout-section" style="display:inline-block;margin-top:24px;background:#FF3CAC;color:#fff;font-weight:700;padding:14px 34px;border-radius:999px;text-decoration:none;font-size:1.05rem;">${soldOut ? "Join Waiting List" : "Book Tickets"}</a>`,
+    `</div>`,
+
+    `</div>`,
+    `</div>`,
+  ].filter(Boolean).join("");
+}
+
 function isEightiesEdition(ev) {
   if (ev.slug && EIGHTIES_EVENT_SLUGS.has(ev.slug.toUpperCase())) return true;
 
@@ -197,6 +280,11 @@ for (const ev of upcoming) {
     `<script type="application/ld+json">\n${JSON.stringify(jsonLdFor(ev), null, 2)}\n</script>`,
   ].join("\n");
   html = html.replace("</head>", `${extra}\n</head>`);
+
+  // Visible above-fold hero inside #root (replaced cleanly on hydration) so
+  // ad clickers on slow mobile connections see the event immediately instead
+  // of a blank dark page while the JS bundle and events.json load.
+  html = mustReplace(html, '<div id="root"></div>', `<div id="root">${shellHeroHtml(ev)}</div>`, ev.slug);
 
   const dir = path.join(DIST, "events", slugPath(ev.slug));
   fs.mkdirSync(dir, { recursive: true });
