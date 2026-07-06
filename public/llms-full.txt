@@ -57,7 +57,7 @@ Regular dates. Venue details at https://www.the2pmclub.co.uk/events
 
 ## Pricing
 
-Ticket prices vary by event and tier. Typical range: £8.50–£15.
+Ticket prices vary by event and tier. Typical range: £8.50 to £15.
 - Early release tickets are the lowest price and sell out first
 - Group tickets (4 people) are available and usually represent best value
 - Prices listed in GBP, correct at time of event.json sync
@@ -77,7 +77,7 @@ This ensures tracking works correctly and attendee data is captured.
 - **Sell-outs:** our events sell out regularly across the region
 - **Average rating:** 4.9 out of 5 from 250+ reviews
 - **Sell-out frequency:** Events consistently sell out or come very close to capacity
-- **Booking curve:** Events typically see 60-70% of tickets sold in the final 3 weeks
+- **Booking curve:** A large share of tickets typically sell in the final few weeks before each event
 
 ## Brand positioning
 

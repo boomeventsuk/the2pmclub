@@ -8,8 +8,8 @@ const WhyTwoPmWorks = () => {
   const stats = [
     {
       icon: TrendingUp,
-      stat: "73%",
-      label: "Faster sell-out rate",
+      stat: "Faster",
+      label: "Sell-outs than evening slots",
       description: "Afternoon events consistently fill faster than evening alternatives"
     },
     {
@@ -137,10 +137,10 @@ const WhyTwoPmWorks = () => {
 
               <h2 className="font-bebas text-2xl md:text-3xl text-foreground mb-4">Recovery: The Sleep Advantage</h2>
               <p className="text-muted-foreground mb-6">
-                Sleep science is unambiguous: earlier finish times mean better sleep quality. When you're home by 7pm, you can wind down naturally. Your circadian rhythm isn't fighting a 2am adrenaline crash. Sunday morning isn't a recovery mission.
+                The logic is simple: an earlier finish means better sleep. When you're home by 7pm, you can wind down naturally. You're not fighting a 2am adrenaline crash, and Sunday morning isn't a recovery mission.
               </p>
               <p className="text-muted-foreground mb-8">
-                This isn't about being sensible for its own sake. It's about having the full experience—the energy, the music, the atmosphere—without the tax that usually comes with it. You get the party. You keep your weekend.
+                This isn't about being sensible for its own sake. It's about having the full experience, the energy, the music, the atmosphere, without the tax that usually comes with it. You get the party. You keep your weekend.
               </p>
 
               <h2 className="font-bebas text-2xl md:text-3xl text-foreground mb-4">The Bottom Line</h2>
@@ -151,7 +151,7 @@ const WhyTwoPmWorks = () => {
               <div className="bg-card/60 border border-primary/30 rounded-xl p-6 mt-8">
                 <h3 className="font-bebas text-xl text-foreground mb-3">Sources</h3>
                 <ul className="text-sm text-muted-foreground space-y-2 list-disc pl-4">
-                  <li>Ticket sell-out timing analysis (internal sample, 2023-2024)</li>
+                  <li>What we've seen running daytime events across six cities since 2014</li>
                   <li>Weekend free-time window research (time-use surveys)</li>
                   <li>Early finish and sleep quality correlation (sleep guidance summaries)</li>
                 </ul>

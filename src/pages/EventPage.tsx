@@ -1989,7 +1989,7 @@ const EventPage = () => {
                       {
                         emoji: "🏆",
                         title: "TRUST THE TRACK RECORD",
-                        description: "Created by Boombastic Events — 10+ years of consistent sell-outs across the UK because we know how to create moments that matter."
+                        description: "Created by Boombastic Events, putting on sell-out events across the Midlands since 2014 because we know how to create moments that matter."
                       }
                     ].map((card, index) => (
                       <div key={index} className="bg-card border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-colors">

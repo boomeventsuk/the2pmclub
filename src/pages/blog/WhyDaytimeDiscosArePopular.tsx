@@ -28,7 +28,7 @@ const WhyDaytimeDiscosArePopular = () => {
 
   const stats = [
     { icon: Clock, label: "Sweet Spot", value: "2-4PM", description: "Peak free time window" },
-    { icon: Users, label: "Attendance", value: "100%", description: "vs 70% evening events" },
+    { icon: Users, label: "Attendance", value: "Full", description: "Afternoons fill up" },
     { icon: PartyPopper, label: "Home By", value: "7PM", description: "Great sleep guaranteed" }
   ];
 
@@ -146,7 +146,7 @@ const WhyDaytimeDiscosArePopular = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-foreground/85 leading-relaxed">
-                    Across England, afternoon events starting in that sweet spot achieve near-perfect attendance while later starts hover around 70% capacity. And here's the really clever bit: UK women aged 30-50 have their peak free time exactly when we're throwing the party.
+                    Across England, afternoon events starting in that sweet spot tend to fill up, while later starts often leave empty space on the floor. And here's the really clever bit: UK women aged 30-50 have their peak free time exactly when we're throwing the party.
                   </p>
                   <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
                     <p className="text-foreground font-semibold">
@@ -168,7 +168,7 @@ const WhyDaytimeDiscosArePopular = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-foreground/85 leading-relaxed">
-                    Finishing by 6PM means you genuinely wake up Sunday feeling human. Not because we're being sensible, but because sleep science shows alcohol stops affecting your sleep quality about 3-4 hours after your last drink.
+                    Finishing by 6PM means you genuinely wake up Sunday feeling human. An afternoon finish means you're not drinking late into the night, so your last drink is hours behind you by bedtime and you actually sleep.
                   </p>
                   <div className="bg-secondary/5 border-l-4 border-secondary p-4 rounded-r-lg">
                     <p className="text-foreground font-semibold">
@@ -190,7 +190,7 @@ const WhyDaytimeDiscosArePopular = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-foreground/85 leading-relaxed">
-                    The proof? People don't just attend—they arrive singing and leave still singing. When we analyzed social media posts from actual attendees, the most common phrase was "so much fun" (mentioned 30 times), followed by "had a blast" and "best time ever."
+                    The proof? People don't just attend, they arrive singing and leave still singing. Look at what actual attendees post afterwards and the phrase that comes up again and again is "so much fun", followed by "had a blast" and "best time ever."
                   </p>
                   <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
                     <p className="text-foreground font-semibold">

@@ -263,7 +263,7 @@ function buildNoscriptContent(events: EventData[]): string {
 
       <h2>About THE 2PM CLUB</h2>
       <p>THE 2PM CLUB is a daytime disco created by Boombastic Events, running sell-out events across Northampton, Bedford, Milton Keynes, Coventry, Luton, and Leicester. Founded on the principle that the best time to party is the afternoon: same energy, better timing, no regrets. Part of Boombastic Events, which has been running sell-out events across the Midlands for over 12 years.</p>
-      <p>Wall-to-wall 80s, 90s and 00s anthems. Night-out energy in the afternoon. Tickets typically start from £10-15.</p>
+      <p>Wall-to-wall 80s, 90s and 00s anthems. Night-out energy in the afternoon. Tickets typically range from £8.50 to £15.</p>
       <p>Contact: hello@boomevents.co.uk</p>
       <p>Cities: Northampton, Bedford, Milton Keynes, Coventry, Luton, Leicester</p>
 
