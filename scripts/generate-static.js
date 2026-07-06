@@ -199,6 +199,32 @@ function replaceBetween(html, start, end, inner, label, file) {
   return html.slice(0, s + start.length) + "\n" + inner + "\n" + html.slice(e);
 }
 
+// The hub hero is a ~210KB 1200w JPEG with no srcset, so phones fetch the full
+// desktop image. Add srcset (768w/1200w) + sizes so mobiles pull the 768w file.
+// Idempotent: only rewrites the eager 400px-tall hero <img> when it has no
+// srcset yet. Uses Bunny "?width=&quality=" params on the same base URL.
+const HERO_IMG_RE =
+  /<img\s+src="(https:\/\/boombastic-events\.b-cdn\.net\/[^"]+?)\?width=1200&quality=80"\s+alt="([^"]*)"\s+style="width:100%;height:400px;object-fit:cover;display:block"\s+loading="eager">/;
+
+function injectHeroSrcset(html, file) {
+  if (!HERO_IMG_RE.test(html)) {
+    // Already has srcset (rerun) or the hero markup changed. If neither the
+    // rewritten form nor the original is present, that is a real drift to flag.
+    if (!/srcset="[^"]*hero[^"]*"/.test(html) && !html.includes("height:400px;object-fit:cover")) {
+      throw new Error(`Hub hero <img> not found in ${file}`);
+    }
+    return html;
+  }
+  return html.replace(HERO_IMG_RE, (_m, base, alt) => {
+    const at = (w) => `${base}?width=${w}&quality=80`;
+    return (
+      `<img src="${at(1200)}" ` +
+      `srcset="${at(768)} 768w, ${at(1200)} 1200w" sizes="100vw" ` +
+      `alt="${alt}" style="width:100%;height:400px;object-fit:cover;display:block" loading="eager">`
+    );
+  });
+}
+
 function generateHub(hub) {
   const file = path.join(ROOT, "public", "hubs", hub.dir, "index.html");
   let html = fs.readFileSync(file, "utf8");
@@ -244,6 +270,9 @@ function generateHub(hub) {
       ? `    <a href="/events/${cityEvents[0].slug.toLowerCase()}/" class="btn-primary btn-large">\n      Join The ${hub.city} Waiting List\n    </a>`
     : `    <a href="/#tickets" class="btn-primary btn-large">\n      See All Upcoming Events\n    </a>`;
   html = replaceBetween(html, M.ctaStart, M.ctaEnd, cta, "CTA", file);
+
+  // Responsive hub hero (srcset/sizes) so phones fetch 768w not 1200w.
+  html = injectHeroSrcset(html, file);
 
   fs.writeFileSync(file, html);
   console.log(`hub ${hub.dir}: ${hasEvents ? cityEvents.length + " event(s)" : "waitlist state"}`);
