@@ -36,6 +36,25 @@ const EIGHTIES_MUSIC_FAQ = "80s anthems. Wall-to-wall songs you know every word 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 const upcoming = events.filter((e) => new Date(e.start) >= today);
+// Ended events: start date strictly before today. These still live in
+// events.json (machine-owned; never removed) but must stop serving a
+// bookable 200 page. Each gets a noindex "gone" shell + a forced 410 below.
+const pastEvents = events.filter((e) => e.start && new Date(e.start) < today);
+
+// cityCode -> hub directory, so an ended event can point visitors at the
+// same city's hub for the next date. Falls back to the events index.
+const HUB_DIR_BY_CITY_CODE = {
+  NPTON: "northampton",
+  BED: "bedford",
+  COV: "coventry",
+  MK: "milton-keynes",
+  LUT: "luton",
+  LEIC: "leicester",
+};
+function hubPathForEvent(ev) {
+  const dir = HUB_DIR_BY_CITY_CODE[(ev.cityCode || "").toUpperCase()];
+  return dir ? `/hubs/${dir}/` : "/events/";
+}
 
 function ordinal(n) {
   if (n % 100 >= 11 && n % 100 <= 13) return "th";
@@ -135,6 +154,34 @@ function shellHeroHtml(ev) {
     `</div>`,
     `</div>`,
   ].filter(Boolean).join("");
+}
+
+// Minimal noindex "gone" shell for ended events. Served with a 410 via the
+// forced redirect lines appended to dist/_redirects below. On-brand dark
+// styling, inline only (no app CSS), links to the homepage tickets section
+// and the same-city hub so the visitor lands on the next available date.
+function goneShellHtml(ev) {
+  const hubPath = hubPathForEvent(ev);
+  const { city } = parseLocation(ev.location);
+  const fontStack = "Poppins,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif";
+  return `<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>This event has ended | THE 2PM CLUB</title>
+</head>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0B0B0F;color:#fff;font-family:${fontStack};text-align:center;">
+  <main style="padding:48px 24px;max-width:560px;">
+    <h1 style="font-size:1.6rem;line-height:1.25;margin:0 0 12px;text-transform:uppercase;letter-spacing:-0.01em;">${esc(displayTitle(ev))}</h1>
+    <p style="color:rgba(255,255,255,0.75);margin:0 0 28px;font-size:1.05rem;">This event has ended.</p>
+    <p style="margin:0 0 14px;"><a href="/#tickets" style="display:inline-block;background:#FF3CAC;color:#fff;font-weight:700;padding:13px 32px;border-radius:999px;text-decoration:none;">See upcoming events</a></p>
+    <p style="margin:0;"><a href="${esc(hubPath)}" style="color:#FF3CAC;font-weight:600;text-decoration:underline;">More ${esc(city || "2PM Club")} dates</a></p>
+  </main>
+</body>
+</html>
+`;
 }
 
 function isEightiesEdition(ev) {
@@ -240,6 +287,42 @@ function mustReplace(html, from, to, slug) {
   return html.split(from).join(to);
 }
 
+// Sanitised current-event object inlined as window.__EVENT__ on the shell, so
+// EventPageV2 can render without the serial /events.json fetch. Only the fields
+// the page's toEventData() reads are included (feed-driven, never hand-authored
+// copy). JSON-embedded in a <script> below, with < escaped so a "</script>" in
+// any string can never break out of the tag.
+function sanitisedEvent(ev) {
+  const out = {
+    slug: ev.slug,
+    eventType: ev.eventType,
+    cityCode: ev.cityCode,
+    eventbriteId: ev.eventbriteId,
+    promoCode: ev.promoCode,
+    title: ev.title,
+    location: ev.location,
+    start: ev.start,
+    end: ev.end,
+    image: ev.image,
+    status: ev.status,
+    statusLabel: ev.statusLabel,
+    urgencyLabel: ev.urgencyLabel,
+    price: ev.price,
+    legacyLine: ev.legacyLine,
+    groupTicket: ev.groupTicket,
+    subtitle: ev.subtitle,
+    description: ev.description,
+  };
+  // Drop undefined keys so the inlined object stays lean and mirrors the feed.
+  Object.keys(out).forEach((k) => out[k] === undefined && delete out[k]);
+  return out;
+}
+
+function eventInlineScript(ev) {
+  const json = JSON.stringify(sanitisedEvent(ev)).replace(/</g, "\\u003c");
+  return `<script>window.__EVENT__ = ${json};</script>`;
+}
+
 let written = 0;
 for (const ev of upcoming) {
   const eventUrl = `${SITE}/events/${slugPath(ev.slug)}/`;
@@ -278,6 +361,9 @@ for (const ev of upcoming) {
     `<meta name="twitter:title" content="${esc(title)}" />`,
     `<meta name="twitter:description" content="${esc(description)}" />`,
     `<script type="application/ld+json">\n${JSON.stringify(jsonLdFor(ev), null, 2)}\n</script>`,
+    // Inlined current event: lets EventPageV2 skip the /events.json fetch on
+    // the money page. Slug-matched at runtime, else the page falls back to fetch.
+    eventInlineScript(ev),
   ].join("\n");
   html = html.replace("</head>", `${extra}\n</head>`);
 
@@ -293,6 +379,52 @@ for (const ev of upcoming) {
 }
 
 console.log(`prerender-events: wrote ${written} event shells to dist/events/`);
+
+/* ---------- ended events: noindex gone shells + 410 redirects ---------- */
+// Ended event URLs currently return an indexable, bookable 200 clone of the
+// homepage. Write a noindex "gone" shell at each ended slug and force a 410
+// for that path so crawlers and buyers stop landing on a dead bookable page.
+// The force flag (!) is required because a static file now exists at the path;
+// without it Netlify serves the shell with a 200. The 410 lines are inserted
+// BEFORE the /events/* SPA fallback so they win Netlify's first-match ordering.
+const SPA_FALLBACK_RE = /^\/events\/\*\s+\/index\.html\s+200\s*$/m;
+
+function writeExpiredEvents() {
+  if (pastEvents.length === 0) {
+    console.log("prerender-events: no ended events to gate");
+    return;
+  }
+
+  for (const ev of pastEvents) {
+    const dir = path.join(DIST, "events", slugPath(ev.slug));
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "index.html"), goneShellHtml(ev));
+  }
+
+  const redirectsPath = path.join(DIST, "_redirects");
+  let redirects = fs.readFileSync(redirectsPath, "utf8");
+  if (redirects.includes("# Ended events: 410 Gone")) {
+    console.log("prerender-events: ended-event 410 redirects already present, skipping");
+    return;
+  }
+  if (!SPA_FALLBACK_RE.test(redirects)) {
+    throw new Error("dist/_redirects: /events/* SPA fallback line not found");
+  }
+  const lines = pastEvents
+    .map((ev) => {
+      const slug = slugPath(ev.slug);
+      return `/events/${slug}        /events/${slug}/index.html    410!\n/events/${slug}/*      /events/${slug}/index.html    410!`;
+    })
+    .join("\n");
+  redirects = redirects.replace(
+    SPA_FALLBACK_RE,
+    `# Ended events: 410 Gone (generated by prerender-events.js)\n${lines}\n\n$&`
+  );
+  fs.writeFileSync(redirectsPath, redirects);
+  console.log(`prerender-events: wrote ${pastEvents.length} ended-event gone shells + 410 redirects`);
+}
+
+writeExpiredEvents();
 
 /* ---------- index shells: /events/ and /blog/ ---------- */
 // Both URLs are in the sitemap but previously served the homepage head

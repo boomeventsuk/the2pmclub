@@ -108,48 +108,98 @@ const formatShortDate = (isoDate: string): string => {
   return `${days[date.getDay()]} ${day}${suffix} ${months[date.getMonth()]}`;
 };
 
+// Map one feed record (events.json shape) to the view model used by the page.
+// Shared by the /events.json fetch path and the inlined window.__EVENT__ fast
+// path so both produce identical EventData.
+const toEventData = (event: EventJson): EventData => {
+  const { venue, city } = parseLocation(event.location);
+  const startTime = new Date(event.start);
+  const endTime = new Date(event.end);
+  const startHour = startTime.getHours();
+  const endHour = endTime.getHours();
+  const startAmPm = startHour >= 12 ? 'pm' : 'am';
+  const endAmPm = endHour >= 12 ? 'pm' : 'am';
+  const start12 = startHour > 12 ? startHour - 12 : startHour === 0 ? 12 : startHour;
+  const end12 = endHour > 12 ? endHour - 12 : endHour === 0 ? 12 : endHour;
+  const timeDisplay = `${start12}${startAmPm}–${end12}${endAmPm}`;
+  return {
+    slug: event.slug,
+    cityCode: event.cityCode,
+    eventbriteId: event.eventbriteId,
+    promoCode: event.promoCode,
+    city,
+    venue,
+    date: formatEventDate(event.start),
+    shortDate: formatShortDate(event.start),
+    squareImg: event.image,
+    title: event.title,
+    timeDisplay,
+    startIso: event.start,
+    status: event.status,
+    statusLabel: event.statusLabel,
+    urgencyLabel: event.urgencyLabel,
+    price: event.price,
+    legacyLine: event.legacyLine,
+    groupTicket: event.groupTicket,
+    isEightiesEdition: isEightiesEditionEvent(event),
+  };
+};
+
+// cityCode -> hub directory, so an ended page can point at the same city's hub
+// for the next date. Mirrors HUB_DIR_BY_CITY_CODE in scripts/prerender-events.js.
+const HUB_DIR_BY_CITY_CODE: Record<string, string> = {
+  NPTON: 'northampton',
+  BED: 'bedford',
+  COV: 'coventry',
+  MK: 'milton-keynes',
+  LUT: 'luton',
+  LEIC: 'leicester',
+};
+const hubPathForCityCode = (cityCode?: string): string => {
+  const dir = HUB_DIR_BY_CITY_CODE[(cityCode || '').toUpperCase()];
+  return dir ? `/hubs/${dir}/` : '/#tickets';
+};
+
+// An event has ended once its start date is before today (start of day). Stale
+// client-side URLs (bookmarks, ad clicks after the date) must never show the
+// bookable page. Netlify already 410s the static shell; this guards the SPA.
+const isEventPast = (startIso: string): boolean => {
+  const start = new Date(startIso);
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  return start < startOfToday;
+};
+
 const loadEventData = async (): Promise<Record<string, EventData>> => {
   try {
     const response = await fetch('/events.json');
     const events: EventJson[] = await response.json();
     const out: Record<string, EventData> = {};
     events.forEach(event => {
-      const { venue, city } = parseLocation(event.location);
-      const startTime = new Date(event.start);
-      const endTime = new Date(event.end);
-      const startHour = startTime.getHours();
-      const endHour = endTime.getHours();
-      const startAmPm = startHour >= 12 ? 'pm' : 'am';
-      const endAmPm = endHour >= 12 ? 'pm' : 'am';
-      const start12 = startHour > 12 ? startHour - 12 : startHour === 0 ? 12 : startHour;
-      const end12 = endHour > 12 ? endHour - 12 : endHour === 0 ? 12 : endHour;
-      const timeDisplay = `${start12}${startAmPm}–${end12}${endAmPm}`;
-      out[event.slug] = {
-        slug: event.slug,
-        cityCode: event.cityCode,
-        eventbriteId: event.eventbriteId,
-        promoCode: event.promoCode,
-        city,
-        venue,
-        date: formatEventDate(event.start),
-        shortDate: formatShortDate(event.start),
-        squareImg: event.image,
-        title: event.title,
-        timeDisplay,
-        startIso: event.start,
-        status: event.status,
-        statusLabel: event.statusLabel,
-        urgencyLabel: event.urgencyLabel,
-        price: event.price,
-        legacyLine: event.legacyLine,
-        groupTicket: event.groupTicket,
-        isEightiesEdition: isEightiesEditionEvent(event),
-      };
+      out[event.slug] = toEventData(event);
     });
     return out;
   } catch (e) {
     console.error('Failed to load events', e);
     return {};
+  }
+};
+
+// The prerendered event shell inlines the current event object as
+// window.__EVENT__ so the money page can render without a serial /events.json
+// fetch. Only trusted when its slug matches the route slug (case-insensitive);
+// any mismatch (homepage, stale inline, wrong route) falls through to the fetch
+// so the page always self-heals.
+const inlineEventFor = (normalizedSlug?: string): EventData | null => {
+  if (!normalizedSlug) return null;
+  const inline = (window as unknown as { __EVENT__?: EventJson }).__EVENT__;
+  if (!inline || typeof inline.slug !== 'string') return null;
+  if (inline.slug.toUpperCase().replace(/\/$/, '') !== normalizedSlug) return null;
+  try {
+    return toEventData(inline);
+  } catch (e) {
+    console.error('Failed to read inlined event', e);
+    return null;
   }
 };
 
@@ -270,12 +320,12 @@ const EventPageV2 = () => {
 
   useEffect(() => {
     let cancelled = false;
-    loadEventData().then(data => {
+    // URLs are served lowercase (Netlify 301s uppercase to the lowercase
+    // shell) but events.json slugs are uppercase: normalise before lookup.
+    const normalizedSlug = slug?.toUpperCase().replace(/\/$/, "");
+
+    const applyEvent = (ev: EventData | null) => {
       if (cancelled) return;
-      // URLs are served lowercase (Netlify 301s uppercase to the lowercase
-      // shell) but events.json slugs are uppercase: normalise before lookup.
-      const normalizedSlug = slug?.toUpperCase().replace(/\/$/, "");
-      const ev = normalizedSlug ? data[normalizedSlug] || null : null;
       setEvent(ev);
       // Try city-specific reel first; onError handler will swap to master if 404.
       setReelSrc(ev?.cityCode ? cityReelUrl(ev.cityCode) : HERO_REEL_MASTER);
@@ -291,6 +341,20 @@ const EventPageV2 = () => {
           source: 'event_page_v2',
         });
       }
+    };
+
+    // Fast path: the prerendered shell inlined this exact event. Use it and
+    // skip the /events.json network leg on the money page.
+    const inline = inlineEventFor(normalizedSlug);
+    if (inline) {
+      applyEvent(inline);
+      return () => { cancelled = true; };
+    }
+
+    // Fallback: fetch the feed (homepage, other routes, stale/absent inline).
+    loadEventData().then(data => {
+      if (cancelled) return;
+      applyEvent(normalizedSlug ? data[normalizedSlug] || null : null);
     });
     return () => { cancelled = true; };
   }, [slug]);
@@ -506,6 +570,44 @@ const EventPageV2 = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="font-poppins text-foreground/60">Event not found.</p>
       </div>
+    );
+  }
+
+  // Ended-event guard for stale client-side URLs. The static shell is served
+  // as a 410, but a URL that resolves in-app (soft nav, cached SPA) must show
+  // an "ended" state, never the bookable page.
+  if (isEventPast(event.startIso)) {
+    const hubPath = hubPathForCityCode(event.cityCode);
+    return (
+      <>
+        <Helmet>
+          <title>This one's gone | THE 2PM CLUB</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
+        <div className="min-h-screen bg-background flex flex-col">
+          <Header />
+          <main
+            id="main-content"
+            className="flex-1 flex flex-col items-center justify-center text-center px-6 py-24"
+          >
+            <h1 className="font-poppins text-3xl md:text-4xl font-bold text-foreground tracking-tight uppercase mb-3">
+              This one's gone
+            </h1>
+            <p className="font-poppins text-base md:text-lg text-foreground/70 max-w-md mb-8">
+              {event.city} on {event.date} has ended. The next dates are on sale now.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild size="lg" className="font-poppins font-semibold">
+                <a href="/#tickets">See upcoming events</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="font-poppins font-semibold">
+                <a href={hubPath}>More {event.city} dates</a>
+              </Button>
+            </div>
+          </main>
+          <Footer />
+        </div>
+      </>
     );
   }
 
