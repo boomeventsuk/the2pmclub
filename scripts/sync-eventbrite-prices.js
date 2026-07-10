@@ -201,11 +201,15 @@ function extractPriceData(ticketClasses, eventDate, location) {
     statusLabel = 'Final release';
     schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (tiers.some(t => /early/i.test(t.name) && t.status === 'SOLD_OUT') && anyAvailable) {
-    // Early tier gone, later tiers live. JD 2026-06-15: never say "sold out"
-    // on an available event (reads as "can't go"). An early tier selling out
-    // IS momentum, so say so positively.
-    statusLabel = 'Selling fast';
-    schemaAvailability = 'https://schema.org/LimitedAvailability';
+    // Do not turn a deliberately small early tier into false whole-event
+    // scarcity. Use real sell-through before claiming the event is moving fast.
+    if (percentSold >= 15) {
+      statusLabel = 'Selling fast';
+      schemaAvailability = 'https://schema.org/LimitedAvailability';
+    } else {
+      statusLabel = 'General release now open';
+      schemaAvailability = 'https://schema.org/InStock';
+    }
   } else if (isEventWeek) {
     // Event week, plenty of stock: generic urgency
     statusLabel = 'Final tickets';
@@ -372,10 +376,16 @@ async function main() {
         // In count mode or sold out, the sync owns the hero urgency banner
         // too: it must never disagree with the badge (JD caught "LAST 15
         // TICKETS" surviving while the badge said 10).
+        const earlyTierSoldOut = (priceData.internal.tiers || []).some(
+          t => /early/i.test(t.name) && t.status === 'SOLD_OUT'
+        );
         if (priceData.public.statusLabel.startsWith('Final release:') ||
             priceData.public.statusLabel === 'Last few tickets' ||
-            priceData.public.statusLabel === 'Join waiting list') {
-          event.urgencyLabel = priceData.public.statusLabel;
+            priceData.public.statusLabel === 'Join waiting list' ||
+            earlyTierSoldOut) {
+          event.urgencyLabel = earlyTierSoldOut
+            ? priceData.public.statusLabel.toUpperCase()
+            : priceData.public.statusLabel;
         }
         if (priceData.public.groupTicket) {
           event.groupTicket = priceData.public.groupTicket;
