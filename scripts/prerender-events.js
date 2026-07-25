@@ -280,6 +280,69 @@ function jsonLdFor(ev) {
   };
 }
 
+// Full event content as plain HTML inside <noscript>, mirroring the homepage
+// edge function's approach. The React hero inside #root is wiped on hydration,
+// so without this the only text a JS-free crawler ever sees is the ~50-word
+// shell. GPTBot, ClaudeBot, PerplexityBot and CCBot do not execute JS, so the
+// money pages were effectively empty to exactly the agents we publish llms.txt
+// for. Feed-driven only: never hand-author event copy here.
+function buildEventNoscript(ev) {
+  const { venue, city } = parseLocation(ev.location);
+  const date = formatDate(ev.start);
+  const price = cleanPrice(ev.priceLabel);
+  const group = ev.groupTicket && ev.groupTicket.label ? plain(ev.groupTicket.label) : "";
+
+  const paras = plain(ev.fullDescription || ev.description || "")
+    .split(/\n{2,}|\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map((p) => `      <p>${esc(p)}</p>`)
+    .join("\n");
+
+  const highlights = String(ev.highlights || "")
+    .split("|")
+    .map((h) => plain(h).trim())
+    .filter(Boolean)
+    .map((h) => `        <li>${esc(h)}</li>`)
+    .join("\n");
+
+  const addr = ev.venueAddress || {};
+  const addrLine = [addr.streetAddress, addr.addressLocality, addr.postalCode]
+    .filter(Boolean)
+    .join(", ");
+
+  const facts = [
+    `        <li><strong>What:</strong> ${esc(plain(displayTitle(ev)))}</li>`,
+    `        <li><strong>When:</strong> ${esc(date)}, 2pm to 6pm</li>`,
+    `        <li><strong>Where:</strong> ${esc([venue, addrLine || city].filter(Boolean).join(", "))}</li>`,
+    price ? `        <li><strong>Tickets:</strong> ${esc(price)}</li>` : "",
+    group ? `        <li><strong>Group tickets:</strong> ${esc(group)}</li>` : "",
+    `        <li><strong>Age:</strong> 25+ (photo ID may be required)</li>`,
+    `        <li><strong>Status:</strong> ${esc(plain(ev.statusLabel || "On sale"))}</li>`,
+  ].filter(Boolean).join("\n");
+
+  return `
+  <noscript>
+    <article>
+      <h1>${esc(plain(displayTitle(ev)))}</h1>
+      <p>${esc(plain(ev.subtitle || ev.description || ""))}</p>
+      <h2>Event details</h2>
+      <ul>
+${facts}
+      </ul>
+      <h2>About this event</h2>
+${paras}
+${highlights ? `      <h2>What to expect</h2>\n      <ul>\n${highlights}\n      </ul>` : ""}
+      <h2>Book tickets</h2>
+      <p><a href="${esc(`${SITE}/events/${slugPath(ev.slug)}/`)}">Book tickets for ${esc(plain(displayTitle(ev)))} on ${esc(date)}</a></p>
+      <h2>About THE 2PM CLUB</h2>
+      <p>THE 2PM CLUB is the Midlands' original daytime disco, run by Boombastic Events Ltd. Four hours of anthems every Saturday afternoon, 2pm to 6pm. Night-out energy in the afternoon. Home by 7.</p>
+      <p>Cities: Northampton, Bedford, Milton Keynes, Coventry, Luton, Leicester.</p>
+      <p>Contact: hello@boomevents.co.uk</p>
+    </article>
+  </noscript>`;
+}
+
 function mustReplace(html, from, to, slug) {
   if (!html.includes(from)) {
     throw new Error(`Template anchor missing for ${slug}: ${from.slice(0, 70)}`);
@@ -370,7 +433,7 @@ for (const ev of upcoming) {
   // Visible above-fold hero inside #root (replaced cleanly on hydration) so
   // ad clickers on slow mobile connections see the event immediately instead
   // of a blank dark page while the JS bundle and events.json load.
-  html = mustReplace(html, '<div id="root"></div>', `<div id="root">${shellHeroHtml(ev)}</div>`, ev.slug);
+  html = mustReplace(html, '<div id="root"></div>', `<div id="root">${shellHeroHtml(ev)}</div>${buildEventNoscript(ev)}`, ev.slug);
 
   const dir = path.join(DIST, "events", slugPath(ev.slug));
   fs.mkdirSync(dir, { recursive: true });

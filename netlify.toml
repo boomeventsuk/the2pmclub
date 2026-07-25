@@ -20,6 +20,11 @@
     Link = "</.well-known/api-catalog>; rel=\"api-catalog\", </llms.txt>; rel=\"alternate\"; type=\"text/markdown\", </openapi.json>; rel=\"service-desc\"; type=\"application/vnd.oai.openapi+json\""
 
 [[headers]]
+  for = "/auth.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=UTF-8"
+
+[[headers]]
   for = "/.well-known/api-catalog"
   [headers.values]
     Content-Type = "application/linkset+json"
