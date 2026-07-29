@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:32.160Z",
+    "priceLastSync": "2026-07-29T17:01:29.590Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:32.805Z",
+    "priceLastSync": "2026-07-29T17:01:30.741Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:33.438Z",
+    "priceLastSync": "2026-07-29T17:01:31.394Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:34.052Z",
+    "priceLastSync": "2026-07-29T17:01:32.108Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:34.699Z",
+    "priceLastSync": "2026-07-29T17:01:32.760Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:35.340Z",
+    "priceLastSync": "2026-07-29T17:01:33.386Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:35.988Z",
+    "priceLastSync": "2026-07-29T17:01:34.018Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:36.622Z",
+    "priceLastSync": "2026-07-29T17:01:34.660Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -266,7 +266,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:37.293Z",
+    "priceLastSync": "2026-07-29T17:01:36.201Z",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -298,7 +298,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:37.923Z",
+    "priceLastSync": "2026-07-29T17:01:36.830Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -329,7 +329,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-07-29T12:01:38.526Z",
+    "priceLastSync": "2026-07-29T17:01:37.449Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -366,7 +366,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-07-29T12:01:39.113Z",
+    "priceLastSync": "2026-07-29T17:01:38.119Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -405,7 +405,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-07-29T12:01:39.731Z",
+    "priceLastSync": "2026-07-29T17:01:39.842Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -493,7 +493,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-07-29T12:01:40.915Z",
+    "priceLastSync": "2026-07-29T17:01:45.855Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -574,7 +574,7 @@
     "highlights": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧|🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.|🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.|🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.|🕑 Party Early, Home Happy, done by 6 PM, Sunday still yours.|👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.",
     "status": "just-announced",
     "urgencyLabel": "JUST ANNOUNCED",
-    "price": 11.0,
+    "price": 11,
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/PreOrder",
@@ -585,11 +585,7 @@
       "postalCode": "LE2 7TR",
       "addressCountry": "GB"
     },
-    "groupTicket": {
-      "size": 4,
-      "price": 46.0,
-      "label": "Group of 4 for £46"
-    }
+    "priceLastSync": "2026-07-29T17:01:51.887Z"
   },
   {
     "id": 125,
@@ -612,7 +608,7 @@
     "highlights": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧|🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.|🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.|🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.|🕑 Party Early, Home Happy, done by 5:30 PM, Sunday still yours.|👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.",
     "status": "just-announced",
     "urgencyLabel": "JUST ANNOUNCED",
-    "price": 11.0,
+    "price": 11,
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/PreOrder",
@@ -623,11 +619,7 @@
       "postalCode": "NN1 4BN",
       "addressCountry": "GB"
     },
-    "groupTicket": {
-      "size": 4,
-      "price": 46.0,
-      "label": "Group of 4 for £46"
-    }
+    "priceLastSync": "2026-07-29T17:01:52.565Z"
   },
   {
     "id": 126,
@@ -650,7 +642,7 @@
     "highlights": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧|🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.|🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.|🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.|🕑 Party Early, Home Happy, done by 5:30 PM, Sunday still yours.|👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.",
     "status": "just-announced",
     "urgencyLabel": "JUST ANNOUNCED",
-    "price": 11.0,
+    "price": 11,
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/PreOrder",
@@ -661,11 +653,7 @@
       "postalCode": "NN1 4BN",
       "addressCountry": "GB"
     },
-    "groupTicket": {
-      "size": 4,
-      "price": 46.0,
-      "label": "Group of 4 for £46"
-    }
+    "priceLastSync": "2026-07-29T17:01:53.187Z"
   },
   {
     "id": 127,
@@ -688,7 +676,7 @@
     "highlights": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧|🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.|🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.|🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.|🕑 Party Early, Home Happy, done by 6 PM, Sunday still yours.|👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.",
     "status": "just-announced",
     "urgencyLabel": "JUST ANNOUNCED",
-    "price": 11.0,
+    "price": 11,
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/PreOrder",
@@ -699,11 +687,7 @@
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
     },
-    "groupTicket": {
-      "size": 4,
-      "price": 46.0,
-      "label": "Group of 4 for £46"
-    }
+    "priceLastSync": "2026-07-29T17:01:53.821Z"
   },
   {
     "id": 128,
@@ -726,7 +710,7 @@
     "highlights": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧|🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.|🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.|🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.|🕑 Party Early, Home Happy, done by 6 PM, Sunday still yours.|👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.",
     "status": "just-announced",
     "urgencyLabel": "JUST ANNOUNCED",
-    "price": 10.0,
+    "price": 10,
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/PreOrder",
@@ -737,10 +721,6 @@
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
     },
-    "groupTicket": {
-      "size": 4,
-      "price": 42.0,
-      "label": "Group of 4 for £42"
-    }
+    "priceLastSync": "2026-07-29T17:01:54.507Z"
   }
 ]
