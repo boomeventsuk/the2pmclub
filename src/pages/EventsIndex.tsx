@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { christmasSaleBadgeLabel } from "@/lib/christmasSale";
 
 interface EventJson {
   slug: string;
@@ -62,6 +63,7 @@ export default function EventsIndex() {
               {events.map((ev) => {
                 const city = ev.location.split(", ").pop() || "";
                 const isSoldOut = ev.status === "sold-out";
+                const saleLabel = christmasSaleBadgeLabel(ev.slug, ev.statusLabel, isSoldOut);
                 return (
                   <a
                     key={ev.slug}
@@ -88,7 +90,9 @@ export default function EventsIndex() {
                       {isSoldOut ? (
                         <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-muted text-muted-foreground">Join waitlist</span>
                       ) : (
-                        <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary text-primary-foreground">Book now</span>
+                        <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary text-primary-foreground">
+                          {saleLabel === "ON SALE FRI" ? saleLabel : "Book now"}
+                        </span>
                       )}
                     </div>
                   </a>

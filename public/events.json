@@ -556,6 +556,8 @@
   {
     "id": 124,
     "slug": "281126-2PM-LEIC",
+    "saleStartsAt": "2026-07-31T11:00:00Z",
+    "launchLabelUntil": "2026-08-02T23:00:00Z",
     "eventType": "2PM",
     "cityCode": "LEIC",
     "eventbriteId": "1995469651444",
@@ -576,7 +578,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/PreOrder",
-    "statusLabel": "Just announced",
+    "statusLabel": "Tickets on sale Friday at 12 noon",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -592,6 +594,8 @@
   {
     "id": 125,
     "slug": "051226-2PM-NPTON",
+    "saleStartsAt": "2026-07-31T11:00:00Z",
+    "launchLabelUntil": "2026-08-02T23:00:00Z",
     "eventType": "2PM",
     "cityCode": "NPTON",
     "eventbriteId": "1995469647432",
@@ -612,7 +616,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/PreOrder",
-    "statusLabel": "Just announced",
+    "statusLabel": "Tickets on sale Friday at 12 noon",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -628,6 +632,8 @@
   {
     "id": 126,
     "slug": "121226-2PM-NPTON",
+    "saleStartsAt": "2026-07-31T11:00:00Z",
+    "launchLabelUntil": "2026-08-02T23:00:00Z",
     "eventType": "2PM",
     "cityCode": "NPTON",
     "eventbriteId": "1995469668495",
@@ -648,7 +654,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/PreOrder",
-    "statusLabel": "Just announced",
+    "statusLabel": "Tickets on sale Friday at 12 noon",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -664,6 +670,8 @@
   {
     "id": 127,
     "slug": "191226-2PM-COV",
+    "saleStartsAt": "2026-07-31T11:00:00Z",
+    "launchLabelUntil": "2026-08-02T23:00:00Z",
     "eventType": "2PM",
     "cityCode": "COV",
     "eventbriteId": "1995469674513",
@@ -684,7 +692,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £11.00",
     "availability": "https://schema.org/PreOrder",
-    "statusLabel": "Just announced",
+    "statusLabel": "Tickets on sale Friday at 12 noon",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -700,6 +708,8 @@
   {
     "id": 128,
     "slug": "191226-2PM-BED",
+    "saleStartsAt": "2026-07-31T11:00:00Z",
+    "launchLabelUntil": "2026-08-02T23:00:00Z",
     "eventType": "2PM",
     "cityCode": "BED",
     "eventbriteId": "1995469677522",
@@ -720,7 +730,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/PreOrder",
-    "statusLabel": "Just announced",
+    "statusLabel": "Tickets on sale Friday at 12 noon",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",

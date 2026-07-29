@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  CHRISTMAS_2026_SALE_START,
+  christmasSaleBadgeLabel,
+} from "@/lib/christmasSale";
 
 const Header = () => {
   const [locationsOpen, setLocationsOpen] = useState(false);
+  const [saleClock, setSaleClock] = useState(Date.now());
+  const eventCode = typeof window !== 'undefined' && window.location.pathname.startsWith('/events/')
+    ? window.location.pathname.split('/')[2]?.toUpperCase()
+    : undefined;
+  const isChristmasPreSale = christmasSaleBadgeLabel(eventCode, undefined, false, saleClock) === 'ON SALE FRI';
+
+  useEffect(() => {
+    const delay = CHRISTMAS_2026_SALE_START - Date.now();
+    if (delay <= 0) return;
+    const timer = window.setTimeout(() => setSaleClock(Date.now()), delay + 100);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const toggleMobileMenu = () => {
     document.body.classList.toggle('nav-open');
@@ -89,7 +105,7 @@ const Header = () => {
           <div className="header-actions">
             <a href="/#tickets" onClick={handleBookClick}>
               <Button size="sm" className="font-poppins font-semibold">
-                Book Tickets
+                {isChristmasPreSale ? 'ON SALE FRI' : 'Book Tickets'}
               </Button>
             </a>
           </div>

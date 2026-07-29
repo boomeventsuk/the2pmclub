@@ -2116,7 +2116,7 @@ const EventPage = () => {
                   </Accordion>
                   
                   <p className="text-sm text-muted-foreground mt-6">
-                    This event is 18+ recommended unless stated otherwise.
+                    Entry is 18+.
                   </p>
                   
                   <div className="mt-4">

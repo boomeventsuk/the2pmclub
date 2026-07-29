@@ -20,6 +20,10 @@ import {
   soundtrackLineForEvent,
   whyBodyForEvent,
 } from '@/lib/eventEdition';
+import {
+  CHRISTMAS_2026_SALE_START,
+  christmasSalePageLabel,
+} from '@/lib/christmasSale';
 
 // Hero reel URLs on Bunny CDN.
 // Per-city cuts live at hero-1x1-{cityCode}.mp4 (NPTON, BED, COV, MK, LUT, LEIC).
@@ -52,6 +56,7 @@ interface EventJson {
   infoUrl: string;
   image: string;
   description: string;
+  fullDescription?: string;
   status?: string;
   statusLabel?: string;
   urgencyLabel?: string;
@@ -75,6 +80,7 @@ interface EventData {
   title: string;
   timeDisplay: string;
   startIso: string;
+  fullDescription?: string;
   status?: string;
   statusLabel?: string;
   urgencyLabel?: string;
@@ -115,13 +121,14 @@ const toEventData = (event: EventJson): EventData => {
   const { venue, city } = parseLocation(event.location);
   const startTime = new Date(event.start);
   const endTime = new Date(event.end);
-  const startHour = startTime.getHours();
-  const endHour = endTime.getHours();
-  const startAmPm = startHour >= 12 ? 'pm' : 'am';
-  const endAmPm = endHour >= 12 ? 'pm' : 'am';
-  const start12 = startHour > 12 ? startHour - 12 : startHour === 0 ? 12 : startHour;
-  const end12 = endHour > 12 ? endHour - 12 : endHour === 0 ? 12 : endHour;
-  const timeDisplay = `${start12}${startAmPm}–${end12}${endAmPm}`;
+  const formatTime = (date: Date) => {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const hour12 = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
+    const minuteLabel = minutes ? `:${minutes.toString().padStart(2, '0')}` : '';
+    return `${hour12}${minuteLabel}${hours >= 12 ? 'pm' : 'am'}`;
+  };
+  const timeDisplay = `${formatTime(startTime)}–${formatTime(endTime)}`;
   return {
     slug: event.slug,
     cityCode: event.cityCode,
@@ -135,8 +142,13 @@ const toEventData = (event: EventJson): EventData => {
     title: event.title,
     timeDisplay,
     startIso: event.start,
+    fullDescription: event.fullDescription,
     status: event.status,
-    statusLabel: event.statusLabel,
+    statusLabel: christmasSalePageLabel(
+      event.slug,
+      event.statusLabel,
+      event.status === 'sold-out',
+    ),
     urgencyLabel: event.urgencyLabel,
     price: event.price,
     legacyLine: event.legacyLine,
@@ -358,6 +370,24 @@ const EventPageV2 = () => {
     });
     return () => { cancelled = true; };
   }, [slug]);
+
+  useEffect(() => {
+    const delay = CHRISTMAS_2026_SALE_START - Date.now();
+    if (delay <= 0) return;
+    const timer = window.setTimeout(() => {
+      setEvent(current => current
+        ? {
+            ...current,
+            statusLabel: christmasSalePageLabel(
+              current.slug,
+              current.statusLabel,
+              current.status === 'sold-out',
+            ),
+          }
+        : current);
+    }, delay + 100);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   // Group variant render marker. Fires only when group mode actually renders
   // (param present AND groupTicket live AND not sold out), so dataLayer
@@ -617,27 +647,35 @@ const EventPageV2 = () => {
     { q: "What music will be played?",
       a: musicFaqForEvent(event) },
     { q: "Why do you start at 2pm?",
-      a: "Because the best part of any night out happens early. Doors at 2, finish by 6. You get the night out, you keep your evening, you keep your Sunday." },
+      a: "Because the best part of any night out happens early. You get the full party, keep your evening and keep your Sunday." },
     { q: "Do you offer group tickets?",
       a: "Yes. Groups of four are the sweet spot. The group ticket gets you a better price per head. Get the chat sorted, book together." },
-    { q: "What's the crowd like?",
-      a: "Mostly 30s and 40s. People who know every word and aren't pretending otherwise. Friends, couples, work crews. No bottle service nonsense." },
+    { q: "Is the event 18+?",
+      a: "Entry is 18+." },
     { q: "What should I wear?",
       a: "Whatever you'd wear to a proper night out. Most people dress up. It's an excuse to." },
     { q: "What time do doors open and when does it finish?",
-      a: `Doors at 2pm. Finish at 6pm. You're home by 7-ish.` },
+      a: `The event runs ${event.timeDisplay}. The full date and venue details are shown above.` },
   ];
 
   const isLastTickets = event.status === 'last-tickets';
   const isSoldOut = event.status === 'sold-out';
+  const isPreSale = /tickets on sale friday/i.test(event.statusLabel || '');
+  const isChristmasEdition = /christmas/i.test(event.title);
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
-  const eventMusicLine = musicLineForEvent(event);
+  const eventMusicLine = isChristmasEdition
+    ? 'Christmas floor-fillers plus Sing Out Loud Anthems from the 80s, 90s and 00s.'
+    : musicLineForEvent(event);
   const eventSubline = eventSublineForEvent(event);
   const eventSoundtrackLine = soundtrackLineForEvent(event);
-  const eventTitle = event.isEightiesEdition
+  const eventTitle = isChristmasEdition
+    ? `The 2PM Club Christmas Edition - ${event.city} - ${event.date}`
+    : event.isEightiesEdition
     ? `The 2PM Club 80s Edition - ${event.city} - ${event.date}`
     : `The 2PM Club - ${event.city} - ${event.date}`;
-  const eventMetaDescription = event.isEightiesEdition
+  const eventMetaDescription = isChristmasEdition
+    ? `THE 2PM CLUB Christmas Daytime Disco in ${event.city} on ${event.date}. Christmas floor-fillers and Sing Out Loud Anthems from the 80s, 90s and 00s.`
+    : event.isEightiesEdition
     ? `THE 2PM CLUB 80s Edition. ${event.city}, ${event.date}. Iconic 80s anthems. Sing your heart out. Home by 7.`
     : `THE 2PM CLUB Daytime Disco. ${event.city}, ${event.date}. ${eventMusicLine} Sing your heart out. Home by 7.`;
 
@@ -770,7 +808,13 @@ const EventPageV2 = () => {
                     <h1 className="font-poppins text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight uppercase leading-tight">
                       The 2PM Club
                       <br />
-                      <span className="text-foreground/90">{event.isEightiesEdition ? '80s Edition Daytime Disco' : 'Daytime Disco'}</span>
+                      <span className="text-foreground/90">
+                        {isChristmasEdition
+                          ? 'Christmas Edition Daytime Disco'
+                          : event.isEightiesEdition
+                            ? '80s Edition Daytime Disco'
+                            : 'Daytime Disco'}
+                      </span>
                       <br />
                       <span className="text-primary">{event.city}</span>
                     </h1>
@@ -845,7 +889,7 @@ const EventPageV2 = () => {
                     size="lg"
                     className="w-full font-poppins font-semibold text-lg"
                   >
-                    {isSoldOut ? 'Join Waiting List' : groupMode ? 'Book for the Group' : 'Book Tickets'}
+                    {isSoldOut ? 'Join Waiting List' : isPreSale ? 'Event Details' : groupMode ? 'Book for the Group' : 'Book Tickets'}
                   </Button>
 
                   {/* WhatsApp share sits directly under the CTA. Group view
@@ -893,6 +937,58 @@ const EventPageV2 = () => {
           </div>
         </section>
 
+        {isChristmasEdition && event.fullDescription && (
+          <section className="py-8 md:py-12">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto rounded-2xl border border-primary/25 bg-primary/5 p-6 md:p-10">
+                <p className="font-poppins text-sm md:text-base font-bold uppercase tracking-[0.18em] text-primary mb-3">
+                  Christmas Edition
+                </p>
+                <h2 className="font-poppins text-2xl md:text-4xl font-bold text-foreground mb-3">
+                  The Christmas party your group chat can actually agree on
+                </h2>
+                <p className="font-poppins text-lg md:text-xl font-semibold text-primary mb-8">
+                  Your best night out. In the middle of the afternoon.
+                </p>
+                <div className="space-y-5 font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                  {event.fullDescription
+                    .split('\n\n')
+                    .map(paragraph => paragraph.trim())
+                    .filter(Boolean)
+                    .slice(3)
+                    .map((paragraph, index) => {
+                      if (/^WHY YOUR CREW WILL LOVE IT$/i.test(paragraph)) {
+                        return (
+                          <h3 key={paragraph} className="font-poppins text-2xl font-bold text-foreground pt-4">
+                            Why your crew will love it
+                          </h3>
+                        );
+                      }
+
+                      if (/^(🎄|🎤|🥂|🕑|👯‍♀️|🎉)/u.test(paragraph)) {
+                        return (
+                          <div key={`${paragraph}-${index}`} className="rounded-xl border border-primary/20 bg-background/50 px-4 py-3">
+                            {paragraph}
+                          </div>
+                        );
+                      }
+
+                      if (paragraph.startsWith('"')) {
+                        return (
+                          <blockquote key={paragraph} className="border-l-4 border-primary pl-5 py-2 text-xl italic text-foreground/90">
+                            {paragraph}
+                          </blockquote>
+                        );
+                      }
+
+                      return <p key={`${paragraph}-${index}`}>{paragraph}</p>;
+                    })}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* PHOTO STRIP: auto-scrolling existing imagery */}
         <section className="py-6 md:py-8 overflow-hidden">
           <div className="relative">
@@ -939,11 +1035,13 @@ const EventPageV2 = () => {
               <div className="bg-primary/10 border border-primary/30 rounded-2xl p-5 md:p-7">
                 <div className="text-center mb-5">
                   <h2 className="font-poppins text-xl md:text-2xl font-bold tracking-tight mb-1 text-foreground uppercase">
-                    {isSoldOut ? 'Sold Out' : isLastTickets ? (event.urgencyLabel || 'Last Tickets') : groupMode ? 'Book the Group In' : 'Book Your Tickets'}
+                    {isSoldOut ? 'Sold Out' : isPreSale ? 'Tickets on sale Friday at 12 noon' : isLastTickets ? (event.urgencyLabel || 'Last Tickets') : groupMode ? 'Book the Group In' : 'Book Your Tickets'}
                   </h2>
                   <p className="font-poppins text-sm md:text-base text-foreground/70">
                     {isSoldOut
                       ? 'This event is sold out. Join the waiting list and we will contact you if tickets become available.'
+                      : isPreSale
+                        ? 'Tickets will be available from 12 noon on Friday.'
                       : `${event.date}, ${event.venue}, ${event.city}. Pick your tickets.`}
                   </p>
                 </div>
@@ -1020,7 +1118,7 @@ const EventPageV2 = () => {
                           aria-label={`Load Eventbrite checkout for ${event.title}`}
                         >
                           <Ticket className="w-5 h-5 mr-2" />
-                          Book Tickets Here
+                          {isPreSale ? 'View Ticket Details' : 'Book Tickets Here'}
                         </Button>
                         <p className="font-poppins text-xs text-foreground/60 mt-3">
                           Secure checkout powered by Eventbrite.
@@ -1082,7 +1180,7 @@ const EventPageV2 = () => {
                   ))}
                 </Accordion>
                 <p className="text-sm text-muted-foreground mt-6">
-                  This event is 18+ recommended unless stated otherwise.
+                  Entry is 18+.
                 </p>
                 <div className="mt-4">
                   <Button asChild variant="outline">

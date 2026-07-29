@@ -72,6 +72,16 @@ function fmtPounds(value) {
   return Number.isInteger(value) ? `£${value}` : `£${value.toFixed(2)}`;
 }
 
+function launchStatusLabel(event, computedLabel, isSoldOut, now = Date.now()) {
+  if (isSoldOut) return computedLabel;
+  const saleStartsAt = Date.parse(event.saleStartsAt || '');
+  if (!Number.isFinite(saleStartsAt)) return computedLabel;
+  const launchLabelUntil = Date.parse(event.launchLabelUntil || '');
+  if (now < saleStartsAt) return 'Tickets on sale Friday at 12 noon';
+  if (Number.isFinite(launchLabelUntil) && now < launchLabelUntil) return 'Tickets on sale now';
+  return computedLabel;
+}
+
 function extractPriceData(ticketClasses, eventDate, location) {
   if (!ticketClasses || ticketClasses.length === 0) return null;
 
@@ -368,6 +378,11 @@ async function main() {
         } else {
           event.statusLabel = priceData.public.statusLabel;
         }
+        event.statusLabel = launchStatusLabel(
+          event,
+          event.statusLabel,
+          priceData.public.availability === 'https://schema.org/SoldOut',
+        );
         if (priceData.public.tierLabels) {
           event.tierLabels = priceData.public.tierLabels;
         } else {

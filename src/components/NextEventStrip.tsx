@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { christmasSaleBadgeLabel } from "@/lib/christmasSale";
 
 interface EventJson {
   slug: string;
@@ -53,7 +54,7 @@ const NextEventStrip = () => {
             date: formatShort(upcoming.start),
             slug: upcoming.slug,
             priceLabel: upcoming.priceLabel,
-            statusLabel: upcoming.statusLabel,
+            statusLabel: christmasSaleBadgeLabel(upcoming.slug, upcoming.statusLabel, false),
           });
         }
       })
@@ -83,7 +84,7 @@ const NextEventStrip = () => {
         </span>
       )}
       <span className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground font-poppins font-semibold uppercase tracking-wide text-xs md:text-sm rounded-full px-4 py-2">
-        Book Now <ArrowRight className="w-3.5 h-3.5" />
+        {next.statusLabel === 'ON SALE FRI' ? 'Event Details' : 'Book Now'} <ArrowRight className="w-3.5 h-3.5" />
       </span>
     </a>
   );

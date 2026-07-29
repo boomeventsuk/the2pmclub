@@ -116,9 +116,15 @@ function shellHeroHtml(ev) {
   const soldOut = ev.status === "sold-out";
   const price = cleanPrice(ev.priceLabel);
   const badge = !soldOut && ev.statusLabel ? plain(ev.statusLabel) : "";
+  const isChristmas = /christmas/i.test(`${ev.title || ""} ${ev.subtitle || ""}`);
+  const isPreSale = /tickets on sale friday/i.test(ev.statusLabel || "");
   const group = ev.groupTicket && ev.groupTicket.label ? plain(ev.groupTicket.label) : "";
   const subline = plain(ev.heroSubtitle || ev.subtitle || "");
-  const line2 = eighties ? "80s Edition Daytime Disco" : "Daytime Disco";
+  const line2 = isChristmas
+    ? "Christmas Edition Daytime Disco"
+    : eighties
+      ? "80s Edition Daytime Disco"
+      : "Daytime Disco";
   const img = esc(ev.image || "");
 
   const fontStack = "Poppins,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif";
@@ -148,7 +154,7 @@ function shellHeroHtml(ev) {
     price ? factRow(`<span style="font-weight:600;">Tickets ${esc(price.replace(/^From\s+/i, "from "))}</span>`) : "",
     group ? factRow(esc(group)) : "",
     `</div>`,
-    `<a href="#checkout-section" style="display:inline-block;margin-top:24px;background:#FF3CAC;color:#fff;font-weight:700;padding:14px 34px;border-radius:999px;text-decoration:none;font-size:1.05rem;">${soldOut ? "Join Waiting List" : "Book Tickets"}</a>`,
+    `<a href="#checkout-section" style="display:inline-block;margin-top:24px;background:#FF3CAC;color:#fff;font-weight:700;padding:14px 34px;border-radius:999px;text-decoration:none;font-size:1.05rem;">${soldOut ? "Join Waiting List" : isPreSale ? "Event Details" : "Book Tickets"}</a>`,
     `</div>`,
 
     `</div>`,
@@ -375,6 +381,7 @@ function sanitisedEvent(ev) {
     groupTicket: ev.groupTicket,
     subtitle: ev.subtitle,
     description: ev.description,
+    fullDescription: ev.fullDescription,
   };
   // Drop undefined keys so the inlined object stays lean and mirrors the feed.
   Object.keys(out).forEach((k) => out[k] === undefined && delete out[k]);

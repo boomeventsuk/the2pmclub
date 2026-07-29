@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Clock, Ticket, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  CHRISTMAS_2026_SALE_START,
+  christmasSaleBadgeLabel,
+} from "@/lib/christmasSale";
 import { trackEventPageView } from "@/lib/dataLayer";
 
 // Bunny Optimizer params for CDN-hosted images (shared with EventPageV2)
@@ -33,6 +38,16 @@ interface EventCardProps {
 
 const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, venue, city, time, poster, bookUrl, infoUrl, dateIso, start, soldOut, urgencyText, urgencyColor, priceLabel, tierLabels, groupTicket }: EventCardProps) => {
   const navigate = useNavigate();
+  const [saleClock, setSaleClock] = useState(Date.now());
+
+  useEffect(() => {
+    const delay = CHRISTMAS_2026_SALE_START - Date.now();
+    if (delay <= 0) return;
+    const timer = window.setTimeout(() => setSaleClock(Date.now()), delay + 100);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const displayUrgency = christmasSaleBadgeLabel(slug, urgencyText, soldOut, saleClock);
 
   const goToEventPage = (source: string) => {
     // Card clicks are interest, not checkout intent: fire ViewContent only.
@@ -85,12 +100,12 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
       </button>
 
       <div className="meta">
-        {urgencyText && (
+        {displayUrgency && (
           <div className={`urgency-strip ${
             urgencyColor === 'green' ? 'urgency-strip-green' :
             urgencyColor === 'amber' ? 'urgency-strip-amber' : ''
           }`}>
-            <span>{urgencyText}</span>
+            <span>{displayUrgency}</span>
           </div>
         )}
         <h3 className="font-poppins text-2xl font-bold text-foreground mb-3 leading-tight">
@@ -151,7 +166,7 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 btn"
           data-event-slug={slug}
         >
-          {soldOut ? 'Join Waiting List' : 'Book Now'}
+          {soldOut ? 'Join Waiting List' : displayUrgency === 'ON SALE FRI' ? 'Event Details' : 'Book Now'}
         </Button>
       </div>
     </article>

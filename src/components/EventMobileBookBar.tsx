@@ -51,6 +51,7 @@ const EventMobileBookBar = ({ shortDate, venue, statusLabel, isSoldOut, ctaLabel
   }, []);
 
   const visible = pastHero && consentResolved && !checkoutInView;
+  const isPreSale = /tickets on sale friday/i.test(statusLabel || "");
 
   return (
     <div
@@ -77,7 +78,7 @@ const EventMobileBookBar = ({ shortDate, venue, statusLabel, isSoldOut, ctaLabel
           onClick={onBook}
           className="rounded-full font-poppins font-semibold uppercase tracking-wide text-xs px-4 shrink-0 shadow-[0_6px_20px_hsl(328_100%_54%_/_0.45)]"
         >
-          {isSoldOut ? "Join Waiting List" : ctaLabel}
+          {isSoldOut ? "Join Waiting List" : isPreSale ? "ON SALE FRI" : ctaLabel}
         </Button>
       </div>
     </div>

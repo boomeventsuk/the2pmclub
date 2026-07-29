@@ -15,7 +15,7 @@ export default function SiteFaqs() {
       "@type":"FAQPage",
       "mainEntity":[
         {"@type":"Question","name":"What time do events run?","acceptedAnswer":{"@type":"Answer","text":"Most events run 14:00–18:00. If a different finish time applies, it is shown on the event page."}},
-        {"@type":"Question","name":"Who are the events for?","acceptedAnswer":{"@type":"Answer","text":"Adults. Age guidance is 18+ recommended unless stated otherwise on the event page."}},
+        {"@type":"Question","name":"Who are the events for?","acceptedAnswer":{"@type":"Answer","text":"Entry is 18+."}},
         {"@type":"Question","name":"What's the dress code?","acceptedAnswer":{"@type":"Answer","text":"Smart-casual; comfortable footwear encouraged."}},
         {"@type":"Question","name":"How much are tickets?","acceptedAnswer":{"@type":"Answer","text":"Tickets usually start from £10. Typical range £10–£15, with Eventbrite fees added at checkout."}},
         {"@type":"Question","name":"Are tickets refundable or transferable?","acceptedAnswer":{"@type":"Answer","text":"Tickets are non-refundable unless an event is cancelled. See the Eventbrite listing for transfer options."}},
