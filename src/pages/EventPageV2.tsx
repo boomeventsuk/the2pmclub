@@ -32,6 +32,7 @@ import {
 const HERO_REEL_BASE = 'https://boombastic-events.b-cdn.net/web%20hero';
 const HERO_REEL_MASTER = `${HERO_REEL_BASE}/hero-1x1.mp4`;
 const cityReelUrl = (cityCode: string) => `${HERO_REEL_BASE}/hero-1x1-${cityCode}.mp4`;
+const CHRISTMAS_HERO_REEL = `${HERO_REEL_BASE}/2pm-christmas-2026.mp4`;
 
 // Hero poster delivery. Sharp poster as WebP (~120KB vs ~180KB JPEG); a tiny
 // ~5KB blurred version shows instantly behind it so the hero is NEVER a black
@@ -339,8 +340,16 @@ const EventPageV2 = () => {
     const applyEvent = (ev: EventData | null) => {
       if (cancelled) return;
       setEvent(ev);
-      // Try city-specific reel first; onError handler will swap to master if 404.
-      setReelSrc(ev?.cityCode ? cityReelUrl(ev.cityCode) : HERO_REEL_MASTER);
+      // Christmas pages share the approved multi-location festive reel. All
+      // other events keep their city-specific reel and existing master fallback.
+      const isChristmas = ev?.title.toLowerCase().includes('christmas') ?? false;
+      setReelSrc(
+        isChristmas
+          ? CHRISTMAS_HERO_REEL
+          : ev?.cityCode
+            ? cityReelUrl(ev.cityCode)
+            : HERO_REEL_MASTER,
+      );
       setLoading(false);
       if (ev) {
         // ViewContent on page view; InitiateCheckout waits for the widget load.
