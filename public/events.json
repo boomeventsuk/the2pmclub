@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:07.841Z",
+    "priceLastSync": "2026-08-14T16:37:31.665Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:08.598Z",
+    "priceLastSync": "2026-08-14T16:37:32.280Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:09.228Z",
+    "priceLastSync": "2026-08-14T16:37:32.867Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:10.079Z",
+    "priceLastSync": "2026-08-14T16:37:33.483Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:10.937Z",
+    "priceLastSync": "2026-08-14T16:37:34.128Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:11.722Z",
+    "priceLastSync": "2026-08-14T16:37:34.737Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:12.474Z",
+    "priceLastSync": "2026-08-14T16:37:35.358Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:13.137Z",
+    "priceLastSync": "2026-08-14T16:37:35.966Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -266,7 +266,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:13.815Z",
+    "priceLastSync": "2026-08-14T16:37:36.587Z",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -298,7 +298,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:14.573Z",
+    "priceLastSync": "2026-08-14T16:37:37.207Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -329,7 +329,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-14T10:58:15.366Z",
+    "priceLastSync": "2026-08-14T16:37:37.806Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -366,7 +366,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £14.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-08-14T10:58:16.029Z",
+    "priceLastSync": "2026-08-14T16:37:38.411Z",
     "statusLabel": "Final release",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -410,7 +410,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-08-14T10:58:16.781Z",
+    "priceLastSync": "2026-08-14T16:37:39.041Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -454,7 +454,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-08-14T10:58:17.416Z",
+    "priceLastSync": "2026-08-14T16:37:39.606Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -498,7 +498,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-08-14T10:58:18.072Z",
+    "priceLastSync": "2026-08-14T16:37:40.240Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -537,13 +537,13 @@
     "fullDescription": "THE 2PM CLUB Daytime Disco is back at Hat Factory on Sat 3rd Oct, 2pm-6pm. This one is different: for one afternoon, every song is 80s.\n\nEXPECT TO HEAR\n\nMadonna, Michael Jackson, Wham!, Whitney Houston, Bon Jovi, Prince, Duran Duran, A-ha, The Human League, Tina Turner, George Michael, Cyndi Lauper, Eurythmics, Culture Club, Tears For Fears and Simple Minds.\n\nThe ones everyone knows. The ones where the room comes in before the chorus has properly started.\n\nHOW IT WORKS\n\nDoors at 2pm. Four hours of 80s anthems back to back, with your people.\n\nHome by 7 if you want to be. Pub, food or sofa after if the afternoon does what it usually does.\n\nWHAT PEOPLE SAY\n\n\"It felt like 2am not 2pm!\"\n\n\"Absolutely fantastic afternoon out. Great music, fab people and a really safe environment\"\n\n\"Great music, great atmosphere everyone was happy and friendly and we still had the evening to carry on!!\"\n\nThat is the point: a proper night-out feeling, just at a time that works.\n\nTHE DETAILS\n\nHat Factory Arts Centre, Luton\nSat 3rd Oct 2026\n2pm-6pm\nOver 18s only\n\nFAQs\n\nIs this different to the normal 2PM Club?\nYes. Same daytime disco format, but this date is 80s-only for one afternoon.\n\nIs it fancy dress?\nCome as dressed-up or dressed-down as you like. The 80s are in the music, not a costume requirement.\n\nWhat time does it finish?\nLast song is 6pm. Plenty of time to go for food, carry on somewhere else, or be home by 7.\n\nWho is it for?\nGrown-ups who want a proper Saturday dance without giving Sunday away.\n\nAre tickets refundable?\nTickets are non-refundable unless the event is cancelled. If an attendee can no longer make it, contact the organiser before the event to update the attendee details.\n\nSend it to the group chat and get it booked.",
     "highlights": "🎤 EXPECT TO HEAR: Madonna, Michael Jackson, Wham!, Whitney Houston, Bon Jovi, Prince, Duran Duran, A-ha, The Human League, Tina Turner, George Michael, Cyndi Lauper, Eurythmics, Culture Club, Tears For Fears and Simple Minds.|🕺 HOW IT WORKS: Doors at 2pm. Four hours of 80s anthems back to back, with your people.|🏠 HOME BY 7 IF YOU WANT TO BE: Pub, food or sofa after if the afternoon does what it usually does.|💬 WHAT PEOPLE SAY: \"It felt like 2am not 2pm!\" A proper night-out feeling, just at a time that works.|🏆 HAT FACTORY: THE 2PM CLUB goes full-on 80s in Luton for one Saturday afternoon.",
     "status": "on-sale",
-    "urgencyLabel": "GENERAL RELEASE NOW OPEN",
+    "urgencyLabel": "SELLING FAST",
     "accentColor": "coral",
     "price": 12,
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
-    "availability": "https://schema.org/InStock",
-    "statusLabel": "General release now open",
+    "availability": "https://schema.org/LimitedAvailability",
+    "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
@@ -551,7 +551,7 @@
       "postalCode": "LU1 2EY",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-14T10:58:18.715Z",
+    "priceLastSync": "2026-08-14T16:37:40.826Z",
     "groupTicket": {
       "size": 4,
       "price": 40,
@@ -590,7 +590,7 @@
       "postalCode": "LE2 7TR",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-14T10:58:19.476Z"
+    "priceLastSync": "2026-08-14T16:37:41.502Z"
   },
   {
     "id": 125,
@@ -624,7 +624,7 @@
       "postalCode": "NN1 4BN",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-14T10:58:20.148Z"
+    "priceLastSync": "2026-08-14T16:37:42.118Z"
   },
   {
     "id": 126,
@@ -646,19 +646,24 @@
     "fullDescription": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧\n\nSat 12th Dec 2026 · 2 PM to 5:30 PM\n\nThe Picturedrome, Northampton\n\nAfter the fastest sell-out in over a decade of Christmas parties, we're back with not one but two daytime discos this festive season. Sat 5th and Sat 12th Dec.\n\nNo more yawning through midnight office do's. From 2 PM sharp we're firing sing-out-loud choruses, neon fairy lights and the festive bangers you've been miming in the car since November.\n\nChristmas hits from the likes of\n\nMARIAH · WHAM! · SLADE · SHAKIN' STEVENS · WIZZARD · EAST 17 and the rest of the gang\n\nAs well as all the biggest Sing Out Loud Anthems from the 80s, 90s & 00s\n\nMADONNA · WHITNEY · TAKE THAT · SPICE GIRLS · ROBIN S · TINA TURNER · CHER · OASIS · BLACK BOX · ABBA · BEYONCÉ · THE KILLERS · CHAKA KHAN · RIHANNA · BON JOVI · YAZZ and many more\n\nThen a few hours later you're on the sofa for Strictly, glowing like Rudolph, voice gone! Secure your tickets early and own the group chat.\n\nWHY YOUR CREW WILL LOVE IT\n\n🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.\n\n🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.\n\n🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.\n\n🕑 Party Early, Home Happy, done by 5:30 PM, Sunday still yours.\n\n👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.\n\n🎉 Proven Sell-Out Energy, Every Christmas Party has sold out in advance in 10+ years!\n\n\"I wasn't expecting much the first time I attended in December but couldn't believe the amazing vibe\" Lorne, Northampton\n\nOur Christmas parties are extremely popular, so we recommend booking early.\n\n🎟 Tickets from £11 adv. Group offers available!\n\n🚨 Book now to dodge festive FOMO",
     "highlights": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧|🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.|🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.|🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.|🕑 Party Early, Home Happy, done by 5:30 PM, Sunday still yours.|👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.",
     "status": "just-announced",
-    "urgencyLabel": "JUST ANNOUNCED",
-    "price": 11,
+    "urgencyLabel": "GENERAL RELEASE NOW OPEN",
+    "price": 13,
     "priceCurrency": "GBP",
-    "priceLabel": "From £11.00",
+    "priceLabel": "From £13.00",
     "availability": "https://schema.org/InStock",
-    "statusLabel": "Just announced",
+    "statusLabel": "General release now open",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
       "postalCode": "NN1 4BN",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-14T10:58:21.034Z"
+    "priceLastSync": "2026-08-14T16:37:42.711Z",
+    "groupTicket": {
+      "size": 4,
+      "price": 46,
+      "label": "Group of 4 for £46"
+    }
   },
   {
     "id": 127,
@@ -692,7 +697,7 @@
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-14T10:58:21.660Z"
+    "priceLastSync": "2026-08-14T16:37:43.343Z"
   },
   {
     "id": 128,
@@ -726,6 +731,6 @@
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-14T10:58:22.320Z"
+    "priceLastSync": "2026-08-14T16:37:43.963Z"
   }
 ]
