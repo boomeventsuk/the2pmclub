@@ -72,6 +72,23 @@ function fmtPounds(value) {
   return Number.isInteger(value) ? `£${value}` : `£${value.toFixed(2)}`;
 }
 
+const LIVE_TICKET_COPY = '🎟 Check the live ticket selector for current prices, availability and group offers when available.';
+
+function normaliseDynamicTicketCopy(event) {
+  if (typeof event.fullDescription === 'string') {
+    event.fullDescription = event.fullDescription
+      .split('\n\n')
+      .map(paragraph => paragraph.trimStart().startsWith('🎟') ? LIVE_TICKET_COPY : paragraph)
+      .join('\n\n');
+  }
+  if (typeof event.highlights === 'string') {
+    event.highlights = event.highlights
+      .split('|')
+      .map(item => item.trimStart().startsWith('🎟') ? LIVE_TICKET_COPY : item)
+      .join('|');
+  }
+}
+
 function launchStatusLabel(event, computedLabel, isSoldOut, now = Date.now()) {
   if (isSoldOut) return computedLabel;
   const saleStartsAt = Date.parse(event.saleStartsAt || '');
@@ -161,15 +178,13 @@ function extractPriceData(ticketClasses, eventDate, location) {
   //
   // Phase 1: "Just announced"          - early days, low sales
   // Phase 2: "Selling fast"            - 15%+ sold
-  // Phase 3: "75% sold"                - really at 67% (1/3 left)
+  // Phase 3: "Over two-thirds sold"    - begins at 67% sold
   // Phase 4: "Final tickets"           - event week fallback
   // Phase 5: "Final release"           - final tier on sale, NO count
   //          (groups may still be on sale; group line shows)
-  // Phase 6: "Final release: N left"   - count mode. ONLY when
-  //          singles are the only thing on sale AND remaining
-  //          singles <= the venue's countFrom. N rounds DOWN:
-  //          100..25 -> nearest 25, 24..10 -> nearest 5,
-  //          under 10 -> "Last few tickets". Never exact.
+  // Phase 6: "Last few tickets"        - singles are the only thing
+  //          on sale and fewer than 10 remain. Automated public labels
+  //          never expose rounded or approximate numeric inventory.
   // Phase 7: "Join waiting list"       - sold out
   // ============================================================
 
@@ -192,10 +207,8 @@ function extractPriceData(ticketClasses, eventDate, location) {
     singleTiersAvailable.length > 0 &&
     singlesRemaining <= countFrom;
 
-  function roundedCountLabel(n) {
-    if (n < 10) return 'Last few tickets';
-    if (n < 25) return `Final release: ${Math.floor(n / 5) * 5} left`;
-    return `Final release: ${Math.floor(n / 25) * 25} left`;
+  function scarcityLabel(n) {
+    return n < 10 ? 'Last few tickets' : 'Final release';
   }
 
   let statusLabel;
@@ -205,7 +218,7 @@ function extractPriceData(ticketClasses, eventDate, location) {
     statusLabel = 'Join waiting list';
     schemaAvailability = 'https://schema.org/SoldOut';
   } else if (countMode) {
-    statusLabel = roundedCountLabel(singlesRemaining);
+    statusLabel = scarcityLabel(singlesRemaining);
     schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (finalPhase) {
     statusLabel = 'Final release';
@@ -225,8 +238,7 @@ function extractPriceData(ticketClasses, eventDate, location) {
     statusLabel = 'Final tickets';
     schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (percentSold >= 67) {
-    // Reality: 1/3 left. Tell them: 75% sold
-    statusLabel = '75% sold';
+    statusLabel = 'Over two-thirds sold';
     schemaAvailability = 'https://schema.org/LimitedAvailability';
   } else if (percentSold >= 15) {
     // Real traction. General urgency.
@@ -353,7 +365,7 @@ async function main() {
         event.availability = priceData.public.availability;
         // Manual override: if event.statusLabelOverride is set, the sync will
         // not touch event.statusLabel. Use this when a label has been hand-set
-        // by JD (e.g. "Final release, 100 left") and should not be reverted to
+        // by JD (e.g. "Final release") and should not be reverted to
         // the computed label on the next sync run.
         // Override safety: a hand-set label is dropped the moment the ticket
         // data contradicts it (e.g. override says "Early Release now on sale"
@@ -394,7 +406,7 @@ async function main() {
         const earlyTierSoldOut = (priceData.internal.tiers || []).some(
           t => /early/i.test(t.name) && t.status === 'SOLD_OUT'
         );
-        if (priceData.public.statusLabel.startsWith('Final release:') ||
+        if (priceData.public.statusLabel === 'Final release' ||
             priceData.public.statusLabel === 'Last few tickets' ||
             priceData.public.statusLabel === 'Join waiting list' ||
             earlyTierSoldOut) {
@@ -407,6 +419,7 @@ async function main() {
         } else {
           delete event.groupTicket;
         }
+        normaliseDynamicTicketCopy(event);
         event.priceLastSync = new Date().toISOString();
 
         // Clean up any legacy fields that should never be public
