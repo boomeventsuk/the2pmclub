@@ -12,6 +12,7 @@ interface EventbriteEmbedProps {
   affiliateCode?: string;
   eventTitle?: string;
   onOrderComplete?: () => void;
+  showTrustStrip?: boolean;
 }
 
 export const EventbriteTrustStrip = () => (
@@ -46,7 +47,7 @@ declare global {
   }
 }
 
-const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, promoCode, affiliateCode, eventTitle, onOrderComplete }: EventbriteEmbedProps) => {
+const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, promoCode, affiliateCode, eventTitle, onOrderComplete, showTrustStrip = true }: EventbriteEmbedProps) => {
   const hasTrackedInteraction = useRef(false);
   const trackingContext = {
     eventbriteId,
@@ -207,7 +208,10 @@ const EventbriteEmbed = ({ eventbriteId, eventSlug, containerId, height = 425, p
   }, [containerId, eventSlug, eventTitle]);
 
   return (
-    <div id={containerId} style={{ minHeight: `${height}px` }} />
+    <>
+      {showTrustStrip && <EventbriteTrustStrip />}
+      <div id={containerId} style={{ minHeight: `${height}px` }} />
+    </>
   );
 };
 

@@ -669,7 +669,6 @@ const EventPageV2 = () => {
 
   const isLastTickets = event.status === 'last-tickets';
   const isSoldOut = event.status === 'sold-out';
-  const showEventbriteTrustStrip = event.slug.toUpperCase() === '120926-2PM-BED';
   const isPreSale = /tickets on sale friday/i.test(event.statusLabel || '');
   const isChristmasEdition = /christmas/i.test(event.title);
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
@@ -1055,7 +1054,7 @@ const EventPageV2 = () => {
                       : `${event.date}, ${event.venue}, ${event.city}. Pick your tickets.`}
                   </p>
                 </div>
-                {showEventbriteTrustStrip && !isSoldOut && <EventbriteTrustStrip />}
+                {!isSoldOut && <EventbriteTrustStrip />}
                 <div className="bg-card/50 rounded-xl overflow-hidden">
                   {isSoldOut ? (
                     <form
@@ -1112,6 +1111,7 @@ const EventPageV2 = () => {
                           promoCode={event.promoCode}
                           affiliateCode={groupMode ? 'BoomWebGrp' : undefined}
                           eventTitle={event.title}
+                          showTrustStrip={false}
                         />
                       </div>
                     </div>
