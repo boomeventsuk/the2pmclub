@@ -14,6 +14,30 @@ interface EventbriteEmbedProps {
   onOrderComplete?: () => void;
 }
 
+export const EventbriteTrustStrip = () => (
+  <aside
+    data-eventbrite-trust-strip="true"
+    aria-label="Ticketing powered by Eventbrite"
+    className="mb-3 rounded-xl border border-[#F05537]/30 bg-white px-4 py-3 text-slate-900 shadow-sm"
+  >
+    <div className="flex flex-col items-center justify-center gap-1.5 sm:flex-row sm:gap-3">
+      <span className="text-xs font-extrabold uppercase tracking-[0.12em] text-slate-800">
+        Ticketing powered by
+      </span>
+      <img
+        src="/eventbrite-logo.png"
+        alt="Eventbrite"
+        width="160"
+        height="28"
+        className="h-7 w-auto"
+      />
+    </div>
+    <p className="mt-1.5 text-center text-xs font-medium text-slate-600">
+      Your ticket selection and payment are handled by Eventbrite.
+    </p>
+  </aside>
+);
+
 declare global {
   interface Window {
     EBWidgets?: {

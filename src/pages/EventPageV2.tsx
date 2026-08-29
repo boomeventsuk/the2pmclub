@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import EventbriteEmbed from '@/components/EventbriteEmbed';
+import EventbriteEmbed, { EventbriteTrustStrip } from '@/components/EventbriteEmbed';
 import EventMobileBookBar from '@/components/EventMobileBookBar';
 import TrustStrip from '@/components/TrustStrip';
 import { Calendar, MapPin, Clock, Ticket, CheckCircle2, Users } from 'lucide-react';
@@ -669,6 +669,7 @@ const EventPageV2 = () => {
 
   const isLastTickets = event.status === 'last-tickets';
   const isSoldOut = event.status === 'sold-out';
+  const showEventbriteTrustStrip = event.slug.toUpperCase() === '120926-2PM-BED';
   const isPreSale = /tickets on sale friday/i.test(event.statusLabel || '');
   const isChristmasEdition = /christmas/i.test(event.title);
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
@@ -1054,6 +1055,7 @@ const EventPageV2 = () => {
                       : `${event.date}, ${event.venue}, ${event.city}. Pick your tickets.`}
                   </p>
                 </div>
+                {showEventbriteTrustStrip && !isSoldOut && <EventbriteTrustStrip />}
                 <div className="bg-card/50 rounded-xl overflow-hidden">
                   {isSoldOut ? (
                     <form
