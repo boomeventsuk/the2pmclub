@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:22.239Z",
+    "priceLastSync": "2026-08-31T10:34:02.238Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:22.917Z",
+    "priceLastSync": "2026-08-31T10:34:02.883Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:23.607Z",
+    "priceLastSync": "2026-08-31T10:34:03.523Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:24.290Z",
+    "priceLastSync": "2026-08-31T10:34:04.164Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:24.956Z",
+    "priceLastSync": "2026-08-31T10:34:04.819Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:25.624Z",
+    "priceLastSync": "2026-08-31T10:34:05.436Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:26.316Z",
+    "priceLastSync": "2026-08-31T10:34:06.090Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:27.046Z",
+    "priceLastSync": "2026-08-31T10:34:06.782Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -266,7 +266,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:27.714Z",
+    "priceLastSync": "2026-08-31T10:34:07.518Z",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -298,7 +298,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:28.436Z",
+    "priceLastSync": "2026-08-31T10:34:08.168Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -329,7 +329,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-08-30T18:53:29.129Z",
+    "priceLastSync": "2026-08-31T10:34:08.790Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -362,11 +362,11 @@
     "status": "selling-fast-amber",
     "urgencyLabel": "FINAL RELEASE",
     "accentColor": "coral",
-    "price": 14,
+    "price": 13.5,
     "priceCurrency": "GBP",
-    "priceLabel": "From £14.00",
+    "priceLabel": "From £13.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-08-30T18:53:29.795Z",
+    "priceLastSync": "2026-08-31T10:34:09.439Z",
     "statusLabel": "Final release",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -405,7 +405,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-08-30T18:53:30.511Z",
+    "priceLastSync": "2026-08-31T10:34:10.079Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -444,7 +444,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-08-30T18:53:31.205Z",
+    "priceLastSync": "2026-08-31T10:34:10.687Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -488,7 +488,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-08-30T18:53:31.886Z",
+    "priceLastSync": "2026-08-31T10:34:11.340Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -541,7 +541,7 @@
       "postalCode": "LU1 2EY",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-30T18:53:32.593Z",
+    "priceLastSync": "2026-08-31T10:34:11.951Z",
     "groupTicket": {
       "size": 4,
       "price": 40,
@@ -580,7 +580,7 @@
       "postalCode": "LE2 7TR",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-30T18:53:33.279Z",
+    "priceLastSync": "2026-08-31T10:34:12.609Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -619,7 +619,7 @@
       "postalCode": "NN1 4BN",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-30T18:53:33.963Z",
+    "priceLastSync": "2026-08-31T10:34:13.271Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -658,7 +658,7 @@
       "postalCode": "NN1 4BN",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-30T18:53:34.644Z",
+    "priceLastSync": "2026-08-31T10:34:13.922Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -697,7 +697,7 @@
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-30T18:53:35.340Z"
+    "priceLastSync": "2026-08-31T10:34:14.655Z"
   },
   {
     "id": 128,
@@ -731,6 +731,6 @@
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-08-30T18:53:36.094Z"
+    "priceLastSync": "2026-08-31T10:34:15.305Z"
   }
 ]
