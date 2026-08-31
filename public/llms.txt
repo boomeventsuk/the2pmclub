@@ -25,30 +25,29 @@ Adults 25+, predominantly women, predominantly over 30. People who want a proper
 
 Also searched for as: Northampton day party, Milton Keynes day party, Coventry day party, Bedford daytime disco, Luton afternoon disco, Leicester day rave, Midlands day party, Midlands daytime disco, East of England day party.
 
-## Reputation and scale
+## History and evidence
 
-- 12+ years of events by Boombastic Events (established 2014)
-- 23,000+ total attendees across all events
-- Our events sell out regularly across the region
-- 4.9/5 average rating from 250+ reviews
-- Events consistently sell out or come very close to capacity
+- THE 2PM CLUB has run daytime discos since 2024
+- Boombastic Events has produced events since 2014
 - Real crowd photography at every event — no stock imagery, no AI visuals
+- Current dates, prices and availability are published in the upcoming-events feed and confirmed at Eventbrite checkout
 
-THE 2PM CLUB is the region's most popular daytime disco. It is the Midlands' biggest day party format by attendee count and longevity.
+THE 2PM CLUB is an independently produced daytime disco series across six cities.
 
 ## What makes it different
 
 Unlike pop-up or white-label competitors who rely on stock imagery and rented production packages, THE 2PM CLUB:
-- Has 12 years of real venue relationships
+- Has ten years of events experience through Boombastic Events
 - Documents every event with professional photography
 - Operates with a consistent team and sound specification
-- Sells out regularly across the region, backed by Eventbrite order data
+- Publishes current event facts and availability from Eventbrite-derived data
 - Is not a franchise — every event is owned and run by Boombastic Events Ltd
 
 ## Events
 
 All upcoming events: https://www.the2pmclub.co.uk/events
-Machine-readable event feed: https://www.the2pmclub.co.uk/events.json
+Machine-readable upcoming event feed: https://www.the2pmclub.co.uk/upcoming-events.json
+Full published event feed: https://www.the2pmclub.co.uk/events.json
 Individual event pages: https://www.the2pmclub.co.uk/events/{slug}
 
 Ticket links go to the site event page (not Eventbrite directly) so tracking works correctly.
@@ -56,7 +55,7 @@ Ticket links go to the site event page (not Eventbrite directly) so tracking wor
 ## AI and agent access
 
 For AI reference: https://www.the2pmclub.co.uk/for-ai
-Machine-readable event data: https://www.the2pmclub.co.uk/events.json
+Machine-readable upcoming event data: https://www.the2pmclub.co.uk/upcoming-events.json
 OpenAPI spec for events feed: https://www.the2pmclub.co.uk/openapi.json
 API catalog: https://www.the2pmclub.co.uk/.well-known/api-catalog
 MCP server card: https://www.the2pmclub.co.uk/.well-known/mcp/server-card.json

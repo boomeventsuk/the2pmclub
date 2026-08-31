@@ -15,6 +15,13 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import {
+  customerStatusLabel,
+  formatUkEventDate,
+  formatUkEventTimeRange,
+  groupTicketAvailability,
+  ticketPriceWithFee,
+} from "./site-event-facts.js";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://www.the2pmclub.co.uk";
@@ -56,19 +63,6 @@ function hubPathForEvent(ev) {
   return dir ? `/hubs/${dir}/` : "/events/";
 }
 
-function ordinal(n) {
-  if (n % 100 >= 11 && n % 100 <= 13) return "th";
-  return ["th", "st", "nd", "rd"][n % 10] || "th";
-}
-
-// "Sat 13th Jun 2026" per house date rule
-function formatDate(iso) {
-  const d = new Date(iso);
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${days[d.getDay()]} ${d.getDate()}${ordinal(d.getDate())} ${months[d.getMonth()]} ${d.getFullYear()}`;
-}
-
 function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
@@ -79,6 +73,12 @@ const EMOJI_RE =
   /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{FE00}-\u{FE0F}\u{200D}\u{20E3}]/gu;
 function plain(s) {
   return String(s || "").replace(EMOJI_RE, "").replace(/\s{2,}/g, " ").trim();
+}
+
+// Keep volatile or broad sell-out assertions out of customer and agent-facing
+// presentation. Current availability is shown from Eventbrite-derived facts.
+function isUnsupportedSelloutClaim(value) {
+  return /sell[- ]?out|sold out|consistent sell/i.test(String(value || ""));
 }
 
 // Bunny CDN delivery, mirroring src/pages/EventPageV2.tsx: a sharp WebP poster
@@ -94,7 +94,7 @@ const heroPosterBlur = (url) => cdnParam(url, "width=24&quality=30");
 
 // "From £10.00" -> "From £10" (keeps non-zero pence, e.g. "From £12.50")
 function cleanPrice(label) {
-  return label ? String(label).replace(/\.00\b/, "") : "";
+  return ticketPriceWithFee(label);
 }
 
 // events.json carries "Venue, City" in location; the React page splits the same way.
@@ -115,10 +115,11 @@ function shellHeroHtml(ev) {
   const eighties = isEightiesEdition(ev);
   const soldOut = ev.status === "sold-out";
   const price = cleanPrice(ev.priceLabel);
-  const badge = !soldOut && ev.statusLabel ? plain(ev.statusLabel) : "";
+  const publicStatus = customerStatusLabel(ev);
+  const badge = !soldOut && publicStatus ? plain(publicStatus) : "";
   const isChristmas = /christmas/i.test(`${ev.title || ""} ${ev.subtitle || ""}`);
-  const isPreSale = /tickets on sale friday/i.test(ev.statusLabel || "");
-  const group = ev.groupTicket && ev.groupTicket.label ? plain(ev.groupTicket.label) : "";
+  const isPreSale = /tickets on sale friday/i.test(publicStatus || "");
+  const group = ev.groupTicket && ev.groupTicket.label ? plain(groupTicketAvailability(ev.groupTicket.label)) : "";
   const subline = plain(ev.heroSubtitle || ev.subtitle || "");
   const line2 = isChristmas
     ? "Christmas Edition Daytime Disco"
@@ -149,7 +150,8 @@ function shellHeroHtml(ev) {
     `<h1 style="margin:0;font-weight:700;text-transform:uppercase;line-height:1.1;letter-spacing:-0.01em;font-size:clamp(1.75rem,6vw,3rem);">THE 2PM CLUB<br><span style="color:rgba(255,255,255,0.9);">${esc(line2)}</span><br><span style="color:#FF3CAC;">${esc(city)}</span></h1>`,
     subline ? `<p style="margin:14px 0 0;color:rgba(255,255,255,0.85);font-size:1.1rem;font-weight:500;line-height:1.4;">${esc(subline)}</p>` : "",
     `<div style="margin:20px 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,0.14);display:flex;flex-direction:column;gap:8px;">`,
-    factRow(esc(formatDate(ev.start))),
+    factRow(`<time datetime="${esc(ev.start)}">${esc(formatUkEventDate(ev.start))}</time>`),
+    factRow(`<time datetime="${esc(ev.start)}/${esc(ev.end)}">${esc(formatUkEventTimeRange(ev.start, ev.end))}</time>`),
     factRow(`${esc(venue)}, ${esc(city)}`),
     price ? factRow(`<span style="font-weight:600;">Tickets ${esc(price.replace(/^From\s+/i, "from "))}</span>`) : "",
     group ? factRow(esc(group)) : "",
@@ -294,14 +296,15 @@ function jsonLdFor(ev) {
 // for. Feed-driven only: never hand-author event copy here.
 function buildEventNoscript(ev) {
   const { venue, city } = parseLocation(ev.location);
-  const date = formatDate(ev.start);
+  const date = formatUkEventDate(ev.start);
   const price = cleanPrice(ev.priceLabel);
-  const group = ev.groupTicket && ev.groupTicket.label ? plain(ev.groupTicket.label) : "";
+  const group = ev.groupTicket && ev.groupTicket.label ? plain(groupTicketAvailability(ev.groupTicket.label)) : "";
 
   const paras = plain(ev.fullDescription || ev.description || "")
     .split(/\n{2,}|\n/)
     .map((p) => p.trim())
     .filter(Boolean)
+    .filter((p) => !isUnsupportedSelloutClaim(p))
     .map((p) => `      <p>${esc(p)}</p>`)
     .join("\n");
 
@@ -309,6 +312,7 @@ function buildEventNoscript(ev) {
     .split("|")
     .map((h) => plain(h).trim())
     .filter(Boolean)
+    .filter((h) => !isUnsupportedSelloutClaim(h))
     .map((h) => `        <li>${esc(h)}</li>`)
     .join("\n");
 
@@ -319,12 +323,12 @@ function buildEventNoscript(ev) {
 
   const facts = [
     `        <li><strong>What:</strong> ${esc(plain(displayTitle(ev)))}</li>`,
-    `        <li><strong>When:</strong> ${esc(date)}, 2pm to 6pm</li>`,
+    `        <li><strong>When:</strong> <time datetime="${esc(ev.start)}/${esc(ev.end)}">${esc(date)}, ${esc(formatUkEventTimeRange(ev.start, ev.end))}</time></li>`,
     `        <li><strong>Where:</strong> ${esc([venue, addrLine || city].filter(Boolean).join(", "))}</li>`,
     price ? `        <li><strong>Tickets:</strong> ${esc(price)}</li>` : "",
     group ? `        <li><strong>Group tickets:</strong> ${esc(group)}</li>` : "",
     `        <li><strong>Age:</strong> 25+ (photo ID may be required)</li>`,
-    `        <li><strong>Status:</strong> ${esc(plain(ev.statusLabel || "On sale"))}</li>`,
+    `        <li><strong>Status:</strong> ${esc(plain(customerStatusLabel(ev) || "On sale"))}</li>`,
   ].filter(Boolean).join("\n");
 
   return `
@@ -342,7 +346,7 @@ ${highlights ? `      <h2>What to expect</h2>\n      <ul>\n${highlights}\n      
       <h2>Book tickets</h2>
       <p><a href="${esc(`${SITE}/events/${slugPath(ev.slug)}/`)}">Book tickets for ${esc(plain(displayTitle(ev)))} on ${esc(date)}</a></p>
       <h2>About THE 2PM CLUB</h2>
-      <p>THE 2PM CLUB is the Midlands' original daytime disco, run by Boombastic Events Ltd. Four hours of anthems every Saturday afternoon, 2pm to 6pm. Night-out energy in the afternoon. Home by 7.</p>
+      <p>THE 2PM CLUB is a daytime disco run by Boombastic Events Ltd. Every date starts at 2pm UK time. Most finish at 6pm; any venue-agreed exception is shown in the event facts above.</p>
       <p>Cities: Northampton, Bedford, Milton Keynes, Coventry, Luton, Leicester.</p>
       <p>Contact: hello@boomevents.co.uk</p>
     </article>
@@ -396,7 +400,7 @@ function eventInlineScript(ev) {
 let written = 0;
 for (const ev of upcoming) {
   const eventUrl = `${SITE}/events/${slugPath(ev.slug)}/`;
-  const title = `${displayTitle(ev)} | ${formatDate(ev.start)} | THE 2PM CLUB`;
+  const title = `${displayTitle(ev)} | ${formatUkEventDate(ev.start)} | THE 2PM CLUB`;
   const description = displayDescription(ev);
 
   let html = template;
@@ -408,6 +412,9 @@ for (const ev of upcoming) {
   // Canonical + og:url
   html = mustReplace(html, '<link rel="canonical" href="https://www.the2pmclub.co.uk/">', `<link rel="canonical" href="${eventUrl}">`, ev.slug);
   html = mustReplace(html, '<meta property="og:url" content="https://www.the2pmclub.co.uk/" />', `<meta property="og:url" content="${eventUrl}" />`, ev.slug);
+  html = html
+    .replace('<link rel="alternate" hreflang="en-GB" href="https://www.the2pmclub.co.uk/">', `<link rel="alternate" hreflang="en-GB" href="${eventUrl}">`)
+    .replace('<link rel="alternate" hreflang="x-default" href="https://www.the2pmclub.co.uk/">', `<link rel="alternate" hreflang="x-default" href="${eventUrl}">`);
 
   // Meta description
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(description)}">`);
@@ -445,6 +452,17 @@ for (const ev of upcoming) {
   const dir = path.join(DIST, "events", slugPath(ev.slug));
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), html);
+  fs.writeFileSync(
+    path.join(dir, "index.json"),
+    `${JSON.stringify({
+      ...ev,
+      statusLabel: customerStatusLabel(ev),
+      priceLabel: ticketPriceWithFee(ev.priceLabel),
+      canonicalUrl: eventUrl,
+      displayDate: formatUkEventDate(ev.start),
+      displayTime: formatUkEventTimeRange(ev.start, ev.end),
+    }, null, 2)}\n`
+  );
   written++;
 }
 
@@ -526,17 +544,17 @@ const eventItems = upcoming
     const soldOut = ev.status === "sold-out";
     const extra = soldOut
       ? "Sold out: join the waitlist"
-      : ev.priceLabel || "";
+      : ticketPriceWithFee(ev.priceLabel);
     return `<li style="margin:0 0 16px;padding:0 0 16px;border-bottom:1px solid rgba(255,255,255,.12)">
         <a href="/events/${slugPath(ev.slug)}/" style="color:inherit;font-weight:600;text-decoration:underline">${esc(ev.title)}</a><br>
-        <span>${esc(formatDate(ev.start))}, ${esc(ev.location)}${extra ? `. ${esc(extra)}` : ""}</span>
+        <span><time datetime="${esc(ev.start)}">${esc(formatUkEventDate(ev.start))}</time>, ${esc(ev.location)}${extra ? `. ${esc(extra)}` : ""}</span>
       </li>`;
   })
   .join("\n      ");
 
 const eventsIndexBody = `<main id="main-content" style="max-width:760px;margin:0 auto;padding:48px 20px 64px;font-family:Poppins,Inter,system-ui,sans-serif">
     <h1 style="font-size:2rem;line-height:1.2;margin:0 0 10px">Upcoming Daytime Disco Events</h1>
-    <p style="margin:0 0 28px">All upcoming THE 2PM CLUB dates across the Midlands. Iconic 80s, 90s and 00s anthems, 2pm to 6pm, home by 7. Book via the event pages below.</p>
+    <p style="margin:0 0 28px">All upcoming THE 2PM CLUB dates across the Midlands. Every date starts at 2pm UK time; the event page shows the exact finish time. Book via the event pages below.</p>
     <ul style="list-style:none;margin:0;padding:0">
       ${eventItems}
     </ul>

@@ -12,7 +12,7 @@
       {
         "name": "events",
         "description": "All upcoming 2PM Club daytime disco events with dates, venues, prices, and availability",
-        "url": "https://www.the2pmclub.co.uk/events.json",
+        "url": "https://www.the2pmclub.co.uk/upcoming-events.json",
         "type": "application/json"
       },
       {

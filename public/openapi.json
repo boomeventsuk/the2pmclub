@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "THE 2PM CLUB Events API",
-    "description": "Machine-readable event data for THE 2PM CLUB daytime disco series by Boombastic Events Ltd. Provides upcoming events across 6 cities in the Midlands and East of England.",
-    "version": "1.0.0",
+    "description": "Machine-readable event data for THE 2PM CLUB daytime disco series by Boombastic Events Ltd. Event times are ISO 8601 values for the UK event date and visible pages render them in Europe/London.",
+    "version": "1.1.0",
     "contact": {
       "name": "Boombastic Events",
       "email": "hello@boomevents.co.uk",
@@ -17,7 +17,7 @@
     }
   ],
   "paths": {
-    "/events.json": {
+    "/upcoming-events.json": {
       "get": {
         "operationId": "listEvents",
         "summary": "List all upcoming events",
@@ -25,6 +25,28 @@
         "responses": {
           "200": {
             "description": "Array of event objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events.json": {
+      "get": {
+        "operationId": "listPublishedEventRecords",
+        "summary": "List published event records",
+        "description": "Returns the complete published event feed used by the site. It may retain past records for route history. Use upcoming-events.json when only future events are required.",
+        "responses": {
+          "200": {
+            "description": "Array of published event objects",
             "content": {
               "application/json": {
                 "schema": {
@@ -49,7 +71,7 @@
             "name": "slug",
             "in": "path",
             "required": true,
-            "description": "Event slug, e.g. northampton-2pm-club-june-2026",
+            "description": "Event slug, e.g. 031026-2pm-npton",
             "schema": {
               "type": "string"
             }
@@ -129,7 +151,7 @@
           },
           "status": {
             "type": "string",
-            "enum": ["on-sale", "selling-fast", "last-tickets", "sold-out"],
+            "enum": ["on-sale", "selling-fast", "selling-fast-amber", "last-tickets", "sold-out", "new-date", "just-announced"],
             "description": "Current ticket availability status"
           },
           "statusLabel": {
@@ -146,7 +168,7 @@
           },
           "priceLabel": {
             "type": "string",
-            "description": "Human-readable price label, e.g. From £9.50"
+            "description": "Human-readable base price label from the live ticket source. Customer-facing pages append + booking fee."
           },
           "venueAddress": {
             "type": "object",

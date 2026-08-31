@@ -119,9 +119,9 @@ const WhyTwoPmWorks = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto prose prose-invert">
               
-              <h2 className="font-bebas text-2xl md:text-3xl text-foreground mb-4">Attendance: Afternoon Events Fill Faster</h2>
+              <h2 className="font-bebas text-2xl md:text-3xl text-foreground mb-4">Attendance: An Easier Event to Say Yes To</h2>
               <p className="text-muted-foreground mb-6">
-                Our internal data shows a clear trend: afternoon events consistently sell out faster and achieve higher capacity than comparable evening alternatives. When we launched the 2pm format, we expected modest interest. Instead, we saw attendance rates that outpaced everything else we'd tried.
+                Since launching our daytime discos in 2024, we have seen how an afternoon event removes many of the practical barriers that stop a group night out from happening.
               </p>
               <p className="text-muted-foreground mb-8">
                 The reason? Fewer barriers to attendance. No childcare negotiations extending into the night. No concerns about the late-night journey home. No Sunday morning write-off. When you remove friction, people show up.

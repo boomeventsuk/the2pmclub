@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { christmasSaleBadgeLabel } from "@/lib/christmasSale";
+import { customerStatusLabel, ticketPriceWithFee } from "@/lib/eventPresentation";
+import { formatUkEventDate } from "@/lib/ukEventTime";
 
 interface EventJson {
   slug: string;
@@ -14,15 +16,6 @@ interface EventJson {
   statusLabel?: string;
   status?: string;
 }
-
-const formatDate = (iso: string) => {
-  const d = new Date(iso);
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const day = d.getDate();
-  const suffix = day === 1 || day === 21 || day === 31 ? "st" : day === 2 || day === 22 ? "nd" : day === 3 || day === 23 ? "rd" : "th";
-  return `${days[d.getDay()]} ${day}${suffix} ${months[d.getMonth()]} ${d.getFullYear()}`;
-};
 
 export default function EventsIndex() {
   const [events, setEvents] = useState<EventJson[]>([]);
@@ -63,7 +56,11 @@ export default function EventsIndex() {
               {events.map((ev) => {
                 const city = ev.location.split(", ").pop() || "";
                 const isSoldOut = ev.status === "sold-out";
-                const saleLabel = christmasSaleBadgeLabel(ev.slug, ev.statusLabel, isSoldOut);
+                const saleLabel = christmasSaleBadgeLabel(
+                  ev.slug,
+                  customerStatusLabel(ev.slug, ev.statusLabel, isSoldOut),
+                  isSoldOut,
+                );
                 return (
                   <a
                     key={ev.slug}
@@ -80,10 +77,10 @@ export default function EventsIndex() {
                       <div className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">
                         {city}
                       </div>
-                      <div className="text-sm text-muted-foreground">{formatDate(ev.start)}</div>
+                      <time dateTime={ev.start} className="text-sm text-muted-foreground">{formatUkEventDate(ev.start)}</time>
                       <div className="text-sm text-muted-foreground">{ev.location.split(", ")[0]}</div>
                       {ev.priceLabel && !isSoldOut && (
-                        <div className="text-sm text-primary font-medium mt-1">{ev.priceLabel}</div>
+                        <div className="text-sm text-primary font-medium mt-1">{ticketPriceWithFee(ev.priceLabel)}</div>
                       )}
                     </div>
                     <div className="flex-shrink-0">

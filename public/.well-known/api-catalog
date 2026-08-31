@@ -1,7 +1,7 @@
 {
   "linkset": [
     {
-      "anchor": "https://www.the2pmclub.co.uk/events.json",
+      "anchor": "https://www.the2pmclub.co.uk/upcoming-events.json",
       "service-desc": [
         {
           "href": "https://www.the2pmclub.co.uk/openapi.json",

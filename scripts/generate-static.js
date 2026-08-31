@@ -16,6 +16,13 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import {
+  customerStatusLabel,
+  formatUkEventDate,
+  formatUkEventTimeRange,
+  groupTicketAvailability,
+  ticketPriceWithFee,
+} from "./site-event-facts.js";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://www.the2pmclub.co.uk";
@@ -42,27 +49,6 @@ const upcoming = events
 
 /* ---------- helpers ---------- */
 
-function ordinal(n) {
-  if (n % 100 >= 11 && n % 100 <= 13) return "th";
-  return ["th", "st", "nd", "rd"][n % 10] || "th";
-}
-
-// "Sat 13th Jun 2026" per house date rule
-function formatDate(iso) {
-  const d = new Date(iso);
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${days[d.getDay()]} ${d.getDate()}${ordinal(d.getDate())} ${months[d.getMonth()]} ${d.getFullYear()}`;
-}
-
-function timeRange(ev) {
-  const f = (iso) => {
-    const d = new Date(iso);
-    return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-  };
-  return `${f(ev.start)}-${f(ev.end)}`;
-}
-
 function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
@@ -73,13 +59,47 @@ function eventUrl(ev) {
   return `${SITE}/events/${ev.slug.toLowerCase()}/`;
 }
 
+// Curated current-event surface for agents. The source feed also carries old
+// campaign prose and historical records; neither belongs in an upcoming-only
+// factual endpoint. Keep the live fact fields and presentation decisions only.
+function upcomingAgentRecord(ev) {
+  return {
+    id: ev.id,
+    slug: ev.slug,
+    eventType: ev.eventType,
+    cityCode: ev.cityCode,
+    eventbriteId: ev.eventbriteId,
+    title: ev.title,
+    location: ev.location,
+    venueAddress: ev.venueAddress,
+    start: ev.start,
+    end: ev.end,
+    displayDate: formatUkEventDate(ev.start),
+    displayTime: formatUkEventTimeRange(ev.start, ev.end),
+    canonicalUrl: eventUrl(ev),
+    bookUrl: eventUrl(ev),
+    image: ev.image,
+    description: ev.description || ev.subtitle || "",
+    status: ev.status,
+    statusLabel: customerStatusLabel(ev),
+    availability: ev.availability,
+    price: ev.price,
+    priceCurrency: ev.priceCurrency || "GBP",
+    priceLabel: ticketPriceWithFee(ev.priceLabel),
+    groupTicket: ev.groupTicket?.label
+      ? { ...ev.groupTicket, label: groupTicketAvailability(ev.groupTicket.label) }
+      : undefined,
+  };
+}
+
 /* ---------- hub event card ---------- */
 
 function badgeFor(ev) {
   // Honest urgency: only render a badge when the synced status label is
   // present and specific. Never invent status.
   if (ev.status === "sold-out") return "Sold out";
-  if (ev.statusLabel && ev.statusLabel.trim()) return esc(ev.statusLabel.trim());
+  const label = customerStatusLabel(ev);
+  if (label && label.trim()) return esc(label.trim());
   return null;
 }
 
@@ -91,11 +111,14 @@ function eventCard(ev) {
     Array.isArray(ev.tierLabels) && ev.tierLabels.length
       ? `\n          <p class="event-tier-line" style="margin:6px 0 0;font-size:13px;opacity:.8">${ev.tierLabels.map(esc).join(". ")}.</p>`
       : "";
+  const groupLine = ev.groupTicket?.label && !soldOut
+    ? `\n          <p class="event-tier-line" style="margin:6px 0 0;font-size:13px;opacity:.8">${esc(groupTicketAvailability(ev.groupTicket.label))}</p>`
+    : "";
   const priceItem =
     ev.priceLabel && !soldOut
       ? `\n            <div class="event-meta-item">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              <span>${esc(ev.priceLabel)}</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 9a3 3 0 0 0 0 6v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a3 3 0 0 0 0-6V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg>
+              <span>${esc(ticketPriceWithFee(ev.priceLabel))}</span>
             </div>`
       : "";
   const cta = soldOut
@@ -111,7 +134,7 @@ function eventCard(ev) {
           <div class="event-card-meta">
             <div class="event-meta-item">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <span>${formatDate(ev.start)}</span>
+              <time datetime="${esc(ev.start)}">${formatUkEventDate(ev.start)}</time>
             </div>
             <div class="event-meta-item">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -119,9 +142,9 @@ function eventCard(ev) {
             </div>
             <div class="event-meta-item">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>${timeRange(ev)}</span>
+              <time datetime="${esc(ev.start)}/${esc(ev.end)}">${formatUkEventTimeRange(ev.start, ev.end)}</time>
             </div>${priceItem}
-          </div>${tierLine}
+          </div>${groupLine}${tierLine}
         </div>
         ${cta}
       </article>`;
@@ -141,6 +164,7 @@ function jsonLdFor(cityEvents) {
   const blocks = cityEvents.map((ev) => ({
     "@context": "https://schema.org",
     "@type": "Event",
+    "@id": `${eventUrl(ev)}#event`,
     name: ev.title,
     startDate: ev.start,
     endDate: ev.end,
@@ -173,7 +197,7 @@ function jsonLdFor(cityEvents) {
         "https://www.instagram.com/boombastic.eventsuk",
       ],
     },
-    description: `${ev.title}. 4 hours of iconic 80s, 90s & 00s anthems at ${(ev.location || "").split(", ").slice(0, -1).join(", ") || ev.location}. All the fun of a proper night out, home by 7-ish.`,
+    description: ev.description || ev.subtitle || ev.title,
   }));
   const payload = blocks.length === 1 ? blocks[0] : blocks;
   return `<script type="application/ld+json">\n${JSON.stringify(payload, null, 2)}\n</script>`;
@@ -317,5 +341,9 @@ function generateSitemap() {
 /* ---------- run ---------- */
 
 HUBS.forEach(generateHub);
+fs.writeFileSync(
+  path.join(ROOT, "public", "upcoming-events.json"),
+  `${JSON.stringify(upcoming.map(upcomingAgentRecord), null, 2)}\n`
+);
 generateSitemap();
 console.log("generate-static: done");

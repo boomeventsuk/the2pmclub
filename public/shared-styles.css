@@ -383,7 +383,8 @@ a:hover { text-decoration: underline; }
    ============================================ */
 .faq-item { border-bottom: 1px solid hsl(var(--border)); }
 .faq-item:last-child { border-bottom: none; }
-.faq-question {
+.faq-question,
+.faq-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -398,7 +399,8 @@ a:hover { text-decoration: underline; }
   padding: 1.25rem 0;
   cursor: pointer;
 }
-.faq-question:hover { color: hsl(var(--primary)); }
+.faq-question:hover,
+.faq-button:hover { color: hsl(var(--primary)); }
 .faq-question::after {
   content: '+';
   font-size: 1.5rem;
@@ -409,6 +411,8 @@ a:hover { text-decoration: underline; }
   margin-left: 1rem;
 }
 .faq-item.open .faq-question::after { content: '-'; }
+.faq-button svg { flex-shrink: 0; margin-left: 1rem; transition: transform 0.3s ease; }
+.faq-button.active svg { transform: rotate(180deg); }
 .faq-answer {
   max-height: 0;
   overflow: hidden;

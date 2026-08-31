@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import EventCard from "./EventCard";
+import { customerStatusLabel } from "@/lib/eventPresentation";
+import { formatUkEventDate, formatUkEventTimeRange } from "@/lib/ukEventTime";
 
 interface EventJson {
   id: number;
@@ -58,23 +60,6 @@ const parseLocation = (location: string): { venue: string; city: string } => {
   };
 };
 
-// Format ISO date to "Sat 6 Dec 2025"
-const formatDate = (isoDate: string): string => {
-  const date = new Date(isoDate);
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-};
-
-// Format start/end to "14:00–18:00"
-const formatTime = (start: string, end: string): string => {
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-  const startTime = `${startDate.getHours().toString().padStart(2, "0")}:${startDate.getMinutes().toString().padStart(2, "0")}`;
-  const endTime = `${endDate.getHours().toString().padStart(2, "0")}:${endDate.getMinutes().toString().padStart(2, "0")}`;
-  return `${startTime}–${endTime}`;
-};
-
 // Honest urgency only: sold-out gets a SOLD OUT badge, anything else
 // shows the synced statusLabel verbatim (specific, from the live pipeline)
 // or nothing at all. No blanket SELLING FAST mapping.
@@ -116,7 +101,10 @@ const Tickets = () => {
         // Map to EventCard props
         const mapped: MappedEvent[] = futureEvents.map((e) => {
           const { venue, city } = parseLocation(e.location);
-          const statusProps = mapStatus(e.status, e.statusLabel);
+          const statusProps = mapStatus(
+            e.status,
+            customerStatusLabel(e.slug, e.statusLabel, e.status === "sold-out"),
+          );
 
           return {
             slug: e.slug,
@@ -125,10 +113,10 @@ const Tickets = () => {
             eventbriteId: e.eventbriteId,
             promoCode: e.promoCode,
             title: e.title,
-            date: formatDate(e.start),
+            date: formatUkEventDate(e.start),
             venue,
             city,
-            time: formatTime(e.start, e.end),
+            time: formatUkEventTimeRange(e.start, e.end),
             poster: e.image,
             bookUrl: e.bookUrl,
             infoUrl: e.infoUrl,

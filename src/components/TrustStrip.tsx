@@ -9,11 +9,11 @@ const TrustStrip = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-center">
           <span className="font-poppins text-sm text-foreground font-semibold">
-            Been going since 2014
+            Daytime discos since 2024
           </span>
           <span className="hidden md:block text-muted-foreground">•</span>
           <span className="font-poppins text-sm text-muted-foreground">
-            Selling out across the Midlands
+            Ten years of events experience
           </span>
         </div>
       </div>

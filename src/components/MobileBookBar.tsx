@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { formatUkEventDateWithoutYear } from "@/lib/ukEventTime";
 
 interface EventJson {
   slug: string;
@@ -8,13 +9,6 @@ interface EventJson {
   isHidden?: boolean;
   status?: string;
 }
-
-const formatShort = (iso: string) => {
-  const d = new Date(iso);
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
-};
 
 /**
  * Full-width mobile book bar, pointed at the next on-sale event's site page.
@@ -35,7 +29,7 @@ const MobileBookBar = () => {
           setNext({
             slug: upcoming.slug,
             city: (upcoming.location.split(", ").pop() || "").trim(),
-            date: formatShort(upcoming.start),
+            date: formatUkEventDateWithoutYear(upcoming.start),
           });
         }
       })

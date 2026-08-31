@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { christmasSaleBadgeLabel } from "@/lib/christmasSale";
+import { customerStatusLabel, ticketPriceWithFee } from "@/lib/eventPresentation";
+import { formatUkEventDateWithoutYear } from "@/lib/ukEventTime";
 
 interface EventJson {
   slug: string;
@@ -22,16 +24,6 @@ interface NextEvent {
 }
 
 // "Sat 13th Jun" per house date rule
-const formatShort = (iso: string) => {
-  const d = new Date(iso);
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const day = d.getDate();
-  const suffix =
-    day % 100 >= 11 && day % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][day % 10] || "th";
-  return `${days[d.getDay()]} ${day}${suffix} ${months[d.getMonth()]}`;
-};
-
 /**
  * Inline next-event strip for the homepage hero. Renders the soonest
  * on-sale event from events.json: city, date, price, honest status,
@@ -51,10 +43,14 @@ const NextEventStrip = () => {
         if (upcoming) {
           setNext({
             city: (upcoming.location.split(", ").pop() || "").trim(),
-            date: formatShort(upcoming.start),
+            date: formatUkEventDateWithoutYear(upcoming.start),
             slug: upcoming.slug,
             priceLabel: upcoming.priceLabel,
-            statusLabel: christmasSaleBadgeLabel(upcoming.slug, upcoming.statusLabel, false),
+            statusLabel: christmasSaleBadgeLabel(
+              upcoming.slug,
+              customerStatusLabel(upcoming.slug, upcoming.statusLabel),
+              false,
+            ),
           });
         }
       })
@@ -76,7 +72,7 @@ const NextEventStrip = () => {
         {next.city} · {next.date}
       </span>
       {next.priceLabel && (
-        <span className="font-poppins text-sm md:text-base text-foreground/85">{next.priceLabel}</span>
+        <span className="font-poppins text-sm md:text-base text-foreground/85">{ticketPriceWithFee(next.priceLabel)}</span>
       )}
       {next.statusLabel && (
         <span className="font-poppins text-xs font-semibold uppercase tracking-wide bg-primary/15 border border-primary/30 text-primary rounded-full px-3 py-1">

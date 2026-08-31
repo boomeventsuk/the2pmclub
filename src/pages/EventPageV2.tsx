@@ -24,6 +24,16 @@ import {
   CHRISTMAS_2026_SALE_START,
   christmasSalePageLabel,
 } from '@/lib/christmasSale';
+import {
+  customerStatusLabel,
+  groupTicketAvailability,
+  ticketPriceWithFee,
+} from '@/lib/eventPresentation';
+import {
+  formatUkEventDate,
+  formatUkEventShortDate,
+  formatUkEventTimeRange,
+} from '@/lib/ukEventTime';
 
 // Hero reel URLs on Bunny CDN.
 // Per-city cuts live at hero-1x1-{cityCode}.mp4 (NPTON, BED, COV, MK, LUT, LEIC).
@@ -97,39 +107,17 @@ const parseLocation = (location: string): { venue: string; city: string } => {
   return { venue, city };
 };
 
-const formatEventDate = (isoDate: string): string => {
-  const date = new Date(isoDate);
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const day = date.getDate();
-  const suffix = day === 1 || day === 21 || day === 31 ? 'st' : day === 2 || day === 22 ? 'nd' : day === 3 || day === 23 ? 'rd' : 'th';
-  return `${days[date.getDay()]} ${day}${suffix} ${months[date.getMonth()]} ${date.getFullYear()}`;
-};
-
-const formatShortDate = (isoDate: string): string => {
-  const date = new Date(isoDate);
-  const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-  const day = date.getDate();
-  const suffix = day === 1 || day === 21 || day === 31 ? 'ST' : day === 2 || day === 22 ? 'ND' : day === 3 || day === 23 ? 'RD' : 'TH';
-  return `${days[date.getDay()]} ${day}${suffix} ${months[date.getMonth()]}`;
-};
+// Eventbrite remains the source for event facts, but promotional feed copy can
+// contain old broad sell-out assertions. Do not repeat those as current proof.
+const isUnsupportedSelloutClaim = (paragraph: string) =>
+  /sell[- ]?out|sold out|consistent sell/i.test(paragraph);
 
 // Map one feed record (events.json shape) to the view model used by the page.
 // Shared by the /events.json fetch path and the inlined window.__EVENT__ fast
 // path so both produce identical EventData.
 const toEventData = (event: EventJson): EventData => {
   const { venue, city } = parseLocation(event.location);
-  const startTime = new Date(event.start);
-  const endTime = new Date(event.end);
-  const formatTime = (date: Date) => {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const hour12 = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
-    const minuteLabel = minutes ? `:${minutes.toString().padStart(2, '0')}` : '';
-    return `${hour12}${minuteLabel}${hours >= 12 ? 'pm' : 'am'}`;
-  };
-  const timeDisplay = `${formatTime(startTime)}–${formatTime(endTime)}`;
+  const timeDisplay = formatUkEventTimeRange(event.start, event.end);
   return {
     slug: event.slug,
     cityCode: event.cityCode,
@@ -137,8 +125,8 @@ const toEventData = (event: EventJson): EventData => {
     promoCode: event.promoCode,
     city,
     venue,
-    date: formatEventDate(event.start),
-    shortDate: formatShortDate(event.start),
+    date: formatUkEventDate(event.start),
+    shortDate: formatUkEventShortDate(event.start),
     squareImg: event.image,
     title: event.title,
     timeDisplay,
@@ -147,7 +135,7 @@ const toEventData = (event: EventJson): EventData => {
     status: event.status,
     statusLabel: christmasSalePageLabel(
       event.slug,
-      event.statusLabel,
+      customerStatusLabel(event.slug, event.statusLabel, event.status === 'sold-out'),
       event.status === 'sold-out',
     ),
     urgencyLabel: event.urgencyLabel,
@@ -389,7 +377,7 @@ const EventPageV2 = () => {
             ...current,
             statusLabel: christmasSalePageLabel(
               current.slug,
-              current.statusLabel,
+              customerStatusLabel(current.slug, current.statusLabel, current.status === 'sold-out'),
               current.status === 'sold-out',
             ),
           }
@@ -747,6 +735,7 @@ const EventPageV2 = () => {
           </div>
         )}
 
+        <main id="main-content">
         {/* HERO: video left + card right (desktop), video on top + card below (mobile) */}
         <section className="pt-24 md:pt-28 pb-8 bg-gradient-to-b from-background via-background to-muted/10">
           <div className="container mx-auto px-4">
@@ -845,7 +834,7 @@ const EventPageV2 = () => {
                         <Users className="w-5 h-5 text-primary mt-0.5" />
                         <div>
                           <span className="font-poppins font-semibold text-base block">
-                            {event.groupTicket.label}
+                            {groupTicketAvailability(event.groupTicket.label)}
                           </span>
                           <span className="font-poppins text-sm text-foreground/70 block">
                             {perHead} each for {sizeWord} of you
@@ -855,11 +844,11 @@ const EventPageV2 = () => {
                     )}
                     <div className="flex items-center gap-2">
                       <Calendar className="w-5 h-5 text-primary" />
-                      <span className="font-poppins font-medium text-base">{event.date}</span>
+                      <time dateTime={event.startIso} className="font-poppins font-medium text-base">{event.date}</time>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="w-5 h-5 text-primary" />
-                      <span className="font-poppins font-medium text-base">{event.timeDisplay}</span>
+                      <time dateTime={event.startIso} className="font-poppins font-medium text-base">{event.timeDisplay}</time>
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="w-5 h-5 text-primary" />
@@ -869,7 +858,7 @@ const EventPageV2 = () => {
                       <div className="flex items-center gap-2">
                         <Ticket className="w-5 h-5 text-primary" />
                         <span className="font-poppins font-medium text-base">
-                          Tickets from {formatPrice(event.price)}
+                          {ticketPriceWithFee(`From ${formatPrice(event.price)}`)}
                         </span>
                       </div>
                     )}
@@ -879,7 +868,7 @@ const EventPageV2 = () => {
                       <div className="flex items-center gap-2">
                         <Users className="w-5 h-5 text-primary" />
                         <span className="font-poppins font-medium text-base">
-                          {event.groupTicket.label}
+                          {groupTicketAvailability(event.groupTicket.label)}
                         </span>
                       </div>
                     )}
@@ -965,6 +954,7 @@ const EventPageV2 = () => {
                     .map(paragraph => paragraph.trim())
                     .filter(Boolean)
                     .slice(3)
+                    .filter(paragraph => !isUnsupportedSelloutClaim(paragraph))
                     .map((paragraph, index) => {
                       if (/^WHY YOUR CREW WILL LOVE IT$/i.test(paragraph)) {
                         return (
@@ -1202,6 +1192,8 @@ const EventPageV2 = () => {
             </div>
           </div>
         </section>
+
+        </main>
 
         <Footer />
 

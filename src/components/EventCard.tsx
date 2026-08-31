@@ -7,6 +7,7 @@ import {
   christmasSaleBadgeLabel,
 } from "@/lib/christmasSale";
 import { trackEventPageView } from "@/lib/dataLayer";
+import { groupTicketAvailability, ticketPriceWithFee } from "@/lib/eventPresentation";
 
 // Bunny Optimizer params for CDN-hosted images (shared with EventPageV2)
 export const optimised = (url: string, width: number) =>
@@ -129,13 +130,13 @@ const EventCard = ({ id, slug, eventType, cityCode, eventbriteId, title, date, v
           {priceLabel && !soldOut && (
             <div className="flex items-center text-foreground">
               <Ticket className="w-4 h-4 mr-2 text-primary" />
-              <span className="font-poppins font-semibold">{priceLabel}</span>
+              <span className="font-poppins font-semibold">{ticketPriceWithFee(priceLabel)}</span>
             </div>
           )}
           {groupTicket?.label && !soldOut && (
             <div className="flex items-center text-foreground/90">
               <Users className="w-4 h-4 mr-2 text-primary" />
-              <span className="font-poppins">{groupTicket.label}</span>
+              <span className="font-poppins">{groupTicketAvailability(groupTicket.label)}</span>
             </div>
           )}
           {tierLabels && tierLabels.length > 0 && (() => {
