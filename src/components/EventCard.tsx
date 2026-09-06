@@ -11,7 +11,9 @@ import { groupTicketAvailability, ticketPriceWithFee } from "@/lib/eventPresenta
 
 // Bunny Optimizer params for CDN-hosted images (shared with EventPageV2)
 export const optimised = (url: string, width: number) =>
-  url.includes("b-cdn.net") ? `${url}${url.includes("?") ? "&" : "?"}width=${width}&quality=75` : url;
+  /-TCB-ANNSQ-approved\.webp$/.test(url) && [400, 800].includes(width)
+    ? url.replace(/\.webp$/, `-${width}.webp`)
+    : url.includes("b-cdn.net") ? `${url}${url.includes("?") ? "&" : "?"}width=${width}&quality=75` : url;
 
 interface EventCardProps {
   id?: number;
