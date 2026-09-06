@@ -200,11 +200,11 @@
     "cityCode": "NPTON",
     "eventbriteId": "1995469647432",
     "title": "THE 2PM CLUB Northampton - Christmas Daytime Disco",
-    "location": "The Picturedrome, Northampton",
+    "location": "The Charles Bradlaugh, Northampton",
     "venueAddress": {
-      "streetAddress": "222 Kettering Road",
+      "streetAddress": "1 Earl Street",
       "addressLocality": "Northampton",
-      "postalCode": "NN1 4BN",
+      "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
     "start": "2026-12-05T14:00:00+00:00",
@@ -213,7 +213,7 @@
     "displayTime": "2pm to 5:30pm",
     "canonicalUrl": "https://www.the2pmclub.co.uk/events/051226-2pm-npton/",
     "bookUrl": "https://www.the2pmclub.co.uk/events/051226-2pm-npton/",
-    "image": "https://boombastic-events.b-cdn.net/events/artwork/051226-2PM-NPTON/051226-2PM-NPTON-ANNSQ.png",
+    "image": "https://www.the2pmclub.co.uk/event-artwork/051226-2PM-NPTON-TCB-ANNSQ-approved.png",
     "description": "The ULTIMATE Christmas Daytime Disco. Festive classics plus the biggest Sing Out Loud Anthems from the 80s, 90s & 00s.",
     "status": "just-announced",
     "statusLabel": "General release now open",
