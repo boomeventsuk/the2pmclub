@@ -1,5 +1,4 @@
 const STATUS_LABEL_OVERRIDES: Record<string, string> = {
-  '031026-2PM-NPTON': 'Final 25 tickets',
 };
 
 export const customerStatusLabel = (

@@ -935,6 +935,19 @@ const EventPageV2 = () => {
           </div>
         </section>
 
+        {event.slug.toUpperCase() === '031026-2PM-NPTON' && event.fullDescription && (
+          <section className="py-8 md:py-12">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto rounded-2xl border border-primary/25 bg-primary/5 p-6 md:p-10">
+                <h2 className="font-poppins text-2xl md:text-4xl font-bold text-foreground mb-6">New venue, same party</h2>
+                <div className="space-y-5 font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
+                  {event.fullDescription.split('\n\n').filter(Boolean).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {isChristmasEdition && event.fullDescription && (
           <section className="py-8 md:py-12">
             <div className="container mx-auto px-4">
