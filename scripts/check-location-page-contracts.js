@@ -34,9 +34,14 @@ const hubHtml = fs.readdirSync(path.join(DIST, 'hubs'), { withFileTypes: true })
 check(!hubHtml.includes('M17 5H9.5'), 'dollar-style price icon remains on a location card');
 check(!/Franklin'?s Gardens/i.test(hubHtml), 'Franklin\'s Gardens remains on Northampton page');
 check(!/Consistent sell-outs|2-3x over|Three dates|Riverside car park|free parking directly outside|ample free parking right outside/i.test(hubHtml), 'known unsupported or stale location copy remains');
-check(hubHtml.includes('From £13.50 + booking fee'), 'Northampton base price does not include booking-fee wording');
-check(hubHtml.includes('Final 25 tickets'), 'Northampton Final 25 tickets decision is missing');
-check(customerStatusLabel(events.find((event) => event.slug === '031026-2PM-NPTON')) === 'Final 25 tickets', 'Northampton status override is not stable');
+const sourceEvents = JSON.parse(fs.readFileSync(path.join(ROOT, 'public', 'events.json'), 'utf8'));
+const northamptonSource = sourceEvents.find((event) => event.slug === '031026-2PM-NPTON');
+const northamptonProjection = events.find((event) => event.slug === '031026-2PM-NPTON');
+check(hubHtml.includes(ticketPriceWithFee(northamptonSource.priceLabel)), 'Northampton source price does not include booking-fee wording');
+check(customerStatusLabel(northamptonSource) === northamptonSource.statusLabel, 'Northampton status must follow the source label');
+check(northamptonProjection.statusLabel === northamptonSource.statusLabel, 'Northampton projected status differs from source');
+check(fs.readFileSync(path.join(DIST, 'hubs', 'northampton', 'index.html'), 'utf8').includes(northamptonSource.statusLabel), 'Northampton hub lacks the source status label');
+check(customerStatusLabel({ slug: '031026-2PM-NPTON', status: 'selling-fast-amber', statusLabel: 'Join waiting list', availability: 'https://schema.org/SoldOut' }) === 'Join waiting list', 'Legacy October urgency override has returned');
 check(events.every((event) => !('fullDescription' in event) && !('highlights' in event)), 'upcoming agent feed exposes stale campaign prose');
 check(events.every((event) => event.displayTime === formatUkEventTimeRange(event.start, event.end)), 'upcoming agent feed display time is not UK-stable');
 check(events.every((event) => /\+ booking fee$/i.test(event.priceLabel || '')), 'upcoming agent feed omits booking-fee wording');

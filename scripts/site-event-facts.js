@@ -37,9 +37,6 @@ export function formatUkEventTimeRange(start, end) {
 }
 
 export function customerStatusLabel(event) {
-  if (event.status !== "sold-out" && event.slug.toUpperCase() === "031026-2PM-NPTON") {
-    return "Final 25 tickets";
-  }
   return event.statusLabel;
 }
 

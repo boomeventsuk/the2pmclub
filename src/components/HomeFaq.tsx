@@ -28,7 +28,7 @@ export default function HomeFaq() {
     },
     {
       question: "What time do doors open and when does it finish?",
-      answer: "Doors open at 2pm. Event runs until 6pm. You can arrive anytime after 2pm."
+      answer: "Doors open at 2pm. Finish times vary by event, so check your chosen date above. The Northampton Christmas parties finish at 5:30pm. You can arrive anytime after 2pm."
     }
   ];
 
