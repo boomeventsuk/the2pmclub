@@ -639,6 +639,10 @@ const EventPageV2 = () => {
   }
 
   const faqs = [
+    ...(event.venue.includes('Charles Bradlaugh') ? [
+      { q: 'What is access like at The Charles Bradlaugh?', a: 'The event room is upstairs, accessed by steps. Toilets are available on both floors. For access questions, contact hello@boomevents.co.uk before booking.' },
+      { q: 'Can we book food?', a: 'Food is served downstairs and booked separately from event tickets. Contact the venue on 01604 473225 or info@thecharlesbradlaugh.com for menus and table bookings.' },
+    ] : []),
     { q: "Is it really like a night out clubbing in the afternoon?",
       a: "Yes. Proper sound system, lighting, confetti moments. But you're done by 6pm and you'll actually feel good the next day. Same energy, better timing." },
     { q: "What music will be played?",
@@ -939,7 +943,7 @@ const EventPageV2 = () => {
           <section className="py-8 md:py-12">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto rounded-2xl border border-primary/25 bg-primary/5 p-6 md:p-10">
-                <h2 className="font-poppins text-2xl md:text-4xl font-bold text-foreground mb-6">New venue, same party</h2>
+                <h2 className="font-poppins text-2xl md:text-4xl font-bold text-foreground mb-6">Four hours of 80s Sing Out Loud Anthems</h2>
                 <div className="space-y-5 font-poppins text-base md:text-lg text-foreground/85 leading-relaxed">
                   {event.fullDescription.split('\n\n').filter(Boolean).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
                 </div>
