@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-08T19:03:09.985Z",
+    "priceLastSync": "2026-09-09T08:39:12.249Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-08T19:03:13.555Z",
+    "priceLastSync": "2026-09-09T08:39:18.416Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-08T14:12:31.003Z",
+    "priceLastSync": "2026-09-09T08:39:19.192Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-08T19:03:15.643Z",
+    "priceLastSync": "2026-09-09T08:39:21.217Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-08T14:12:33.211Z",
+    "priceLastSync": "2026-09-09T08:39:27.324Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-08T19:03:17.299Z",
+    "priceLastSync": "2026-09-09T08:39:28.055Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -366,7 +366,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-08T19:03:19.477Z",
+    "priceLastSync": "2026-09-09T08:39:43.662Z",
     "statusLabel": "Join waiting list",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -405,7 +405,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £13.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-09-08T19:03:20.187Z",
+    "priceLastSync": "2026-09-09T08:39:44.357Z",
     "statusLabel": "Final release",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -444,7 +444,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-09-08T19:03:20.934Z",
+    "priceLastSync": "2026-09-09T08:39:45.075Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -488,7 +488,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-09-08T19:03:21.615Z",
+    "priceLastSync": "2026-09-09T08:39:45.784Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -541,7 +541,7 @@
       "postalCode": "LU1 2EY",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-08T19:03:22.367Z",
+    "priceLastSync": "2026-09-09T08:39:46.446Z",
     "groupTicket": {
       "size": 4,
       "price": 40,
@@ -580,7 +580,7 @@
       "postalCode": "LE2 7TR",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-08T19:03:23.063Z",
+    "priceLastSync": "2026-09-09T08:39:47.155Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -619,7 +619,7 @@
       "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-08T19:03:23.727Z",
+    "priceLastSync": "2026-09-09T08:39:47.835Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -658,7 +658,7 @@
       "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-08T19:03:25.101Z",
+    "priceLastSync": "2026-09-09T08:39:48.494Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -697,7 +697,7 @@
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-08T19:03:25.765Z"
+    "priceLastSync": "2026-09-09T08:39:49.268Z"
   },
   {
     "id": 128,
@@ -731,6 +731,6 @@
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-08T19:03:26.483Z"
+    "priceLastSync": "2026-09-09T08:39:49.978Z"
   }
 ]
