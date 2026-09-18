@@ -24,6 +24,15 @@ https://the2pmclub.co.uk/*   https://www.the2pmclub.co.uk/:splat  301!
 
 # SPA routes — explicit React Router paths only, so unknown URLs fall through to 404
 /                      /index.html  200
+# Cancelled 3rd Oct 2026 Luton event, retired 18th Sept 2026. Sent to the
+# Luton hub so an old link lands somewhere useful instead of a bare SPA shell.
+/events/031026-2pm-lut                /hubs/luton/   301!
+/events/031026-2pm-lut/               /hubs/luton/   301!
+/events/031026-2pm-lut/*              /hubs/luton/   301!
+/events/031026-2PM-LUT                /hubs/luton/   301!
+/events/031026-2PM-LUT/               /hubs/luton/   301!
+/events/031026-2PM-LUT/*              /hubs/luton/   301!
+
 /events/*              /index.html  200
 /events-v2/*           /index.html  200
 /faqs                  /index.html  200
