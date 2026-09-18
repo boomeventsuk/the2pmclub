@@ -15,7 +15,6 @@ const EIGHTIES_EVENT_SLUGS = new Set([
   "120926-2PM-BED",
   "190926-2PM-COV",
   "260926-2PM-MK",
-  "031026-2PM-LUT",
 ]);
 
 export const isEightiesEditionEvent = (event?: EventEditionInput | null): boolean => {

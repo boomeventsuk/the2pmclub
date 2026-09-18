@@ -36,7 +36,6 @@ const EIGHTIES_EVENT_SLUGS = new Set([
   "120926-2PM-BED",
   "190926-2PM-COV",
   "260926-2PM-MK",
-  "031026-2PM-LUT",
 ]);
 const EIGHTIES_MUSIC_FAQ = "80s anthems. Wall-to-wall songs you know every word to. Think Whitney, Wham!, Madonna, Bon Jovi, Queen, Cyndi Lauper and A-ha.";
 
