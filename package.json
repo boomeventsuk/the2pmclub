@@ -12,7 +12,8 @@
     "prebuild": "node scripts/generate-static.js",
     "postbuild": "node scripts/prerender-events.js",
     "test:locations": "node scripts/check-location-page-contracts.js",
-    "test:cancellation": "node scripts/test-cancellation-sync.js"
+    "test:cancellation": "node scripts/test-cancellation-sync.js",
+    "test:urgency": "node scripts/test-event-date-proximity.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

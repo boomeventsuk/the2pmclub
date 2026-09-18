@@ -181,6 +181,21 @@ function extractPriceData(ticketClasses, eventDate, location) {
   // ============================================================
   // Time awareness: is this event "this Saturday"?
   // From the Sunday before the event, it counts as event week.
+  //
+  // These two values stay INTERNAL on purpose (JD, 18th September 2026). The
+  // customer-facing "TODAY" / "TOMORROW" / "THIS SATURDAY" wording on the
+  // event page is deliberately never baked into public/events.json, because a
+  // relative label stored here outlives the day it was true for: this script
+  // runs on a cron at 04:00, 10:00 and 16:00 UTC, and the value only reaches
+  // the live site on the next Netlify deploy, which can be days later. A
+  // 16:00 Saturday run that wrote "TODAY" would still be serving "TODAY" on
+  // Sunday morning, after the event had finished.
+  //
+  // The page therefore recomputes the wording from the immutable event.start
+  // on every render, in src/lib/eventDateProximity.ts, proved by
+  // scripts/test-event-date-proximity.js. Do not "fix" this by adding a date
+  // label to the public block below: start is already in the feed and any
+  // consumer can derive the wording correctly from it at read time.
   // ============================================================
 
   const now = new Date();

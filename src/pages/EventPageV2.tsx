@@ -34,6 +34,7 @@ import {
   formatUkEventShortDate,
   formatUkEventTimeRange,
 } from '@/lib/ukEventTime';
+import { eventDateProximityLabel } from '@/lib/eventDateProximity';
 
 // Hero reel URLs on Bunny CDN.
 // Per-city cuts live at hero-1x1-{cityCode}.mp4 (NPTON, BED, COV, MK, LUT, LEIC).
@@ -704,6 +705,35 @@ const EventPageV2 = () => {
 
   const isLastTickets = event.status === 'last-tickets';
   const isSoldOut = event.status === 'sold-out';
+
+  // Date proximity leads the urgency banner whenever the event is close and
+  // still on sale, which is the whole point of the banner in the run-up week.
+  // Recomputed from event.startIso on every render (see lib/eventDateProximity)
+  // rather than read from a stored label, so neither a cron-stale events.json
+  // nor a static shell built days ago can put a wrong day in front of a
+  // visitor. Cancelled and past events have already returned above; sold out
+  // keeps its own banner and never gets a date label.
+  const dateProximityLabel = isSoldOut
+    ? null
+    : eventDateProximityLabel(event.startIso);
+
+  // The sync's urgencyLabel ladder carries two different kinds of wording:
+  // scarcity ("SELLING FAST", "LAST FEW TICKETS", "JOIN WAITING LIST") and
+  // announcement ("JUST ANNOUNCED", "GENERAL RELEASE NOW OPEN"). Only scarcity
+  // reads naturally as the second line under a date headline; "TOMORROW" over
+  // "JUST ANNOUNCED" would contradict itself.
+  const scarcityWording =
+    event.urgencyLabel && !/just announced|general release/i.test(event.urgencyLabel)
+      ? event.urgencyLabel
+      : null;
+
+  // Widened gate: the banner now fires on date proximity as well as on the
+  // last-tickets status. With no date label the composition below is exactly
+  // what a last-tickets event rendered before.
+  const showUrgencyBanner = !isSoldOut && (isLastTickets || !!dateProximityLabel);
+  const urgencyHeadline = dateProximityLabel || event.urgencyLabel || 'Last Tickets';
+  const urgencySubline =
+    dateProximityLabel && scarcityWording ? scarcityWording : "Don't miss out!";
   const isPreSale = /tickets on sale friday/i.test(event.statusLabel || '');
   const isChristmasEdition = /christmas/i.test(event.title);
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
@@ -765,7 +795,7 @@ const EventPageV2 = () => {
       <div className="min-h-screen bg-background pb-20 md:pb-0">
         <Header />
 
-        {/* Sold-out / last-tickets urgency banner */}
+        {/* Sold-out banner, then the date-proximity / last-tickets urgency banner */}
         {isSoldOut && (
           <div className="bg-muted text-foreground py-3 text-center">
             <p className="font-poppins font-bold text-sm md:text-base tracking-wide uppercase">
@@ -773,12 +803,12 @@ const EventPageV2 = () => {
             </p>
           </div>
         )}
-        {isLastTickets && (
+        {showUrgencyBanner && (
           <div className="urgency-banner-last-tickets text-white py-4 md:py-5 text-center sticky top-0 z-50">
             <p className="font-poppins font-black text-2xl md:text-4xl tracking-tight uppercase">
-              {event.urgencyLabel || 'Last Tickets'}
+              {urgencyHeadline}
             </p>
-            <p className="font-poppins text-lg md:text-xl font-bold mt-1">Don't miss out!</p>
+            <p className="font-poppins text-lg md:text-xl font-bold mt-1">{urgencySubline}</p>
           </div>
         )}
 
