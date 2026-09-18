@@ -234,6 +234,32 @@ a.button:focus, button:focus {
 }
 
 /* Last tickets urgency banner - IMPOSSIBLE TO IGNORE */
+/* Hero pill when it is carrying a date, "TOMORROW" or "THIS SATURDAY".
+   JD 18th Sept 2026 wanted the date in the pill rather than a full-width
+   strip, with a flash to carry the urgency. Kept to a soft breath rather
+   than a hard blink so it reads as alive, not as a broken element. */
+.hero-pill-urgent {
+  animation: hero-pill-breathe 2.2s ease-in-out infinite;
+}
+
+@keyframes hero-pill-breathe {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(328 100% 54% / 0.45);
+    border-color: hsl(328 100% 54% / 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 8px hsl(328 100% 54% / 0);
+    border-color: hsl(328 100% 54% / 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pill-urgent {
+    animation: none;
+    border-color: hsl(328 100% 54% / 1);
+  }
+}
+
 .urgency-banner-last-tickets {
   background: linear-gradient(90deg, hsl(328 100% 45%) 0%, hsl(328 100% 54%) 50%, hsl(328 100% 45%) 100%);
   background-size: 200% 100%;

@@ -727,13 +727,18 @@ const EventPageV2 = () => {
       ? event.urgencyLabel
       : null;
 
-  // Widened gate: the banner now fires on date proximity as well as on the
-  // last-tickets status. With no date label the composition below is exactly
-  // what a last-tickets event rendered before.
-  const showUrgencyBanner = !isSoldOut && (isLastTickets || !!dateProximityLabel);
-  const urgencyHeadline = dateProximityLabel || event.urgencyLabel || 'Last Tickets';
-  const urgencySubline =
-    dateProximityLabel && scarcityWording ? scarcityWording : "Don't miss out!";
+  // JD 18th Sept 2026: the date belongs in the hero pill, not a full-width
+  // strip across the top. The banner is back to its original job, genuine
+  // last-tickets scarcity only, and the date proximity takes over the pill.
+  const showUrgencyBanner = !isSoldOut && isLastTickets;
+  const urgencyHeadline = event.urgencyLabel || 'Last Tickets';
+  const urgencySubline = "Don't miss out!";
+
+  // The pill leads with how close the event is when that is worth saying, and
+  // falls back to the scarcity ladder otherwise. scarcityWording stays in play
+  // for the last-tickets banner above.
+  const heroPillLabel = dateProximityLabel || event.statusLabel;
+  const heroPillIsDate = !!dateProximityLabel;
   const isPreSale = /tickets on sale friday/i.test(event.statusLabel || '');
   const isChristmasEdition = /christmas/i.test(event.title);
   const formatPrice = (n: number) => Number.isInteger(n) ? `£${n}` : `£${n.toFixed(2)}`;
@@ -871,11 +876,17 @@ const EventPageV2 = () => {
 
                 {/* Right card: locked 3-line header + facts + CTA */}
                 <div className="bg-card/60 backdrop-blur-sm border border-border/40 rounded-2xl p-5 md:p-7 space-y-5">
-                  {!isSoldOut && event.statusLabel && (
-                    <div className="inline-flex items-center gap-2.5 bg-primary/15 border border-primary/30 rounded-full px-4 py-2">
+                  {!isSoldOut && heroPillLabel && (
+                    <div
+                      className={`inline-flex items-center gap-2.5 rounded-full px-4 py-2 border ${
+                        heroPillIsDate
+                          ? 'bg-primary/25 border-primary/60 hero-pill-urgent'
+                          : 'bg-primary/15 border-primary/30'
+                      }`}
+                    >
                       <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
                       <span className="font-poppins font-bold text-base text-primary tracking-wide uppercase">
-                        {event.statusLabel}
+                        {heroPillLabel}
                       </span>
                     </div>
                   )}
