@@ -597,6 +597,73 @@ function writeCancelledEvents() {
 
 writeCancelledEvents();
 
+/* ---------- strip cancelled events from the DEPLOYED JSON feeds ---------- */
+// public/events.json keeps the isCancelled: true entry as the internal
+// record. That is what makes cancellation sticky across syncs and what the
+// cancelled shells and 410s above are generated from, so it must stay in
+// git. The copies Vite has already placed in dist/ are a different thing:
+// they are served publicly at /events.json and /upcoming-events.json, and
+// anyone, including an AI crawler or a scraper, can read the full title,
+// date, venue, price, Eventbrite id and image of a cancelled event from
+// them. This runs after the shells, and after Vite has copied public/ into
+// dist/, and removes the cancelled entries from the deployed copies only.
+// Nothing under public/ is touched.
+//
+// upcoming-events.json is already built from the isCancelled-filtered list
+// in scripts/generate-static.js, so it should come out at zero here. It is
+// checked anyway, because a feed that silently regains a cancelled entry is
+// exactly the failure this step exists to prevent.
+const DIST_EVENT_FEEDS = ["events.json", "upcoming-events.json"];
+
+// Match on the stable identifiers rather than on isCancelled alone, so a
+// derived feed that drops the flag when it reshapes records is still caught.
+function makeCancelledMatcher(cancelled) {
+  const slugs = new Set(
+    cancelled.map((e) => String(e.slug || "").toLowerCase()).filter(Boolean)
+  );
+  const ids = new Set(
+    cancelled.map((e) => String(e.eventbriteId || "")).filter(Boolean)
+  );
+  return (entry) => {
+    if (!entry || typeof entry !== "object") return false;
+    if (entry.isCancelled === true) return true;
+    const slug = String(entry.slug || entry.eventCode || "").toLowerCase();
+    if (slug && slugs.has(slug)) return true;
+    const id = String(entry.eventbriteId || "");
+    return Boolean(id) && ids.has(id);
+  };
+}
+
+function stripCancelledFromDistFeeds() {
+  if (cancelledEvents.length === 0) {
+    console.log("prerender-events: stripped 0 cancelled event(s) from dist JSON feeds");
+    return;
+  }
+  const isCancelledEntry = makeCancelledMatcher(cancelledEvents);
+
+  for (const name of DIST_EVENT_FEEDS) {
+    const file = path.join(DIST, name);
+    if (!fs.existsSync(file)) {
+      console.log(`prerender-events: dist/${name} not present, nothing to strip`);
+      continue;
+    }
+    const data = JSON.parse(fs.readFileSync(file, "utf8"));
+    if (!Array.isArray(data)) {
+      throw new Error(`dist/${name}: expected a top-level array of events`);
+    }
+    const kept = data.filter((entry) => !isCancelledEntry(entry));
+    const removed = data.length - kept.length;
+    if (removed === 0) {
+      console.log(`prerender-events: stripped 0 cancelled event(s) from dist/${name}`);
+      continue;
+    }
+    fs.writeFileSync(file, `${JSON.stringify(kept, null, 2)}\n`);
+    console.log(`prerender-events: stripped ${removed} cancelled event(s) from dist/${name}`);
+  }
+}
+
+stripCancelledFromDistFeeds();
+
 /* ---------- index shells: /events/ and /blog/ ---------- */
 // Both URLs are in the sitemap but previously served the homepage head
 // (homepage title + canonical = soft duplicate signals) with no crawlable
