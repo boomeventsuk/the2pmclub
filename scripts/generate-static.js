@@ -43,8 +43,12 @@ const events = JSON.parse(
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
+// isCancelled events (see scripts/sync-eventbrite-prices.js) are excluded
+// from every visitor-facing surface: hub cards, JSON-LD, upcoming-events.json
+// and the sitemap all derive from this one "upcoming" list, so excluding here
+// is the single point of truth for all of them.
 const upcoming = events
-  .filter((e) => new Date(e.start) >= today)
+  .filter((e) => new Date(e.start) >= today && !e.isCancelled)
   .sort((a, b) => new Date(a.start) - new Date(b.start));
 
 /* ---------- helpers ---------- */

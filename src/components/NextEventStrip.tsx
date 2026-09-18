@@ -10,6 +10,7 @@ interface EventJson {
   location: string;
   start: string;
   isHidden?: boolean;
+  isCancelled?: boolean;
   status?: string;
   statusLabel?: string;
   priceLabel?: string;
@@ -38,7 +39,7 @@ const NextEventStrip = () => {
       .then((data: EventJson[]) => {
         const now = new Date();
         const upcoming = data
-          .filter((e) => new Date(e.start) >= now && !e.isHidden && e.status !== "sold-out")
+          .filter((e) => new Date(e.start) >= now && !e.isHidden && !e.isCancelled && e.status !== "sold-out")
           .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())[0];
         if (upcoming) {
           setNext({

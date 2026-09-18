@@ -41,11 +41,21 @@ const EIGHTIES_MUSIC_FAQ = "80s anthems. Wall-to-wall songs you know every word 
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
-const upcoming = events.filter((e) => new Date(e.start) >= today);
+// isCancelled (set by scripts/sync-eventbrite-prices.js from the Eventbrite
+// event resource's own status, never from ticket availability alone) is
+// excluded from "upcoming" here so it can never render as a bookable page,
+// and from "pastEvents" below so a cancelled-but-future-dated event is not
+// mistaken for one that simply "ended". Cancelled events get their own gone
+// shell + 410 further down, mirroring but distinct from the ended mechanism.
+const upcoming = events.filter((e) => new Date(e.start) >= today && !e.isCancelled);
 // Ended events: start date strictly before today. These still live in
 // events.json (machine-owned; never removed) but must stop serving a
 // bookable 200 page. Each gets a noindex "gone" shell + a forced 410 below.
-const pastEvents = events.filter((e) => e.start && new Date(e.start) < today);
+const pastEvents = events.filter((e) => e.start && new Date(e.start) < today && !e.isCancelled);
+// Cancelled events: isCancelled true, regardless of date (a cancellation can
+// be announced for a future date too). Same keep-but-mark, noindex terminal
+// shell pattern as pastEvents, but a distinct reason and distinct copy.
+const cancelledEvents = events.filter((e) => e.isCancelled);
 
 // cityCode -> hub directory, so an ended event can point visitors at the
 // same city's hub for the next date. Falls back to the events index.
@@ -183,6 +193,36 @@ function goneShellHtml(ev) {
   <main style="padding:48px 24px;max-width:560px;">
     <h1 style="font-size:1.6rem;line-height:1.25;margin:0 0 12px;text-transform:uppercase;letter-spacing:-0.01em;">${esc(displayTitle(ev))}</h1>
     <p style="color:rgba(255,255,255,0.75);margin:0 0 28px;font-size:1.05rem;">This event has ended.</p>
+    <p style="margin:0 0 14px;"><a href="/#tickets" style="display:inline-block;background:#FF3CAC;color:#fff;font-weight:700;padding:13px 32px;border-radius:999px;text-decoration:none;">See upcoming events</a></p>
+    <p style="margin:0;"><a href="${esc(hubPath)}" style="color:#FF3CAC;font-weight:600;text-decoration:underline;">More ${esc(city || "2PM Club")} dates</a></p>
+  </main>
+</body>
+</html>
+`;
+}
+
+// Minimal noindex "gone" shell for cancelled events. Same architecture as
+// goneShellHtml() above (served with a 410 via the forced redirect lines
+// appended to dist/_redirects below; on-brand dark styling, inline only,
+// links to the homepage tickets section and the same-city hub) but distinct
+// copy: "cancelled" is a different fact from "ended" and must never be
+// presented as if the date simply passed.
+function cancelledShellHtml(ev) {
+  const hubPath = hubPathForEvent(ev);
+  const { city } = parseLocation(ev.location);
+  const fontStack = "Poppins,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif";
+  return `<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>This event has been cancelled | THE 2PM CLUB</title>
+</head>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0B0B0F;color:#fff;font-family:${fontStack};text-align:center;">
+  <main style="padding:48px 24px;max-width:560px;">
+    <h1 style="font-size:1.6rem;line-height:1.25;margin:0 0 12px;text-transform:uppercase;letter-spacing:-0.01em;">${esc(displayTitle(ev))}</h1>
+    <p style="color:rgba(255,255,255,0.75);margin:0 0 28px;font-size:1.05rem;">This event has been cancelled.</p>
     <p style="margin:0 0 14px;"><a href="/#tickets" style="display:inline-block;background:#FF3CAC;color:#fff;font-weight:700;padding:13px 32px;border-radius:999px;text-decoration:none;">See upcoming events</a></p>
     <p style="margin:0;"><a href="${esc(hubPath)}" style="color:#FF3CAC;font-weight:600;text-decoration:underline;">More ${esc(city || "2PM Club")} dates</a></p>
   </main>
@@ -512,6 +552,50 @@ function writeExpiredEvents() {
 }
 
 writeExpiredEvents();
+
+/* ---------- cancelled events: noindex gone shells + 410 redirects ---------- */
+// Same mechanism as writeExpiredEvents() above (noindex shell + forced 410,
+// inserted before the /events/* SPA fallback so it wins Netlify's first-match
+// ordering), reused for a different reason: isCancelled is set from the
+// Eventbrite event resource's own status (see scripts/sync-eventbrite-prices.js),
+// independent of the event's date, so a cancelled event due next week is
+// gated exactly the same way as one whose date has already passed.
+function writeCancelledEvents() {
+  if (cancelledEvents.length === 0) {
+    console.log("prerender-events: no cancelled events to gate");
+    return;
+  }
+
+  for (const ev of cancelledEvents) {
+    const dir = path.join(DIST, "events", slugPath(ev.slug));
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "index.html"), cancelledShellHtml(ev));
+  }
+
+  const redirectsPath = path.join(DIST, "_redirects");
+  let redirects = fs.readFileSync(redirectsPath, "utf8");
+  if (redirects.includes("# Cancelled events: 410 Gone")) {
+    console.log("prerender-events: cancelled-event 410 redirects already present, skipping");
+    return;
+  }
+  if (!SPA_FALLBACK_RE.test(redirects)) {
+    throw new Error("dist/_redirects: /events/* SPA fallback line not found");
+  }
+  const lines = cancelledEvents
+    .map((ev) => {
+      const slug = slugPath(ev.slug);
+      return `/events/${slug}        /events/${slug}/index.html    410!\n/events/${slug}/*      /events/${slug}/index.html    410!`;
+    })
+    .join("\n");
+  redirects = redirects.replace(
+    SPA_FALLBACK_RE,
+    `# Cancelled events: 410 Gone (generated by prerender-events.js)\n${lines}\n\n$&`
+  );
+  fs.writeFileSync(redirectsPath, redirects);
+  console.log(`prerender-events: wrote ${cancelledEvents.length} cancelled-event gone shells + 410 redirects`);
+}
+
+writeCancelledEvents();
 
 /* ---------- index shells: /events/ and /blog/ ---------- */
 // Both URLs are in the sitemap but previously served the homepage head

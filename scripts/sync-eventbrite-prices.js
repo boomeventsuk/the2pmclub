@@ -49,6 +49,34 @@ async function fetchTicketClasses(eventbriteId, token) {
   return data.ticket_classes || [];
 }
 
+// The ticket_classes endpoint alone cannot tell a cancelled event apart from
+// a live one with unsold, unavailable tickets: both look like "nothing on
+// sale" to extractPriceData(), which then falls through to a live-sounding
+// label such as "Coming soon". The event resource itself carries the real
+// status ("live", "canceled", "deleted", etc.), so it is fetched separately
+// and is the only source ever allowed to set isCancelled. Never throws: any
+// failure (network or non-2xx) is logged and treated as "unknown", never as
+// "cancelled" - see applyCancellationState().
+async function fetchEventStatus(eventbriteId, token) {
+  const url = `https://www.eventbriteapi.com/v3/events/${eventbriteId}/`;
+  try {
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!res.ok) {
+      console.warn(`  WARNING: Eventbrite API returned ${res.status} fetching event status for ${eventbriteId}`);
+      return null;
+    }
+
+    const data = await res.json();
+    return typeof data.status === 'string' ? data.status : null;
+  } catch (err) {
+    console.warn(`  WARNING: failed to fetch event status for ${eventbriteId}: ${err.message}`);
+    return null;
+  }
+}
+
 // ============================================================
 // Per-venue count rules (JD, 2026-06-10).
 // countFrom = the singles-remaining level at which the badge may
@@ -303,6 +331,135 @@ function extractPriceData(ticketClasses, eventDate, location) {
 }
 
 // ============================================================
+// Cancellation detection (JD, 2026-09-18).
+//
+// Fixes the defect where a CANCELLED Eventbrite event (status "canceled",
+// American spelling in the API) whose ticket classes were all UNAVAILABLE
+// still fell through extractPriceData()'s ladder to "Coming soon" and kept
+// publishing as a live upcoming event.
+//
+// isCancelled is sticky and machine-owned, same spirit as the "ended"
+// past-event hygiene below: once set it is never cleared or recomputed by
+// this script. A failed or missing status fetch (eventStatus === null) NEVER
+// sets or clears isCancelled, it only leaves the existing state untouched.
+// ============================================================
+
+const CANCELLED_EVENTBRITE_STATUSES = new Set(['canceled', 'deleted']);
+
+function applyCancellationState(event, eventStatus) {
+  if (event.isCancelled) return true; // sticky: already cancelled, stays cancelled
+  if (eventStatus === null) return false; // fetch failed or status missing: never guess
+  if (!CANCELLED_EVENTBRITE_STATUSES.has(eventStatus)) return false;
+
+  event.isCancelled = true;
+  event.statusLabel = 'Cancelled';
+  event.availability = 'https://schema.org/Discontinued';
+  return true;
+}
+
+// Applies one event's ticket-price and cancellation classification to the
+// event object. Pure with respect to the network: it only reads/writes the
+// event object and the already-fetched ticketClasses/eventStatus, so it can
+// be exercised directly against fixtures without hitting Eventbrite (see
+// scripts/test-cancellation-sync.js). Returns { priceData, cancelled } for
+// the caller's logging and internal-data bookkeeping.
+function syncEventFields(event, ticketClasses, eventStatus) {
+  const priceData = extractPriceData(ticketClasses, event.start, event.location);
+  const cancelled = applyCancellationState(event, eventStatus);
+
+  if (priceData) {
+    // Public fields only in events.json
+    event.price = priceData.public.price;
+    event.priceCurrency = priceData.public.priceCurrency;
+    event.priceLabel = priceData.public.priceLabel;
+
+    if (cancelled) {
+      // A cancelled event's computed urgency ladder must never override
+      // "Cancelled" - this is the exact defect being fixed here. Strip the
+      // marketing fields that only make sense for a live, on-sale event.
+      delete event.tierLabels;
+      delete event.groupTicket;
+      delete event.urgencyLabel;
+      delete event.statusLabelOverride;
+    } else {
+      event.availability = priceData.public.availability;
+      // Manual override: if event.statusLabelOverride is set, the sync will
+      // not touch event.statusLabel. Use this when a label has been hand-set
+      // by JD (e.g. "Final release") and should not be reverted to
+      // the computed label on the next sync run.
+      // Override safety: a hand-set label is dropped the moment the ticket
+      // data contradicts it (e.g. override says "Early Release now on sale"
+      // while the Early Release tier is SOLD_OUT). Stale FOMO is a lie; the
+      // computed ladder takes over and the override is deleted for good.
+      const overrideContradicted = (() => {
+        const ov = String(event.statusLabelOverride || '').toLowerCase();
+        if (!ov) return false;
+        const soldOutTiers = (priceData.internal.tiers || []).filter(t => t.status === 'SOLD_OUT');
+        return soldOutTiers.some(t => {
+          const tier = String(t.name || '').toLowerCase().replace(/\s*tickets?\s*$/, '');
+          return tier && ov.includes(tier);
+        });
+      })();
+      if (overrideContradicted) {
+        console.log(`    OVERRIDE DROPPED: "${event.statusLabelOverride}" contradicted by sold-out tier; using computed "${priceData.public.statusLabel}"`);
+        delete event.statusLabelOverride;
+        event.statusLabel = priceData.public.statusLabel;
+      } else if (event.statusLabelOverride && String(event.statusLabelOverride).trim().length > 0) {
+        event.statusLabel = event.statusLabelOverride;
+        console.log(`    NOTE: statusLabel override in effect ("${event.statusLabelOverride}"), computed label "${priceData.public.statusLabel}" not applied`);
+      } else {
+        event.statusLabel = priceData.public.statusLabel;
+      }
+      event.statusLabel = launchStatusLabel(
+        event,
+        event.statusLabel,
+        priceData.public.availability === 'https://schema.org/SoldOut',
+      );
+      if (priceData.public.tierLabels) {
+        event.tierLabels = priceData.public.tierLabels;
+      } else {
+        delete event.tierLabels;
+      }
+      // In count mode or sold out, the sync owns the hero urgency banner
+      // too: it must never disagree with the badge (JD caught "LAST 15
+      // TICKETS" surviving while the badge said 10).
+      const earlyTierSoldOut = (priceData.internal.tiers || []).some(
+        t => /early/i.test(t.name) && t.status === 'SOLD_OUT'
+      );
+      if (priceData.public.statusLabel === 'Final release' ||
+          priceData.public.statusLabel === 'Last few tickets' ||
+          priceData.public.statusLabel === 'Join waiting list' ||
+          earlyTierSoldOut) {
+        event.urgencyLabel = earlyTierSoldOut
+          ? priceData.public.statusLabel.toUpperCase()
+          : priceData.public.statusLabel;
+      }
+      if (priceData.public.groupTicket) {
+        event.groupTicket = priceData.public.groupTicket;
+      } else {
+        delete event.groupTicket;
+      }
+    }
+
+    normaliseDynamicTicketCopy(event);
+    event.priceLastSync = new Date().toISOString();
+
+    // Clean up any legacy fields that should never be public
+    delete event.capacityTotal;
+    delete event.ticketsSold;
+    delete event.ticketsRemaining;
+    delete event.tiers;
+  } else if (cancelled) {
+    // No ticket-class price data at all, but the event resource itself says
+    // cancelled/deleted - still honour it (sticky fields already set above).
+    normaliseDynamicTicketCopy(event);
+    event.priceLastSync = new Date().toISOString();
+  }
+
+  return { priceData, cancelled };
+}
+
+// ============================================================
 // Em dash sanitisation (house rule: no em dashes anywhere).
 // Event titles and copy must never contain U+2014. Titles get
 // ": " (reads as a subtitle separator); all other strings get
@@ -355,90 +512,27 @@ async function main() {
 
     try {
       const ticketClasses = await fetchTicketClasses(event.eventbriteId, token);
-      const priceData = extractPriceData(ticketClasses, event.start, event.location);
+      const eventStatus = await fetchEventStatus(event.eventbriteId, token);
+      const { priceData, cancelled } = syncEventFields(event, ticketClasses, eventStatus);
 
       if (priceData) {
-        // Public fields only in events.json
-        event.price = priceData.public.price;
-        event.priceCurrency = priceData.public.priceCurrency;
-        event.priceLabel = priceData.public.priceLabel;
-        event.availability = priceData.public.availability;
-        // Manual override: if event.statusLabelOverride is set, the sync will
-        // not touch event.statusLabel. Use this when a label has been hand-set
-        // by JD (e.g. "Final release") and should not be reverted to
-        // the computed label on the next sync run.
-        // Override safety: a hand-set label is dropped the moment the ticket
-        // data contradicts it (e.g. override says "Early Release now on sale"
-        // while the Early Release tier is SOLD_OUT). Stale FOMO is a lie; the
-        // computed ladder takes over and the override is deleted for good.
-        const overrideContradicted = (() => {
-          const ov = String(event.statusLabelOverride || '').toLowerCase();
-          if (!ov) return false;
-          const soldOutTiers = (priceData.internal.tiers || []).filter(t => t.status === 'SOLD_OUT');
-          return soldOutTiers.some(t => {
-            const tier = String(t.name || '').toLowerCase().replace(/\s*tickets?\s*$/, '');
-            return tier && ov.includes(tier);
-          });
-        })();
-        if (overrideContradicted) {
-          console.log(`    OVERRIDE DROPPED: "${event.statusLabelOverride}" contradicted by sold-out tier; using computed "${priceData.public.statusLabel}"`);
-          delete event.statusLabelOverride;
-          event.statusLabel = priceData.public.statusLabel;
-        } else if (event.statusLabelOverride && String(event.statusLabelOverride).trim().length > 0) {
-          event.statusLabel = event.statusLabelOverride;
-          console.log(`    NOTE: statusLabel override in effect ("${event.statusLabelOverride}"), computed label "${priceData.public.statusLabel}" not applied`);
-        } else {
-          event.statusLabel = priceData.public.statusLabel;
-        }
-        event.statusLabel = launchStatusLabel(
-          event,
-          event.statusLabel,
-          priceData.public.availability === 'https://schema.org/SoldOut',
-        );
-        if (priceData.public.tierLabels) {
-          event.tierLabels = priceData.public.tierLabels;
-        } else {
-          delete event.tierLabels;
-        }
-        // In count mode or sold out, the sync owns the hero urgency banner
-        // too: it must never disagree with the badge (JD caught "LAST 15
-        // TICKETS" surviving while the badge said 10).
-        const earlyTierSoldOut = (priceData.internal.tiers || []).some(
-          t => /early/i.test(t.name) && t.status === 'SOLD_OUT'
-        );
-        if (priceData.public.statusLabel === 'Final release' ||
-            priceData.public.statusLabel === 'Last few tickets' ||
-            priceData.public.statusLabel === 'Join waiting list' ||
-            earlyTierSoldOut) {
-          event.urgencyLabel = earlyTierSoldOut
-            ? priceData.public.statusLabel.toUpperCase()
-            : priceData.public.statusLabel;
-        }
-        if (priceData.public.groupTicket) {
-          event.groupTicket = priceData.public.groupTicket;
-        } else {
-          delete event.groupTicket;
-        }
-        normaliseDynamicTicketCopy(event);
-        event.priceLastSync = new Date().toISOString();
-
-        // Clean up any legacy fields that should never be public
-        delete event.capacityTotal;
-        delete event.ticketsSold;
-        delete event.ticketsRemaining;
-        delete event.tiers;
-
         // Internal data stored separately (gitignored)
         internalData[event.eventbriteId] = {
           title: event.title,
           slug: event.slug,
           ...priceData.internal,
-          publicLabel: priceData.public.statusLabel,
+          publicLabel: event.statusLabel,
+          cancelled,
           syncedAt: new Date().toISOString()
         };
 
         updated++;
-        console.log(`    OK: ${priceData.public.priceLabel} | ${priceData.public.statusLabel} (real: ${priceData.internal.totalAttendeeRemaining} attendees left, ${priceData.internal.percentSold}% sold, ${priceData.internal.daysUntil}d away${priceData.internal.isEventWeek ? ' [EVENT WEEK]' : ''})`);
+        console.log(cancelled
+          ? `    CANCELLED: ${priceData.public.priceLabel} | statusLabel forced to "Cancelled" (Eventbrite status: ${eventStatus ?? 'already flagged'})`
+          : `    OK: ${priceData.public.priceLabel} | ${event.statusLabel} (real: ${priceData.internal.totalAttendeeRemaining} attendees left, ${priceData.internal.percentSold}% sold, ${priceData.internal.daysUntil}d away${priceData.internal.isEventWeek ? ' [EVENT WEEK]' : ''})`);
+      } else if (cancelled) {
+        updated++;
+        console.log(`    CANCELLED: no ticket price data, statusLabel forced to "Cancelled" (Eventbrite status: ${eventStatus ?? 'already flagged'})`);
       } else {
         console.log(`    WARN: No price data extracted`);
       }
@@ -457,12 +551,17 @@ async function main() {
   // live-sounding label. Events whose start date is more than 7
   // days past lose their marketing fields and keep the factual
   // record (title, date, venue, price) with SoldOut availability.
+  //
+  // Cancelled events are skipped here: "cancelled" and "ended" are separate
+  // facts, and forcing SoldOut availability onto a cancelled event would
+  // overwrite the more accurate Discontinued state set above with a false
+  // one (it was never sold out, it was cancelled).
   // ============================================================
   const ARCHIVE_AFTER_MS = 7 * 24 * 60 * 60 * 1000;
   const now = Date.now();
   let archived = 0;
   for (const event of events) {
-    if (!event.start) continue;
+    if (!event.start || event.isCancelled) continue;
     const start = new Date(event.start).getTime();
     if (Number.isNaN(start) || now - start <= ARCHIVE_AFTER_MS) continue;
     const hadMarketing =
@@ -498,7 +597,17 @@ async function main() {
   console.log(`Internal: ${INTERNAL_PATH}`);
 }
 
-main().catch(err => {
-  console.error('Fatal error:', err);
-  process.exit(1);
-});
+// Only run automatically when this file is executed directly (node
+// scripts/sync-eventbrite-prices.js or the GitHub Actions step), never when
+// imported - e.g. by scripts/test-cancellation-sync.js, which imports
+// applyCancellationState/syncEventFields to exercise the classification
+// logic against fixtures without a token or network access.
+const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) {
+  main().catch(err => {
+    console.error('Fatal error:', err);
+    process.exit(1);
+  });
+}
+
+export { applyCancellationState, syncEventFields, extractPriceData };

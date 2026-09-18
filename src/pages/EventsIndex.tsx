@@ -15,6 +15,7 @@ interface EventJson {
   priceLabel?: string;
   statusLabel?: string;
   status?: string;
+  isCancelled?: boolean;
 }
 
 export default function EventsIndex() {
@@ -27,7 +28,7 @@ export default function EventsIndex() {
         const now = new Date();
         setEvents(
           data
-            .filter((e) => new Date(e.start) >= now)
+            .filter((e) => new Date(e.start) >= now && !e.isCancelled)
             .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())
         );
       })

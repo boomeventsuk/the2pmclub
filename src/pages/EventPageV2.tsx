@@ -76,6 +76,7 @@ interface EventJson {
   legacyLine?: string;
   groupTicket?: { size: number; price: number; label: string };
   isEightiesEdition: boolean;
+  isCancelled?: boolean;
 }
 
 interface EventData {
@@ -98,6 +99,7 @@ interface EventData {
   price?: number;
   legacyLine?: string;
   groupTicket?: { size: number; price: number; label: string };
+  isCancelled?: boolean;
 }
 
 const parseLocation = (location: string): { venue: string; city: string } => {
@@ -143,6 +145,7 @@ const toEventData = (event: EventJson): EventData => {
     legacyLine: event.legacyLine,
     groupTicket: event.groupTicket,
     isEightiesEdition: isEightiesEditionEvent(event),
+    isCancelled: event.isCancelled,
   };
 };
 
@@ -597,6 +600,46 @@ const EventPageV2 = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="font-poppins text-foreground/60">Event not found.</p>
       </div>
+    );
+  }
+
+  // Cancelled-event guard for stale client-side URLs. Same mechanism as the
+  // ended-event guard below (static shell served as a 410; this covers a soft
+  // nav or cached SPA that resolves in-app), but checked first and
+  // independent of the date: a cancellation can be announced for a future
+  // date, so isCancelled must win even when isEventPast() would say "not yet".
+  if (event.isCancelled) {
+    const hubPath = hubPathForCityCode(event.cityCode);
+    return (
+      <>
+        <Helmet>
+          <title>This event has been cancelled | THE 2PM CLUB</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
+        <div className="min-h-screen bg-background flex flex-col">
+          <Header />
+          <main
+            id="main-content"
+            className="flex-1 flex flex-col items-center justify-center text-center px-6 py-24"
+          >
+            <h1 className="font-poppins text-3xl md:text-4xl font-bold text-foreground tracking-tight uppercase mb-3">
+              This event has been cancelled
+            </h1>
+            <p className="font-poppins text-base md:text-lg text-foreground/70 max-w-md mb-8">
+              {event.city} on {event.date} has been cancelled. The next dates are on sale now.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild size="lg" className="font-poppins font-semibold">
+                <a href="/#tickets">See upcoming events</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="font-poppins font-semibold">
+                <a href={hubPath}>More {event.city} dates</a>
+              </Button>
+            </div>
+          </main>
+          <Footer />
+        </div>
+      </>
     );
   }
 

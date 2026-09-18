@@ -26,6 +26,7 @@ interface EventJson {
   tierLabels?: string[];
   groupTicket?: { size: number; price: number; label: string };
   isHidden?: boolean;
+  isCancelled?: boolean;
 }
 
 interface MappedEvent {
@@ -96,6 +97,7 @@ const Tickets = () => {
         const futureEvents = data
           .filter((e) => new Date(e.start) >= now)
           .filter((e) => !e.isHidden)
+          .filter((e) => !e.isCancelled)
           .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
 
         // Map to EventCard props
