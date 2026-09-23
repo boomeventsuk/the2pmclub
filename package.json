@@ -5,12 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "TWIN_BRAND=pm python3 v2/release-work/build-v2-production.py",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prebuild": "node scripts/generate-static.js",
-    "postbuild": "node scripts/prerender-events.js",
     "test:locations": "node scripts/check-location-page-contracts.js",
     "test:cancellation": "node scripts/test-cancellation-sync.js",
     "test:urgency": "node scripts/test-event-date-proximity.js"

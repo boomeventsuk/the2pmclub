@@ -1,33 +1,7 @@
 [build]
   command = "npm run build"
   publish = "dist"
-
-[[edge_functions]]
-  path = "/*"
-  function = "markdown-negotiate"
-
-[[edge_functions]]
-  path = "/"
-  function = "homepage-inject"
-
-[[edge_functions]]
-  path = "/events/*"
-  function = "og-inject"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Link = "</.well-known/api-catalog>; rel=\"api-catalog\", </llms.txt>; rel=\"alternate\"; type=\"text/markdown\", </openapi.json>; rel=\"service-desc\"; type=\"application/vnd.oai.openapi+json\""
-
-[[headers]]
-  for = "/auth.md"
-  [headers.values]
-    Content-Type = "text/markdown; charset=UTF-8"
-
-[[headers]]
-  for = "/.well-known/api-catalog"
-  [headers.values]
-    Content-Type = "application/linkset+json"
+  functions = "netlify/functions"
 
 [[headers]]
   for = "/*"
@@ -36,69 +10,14 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "accelerometer=(), autoplay=(), camera=(), clipboard-read=(self), clipboard-write=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
 [[headers]]
-  for = "/*"
+  for = "/sitemap.xml"
   [headers.values]
-    Content-Security-Policy = """
-      default-src 'self';
-      img-src 'self' data: https://boombastic-events.b-cdn.net https://storage.googleapis.com https://www.facebook.com https://www.googletagmanager.com https://www.google-analytics.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.googletagmanager.com;
-      font-src https://fonts.gstatic.com;
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.eventbrite.co.uk https://eventbrite.co.uk https://www.eventbrite.com https://eventbrite.com https://connect.facebook.net;
-      connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://www.eventbrite.co.uk https://eventbrite.co.uk https://www.eventbrite.com https://eventbrite.com https://connect.facebook.net https://www.facebook.com https://*.facebook.com;
-      frame-src https://www.googletagmanager.com https://www.facebook.com https://open.spotify.com https://www.eventbrite.co.uk https://eventbrite.co.uk https://www.eventbrite.com https://eventbrite.com https://www.youtube.com;
-      media-src 'self' https://boombastic-events.b-cdn.net;
-    """
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "application/xml"
 
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/lovable-uploads/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/events/*"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-
-# SPA fallback for client-side routes — explicit React Router paths only
-[[redirects]]
-  from = "/events/*"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/events-v2/*"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/faqs"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/blog"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/blog/why-daytime-discos-are-popular/"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/blog/why-2pm-works/"
-  to = "/index.html"
-  status = 200
-
-# Catch-all 404 for genuinely unknown URLs — must be LAST
 [[redirects]]
   from = "/*"
   to = "/404.html"
