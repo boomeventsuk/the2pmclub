@@ -683,7 +683,10 @@ const EventPageV2 = () => {
   }
 
   const faqs = [
-    ...(event.venue.includes('Charles Bradlaugh') ? [
+    ...(event.slug.toUpperCase() === '031026-2PM-NPTON' ? [
+      { q: 'Does one ticket cover both floors?', a: 'Yes. Your ticket gives you access to the upstairs 80s Sing Out Loud Anthems and the downstairs 80s Disco & Smooth Grooves. You can move between the rooms throughout the afternoon.' },
+      { q: 'What is access like at The Charles Bradlaugh?', a: 'The upstairs room is accessed by steps. For access questions, contact hello@boomevents.co.uk before booking.' },
+    ] : event.venue.includes('Charles Bradlaugh') ? [
       { q: 'What is access like at The Charles Bradlaugh?', a: 'The event room is upstairs, accessed by steps. Toilets are available on both floors. For access questions, contact hello@boomevents.co.uk before booking.' },
       { q: 'Can we book food?', a: 'Food is served downstairs and booked separately from event tickets. Contact the venue on 01604 473225 or info@thecharlesbradlaugh.com for menus and table bookings.' },
     ] : []),
@@ -745,7 +748,9 @@ const EventPageV2 = () => {
   const eventMusicLine = isChristmasEdition
     ? 'Christmas floor-fillers plus Sing Out Loud Anthems from the 80s, 90s and 00s.'
     : musicLineForEvent(event);
-  const eventSubline = eventSublineForEvent(event);
+  const eventSubline = event.slug.toUpperCase() === '031026-2PM-NPTON'
+    ? 'Two floors. One ticket. A whole building of 80s music.'
+    : eventSublineForEvent(event);
   const eventSoundtrackLine = soundtrackLineForEvent(event);
   const eventTitle = isChristmasEdition
     ? `The 2PM Club Christmas Edition - ${event.city} - ${event.date}`

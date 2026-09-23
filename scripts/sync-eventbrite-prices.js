@@ -112,7 +112,7 @@ function normaliseDynamicTicketCopy(event) {
   if (typeof event.highlights === 'string') {
     event.highlights = event.highlights
       .split('|')
-      .map(item => item.trimStart().startsWith('🎟') ? LIVE_TICKET_COPY : item)
+      .map(item => item.trimStart().startsWith('🎟') && !item.includes('ONE TICKET, BOTH FLOORS:') ? LIVE_TICKET_COPY : item)
       .join('|');
   }
 }
