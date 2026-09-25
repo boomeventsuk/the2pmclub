@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:07.593Z",
+    "priceLastSync": "2026-09-25T19:38:04.073Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:08.942Z",
+    "priceLastSync": "2026-09-25T19:38:05.165Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:10.120Z",
+    "priceLastSync": "2026-09-25T19:38:06.302Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:11.462Z",
+    "priceLastSync": "2026-09-25T19:38:07.685Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:12.733Z",
+    "priceLastSync": "2026-09-25T19:38:08.835Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:13.899Z",
+    "priceLastSync": "2026-09-25T19:38:09.950Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:15.051Z",
+    "priceLastSync": "2026-09-25T19:38:11.080Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:16.338Z",
+    "priceLastSync": "2026-09-25T19:38:12.193Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -266,7 +266,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:17.868Z",
+    "priceLastSync": "2026-09-25T19:38:13.259Z",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -298,7 +298,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:19.153Z",
+    "priceLastSync": "2026-09-25T19:38:14.529Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -329,7 +329,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:20.428Z",
+    "priceLastSync": "2026-09-25T19:38:15.705Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -366,7 +366,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £13.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-09-25T15:02:21.573Z",
+    "priceLastSync": "2026-09-25T19:38:17.028Z",
     "statusLabel": "Final release",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -404,7 +404,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-25T15:02:23.122Z",
+    "priceLastSync": "2026-09-25T19:38:18.283Z",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -442,7 +442,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-09-25T15:02:24.438Z",
+    "priceLastSync": "2026-09-25T19:38:19.393Z",
     "statusLabel": "Selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -481,7 +481,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £12.00",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-09-25T15:02:25.555Z",
+    "priceLastSync": "2026-09-25T19:38:20.576Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -529,7 +529,7 @@
       "postalCode": "LE2 7TR",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-25T15:02:26.595Z",
+    "priceLastSync": "2026-09-25T19:38:21.844Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -556,19 +556,19 @@
     "fullDescription": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧\n\nSat 5th Dec 2026 · 2 PM to 5:30 PM\n\nThe Charles Bradlaugh, Northampton\n\nAfter the fastest sell-out in over a decade of Christmas parties, we're back with not one but two daytime discos this festive season. Sat 5th and Sat 12th Dec.\n\nNo more yawning through midnight office do's. From 2 PM sharp we're firing sing-out-loud choruses, neon fairy lights and the festive bangers you've been miming in the car since November.\n\nChristmas hits from the likes of\n\nMARIAH · WHAM! · SLADE · SHAKIN' STEVENS · WIZZARD · EAST 17 and the rest of the gang\n\nAs well as all the biggest Sing Out Loud Anthems from the 80s, 90s & 00s\n\nMADONNA · WHITNEY · TAKE THAT · SPICE GIRLS · ROBIN S · TINA TURNER · CHER · OASIS · BLACK BOX · ABBA · BEYONCÉ · THE KILLERS · CHAKA KHAN · RIHANNA · BON JOVI · YAZZ and many more\n\nThen a few hours later you're on the sofa for Strictly, glowing like Rudolph, voice gone! Secure your tickets early and own the group chat.\n\nWHY YOUR CREW WILL LOVE IT\n\n🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.\n\n🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.\n\n🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.\n\n🕑 Party Early, Home Happy, done by 5:30 PM, Sunday still yours.\n\n👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.\n\n🎉 Proven Sell-Out Energy, Every Christmas Party has sold out in advance in 10+ years!\n\n\"I wasn't expecting much the first time I attended in December but couldn't believe the amazing vibe\" Lorne, Northampton\n\nOur Christmas parties are extremely popular, so we recommend booking early.\n\n🎟 Check the live ticket selector for current prices, availability and group offers when available.\n\n🚨 Book now to dodge festive FOMO\n\nNow at The Charles Bradlaugh. Existing tickets remain valid. Upstairs event, accessed by steps. Food available downstairs, booked separately.",
     "highlights": "🎧✨ THE 2PM CLUB CHRISTMAS DAYTIME DISCO ✨🎧|🎄 Festive Floor-Fillers, every Christmas anthem you want to hear.|🎤 Sing-out-loud Throwbacks, every chorus you didn't know you still knew.|🥂 Just The Party, no sit-down meal, straight to the dancefloor with a drink in hand.|🕑 Party Early, Home Happy, done by 5:30 PM, Sunday still yours.|👯‍♀️ Group-Chat Gold, one link, one payment, Christmas reunion sorted.",
     "status": "just-announced",
-    "urgencyLabel": "GENERAL RELEASE NOW OPEN",
+    "urgencyLabel": "SELLING FAST",
     "price": 13,
     "priceCurrency": "GBP",
     "priceLabel": "From £13.00",
-    "availability": "https://schema.org/InStock",
-    "statusLabel": "General release now open",
+    "availability": "https://schema.org/LimitedAvailability",
+    "statusLabel": "Selling fast",
     "venueAddress": {
       "streetAddress": "1 Earl Street",
       "addressLocality": "Northampton",
       "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-25T15:02:27.774Z",
+    "priceLastSync": "2026-09-25T19:38:22.909Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -607,7 +607,7 @@
       "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-25T15:02:29.083Z",
+    "priceLastSync": "2026-09-25T19:38:24.485Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -646,7 +646,7 @@
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-25T15:02:30.480Z",
+    "priceLastSync": "2026-09-25T19:38:25.668Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -685,7 +685,7 @@
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-25T15:02:31.660Z",
+    "priceLastSync": "2026-09-25T19:38:26.713Z",
     "groupTicket": {
       "size": 4,
       "price": 42,
