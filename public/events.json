@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:23.753Z",
+    "priceLastSync": "2026-09-26T14:11:33.877Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:24.897Z",
+    "priceLastSync": "2026-09-26T14:11:34.899Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:26.119Z",
+    "priceLastSync": "2026-09-26T14:11:35.930Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:27.323Z",
+    "priceLastSync": "2026-09-26T14:11:36.981Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:28.459Z",
+    "priceLastSync": "2026-09-26T14:11:37.996Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:29.605Z",
+    "priceLastSync": "2026-09-26T14:11:39.008Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:30.887Z",
+    "priceLastSync": "2026-09-26T14:11:40.060Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:32.119Z",
+    "priceLastSync": "2026-09-26T14:11:41.027Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -266,7 +266,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:33.262Z",
+    "priceLastSync": "2026-09-26T14:11:42.026Z",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -298,7 +298,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:34.402Z",
+    "priceLastSync": "2026-09-26T14:11:43.088Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -329,7 +329,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:35.704Z",
+    "priceLastSync": "2026-09-26T14:11:44.104Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -366,7 +366,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £13.50",
     "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-09-26T09:08:36.892Z",
+    "priceLastSync": "2026-09-26T14:11:45.051Z",
     "statusLabel": "Final release",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
@@ -404,7 +404,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-09-26T09:08:37.934Z",
+    "priceLastSync": "2026-09-26T14:11:45.933Z",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -436,14 +436,12 @@
     "fullDescription": "THE 2PM CLUB Daytime Disco is back at hmv Empire on Sat 19th Sept, 2pm-6pm. The 2PM Club has already shown this room works in the middle of the afternoon. This one’s different: for one afternoon, every song is 80s.\n\nEXPECT TO HEAR\n\nMadonna · Michael Jackson · Wham! · Whitney Houston · Bon Jovi · Prince · Duran Duran · A-ha · The Human League · Tina Turner · George Michael · Cyndi Lauper · Eurythmics · Culture Club · Tears For Fears · Simple Minds\n\nThe ones everyone knows. The ones where the room comes in before the chorus has properly started.\n\nHOW IT WORKS\n\nDoors at 2pm. Four hours of 80s anthems back to back, with your people.\n\nHome by 7 if you want to be. Pub, food or sofa after if the afternoon does what it usually does.\n\nWHAT PEOPLE SAY\n\n“It felt like 2am not 2pm!”\n\n“Absolutely fantastic afternoon out. Great music, fab people and a really safe environment”\n\n“Great music, great atmosphere everyone was happy & friendly & we still had the evening to carry on!!”\n\nThat is the point: a proper night-out feeling, just at a time that works.\n\nTHE DETAILS\n\nhmv Empire, Coventry\nSat 19th Sept 2026\n2pm-6pm\nOver 18s only\n\nFAQs\n\nIs this different to the normal 2PM Club?\nYes. Same daytime disco format, but this date is 80s-only for one afternoon.\n\nIs it fancy dress?\nCome as dressed-up or dressed-down as you like. The 80s are in the music, not a costume requirement.\n\nWhat time does it finish?\nLast song is 6pm. Plenty of time to go for food, carry on somewhere else, or be home by 7.\n\nWho is it for?\nGrown-ups who want a proper Saturday dance without giving Sunday away.\n\nAre tickets refundable?\nTickets are non-refundable unless the event is cancelled.\n\nSend it to the group chat and get it booked.",
     "highlights": "🎤 EXPECT TO HEAR: Madonna, Michael Jackson, Wham!, Whitney Houston, Bon Jovi, Prince, Duran Duran, A-ha, The Human League, Tina Turner, George Michael, Cyndi Lauper, Eurythmics, Culture Club, Tears For Fears and Simple Minds.|🕺 HOW IT WORKS: Doors at 2pm. Four hours of 80s anthems back to back, with your people.|🏠 HOME BY 7 IF YOU WANT TO BE: Pub, food or sofa after if the afternoon does what it usually does.|💬 WHAT PEOPLE SAY: “It felt like 2am not 2pm!” A proper night-out feeling, just at a time that works.|🏆 HMV EMPIRE, COVENTRY: THE 2PM CLUB goes full-on 80s in a big-room Saturday afternoon setting.",
     "status": "selling-fast-amber",
-    "urgencyLabel": "SELLING FAST",
     "accentColor": "coral",
     "price": 10,
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
-    "availability": "https://schema.org/InStock",
-    "priceLastSync": "2026-09-26T09:08:39.004Z",
-    "statusLabel": "Selling fast",
+    "availability": "https://schema.org/SoldOut",
+    "priceLastSync": "2026-09-26T14:11:46.899Z",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -477,11 +475,11 @@
     "status": "selling-fast-amber",
     "urgencyLabel": "SELLING FAST",
     "accentColor": "coral",
-    "price": 12,
+    "price": 10,
     "priceCurrency": "GBP",
-    "priceLabel": "From £12.00",
-    "availability": "https://schema.org/LimitedAvailability",
-    "priceLastSync": "2026-09-26T09:08:40.214Z",
+    "priceLabel": "From £10.00",
+    "availability": "https://schema.org/InStock",
+    "priceLastSync": "2026-09-26T14:11:47.900Z",
     "statusLabel": "Tickets selling fast",
     "statusLabelOverride": "Tickets selling fast",
     "legacyLine": "One afternoon only: 80s from start to finish.",
@@ -490,11 +488,6 @@
       "addressLocality": "Milton Keynes",
       "postalCode": "MK11 3LH",
       "addressCountry": "GB"
-    },
-    "groupTicket": {
-      "size": 4,
-      "price": 40,
-      "label": "Group of 4 for £40"
     }
   },
   {
@@ -529,7 +522,7 @@
       "postalCode": "LE2 7TR",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-26T09:08:41.453Z",
+    "priceLastSync": "2026-09-26T14:11:48.864Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -568,7 +561,7 @@
       "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-26T09:08:42.650Z",
+    "priceLastSync": "2026-09-26T14:11:49.862Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -607,7 +600,7 @@
       "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-26T09:08:43.919Z",
+    "priceLastSync": "2026-09-26T14:11:51.120Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -646,7 +639,7 @@
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-26T09:08:45.091Z",
+    "priceLastSync": "2026-09-26T14:11:52.087Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -685,7 +678,7 @@
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-09-26T09:08:46.131Z",
+    "priceLastSync": "2026-09-26T14:11:53.039Z",
     "groupTicket": {
       "size": 4,
       "price": 42,
