@@ -1587,7 +1587,7 @@ def northampton_christmas_ad(events):
             if not match:
                 raise ValueError('Missing Christmas landing section: ' + section + day)
             if event is None:
-                replacement = (f'<article class="date-card"><h3>Sat {day}th Dec</h3><p>This date has ended.</p></article>' if section == 'CARD' else '')
+                replacement = (f'<article class="ad-date-card"><h3>Sat {day}th Dec</h3><p>This date has ended.</p></article>' if section == 'CARD' else '')
             else:
                 replacement = match.group(1).replace('{{PRICE}}', esc(event.get('price') or 'See live tickets'))
                 group = event.get('groupTicket') or {}
@@ -1595,10 +1595,12 @@ def northampton_christmas_ad(events):
                 replacement = replacement.replace('{{GROUP}}', esc(group_text))
             content = re.sub(pattern, lambda _: replacement, content, count=1, flags=re.S)
         if event is None:
-            content = re.sub(rf'<a class="change" href="#tickets-{day}">.*?</a>', '', content)
+            content = re.sub(rf'<a class="ad-change" href="#tickets-{day}">.*?</a>', '', content)
         elif str(event['eventbriteId']) != ('1995469647432' if day == '5' else '1995469668495'):
             raise ValueError('Christmas landing event identity changed: ' + day)
-    return content
+    return page('pm', 'Northampton Christmas', content,
+                description='Christmas Daytime Disco in Northampton. Choose Sat 5th Dec or Sat 12th Dec 2026 at The Charles Bradlaugh, 2pm to 5:30pm. Book tickets here.',
+                sticky_label='Choose your date', sticky_href='#dates', body_class='is-ad-landing')
 
 
 def build():
