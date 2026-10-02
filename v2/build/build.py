@@ -1574,6 +1574,33 @@ def past_event_redirects(brand, existing):
     return rows
 
 
+def northampton_christmas_ad(events):
+    dates = {'5': '051226-2PM-NPTON', '12': '121226-2PM-NPTON'}
+    found = {day: next((e for e in events if e['code'].upper() == event_code), None) for day, event_code in dates.items()}
+    if not any(found.values()):
+        return None
+    content = (HERE / 'dec26-northampton.html').read_text()
+    for day, event in found.items():
+        for section in ('CARD', 'BOOK'):
+            pattern = rf'<!-- {section}-{day}-START -->(.*?)<!-- {section}-{day}-END -->'
+            match = re.search(pattern, content, re.S)
+            if not match:
+                raise ValueError('Missing Christmas landing section: ' + section + day)
+            if event is None:
+                replacement = (f'<article class="date-card"><h3>Sat {day}th Dec</h3><p>This date has ended.</p></article>' if section == 'CARD' else '')
+            else:
+                replacement = match.group(1).replace('{{PRICE}}', esc(event.get('price') or 'See live tickets'))
+                group = event.get('groupTicket') or {}
+                group_text = (str(group.get('label', '')) + ' + booking fees') if group else 'See the checkout for current ticket options.'
+                replacement = replacement.replace('{{GROUP}}', esc(group_text))
+            content = re.sub(pattern, lambda _: replacement, content, count=1, flags=re.S)
+        if event is None:
+            content = re.sub(rf'<a class="change" href="#tickets-{day}">.*?</a>', '', content)
+        elif str(event['eventbriteId']) != ('1995469647432' if day == '5' else '1995469668495'):
+            raise ValueError('Christmas landing event identity changed: ' + day)
+    return content
+
+
 def build():
     global CURRENT_EVENTS
     boom, pm = normalized()
@@ -1610,6 +1637,9 @@ def build():
         for e in events:
             if e['brand'] == brand: write_page(dist, e['path'], details(brand, e))
         if brand == 'pm':
+            ad_landing = northampton_christmas_ad(events)
+            if ad_landing:
+                write_page(dist, 'events/dec26-2pm-npton', ad_landing)
             write_page(dist, 'what-to-expect', pm_what_to_expect(events))
         else:
             for key in BOOM_FORMATS: write_page(dist, key, boom_format(key, events))
