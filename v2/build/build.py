@@ -1860,29 +1860,37 @@ def pm_feed_clean(records):
     return out
 
 
-# Fields kept on ended records in /events.json. Consumers: the Boombastic build (slug, eventbriteId, title,
-# start, end, cityCode, location, isCancelled), boom-mailing-list/sync_eventbrite_to_mailjet.py (eventbriteId,
-# slug, end) and automation/scripts/check_website_freshness.py (slug, eventbriteId). (CODEX-1)
-PAST_KEEP = ('id', 'slug', 'eventbriteId', 'eventType', 'title', 'start', 'end', 'cityCode', 'location', 'isCancelled')
+# /events.json consumers: the live Boombastic production build (crashes without cityCode on any record; reads
+# slug, eventbriteId, title, start, end, cityCode, location, isCancelled), boom-mailing-list/
+# sync_eventbrite_to_mailjet.py (eventbriteId, slug, end) and automation/scripts/check_website_freshness.py
+# (slug, eventbriteId). REQUIRED fields stay on every record; ended records lose only sales data and copy (CODEX-1).
+FEED_REQUIRED = ('start', 'end', 'isCancelled', 'slug', 'cityCode', 'city', 'eventbriteId', 'title')
+PAST_STRIP = ('price', 'priceLabel', 'priceFrom', 'availability', 'status', 'statusLabel', 'isSoldOut', 'urgencyLabel', 'urgency',
+              'description', 'subtitle', 'fullDescription', 'highlights', 'heroSubtitle', 'legacyLine', 'musicDescription', 'soundtrackLine',
+              'groupTicket', 'image', 'infoUrl', 'bookUrl')
 
 
 def pm_public_history(records):
-    """/events.json, same URL and shape for existing consumers: every bookUrl is the owned page (never Eventbrite);
-    ended records keep identity fields only (no price, availability, urgency, status or marketing copy), and a
-    Picturedrome venue is replaced by 'a previous Northampton venue'. Upcoming records match upcoming-events.json."""
+    """/events.json at the same URL for existing consumers. Every record keeps FEED_REQUIRED (city and isCancelled
+    are added where the source omits them) and its bookUrl becomes the owned page. Ended records drop PAST_STRIP,
+    and a Picturedrome location becomes 'Northampton' (its street address is dropped)."""
     out = []
     for r in pm_feed_clean(records):
+        city = CITY_CODE.get(r.get('cityCode'), r.get('cityCode'))
         canonical = PM_SITE + '/events/' + str(r.get('slug') or '').lower() + '/'
-        if r['start'][:10] >= TODAY and not r.get('isCancelled'):
-            item = dict(r)
-        else:
-            item = {k: r[k] for k in PAST_KEEP if k in r}
-            city = CITY_CODE.get(r.get('cityCode'), r.get('cityCode'))
+        item = dict(r)
+        item.setdefault('city', city)
+        item.setdefault('isCancelled', False)
+        if r['start'][:10] < TODAY or r.get('isCancelled'):
+            item = {k: v for k, v in item.items() if k not in PAST_STRIP}
             if RETIRED_VENUE.lower() in str(item.get('location') or '').lower():
-                item['location'] = f'a previous {city} venue, {city}'
+                item['location'] = city
+                item.pop('venueAddress', None)
             item['ended'] = True
         item['canonicalUrl'] = canonical
         item['bookUrl'] = canonical
+        missing = [k for k in FEED_REQUIRED if k not in item]
+        if missing: raise SystemExit(f'events.json {r.get("slug")}: required consumer fields missing {missing}')
         out.append(item)
     return out
 
