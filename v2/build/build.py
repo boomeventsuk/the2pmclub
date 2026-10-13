@@ -63,7 +63,7 @@ DESCRIPTIONS = {
     ('boom', '/privacy/'): 'How Boombastic Events Ltd collects, uses and protects your information when you visit the website, book through Eventbrite or attend an event.',
     ('boom', '/silent-disco/'): 'Silent Disco Greatest Hits: three live DJs on three headphone channels, pop, indie and dance. Switch whenever you like. See dates, venues and tickets.',
     ('pm', '/about/'): 'About THE 2PM CLUB Daytime Disco: a Saturday afternoon party with a DJ, a full sound system and 80s, 90s and 00s anthems. Doors at 2pm. Run by Boombastic Events.',
-    ('pm', '/blog/'): 'Guides from THE 2PM CLUB: what a daytime disco is, hen do and birthday ideas, and how an afternoon party works. Each event page has its own times and tickets.',
+    ('pm', '/blog/'): 'What a daytime disco is, how to plan a hen do or birthday around 2pm, and how the afternoon works. Straight answers from THE 2PM CLUB Daytime Disco.',
     ('pm', '/contact/'): 'Email THE 2PM CLUB team about tickets, access or an upcoming daytime disco. Include your event date, city and order reference so we can help.',
     ('pm', '/faqs/'): 'Straight answers before you book THE 2PM CLUB: tickets, start and finish times, access, coming on your own, what to wear and entry rules.',
     ('pm', '/for-ai/'): 'Public facts and machine-readable data for THE 2PM CLUB: the event feed, upcoming dates and where to find live times, venues and ticket details.',
@@ -1446,6 +1446,27 @@ def ported_page(brand, route, record):
     return page(brand, record['title'].split(' | ')[0], body, active='/blog/')
 
 
+# Published = first commit that added the post's URL to this repo; modified = the 23rd Sept 2026 V2 rewrite
+# that introduced the current text (git log -S on each post's headings). Real dates only.
+BLOG_DATES = {
+    '/blog/what-is-a-daytime-disco/': ('2026-03-20', '2026-09-23'),
+    '/blog/hen-do-daytime-disco/': ('2026-03-20', '2026-09-23'),
+    '/blog/hen-party-ideas-northampton/': ('2026-03-23', '2026-09-23'),
+    '/blog/birthday-party-ideas-northampton-adults/': ('2026-03-23', '2026-09-23'),
+    '/blog/why-daytime-discos-are-popular/': ('2025-09-20', '2026-09-23'),
+}
+
+
+def human_date(iso):
+    d = datetime.fromisoformat(iso); return f'{ordinal(d.day)} {MONTHS[d.month]} {d.year}'
+
+
+def post_dates(route):
+    pub, mod = BLOG_DATES[route]
+    upd = f' · Updated <time datetime="{mod}">{human_date(mod)}</time>' if mod != pub else ''
+    return f'<p class="post-date">Published <time datetime="{pub}">{human_date(pub)}</time>{upd}</p>'
+
+
 def fresh_blog_page(route):
     articles = {
         '/blog/hen-do-daytime-disco/': (
@@ -1491,7 +1512,7 @@ def fresh_blog_page(route):
     }
     title, lede, image_name, sections, description = articles[route]
     blocks = ''.join(f'<h2>{esc(heading)}</h2><p>{body}</p>' for heading, body in sections)
-    body = f'''<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a><p class="eyebrow">THE 2PM CLUB guide</p><h1>{esc(title.upper())}</h1></div></section><article class="prose container"><p class="lede">{esc(lede)}</p>{photo(image_name, 'prose-media')}{blocks}<div class="article-actions">{btn('See dates and tickets', '/whats-on/', 'btn-hot')}<a class="text-link" href="/group-bookings/">Planning for a group {ARROW}</a></div></article>'''
+    body = f'''<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a><p class="eyebrow">THE 2PM CLUB guide</p><h1>{esc(title.upper())}</h1>{post_dates(route)}</div></section><article class="prose container"><p class="lede">{esc(lede)}</p>{photo(image_name, 'prose-media')}{blocks}<div class="article-actions">{btn('See dates and tickets', '/whats-on/', 'btn-hot')}<a class="text-link" href="/group-bookings/">Planning for a group {ARROW}</a></div></article>'''
     return page('pm', title, body, description, '/blog/')
 
 
@@ -1503,13 +1524,17 @@ def blog_index():
         ('Birthday ideas for grown-ups', 'A few ways to mark a birthday together, including a daytime dancefloor.', '/blog/birthday-party-ideas-northampton-adults/', 'pm-hug.jpg'),
         ('Why a daytime disco works', 'Familiar songs, an afternoon dancefloor and time left for dinner.', '/blog/why-daytime-discos-are-popular/', 'pm-wide.jpg'),
     ]
+    xmas = npton_xmas()
+    if xmas:
+        articles.insert(1, ('Christmas daytime disco, Northampton', f'Two Christmas Saturdays at The Charles Bradlaugh, {date_join(xmas)}. Pick yours.', XMAS_PATH, 'pm-smile.jpg'))
     cards = ''.join(f'<a class="post-card" href="{u}">{photo(img, "post-media", caption=False)}<h2>{esc(t_)}</h2><p>{esc(c)}</p><b>Read {ARROW}</b></a>' for t_, c, u, img in articles)
-    body = f'<section class="page-band"><div class="container"><p class="eyebrow">The blog</p><h1>YOUR NEXT AFTERNOON, PLANNED.</h1><p>Guides and ideas for your next afternoon. Each event page has its own time, venue and tickets.</p></div></section><section class="section container"><div class="post-grid">{cards}</div></section>'
-    return page('pm', 'Blog', body, 'Guides and ideas for your next THE 2PM CLUB afternoon.', '/blog/')
+    body = f'<section class="page-band"><div class="container"><p class="eyebrow">The blog</p><h1>PLANS THAT START AT 2PM.</h1><p>Hen dos, birthdays, Christmas and what actually happens at a daytime disco. Each event page has its own time, venue and tickets.</p></div></section><section class="section container"><div class="post-grid">{cards}</div></section>'
+    TITLES[('pm', '/blog/')] = 'Daytime Disco Guides: Hens, Birthdays, Christmas | THE 2PM CLUB'
+    return page('pm', 'Blog', body, 'What a daytime disco is, how to plan a hen do or birthday around 2pm, and how the afternoon works. Straight answers from THE 2PM CLUB Daytime Disco.', '/blog/')
 
 
 def blog_daytime_guide():
-    body = f'''<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a><p class="eyebrow">THE 2PM CLUB guide</p><h1>WHAT IS A DAYTIME DISCO?</h1></div></section><article class="prose container"><p class="lede">A proper party, in the afternoon. A DJ, a full dancefloor and the songs you love singing with other people. Then an evening that’s still yours.</p>{photo('pm-arms.jpg', 'prose-media')}<h2>WHAT ACTUALLY HAPPENS?</h2><p>Doors open at 2pm. Meet your friends or come on your own, and let the music pull you in. THE 2PM CLUB plays Sing Out Loud Anthems from the 80s, 90s and 00s: Wham!, Whitney, Madonna, Take That, Spice Girls, Oasis, Bon Jovi, Beyoncé. An 80s Edition is 80s from start to finish; the Christmas dates add Mariah, Wham! and Slade.</p><h2>WHY THE AFTERNOON?</h2><p>All the energy of going out, with timing that leaves the rest of the weekend free. This season’s dates finish at 5:30pm or 6pm, so you’re home by 7-ish, or on to dinner if the afternoon gets ambitious.</p>{quote_block(QUOTES['diane'])}<h2>IS IT FOR ME?</h2><p>If you want to dance, sing along and spend time with good people, yes. Come with a group or come solo. There’s no dress code.</p><h2>HOW DO I BOOK?</h2><p>Pick your city and edition. Each event page shows the venue, times and access details, with live ticket types and fees from Eventbrite. Group tickets vary by event.</p><div class="article-actions">{btn('Find your afternoon', '/whats-on/', 'btn-hot')}<a class="text-link" href="/what-to-expect/">What to expect {ARROW}</a></div></article>'''
+    body = f'''<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a><p class="eyebrow">THE 2PM CLUB guide</p><h1>WHAT IS A DAYTIME DISCO?</h1>{post_dates('/blog/what-is-a-daytime-disco/')}</div></section><article class="prose container"><p class="lede">A proper party, in the afternoon. A DJ, a full dancefloor and the songs you love singing with other people. Then an evening that’s still yours.</p>{photo('pm-arms.jpg', 'prose-media')}<h2>WHAT ACTUALLY HAPPENS?</h2><p>Doors open at 2pm. Meet your friends or come on your own, and let the music pull you in. THE 2PM CLUB plays Sing Out Loud Anthems from the 80s, 90s and 00s: Wham!, Whitney, Madonna, Take That, Spice Girls, Oasis, Bon Jovi, Beyoncé. An 80s Edition is 80s from start to finish; the Christmas dates add Mariah, Wham! and Slade.</p><h2>WHY THE AFTERNOON?</h2><p>All the energy of going out, with timing that leaves the rest of the weekend free. This season’s dates finish at 5:30pm or 6pm, so you’re home by 7-ish, or on to dinner if the afternoon gets ambitious.</p>{quote_block(QUOTES['diane'])}<h2>IS IT FOR ME?</h2><p>If you want to dance, sing along and spend time with good people, yes. Come with a group or come solo. There’s no dress code.</p><h2>HOW DO I BOOK?</h2><p>Pick your city and edition. Each event page shows the venue, times and access details, with live ticket types and fees from Eventbrite. Group tickets vary by event.</p><div class="article-actions">{btn('Find your afternoon', '/whats-on/', 'btn-hot')}<a class="text-link" href="/what-to-expect/">What to expect {ARROW}</a></div></article>'''
     return page('pm', 'What is a Daytime Disco?', body, 'A daytime disco is a proper party in the afternoon. See the music, timing, crowd and how to book a THE 2PM CLUB day party.', '/blog/', image=PM_BASE + '/assets/pm-arms.jpg')
 
 
@@ -1707,7 +1732,9 @@ def seo_enrich(brand, path, content):
     if route.startswith('/blog/') and route != '/blog/':
         h1 = re.search(r'<h1[^>]*>(.*?)</h1>', content, re.S)
         img = re.search(r'<meta property="og:image" content="([^"]+)"', content)
-        schema.append({'@context': 'https://schema.org', '@type': 'Article', 'headline': plain_text(h1.group(1)) if h1 else short_title,
+        dates = BLOG_DATES.get(route) if brand == 'pm' else None
+        schema.append({'@context': 'https://schema.org', '@type': 'BlogPosting' if dates else 'Article', 'headline': plain_text(h1.group(1)) if h1 else short_title,
+                       **({'datePublished': dates[0], 'dateModified': dates[1]} if dates else {}),
                        'description': description, 'mainEntityOfPage': page_url, 'inLanguage': 'en-GB',
                        **({'image': [img.group(1)]} if img else {}),
                        'author': {'@type': 'Organization', '@id': org_id, 'name': site},
