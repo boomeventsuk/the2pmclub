@@ -1355,13 +1355,33 @@ def pm_what_to_expect(events):
     return page('pm', 'What to expect', body, 'Your first THE 2PM CLUB Daytime Disco: the music, the crowd and the timing.', '/what-to-expect/')
 
 
+def pm_about_faqs():
+    """08 section 4.3 answers, built only from the live feed and facts already on the site."""
+    evs = [e for e in CURRENT_EVENTS['pm'] if e['brand'] == 'pm' and on_sale(e)]
+    fin = sorted({t(e['end']) for e in evs})
+    venues = list(dict.fromkeys(f"{e['venue']} in {e['city']}" for e in evs))
+    out = [('What is THE 2PM CLUB?', 'THE 2PM CLUB Daytime Disco is a Saturday afternoon party run by Boombastic Events. A live DJ plays the biggest 80s, 90s and 00s anthems on a full sound system in an indoor venue. Doors open at 2pm' + (f', and current dates finish at {" or ".join(fin)}.' if fin else '.')),
+           ('Is it indoors, with a live DJ?', 'Yes. One live DJ plays through the venue’s full sound system, so the whole room hears the same song at the same time.' + (f' Current dates are in indoor venues: {esc(join_words(venues))}.' if venues else '')),
+           ('What music do they play?', 'Sing Out Loud Anthems from the 80s, 90s and 00s: Madonna, Whitney, Wham!, Take That, Spice Girls, Oasis, Bon Jovi and Beyoncé. 80s Editions play the 80s from start to finish, and the Christmas dates start with Mariah, Wham! and Slade.')]
+    if evs:
+        out.append(('Where and when are the next dates?', esc('; '.join(f"{e['city']}, {d_short(e['start'])}, {e['venue']}, {times_to(e)}" for e in evs)) + '. Each event page has the live details.'))
+        prices = {}
+        for e in evs:
+            if e.get('price'): prices.setdefault(price_label(e['price']).replace('From ', 'from '), []).append(e['city'])
+        groups = sorted({price_label(e['groupTicket']['label']).split('£')[-1] for e in evs if (e.get('groupTicket') or {}).get('label')})
+        if prices:
+            out.append(('How much are tickets?', 'Tickets start ' + esc('; '.join(f'{k} plus an Eventbrite booking fee in {join_words(list(dict.fromkeys(v)))}' for k, v in prices.items())) + '.'
+                        + (f' Most dates have a group-of-4 ticket ({esc(join_words(["£" + g for g in groups]))} face value) while available.' if groups else '') + ' The ticket selector shows live prices and fees.'))
+    return out
+
+
 def faq_page(brand):
     pm = brand == 'pm'
-    sections = [
+    sections = ([('about', 'music', 'About', 'What it is and the music', 'ABOUT THE 2PM CLUB', pm_about_faqs())] if pm else []) + [
         ('tickets', 'ticket', 'Tickets', 'Booking and your tickets', 'TICKETS & BOOKING', [
             ('Where are my tickets?', f'Check the email address you used at checkout for your Eventbrite confirmation. Still stuck? <a href="mailto:{EMAIL}">Get in touch</a> with your name, event date, city and order reference.'),
             ('How do I book?', 'Choose a date on this site and use the live ticket selector on its event page. It shows the ticket types, fees and availability for that event.'),
-            ('Can we book as a group?', 'Group options vary by event. Check the live selector on your chosen date. For a larger group, email us with the city, date and rough numbers.'),
+            ('Can we book as a group?', (f'Yes. Many dates have a group-of-4 ticket, and everyone books through the same event page. For a larger group or to ask about an area, email <a href="mailto:{EMAIL}">{EMAIL}</a> with the date and numbers.' if pm else 'Group options vary by event. Check the live selector on your chosen date. For a larger group, email us with the city, date and rough numbers.')),
             ('Are tickets refundable?', ('Current THE 2PM CLUB ticket listings say tickets are non-refundable unless the event is cancelled. Check the policy for your chosen date before paying. Our <a href="/terms/">terms</a> explain how we handle event changes.' if pm else 'Refund conditions vary by event. Check the policy shown with your chosen tickets before paying. Our <a href="/terms/">terms</a> explain where to find it.')),
             ('What if an event is changed or cancelled?', 'We update the event page and email ticket holders. If you need help with a change, email us with your booking details.'),
         ]),
@@ -1376,7 +1396,7 @@ def faq_page(brand):
         ]),
         ('day', 'info', 'On the day', 'Entry, what to wear and what to expect', 'ON THE DAY', ([
             ('Can I come on my own?', 'Yes. Come for the music; you can join in whether you arrive with friends or on your own.'),
-            ('What should I wear?', 'No dress code. Wear what you can dance in.'),
+            ('What should I wear?', 'No dress code. Wear what you can dance in. For hen dos there is no compulsory costume.'),
             ('Do I need to know the songs?', 'You’ll know most of them. That’s rather the point.'),
             ('Are there entry rules?', 'Current THE 2PM CLUB dates are for over 18s. Check your chosen event page for its venue and entry details before you book.'),
         ] if pm else [
@@ -1601,7 +1621,8 @@ def not_found(brand):
 
 
 def plain_text(fragment):
-    return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', fragment or ''))).strip()
+    fragment = re.sub(r'<span class="lc">s</span>', 's', fragment or '')  # 80s/90s/00s display wrapper, not a word break
+    return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', fragment))).strip()
 
 
 def price_amount(label):
