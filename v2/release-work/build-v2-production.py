@@ -5,6 +5,7 @@ The repository's existing Eventbrite sync continues updating public/events*.json
 The opposite brand is read from its live owned domain. Network or data failures
 stop the deploy rather than silently publishing old ticket details.
 """
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -35,10 +36,22 @@ def check(path, brand):
 with tempfile.TemporaryDirectory(prefix='boom-v2-build-') as tmp:
     temporary = Path(tmp)
     other = temporary / 'other.json'
-    with urlopen(Request(other_url, headers={'User-Agent': 'Boombastic-V2-Build/1.0'}), timeout=25) as response:
-        if response.status != 200:
-            raise RuntimeError(f'Other brand feed returned HTTP {response.status}')
-        other.write_bytes(response.read())
+    override = os.environ.get('TWIN_OTHER_FEED')
+    if override:
+        # Explicit local copy for preview and CI reruns only. Production builds leave this unset and fetch
+        # the live owned feed, failing closed if it cannot be read.
+        src = Path(override)
+        if not src.is_file():
+            raise SystemExit(f'TWIN_OTHER_FEED is not a file: {src}')
+        other.write_bytes(src.read_bytes())
+        source = f'TWIN_OTHER_FEED {src}'
+    else:
+        with urlopen(Request(other_url, headers={'User-Agent': 'Boombastic-V2-Build/1.0'}), timeout=25) as response:
+            if response.status != 200:
+                raise RuntimeError(f'Other brand feed returned HTTP {response.status}')
+            other.write_bytes(response.read())
+        source = other_url
+    print('Other brand feed:', source, 'sha256', hashlib.sha256(other.read_bytes()).hexdigest(), flush=True)
     pm = own if BRAND == 'pm' else other
     boom = own if BRAND == 'boom' else other
     print('Validated feed records:', '2PM', check(pm, '2PM'), 'Boombastic', check(boom, 'Boombastic'))
