@@ -1115,12 +1115,42 @@ def finish_phrase(evs):
     return join_words([f'{k} on {date_join(v)}' for k, v in groups.items()])
 
 
+# Boombastic format labels by event-code token. Silent disco formats are named generically on 2PM pages
+# (live-DJ brand: no headphone or silent disco vocabulary), but only where that format has run in the town.
+BOOM_FORMAT_LABEL = [('-B90-', 'Boombastic 90s'), ('-FL80-', 'Footloose 80s'), ('-DEC-', 'Christmas Decades Party'), ('-HHP-', 'Halloween House Party'),
+                     ('-GR-', 'Get Ready'), ('-FSD-', 'family parties'), ('-SD-', 'evening parties')]
+BOOM_TOWN_CODE = {v: k for k, v in CITY_CODE.items()}
+
+
+def boom_history():
+    """{town: [format labels]} for every non-2PM Boombastic format in the Boom feed history (past and future,
+    not cancelled) plus the legacy Boom redirect map. Nothing is listed for a town without a record."""
+    codes = [str(r.get('eventCode') or '') for r in BOOM if not r.get('isCancelled') and '2PM' not in r['title'].upper()]
+    codes += [m.upper() for m in re.findall(r'/event/(\d{6}-[A-Za-z0-9]+-[A-Za-z]+)', (TWIN / 'legacy-redirects-boom.txt').read_text())]
+    out = {}
+    for code in codes:
+        code = code.upper()
+        if '-2PM-' in code: continue
+        town = CITY_CODE.get(code.rsplit('-', 1)[-1])
+        label = next((l for tok, l in BOOM_FORMAT_LABEL if tok in code), None)
+        if town and label: out.setdefault(town, [])
+        if town and label and label not in out[town]: out[town].append(label)
+    order = [l for _, l in BOOM_FORMAT_LABEL]
+    return {t: sorted(v, key=order.index) for t, v in sorted(out.items())}
+
+
 def boom_town_link(city):
-    kinds = list(dict.fromkeys(BOOM_KIND[e['fmt']] for e in CURRENT_EVENTS['boom'] if e['brand'] == 'boom' and e['city'] == city and on_sale(e) and e['fmt'] in BOOM_KIND))
-    url = f'{BOOM_BASE}/locations/{slug(city)}/'
-    anchor = f'Boombastic Events in {city}: {join_words(kinds)}' if kinds else f'Boombastic Events in {city}, for their evening and family formats'
-    return (f'<section class="section container hub-boom"><h2>MORE FROM THE SAME TEAM</h2><p>THE 2PM CLUB Daytime Disco is run by Boombastic Events. '
-            f'For their other party formats in {esc(city)}, see <a href="{esc(url)}">{esc(anchor)}</a>.</p></section>')
+    """Cross-domain line, generated from Boombastic's real event history (COPY-FIX, 13th Oct 2026)."""
+    hist = boom_history()
+    head = '<section class="section container hub-boom"><h2>MORE FROM THE SAME TEAM</h2><p>'
+    if city in hist:
+        url = f'{BOOM_BASE}/locations/{slug(city)}/'
+        return head + f'THE 2PM CLUB Daytime Disco is run by Boombastic Events, who also run <a href="{esc(url)}">{esc(join_words(hist[city]) + " in " + city)}</a>.</p></section>'
+    towns = sorted(hist, key=lambda t: (t != 'Northampton', t))
+    shared = [l for l in (hist[towns[0]] if towns else []) if all(l in hist[t] for t in towns)]
+    detail = f', including {join_words(shared)}' if shared else ''
+    return head + (f'THE 2PM CLUB Daytime Disco is run by <a href="{esc(BOOM_BASE)}/">Boombastic Events</a>, who also run other party formats in {esc(join_words(towns))}{esc(detail)}.' if towns
+                   else f'THE 2PM CLUB Daytime Disco is run by <a href="{esc(BOOM_BASE)}/">Boombastic Events</a>.') + '</p></section>'
 
 
 def hub_page(city, events):
