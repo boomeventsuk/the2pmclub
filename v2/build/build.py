@@ -1867,7 +1867,7 @@ def pm_feed_clean(records):
 FEED_REQUIRED = ('start', 'end', 'isCancelled', 'slug', 'cityCode', 'city', 'eventbriteId', 'title')
 PAST_STRIP = ('price', 'priceLabel', 'priceFrom', 'availability', 'status', 'statusLabel', 'isSoldOut', 'urgencyLabel', 'urgency',
               'description', 'subtitle', 'fullDescription', 'highlights', 'heroSubtitle', 'legacyLine', 'musicDescription', 'soundtrackLine',
-              'groupTicket', 'image', 'infoUrl', 'bookUrl')
+              'groupTicket', 'image', 'infoUrl', 'bookUrl', 'priceCurrency', 'priceLastSync')  # last two: CODEX-5
 
 
 def pm_public_history(records):
