@@ -1118,23 +1118,25 @@ def finish_phrase(evs):
 # Boombastic format labels by event-code token. Silent disco formats are named generically on 2PM pages
 # (live-DJ brand: no headphone or silent disco vocabulary), but only where that format has run in the town.
 BOOM_FORMAT_LABEL = [('-B90-', 'Boombastic 90s'), ('-FL80-', 'Footloose 80s'), ('-DEC-', 'Christmas Decades Party'), ('-HHP-', 'Halloween House Party'),
-                     ('-GR-', 'Get Ready'), ('-FSD-', 'family parties'), ('-SD-', 'evening parties')]
+                     ('-FSD-', 'family parties'), ('-SD-', 'evening parties')]
+# Retired brands never appear as a current format (COPY-FIX-2): GET READY, and The Picturedrome venue.
+RETIRED_TOKENS = ('-GR-',)
+RETIRED_VENUE = 'Picturedrome'
 BOOM_TOWN_CODE = {v: k for k, v in CITY_CODE.items()}
 
 
 def boom_history():
-    """{town: [format labels]} for every non-2PM Boombastic format in the Boom feed history (past and future,
-    not cancelled) plus the legacy Boom redirect map. Nothing is listed for a town without a record."""
-    codes = [str(r.get('eventCode') or '') for r in BOOM if not r.get('isCancelled') and '2PM' not in r['title'].upper()]
-    codes += [m.upper() for m in re.findall(r'/event/(\d{6}-[A-Za-z0-9]+-[A-Za-z]+)', (TWIN / 'legacy-redirects-boom.txt').read_text())]
+    """{town: [format labels]} for non-2PM Boombastic formats from the Boom feed (it carries venues).
+    A format counts in a town only if it has a non-cancelled record there at a venue other than the retired
+    Picturedrome; retired brands (GET READY) never count. Nothing is listed for a town without such a record."""
     out = {}
-    for code in codes:
-        code = code.upper()
-        if '-2PM-' in code: continue
+    for r in BOOM:
+        code = str(r.get('eventCode') or '').upper()
+        if r.get('isCancelled') or '2PM' in r['title'].upper() or '-2PM-' in code: continue
+        if any(tok in code for tok in RETIRED_TOKENS) or RETIRED_VENUE.lower() in str(r.get('venue') or '').lower(): continue
         town = CITY_CODE.get(code.rsplit('-', 1)[-1])
         label = next((l for tok, l in BOOM_FORMAT_LABEL if tok in code), None)
-        if town and label: out.setdefault(town, [])
-        if town and label and label not in out[town]: out[town].append(label)
+        if town and label and label not in out.setdefault(town, []): out[town].append(label)
     order = [l for _, l in BOOM_FORMAT_LABEL]
     return {t: sorted(v, key=order.index) for t, v in sorted(out.items())}
 
@@ -1242,7 +1244,8 @@ def hub_page(city, events):
            f'<p>{esc(HUB_ROOM.get(city, ""))}{season}</p><ul class="hub-facts">{"".join(facts)}</ul></div><div>{(f'<h3 class=mini-h>{"THE SOUNDTRACK" if live else "THE SOUNDTRACK LAST TIME"}</h3>' + roll) if roll else ''}</div></div></section>')
 
     # Past-date proof: dates from the feed, captioned photos taken in this town, verbatim quotes from this town.
-    past_rows = ''.join(f'<li><b>{esc(d_mid(r["start"]))}</b> {esc(r["location"].rsplit(", ", 1)[0])}{", " + esc(r["editionLabel"]) if r.get("editionLabel") else (", Christmas" if "Christmas" in r["title"] else "")}</li>' for r in past)
+    past_venue = lambda r: f'a previous {city} venue' if RETIRED_VENUE in r['location'] else r['location'].rsplit(', ', 1)[0]
+    past_rows = ''.join(f'<li><b>{esc(d_mid(r["start"]))}</b> {esc(past_venue(r))}{", " + esc(r["editionLabel"]) if r.get("editionLabel") else (", Christmas" if "Christmas" in r["title"] else "")}</li>' for r in past)
     proof_photo = PM_CITY_PROOF_PHOTO.get(city)
     quotes = ''.join(quote_block(QUOTES[k]) for k in HUB_QUOTES.get(city, []))
     if past:
