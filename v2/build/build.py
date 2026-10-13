@@ -1633,8 +1633,8 @@ def official_content_page(brand, key):
             return page(brand, label, body, 'Contact Boombastic Events about event work.')
         if key == 'for-ai':
             name = 'THE 2PM CLUB' if brand == 'pm' else 'Boombastic Events'
-            feed = '/events.json' if brand == 'pm' else '/events-boombastic.json'
-            body = f'''<article class="prose container legal-page"><h1>Public information about {esc(name)}</h1><p>{esc(name)} is operated by Boombastic Events Ltd. The <a href="{feed}">public event feed</a> lists event-specific dates, venues and links. The <a href="/whats-on/">What’s on page</a> is the current visitor-facing listing; each event page links to its live Eventbrite ticket selector.</p><p>Check the individual event page for the current time, access details and ticket options. Questions: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></article>'''
+            feed = '/upcoming-events.json' if brand == 'pm' else '/events-boombastic.json'
+            body = f'''<article class="prose container legal-page"><h1>Public information about {esc(name)}</h1><p>{esc(name)} is operated by Boombastic Events Ltd. The <a href="{feed}">public event feed</a> lists {'the dates on sale now, with' if brand == 'pm' else 'event-specific dates,'} venues and links. The <a href="/whats-on/">What’s on page</a> is the current visitor-facing listing; each event page links to its live Eventbrite ticket selector.</p><p>Check the individual event page for the current time, access details and ticket options. Questions: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></article>'''
             return page(brand, label, body, f'Public event information and data feed for {name}.')
         raise SystemExit(f'{brand}/{key}: no production content source')
     body = f'<section class="page-band"><div class="container"><p class="eyebrow">Current information</p><h1>{esc(label.upper())}.</h1><p>This preview keeps the current {esc(label.lower())} on the official website while the new site is reviewed.</p>{btn("Read the current " + esc(label.lower()) + " ↗", f"{live}/{key}/")}</div></section>'
@@ -1846,6 +1846,33 @@ def pm_feed_clean(records):
     return out
 
 
+# Fields kept on ended records in /events.json. Consumers: the Boombastic build (slug, eventbriteId, title,
+# start, end, cityCode, location, isCancelled), boom-mailing-list/sync_eventbrite_to_mailjet.py (eventbriteId,
+# slug, end) and automation/scripts/check_website_freshness.py (slug, eventbriteId). (CODEX-1)
+PAST_KEEP = ('id', 'slug', 'eventbriteId', 'eventType', 'title', 'start', 'end', 'cityCode', 'location', 'isCancelled')
+
+
+def pm_public_history(records):
+    """/events.json, same URL and shape for existing consumers: every bookUrl is the owned page (never Eventbrite);
+    ended records keep identity fields only (no price, availability, urgency, status or marketing copy), and a
+    Picturedrome venue is replaced by 'a previous Northampton venue'. Upcoming records match upcoming-events.json."""
+    out = []
+    for r in pm_feed_clean(records):
+        canonical = PM_SITE + '/events/' + str(r.get('slug') or '').lower() + '/'
+        if r['start'][:10] >= TODAY and not r.get('isCancelled'):
+            item = dict(r)
+        else:
+            item = {k: r[k] for k in PAST_KEEP if k in r}
+            city = CITY_CODE.get(r.get('cityCode'), r.get('cityCode'))
+            if RETIRED_VENUE.lower() in str(item.get('location') or '').lower():
+                item['location'] = f'a previous {city} venue, {city}'
+            item['ended'] = True
+        item['canonicalUrl'] = canonical
+        item['bookUrl'] = canonical
+        out.append(item)
+    return out
+
+
 def write_page(dist, path, content):
     target = dist / path.strip('/') / 'index.html'
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -1984,10 +2011,10 @@ def llms_txt(brand, events):
                 f'- [Boombastic 90s]({base}/boombastic-90s/)', f'- [Footloose 80s]({base}/footloose-80s/)', f'- [Group bookings]({base}/group-bookings/)',
                 *([f'- [Christmas parties]({base}/christmas-parties/)'] if christmas_events(events) else []),
                 f'- [THE 2PM CLUB daytime disco]({PM_BASE}/)']
-    out += ['', '## Data', '', f'- [Event feed (JSON)]({base}/{"events.json" if pm else "events-boombastic.json"})']
     if pm:
-        out.append(f'- [Upcoming event feed (JSON)]({base}/upcoming-events.json)')
+        out += ['', '## Data', '', f'- [Upcoming event feed (JSON)]({base}/upcoming-events.json): the public feed of dates on sale']
     else:
+        out += ['', '## Data', '', f'- [Event feed (JSON)]({base}/events-boombastic.json)']
         out.append(f'- [Venues (JSON)]({base}/venues.json)')
     out += [f'- [Sitemap]({base}/sitemap.xml)', '', '## Contact', '', f'- {EMAIL}', '']
     return '\n'.join(out)
@@ -2119,7 +2146,7 @@ def build():
             write_page(dist, key, official_content_page(brand, key))
         if brand == 'pm':
             # Published copy of the feed without the headphones emoji Eventbrite copy carries (08 fix 2, site side).
-            (dist / 'events.json').write_text(json.dumps(pm_feed_clean(PM), ensure_ascii=False, indent=2) + '\n')
+            (dist / 'events.json').write_text(json.dumps(pm_public_history(PM), ensure_ascii=False, indent=2) + '\n')
         else:
             shutil.copyfile(BOOM_FEED, dist / 'events-boombastic.json')
             shutil.copyfile(TWIN / 'source-snapshots/venues.json', dist / 'venues.json')
