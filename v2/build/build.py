@@ -67,7 +67,7 @@ DESCRIPTIONS = {
     ('pm', '/contact/'): 'Email THE 2PM CLUB team about tickets, access or an upcoming daytime disco. Include your event date, city and order reference so we can help.',
     ('pm', '/faqs/'): 'Straight answers before you book THE 2PM CLUB: tickets, start and finish times, access, coming on your own, what to wear and entry rules.',
     ('pm', '/for-ai/'): 'Public facts and machine-readable data for THE 2PM CLUB: the event feed, upcoming dates and where to find live times, venues and ticket details.',
-    ('pm', '/group-bookings/'): 'Birthdays, hen dos and work dos at THE 2PM CLUB. Share one date with the group chat; many dates have a group-of-four ticket. Email us about larger groups.',
+    ('pm', '/group-bookings/'): 'Birthdays, hen dos and Christmas get-togethers at THE 2PM CLUB Daytime Disco. Group of 4 tickets on most dates, one link for the group chat, doors 2pm.',
     ('pm', '/privacy/'): 'How Boombastic Events Ltd, which runs THE 2PM CLUB, collects and uses personal information, including consent-based analytics and advertising cookies.',
     ('pm', '/terms/'): 'Terms for THE 2PM CLUB tickets: sold through Eventbrite, valid for the named date, with refunds under the Eventbrite policy for each event.',
 }
@@ -777,7 +777,11 @@ def home(brand, events):
         what = (f'<section class="section container home-what"><p class="eyebrow">What it is</p><p class="hub-answer-text">THE 2PM CLUB Daytime Disco is a Saturday afternoon party in indoor venues in {esc(join_words(towns))}. '
                 f'A live DJ plays Sing Out Loud Anthems from the 80s, 90s and 00s on a full sound system. Doors at 2pm, finishing at {esc(" or ".join(fin))}. 18+. Run by Boombastic Events.</p></section>') if towns else ''
         body = h + rib + what + f'<section class="section container" id="upcoming">{head}{results(events)}</section>' + band(brand, 'pm-friends.jpeg', 'ALL THE CHORUSES.<br>ALL YOUR PEOPLE.', [('What to expect', '/what-to-expect/'), ('The music', '#music'), ('Bring your group', '/group-bookings/')]) + music + guide + proof + signup(brand, 'YOUR CITY. YOUR NEXT AFTERNOON.', 'Be first to hear when THE 2PM CLUB announces a date near you.', events=events)
-        return page(brand, 'Your best night out. In the middle of the afternoon.', body, 'THE 2PM CLUB Daytime Disco: Sing Out Loud Anthems from the 80s, 90s and 00s. Doors 2pm, home by 7-ish.', '/')
+        order = sorted({e['city']: e['start'] for e in reversed(events) if on_sale(e)}.items(), key=lambda x: (x[0] != 'Northampton', x[1]))
+        TITLES[('pm', '/')] = (f'Daytime Disco {", ".join(c for c, _ in order)} | THE 2PM CLUB' if order else 'THE 2PM CLUB | Daytime Disco and Day Parties')
+        meta = ('THE 2PM CLUB Daytime Disco: Saturday afternoon parties with a DJ and Sing Out Loud Anthems from the 80s, 90s and 00s. Doors 2pm.'
+                + (' Christmas dates on sale now.' if any(e['fmt'] == 'pmxmas' and on_sale(e) for e in events) else ''))
+        return page(brand, 'Your best night out. In the middle of the afternoon.', body, meta, '/')
     h = hero(brand, 'THE MIDLANDS’<br>PARTY STARTERS<br>SINCE 2014.', 'THE 2PM CLUB in the afternoon. Silent Disco Greatest Hits and Decades Parties in the evening. Family Silent Disco too.', btn(f'See all <span data-live-total>{len(events)}</span> dates', '/whats-on/') + home_city_finder(brand, events), 'boom-hero.jpg', extra='<p class="hero-proof">TRUSTED BY THOUSANDS.</p>', h1cls='h1-boom')
     rib = ribbon([('DAYTIME', 'THE 2PM CLUB, doors at 2pm', PM_BASE + '/'), ('EVENING', 'Silent Disco and Decades Parties', '/about/#parties'), ('FAMILY', 'Family Silent Disco, ages 4+', '/family-silent-disco/')], cls='rib-short')
     head = section_head('WHAT’S COMING UP', filters(events, 0))
@@ -1393,13 +1397,23 @@ def faq_page(brand):
 
 def groups_page(brand, events):
     pm = brand == 'pm'
-    h = hero(brand, 'ONE DATE.<br>ALL YOUR PEOPLE.' if pm else 'BRING THE<br>WHOLE CREW.', 'Birthdays. Hen dos. Just because.' if pm else 'Birthdays. Christmas parties. Nights you’ll talk about.', btn('Find your group’s afternoon' if pm else 'Find your group’s party', '/whats-on/', 'btn-hot' if pm else 'btn-dark'), 'pm-group.jpg' if pm else 'b90-group.jpg')
+    h = hero(brand, 'ONE DATE.<br>ALL YOUR PEOPLE.' if pm else 'BRING THE<br>WHOLE CREW.', 'Birthdays. Hen dos. Just because.' if pm else 'Birthdays. Christmas parties. Nights you’ll talk about.', btn('Find your group’s afternoon' if pm else 'Find your group’s party', '/whats-on/', 'btn-hot' if pm else 'btn-dark'), 'pm-group.jpg' if pm else 'b90-group.jpg', eyebrow='Group bookings: birthdays, hen dos, Christmas' if pm else '')
     rib = ribbon([('BIRTHDAYS', '', None, 'gift'), ('HEN DOS' if pm else 'CHRISTMAS PARTIES', '', None, 'people'), ('WORK DOS' if pm else 'NIGHTS OUT', '', None, 'glass')], cls='occasions')
     plan = f'''<section class="section container plan">{section_head('MAKE A PLAN TOGETHER.')}<p class="plan-sub">Choose your event, share it with your friends and make a plan.</p>{steps([('Pick your city', 'Browse our events and find a date that works for your group.'), ('Choose your date', 'Check the times and venue, then share the event link in the group chat.'), ('Get your tickets', 'Everyone can book through the live selector, or one person can book for all.')], 'steps-display')}<div class="group-strip"><span class="gs-ico">{icon('people')}</span><div><h3>GROUP TICKETS</h3><p>Many dates have a group-of-4 ticket. Check your date for the price and live availability.</p></div>{btn('Find an event', '/whats-on/')}<a class="gs-mail" href="mailto:{EMAIL}">{icon('mail')}<span>Larger group or a question?<br><u>Email us {ARROW}</u></span></a></div></section>'''
     proof = quote_block(QUOTES['friends'] if pm else QUOTES['emma_r'], 'quote-center')
     qa = f'''<section class="container group-qa">{acc('Can we arrive together?', 'Yes. Book together or separately; everyone uses the same event and venue. Arriving around doors gives the group time to find a spot.')}{acc('Are there group tickets?', 'Many dates have a group-of-4 ticket. Where one is listed, the event page shows its price; the ticket selector shows live availability and fees.')}{acc('What time does it finish?', ('Doors at 2pm. This season’s dates finish at 5:30pm or 6pm. Your event page has the exact times.' if pm else 'Times vary by party. Your event page has the exact start and finish.'))}{acc('Can you reserve an area for us?', f'Email <a href="mailto:{EMAIL}">{EMAIL}</a> with the date and numbers and we’ll tell you what the venue can do.')}</section>'''
     final = f'<section class="final-band"><div class="container final-in"><h2>{"THAT PLAN YOU KEEP TALKING ABOUT." if pm else "THE NIGHT EVERYONE ACTUALLY MAKES."}</h2>{btn("Make it happen", "/whats-on/")}</div></section>'
-    body = h + rib + plan + strip('pm-three.jpg' if pm else 'fl-portrait.jpg') + proof + qa + final
+    extra = ''
+    if pm:
+        gt = [e for e in events if e['brand'] == 'pm' and on_sale(e) and (e.get('groupTicket') or {}).get('label')]
+        rows = ''.join(f'<li><a href="{esc(e["path"])}"><b>{esc(d_short(e["start"]))}, {esc(e["city"])}</b> {esc(e["venue"])}: {esc(price_label(e["groupTicket"]["label"]))} + booking fee</a></li>' for e in gt)
+        guides = [('/blog/hen-do-daytime-disco/', 'A hen do that starts at 2pm'), ('/blog/hen-party-ideas-northampton/', 'Hen party ideas in Northampton'),
+                  ('/blog/birthday-party-ideas-northampton-adults/', 'Birthday ideas for grown-ups in Northampton')]
+        if npton_xmas(): guides.append((XMAS_PATH, f'Christmas daytime disco, Northampton: {date_join(npton_xmas())}'))
+        extra = (f'<section class="section container hub-links">{section_head("GROUP-OF-4 TICKETS ON SALE NOW")}<p>Where a date has a group-of-4 ticket, it is one booking for four people. These are the face prices listed today; the ticket selector shows live availability and fees.</p><ul class="hub-link-list">{rows}</ul>'
+                 f'<h3 class="mini-h">PLANNING SOMETHING SPECIFIC?</h3><ul class="hub-link-list">{"".join(f"<li><a href={chr(34)}{u}{chr(34)}>{esc(x)} {ARROW}</a></li>" for u, x in guides)}</ul></section>') if rows else ''
+        TITLES[('pm', '/group-bookings/')] = 'Group Day Party Tickets: Birthdays, Hens, Christmas | THE 2PM CLUB'
+    body = h + rib + plan + extra + strip('pm-three.jpg' if pm else 'fl-portrait.jpg') + proof + qa + final
     return page(brand, 'Groups and celebrations', body, 'Birthdays, hen dos and group plans.', '/group-bookings/')
 
 
