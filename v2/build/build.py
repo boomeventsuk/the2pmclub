@@ -50,7 +50,7 @@ EMAIL = 'hello@boomevents.co.uk'
 INDEXNOW_KEY = '6f1c2b9e8d4a47b3a0e5c7d9f2b18e64'
 ORG_DESCRIPTION = {
     'boom': 'Boombastic Events has run parties across the Midlands since 2014: THE 2PM CLUB daytime disco, Silent Disco Greatest Hits, Decades Parties (Boombastic 90s and Footloose 80s) and Family Silent Disco.',
-    'pm': 'THE 2PM CLUB Daytime Disco: Saturday afternoon parties with Sing Out Loud Anthems from the 80s, 90s and 00s, doors at 2pm. Run by Boombastic Events.',
+    'pm': 'THE 2PM CLUB Daytime Disco: Saturday afternoon parties in indoor venues with a live DJ on a full sound system and Sing Out Loud Anthems from the 80s, 90s and 00s. Doors at 2pm. Run by Boombastic Events.',
 }
 # Route-specific descriptions where the page's own summary is too thin for search results.
 DESCRIPTIONS = {
@@ -73,7 +73,8 @@ DESCRIPTIONS = {
 }
 SOCIAL = {
     'boom': [('instagram', 'https://www.instagram.com/boombastic.eventsuk', 'Instagram'), ('facebook', 'https://www.facebook.com/boombastic.eventsuk', 'Facebook'), ('tiktok', 'https://www.tiktok.com/@boombastic.eventsuk', 'TikTok')],
-    'pm': [('instagram', 'https://www.instagram.com/the2pmclub', 'Instagram'), ('facebook', 'https://www.facebook.com/the2pmclub', 'Facebook')],
+    # TODO(JD): confirm which Instagram is primary (@the2pmclub or @the2pmclubdaytimedisco) before changing these links.
+    'pm': [('instagram', 'https://www.instagram.com/the2pmclub', 'Instagram'), ('facebook', 'https://www.facebook.com/the2pmclub', 'Facebook'), ('tiktok', 'https://www.tiktok.com/@the2pmclub', 'TikTok')],
 }
 
 # Attendee quotes carried from named sources. Verify original provenance before wider reuse.
@@ -242,7 +243,7 @@ def normalized():
     for raw in PM:
         if raw['start'][:10] < TODAY or raw.get('isCancelled'): continue
         code = raw['slug']
-        p.append(dict(code=code, title=raw['title'], city=CITY_CODE.get(raw['cityCode'], raw['cityCode']), venue=raw['location'].rsplit(', ', 1)[0], address=raw.get('venueAddress') or {}, start=raw['start'], end=raw['end'], image=raw['image'], eventbriteId=raw['eventbriteId'], price=raw.get('priceLabel'), groupTicket=raw.get('groupTicket'), status=raw.get('statusLabel'), description=raw.get('description') or '', subtitle=raw.get('subtitle') or '', full=raw.get('fullDescription') or '', highlights=raw.get('highlights') or '', soundtrack=raw.get('soundtrack') or '', brand='pm', path=f'/events/{code.lower()}/', owned=f'https://www.the2pmclub.co.uk/events/{code.lower()}/'))
+        p.append(dict(code=code, title=raw['title'], city=CITY_CODE.get(raw['cityCode'], raw['cityCode']), venue=raw['location'].rsplit(', ', 1)[0], address=raw.get('venueAddress') or {}, start=raw['start'], end=raw['end'], image=raw['image'], eventbriteId=raw['eventbriteId'], price=raw.get('priceLabel'), groupTicket=raw.get('groupTicket'), status=raw.get('statusLabel'), description=raw.get('description') or '', subtitle=raw.get('subtitle') or '', full=raw.get('fullDescription') or '', highlights=raw.get('highlights') or '', soundtrack=raw.get('soundtrack') or '', saleStartsAt=raw.get('saleStartsAt'), brand='pm', path=f'/events/{code.lower()}/', owned=f'https://www.the2pmclub.co.uk/events/{code.lower()}/'))
     p.sort(key=lambda e: e['start'])
     b = []
     for raw in BOOM:
@@ -275,6 +276,25 @@ def normalized():
 
 # Approximate town-centre coordinates, used only to order "nearest dates" for a place with nothing on sale.
 TOWN_COORDS = {'Northampton': (52.2405, -0.9027), 'Bedford': (52.1360, -0.4667), 'Milton Keynes': (52.0406, -0.7594), 'Leicester': (52.6369, -1.1398), 'Coventry': (52.4068, -1.5197), 'Luton': (51.8787, -0.4200)}
+
+
+# Ceremonial county for each 2PM town, for schema addressRegion.
+REGION = {'Northampton': 'Northamptonshire', 'Bedford': 'Bedfordshire', 'Luton': 'Bedfordshire', 'Milton Keynes': 'Buckinghamshire', 'Leicester': 'Leicestershire', 'Coventry': 'West Midlands'}
+PM_SITE = 'https://www.the2pmclub.co.uk'
+
+
+def place_id(city, venue): return f'{PM_SITE}/hubs/{slug(city)}/#venue-{slug(venue)}'
+
+
+def place_schema(city, venue, address):
+    """One Place node per venue, with a stable @id shared by the hub and every event held there."""
+    node = {'@type': 'Place', '@id': place_id(city, venue), 'name': venue}
+    a = {k: v for k, v in (address or {}).items() if k in ('streetAddress', 'addressLocality', 'postalCode', 'addressCountry') and v}
+    if a:
+        if city in REGION: a['addressRegion'] = REGION[city]
+        a.setdefault('addressCountry', 'GB')
+        node['address'] = {'@type': 'PostalAddress', **a}
+    return node
 
 
 def on_sale(e): return e['start'][:10] >= TODAY and not e.get('soldout')
@@ -1351,8 +1371,11 @@ def seo_enrich(brand, path, content):
                'areaServed': [{'@type': 'City', 'name': c} for c in sorted({e['city'] for e in CURRENT_EVENTS[brand]})],
                'sameAs': [url for _, url, _ in SOCIAL[brand]]}
         if brand == 'pm':
+            org['alternateName'] = ['THE 2PM CLUB Daytime Disco', 'The 2PM Club']
+            org['logo'] = {'@type': 'ImageObject', 'url': base + '/assets/pm-logo.png', 'width': 300, 'height': 200}
+            org['areaServed'] = [{'@type': 'City', 'name': c} for c in verified_places('pm')]
             org['parentOrganization'] = {'@type': 'Organization', '@id': 'https://www.boomevents.co.uk/#organization',
-                                         'name': 'Boombastic Events', 'url': 'https://www.boomevents.co.uk/'}
+                                         'name': 'Boombastic Events', 'legalName': 'Boombastic Events Ltd', 'url': 'https://www.boomevents.co.uk/'}
         else:
             org['foundingDate'] = '2014'
             org['subOrganization'] = {'@type': 'Organization', '@id': 'https://www.the2pmclub.co.uk/#organization',
@@ -1360,7 +1383,44 @@ def seo_enrich(brand, path, content):
         schema.append(org)
         schema.append({'@context': 'https://schema.org', '@type': 'WebSite', '@id': site_url + '#website', 'name': site,
                        'url': site_url, 'inLanguage': 'en-GB', 'publisher': {'@id': org_id}})
-    if event:
+        if brand == 'pm':
+            schema.append({'@context': 'https://schema.org', '@type': 'EventSeries', '@id': site_url + '#series',
+                           'name': 'THE 2PM CLUB Daytime Disco',
+                           'description': 'Saturday afternoon daytime disco in indoor venues, with a live DJ on a full sound system and Sing Out Loud Anthems from the 80s, 90s and 00s. Doors at 2pm. 18+.',
+                           'url': base + '/events/', 'image': base + '/assets/pm-hero.webp',
+                           'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode', 'typicalAgeRange': '18-',
+                           'organizer': {'@id': org_id},
+                           'subEvent': [{'@id': PM_SITE + e['path'] + '#event'} for e in CURRENT_EVENTS['pm'] if e['brand'] == 'pm' and on_sale(e)]})
+    if event and brand == 'pm':
+        item = {'@context': 'https://schema.org', '@type': 'Event', '@id': page_url + '#event',
+                'name': event['title'], 'description': description, 'url': page_url,
+                'startDate': schema_time(event['start']), 'endDate': schema_time(event['end']), 'doorTime': schema_time(event['start']),
+                'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+                'eventStatus': 'https://schema.org/EventScheduled', 'typicalAgeRange': '18-', 'inLanguage': 'en-GB',
+                'superEvent': {'@id': site_url + '#series'},
+                'location': place_schema(event['city'], event['venue'], event.get('address')), 'image': [base + event['poster']],
+                'organizer': {'@id': org_id}}
+        # performer omitted: no named DJ is in the event data (08 fix 8; add only when JD confirms a real name).
+        amount = price_amount(event.get('price'))
+        offers = []
+        availability = 'https://schema.org/SoldOut' if event.get('soldout') else 'https://schema.org/InStock'
+        if amount:
+            # The page's own "from" price. Booking fees are added at Eventbrite checkout, as the page states (fee-inclusive price pending JD).
+            offers.append({'@type': 'Offer', 'name': 'General admission', 'url': page_url, 'price': amount, 'priceCurrency': 'GBP', 'availability': availability})
+        group = event.get('groupTicket') or {}
+        if group.get('price') and group.get('size') and not event.get('soldout'):
+            offers.append({'@type': 'Offer', 'name': f"Group of {group['size']}", 'url': page_url, 'price': f"{float(group['price']):.2f}", 'priceCurrency': 'GBP',
+                           'availability': availability, 'eligibleQuantity': {'@type': 'QuantitativeValue', 'value': int(group['size'])}})
+        for o in offers:
+            if event.get('saleStartsAt'): o['validFrom'] = event['saleStartsAt']
+        if offers: item['offers'] = offers
+        schema.append(item)
+        schema.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': site_url},
+            {'@type': 'ListItem', 'position': 2, 'name': 'Locations', 'item': base + '/hubs/'},
+            {'@type': 'ListItem', 'position': 3, 'name': event['city'], 'item': base + city_url('pm', event['city'])},
+            {'@type': 'ListItem', 'position': 4, 'name': clean_title(event), 'item': page_url}]})
+    elif event:
         address = event.get('address') or {}
         place = {'@type': 'Place', 'name': event['venue']}
         if address:
