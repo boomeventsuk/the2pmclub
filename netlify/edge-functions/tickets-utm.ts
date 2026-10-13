@@ -13,13 +13,13 @@ import type { Context } from "https://edge.netlify.com";
 
 type FeedItem = { slug?: string; eventbriteId?: string | number };
 
-const UTM = /^utm_[a-z_]{1,30}$/i;
+const UTM = /^utm_[a-z0-9_]+$/i;
 
 export function ticketRedirect(requestUrl: string, feed: FeedItem[]): string | null {
   const url = new URL(requestUrl);
   const match = url.pathname.match(/^\/tickets\/([a-z0-9-]+)\/?$/i);
   if (!match) return null;
-  const tags = [...url.searchParams.entries()].filter(([k, v]) => UTM.test(k) && v.length <= 200);
+  const tags = [...url.searchParams.entries()].filter(([k, v]) => UTM.test(k) && k.length <= 40 && v.length <= 200);
   if (!tags.length) return null;
   const slug = match[1].toLowerCase();
   const item = feed.find((e) => String(e.slug || "").toLowerCase() === slug);

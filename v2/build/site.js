@@ -32,7 +32,7 @@
   // homepage or a hub to an event page and on to the /tickets/ fallback. Reads only this page's own URL:
   // no storage, no cookies, no new trackers, so it runs regardless of the consent choice.
   const utmIn = new URLSearchParams(location.search);
-  const utmKeys = [...utmIn.keys()].filter(k => /^utm_[a-z_]{1,30}$/i.test(k));
+  const utmKeys = [...new Set(utmIn.keys())].filter(k => /^utm_[a-z0-9_]+$/i.test(k) && k.length <= 40 && utmIn.get(k).length <= 200);
   if (utmKeys.length) {
     const carry = e => {
       const a = e.target.closest && e.target.closest('a[href]');
