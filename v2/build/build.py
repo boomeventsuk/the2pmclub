@@ -1829,13 +1829,13 @@ def release_redirects(brand, events):
     if brand == 'pm':
         rows += ['/whats-on/ /events/ 301!', '/locations/ /hubs/ 301!',
                  '/developers /for-ai/ 301!', '/developers/* /for-ai/ 301!',
-                 '/events/250726-2pm-npton /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2pm-npton/ /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2pm-npton/* /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2PM-NPTON /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2PM-NPTON/ /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2PM-NPTON/* /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2PM-NPTON-80S/* /events/031026-2pm-npton/ 301!',
+                 '/events/250726-2pm-npton /hubs/northampton/ 301!',
+                 '/events/250726-2pm-npton/ /hubs/northampton/ 301!',
+                 '/events/250726-2pm-npton/* /hubs/northampton/ 301!',
+                 '/events/250726-2PM-NPTON /hubs/northampton/ 301!',
+                 '/events/250726-2PM-NPTON/ /hubs/northampton/ 301!',
+                 '/events/250726-2PM-NPTON/* /hubs/northampton/ 301!',
+                 '/events/250726-2PM-NPTON-80S/* /hubs/northampton/ 301!',
                  '/events/031026-2pm-lut /hubs/luton/ 301!',
                  '/events/031026-2pm-lut/ /hubs/luton/ 301!',
                  '/events/031026-2pm-lut/* /hubs/luton/ 301!',
@@ -1950,7 +1950,7 @@ def llms_txt(brand, events):
 
 def past_event_redirects(brand, existing):
     """Finished or cancelled dates: send their old URLs somewhere useful instead of a dead page."""
-    seen = {r.split()[0].lower() for r in existing if r.strip()}
+    seen_exact = {r.split()[0] for r in existing if r.strip()}
     current = {e['path'].lower() for e in CURRENT_EVENTS[brand] if e['brand'] == brand}
     hubs = set(verified_places('pm')) if brand == 'pm' else set()
     rows = []
@@ -1968,10 +1968,13 @@ def past_event_redirects(brand, existing):
             dest = city_url('pm', city) if city in hubs else '/events/'
         else:
             dest = next((f'/{key}/' for key, _, token in FORMAT_PAGES if token in code.upper()), '/whats-on/')
-        for src in (path, path.rstrip('/')):
-            if src.lower() not in seen:
+        # One hop to the hub. Venue sites and press links use the uppercase event code, and Netlify
+        # matches paths case-sensitively, so emit the feed's own casing as well as lowercase.
+        upper = path.replace(code.lower(), code)
+        for src in dict.fromkeys((path, path.rstrip('/'), upper, upper.rstrip('/'))):
+            if src not in seen_exact:
                 rows.append(f'{src} {dest} 301!')
-                seen.add(src.lower())
+                seen_exact.add(src)
     return rows
 
 
