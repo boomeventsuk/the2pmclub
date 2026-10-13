@@ -1455,7 +1455,7 @@ def about_page(brand, events):
         rib = ribbon([('DOORS AT 2PM', 'An afternoon on the dancefloor'), ('SING OUT LOUD', '80s, 90s and 00s anthems'), ('HOME BY 7-ISH', 'Sunday not written off')])
         what = f'''<section class="section container about-grid"><div><p class="eyebrow">What it is</p><h2>A PROPER PARTY. JUST EARLIER.</h2><p>A live DJ on a full sound system, in a proper indoor venue, playing the biggest 80s, 90s and 00s anthems back to back, the kind the whole room knows every word to. Doors at 2pm. You can keep Saturday evening for dinner, the sofa or whatever happens next.</p><p>Some dates go 80s only. At Christmas it’s festive classics first, then everything. Every event page lists its own soundtrack, venue and finish time.</p></div><div><p class="eyebrow">Who it’s for</p><h2>YOUR PEOPLE. OR NEW ONES.</h2><p>Bring your group or come on your own. Either way, there’s a roomful of people who know the same choruses.</p>{quote_block(QUOTES['emma_leic'])}</div></section>'''
         where = f'<section class="section container">{section_head("WHERE WE PARTY", f"<a class=text-link href=/locations/>All locations {ARROW}</a>")}<ul class="city-chips">{"".join(f"<li><a href=/hubs/{slug(c)}/>{esc(c)}</a></li>" for c in cities)}</ul><p class="fine">{about_venues(events)}</p></section>'
-        rel = f'<section class="relation container"><div class="relation-copy"><p class="eyebrow">Who runs it</p><h2>BY BOOMBASTIC EVENTS.</h2><p>THE 2PM CLUB is run by Boombastic Events, who have been putting on singalong parties across the Midlands since 2014: Silent Disco Greatest Hits, Decades Parties and family events among them. THE 2PM CLUB is the afternoon one.</p>{btn("Meet Boombastic Events", BOOM_BASE + "/about/")}</div><div class="relation-quotes">{quote_block(QUOTES["lorne"])}{quote_block(QUOTES["lara"])}</div></section>'
+        rel = f'<section class="relation container"><div class="relation-copy"><p class="eyebrow">Who runs it</p><h2>BY BOOMBASTIC EVENTS.</h2><p>THE 2PM CLUB is run by Boombastic Events, who have been putting on singalong parties across the Midlands since 2014, evening parties and family events among them. THE 2PM CLUB is the afternoon one.</p>{btn("Meet Boombastic Events", BOOM_BASE + "/about/")}</div><div class="relation-quotes">{quote_block(QUOTES["lorne"])}{quote_block(QUOTES["lara"])}</div></section>'
         body = h + rib + what + strip('pm-wide.jpg') + where + rel + signup('pm', 'YOUR CITY. YOUR NEXT AFTERNOON.', 'Be first to hear about new dates.', events=events)
         return page('pm', 'About', body, 'About THE 2PM CLUB Daytime Disco, by Boombastic Events.', '/about/')
     h = hero('boom', 'IT STARTED WITH<br>ONE 90s NIGHT.', 'Since 2014, tens of thousands of people have joined us for Silent Disco, Decades Parties, Family Silent Disco and THE 2PM CLUB.', btn('Find your next party', '/whats-on/'), 'b90-crowd.jpg', eyebrow='About Boombastic Events')
@@ -1801,6 +1801,18 @@ def seo_enrich(brand, path, content):
     return content.replace('</head>', extra + '</head>', 1)
 
 
+def pm_feed_clean(records):
+    """THE 2PM CLUB is a live-DJ daytime disco: drop the headphones emoji from feed text fields."""
+    out = []
+    for r in records:
+        r = dict(r)
+        for k in ('fullDescription', 'highlights', 'description', 'subtitle'):
+            if isinstance(r.get(k), str):
+                r[k] = r[k].replace('\U0001F3A7\u2728 ', '').replace(' \u2728\U0001F3A7', '').replace('\U0001F3A7', '')
+        out.append(r)
+    return out
+
+
 def write_page(dist, path, content):
     target = dist / path.strip('/') / 'index.html'
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -2072,7 +2084,9 @@ def build():
             write_page(dist, 'blog/what-is-a-daytime-disco', blog_daytime_guide())
         for key in (['privacy', 'terms', 'for-ai'] if brand == 'pm' else ['privacy', 'terms', 'jobs', 'for-ai']):
             write_page(dist, key, official_content_page(brand, key))
-        if brand == 'pm': shutil.copyfile(PM_FEED, dist / 'events.json')
+        if brand == 'pm':
+            # Published copy of the feed without the headphones emoji Eventbrite copy carries (08 fix 2, site side).
+            (dist / 'events.json').write_text(json.dumps(pm_feed_clean(PM), ensure_ascii=False, indent=2) + '\n')
         else:
             shutil.copyfile(BOOM_FEED, dist / 'events-boombastic.json')
             shutil.copyfile(TWIN / 'source-snapshots/venues.json', dist / 'venues.json')
@@ -2084,7 +2098,7 @@ def build():
                 for raw in PM:
                     code = str(raw.get('slug') or '').lower()
                     if code not in current_codes: continue
-                    item = dict(raw)
+                    item = pm_feed_clean([raw])[0]
                     item['canonicalUrl'] = base + '/events/' + code + '/'
                     item['bookUrl'] = item['canonicalUrl']
                     upcoming.append(item)
