@@ -1172,7 +1172,7 @@ def hub_page(city, events):
         first_near = nearby[0] if nearby else None
         answer = (f'THE 2PM CLUB Daytime Disco is a Saturday afternoon party with a live DJ, a full sound system and the biggest 80s, 90s and 00s anthems, in an indoor venue. '
                   f'In {city} we have played {short if short.startswith("the ") else venue}. No {city} date is on sale right now'
-                  + (f'; the nearest is {first_near["city"]}, {d_short(first_near["start"])}.' if first_near else '.') + ' 18+.')
+                  + (f'; the nearest is {first_near["city"]}, {d_short(first_near["start"])}.' if first_near else '.') + ' Doors at 2pm. 18+.')
 
     cap = PHOTOS[PM_CITY_PHOTO.get(city, 'pm-packed.jpg')][1]
     hero_photo = PM_CITY_PHOTO.get(city, 'pm-packed.jpg')
