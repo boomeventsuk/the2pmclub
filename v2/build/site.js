@@ -167,50 +167,61 @@
     } else activate();
   });
 
-  // Eventbrite checkout widget with owned fallback
-  const widget = document.querySelector('[data-eventbrite-id]');
-  if (widget) {
-    const loading = widget.querySelector('.widget-loading');
-    const eventId = widget.dataset.eventbriteId;
-    // Preserve launch attribution on the owned fallback as well as the embed.
-    if (location.pathname.toLowerCase().includes('-2pmdf-')) {
-      const fallback = document.querySelector('.tickets-fallback a');
-      if (fallback) {
-        const target = new URL(fallback.href);
-        const current = new URLSearchParams(location.search);
-        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'email'].forEach(key => {
-          if (current.has(key)) target.searchParams.set(key, current.get(key));
-        });
-        fallback.href = target.href;
-      }
+  // From main (ae13050): preserve launch attribution on the Disco Fever owned ticket fallback link.
+  if (location.pathname.toLowerCase().includes('-2pmdf-')) {
+    const fallback = document.querySelector('.tickets-fallback a');
+    if (fallback) {
+      const target = new URL(fallback.href);
+      const current = new URLSearchParams(location.search);
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'email'].forEach(key => {
+        if (current.has(key)) target.searchParams.set(key, current.get(key));
+      });
+      fallback.href = target.href;
     }
-    const fail = () => { if (loading) loading.textContent = 'Ticket selector unavailable here. Use the official event page link.'; };
-    let widgetStarted = false;
-    const start = () => {
-      if (widgetStarted) return;
-      widgetStarted = true;
-      if (!window.EBWidgets || !/^\d+$/.test(eventId)) return fail();
-      try {
-        window.EBWidgets.createWidget({ widgetType: 'checkout', eventId, iframeContainerId: widget.id, iframeContainerHeight: 480 });
-        const done = () => {
-          const frame = widget.querySelector('iframe');
-          if (frame) { frame.title = widget.getAttribute('aria-label'); loading?.remove(); return true; }
-          return false;
-        };
-        if (!done()) { const mo = new MutationObserver(() => { if (done()) mo.disconnect(); }); mo.observe(widget, { childList: true, subtree: true }); }
-      } catch (_) { fail(); }
-    };
-    const load = () => {
+  }
+
+  // Eventbrite checkout, click to load. Nothing is requested from Eventbrite (script, iframe or
+  // cookies) until the visitor asks for tickets: the gate button, or any link to the ticket section.
+  const widgets = Array.from(document.querySelectorAll('[data-eventbrite-id]'));
+  if (widgets.length) {
+    let script = null;
+    const loadScript = () => script || (script = new Promise((resolve, reject) => {
       const s = document.createElement('script');
       s.src = 'https://www.eventbrite.co.uk/static/widgets/eb_widgets.js';
-      s.async = true; s.onload = start; s.onerror = fail;
+      s.async = true; s.onload = resolve; s.onerror = reject;
       document.body.appendChild(s);
+    }));
+    const open = (widget) => {
+      if (widget.dataset.ebState) return;
+      widget.dataset.ebState = 'loading';
+      const gate = widget.querySelector('.widget-gate');
+      const loading = widget.querySelector('.widget-loading');
+      const eventId = widget.dataset.eventbriteId;
+      const fail = () => { widget.dataset.ebState = 'failed'; if (loading) { loading.hidden = false; loading.textContent = 'Ticket selector unavailable here. Use the ticket checkout link.'; } };
+      if (gate) gate.hidden = true;
+      if (loading) loading.hidden = false;
+      if (!/^\d+$/.test(eventId)) return fail();
+      loadScript().then(() => {
+        if (!window.EBWidgets) return fail();
+        try {
+          window.EBWidgets.createWidget({ widgetType: 'checkout', eventId, iframeContainerId: widget.id, iframeContainerHeight: 480 });
+          const done = () => {
+            const frame = widget.querySelector('iframe');
+            if (frame) { frame.title = widget.getAttribute('aria-label') || 'Ticket selector'; loading?.remove(); widget.dataset.ebState = 'ready'; return true; }
+            return false;
+          };
+          if (!done()) { const mo = new MutationObserver(() => { if (done()) mo.disconnect(); }); mo.observe(widget, { childList: true, subtree: true }); }
+        } catch (_) { fail(); }
+      }, fail);
     };
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(entries => {
-        if (entries.some(entry => entry.isIntersecting)) { load(); io.disconnect(); }
-      }, { rootMargin: '900px 0px' });
-      io.observe(widget);
-    } else load();
+    widgets.forEach(w => w.querySelector('[data-eb-load]')?.addEventListener('click', () => open(w)));
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a || a.getAttribute('href').length < 2) return;
+      const target = document.getElementById(a.getAttribute('href').slice(1));
+      if (!target) return;
+      const w = target.matches('[data-eventbrite-id]') ? target : target.querySelector('[data-eventbrite-id]');
+      if (w) open(w);
+    });
   }
 })();

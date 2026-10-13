@@ -553,6 +553,14 @@ def btn(label, href, cls='btn-dark'):
     return f'<a class="btn {cls}" href="{href}">{label} {ARROW}</a>'
 
 
+def ticket_gate(when=''):
+    """Click-to-load gate for the Eventbrite checkout. site.js loads Eventbrite only after this is clicked."""
+    label = f'Show live tickets for {when}' if when else 'Show live tickets'
+    return (f'<div class="widget-gate"><button class="btn btn-hot" type="button" data-eb-load>{esc(label)} {ARROW}</button>'
+            '<p class="widget-note">Tickets are sold through Eventbrite. The live ticket selector loads from Eventbrite when you press the button, and Eventbrite may then set its own cookies.</p></div>'
+            '<p class="widget-loading" hidden>Loading live tickets…</p>')
+
+
 def price_label(value):
     return re.sub(r'£(\d+)\.00\b', r'£\1', value or '')
 
@@ -878,7 +886,7 @@ def details(brand, e):
     ph = PM_CITY_PHOTO.get(e['city'], c['photo']) if e['brand'] == 'pm' else c['photo']
     strip_html = f'<div class="ev-strip">{photo(ph, "strip-media")}</div>' if ph else ''
     fallback = f'/tickets/{e["code"].lower()}/'
-    tickets = f'''<section class="tickets container" id="tickets"><div class="tickets-intro"><p class="eyebrow">Tickets</p><h2>CHOOSE YOUR TICKETS.</h2><p>Secure checkout by Eventbrite. The selector shows live ticket types, fees and availability for {esc(date)}. Nothing is booked until you complete checkout.</p><p class="tickets-fallback">Selector not loading? <a href="{esc(fallback)}" rel="noopener">Open ticket checkout ↗</a></p></div><div class="ticket-widget" id="eventbrite-tickets" data-eventbrite-id="{esc(e['eventbriteId'])}" role="region" aria-label="Live ticket options for {esc(e['title'])}"><p class="widget-loading">Loading live tickets…</p></div></section>'''
+    tickets = f'''<section class="tickets container" id="tickets"><div class="tickets-intro"><p class="eyebrow">Tickets</p><h2>CHOOSE YOUR TICKETS.</h2><p>Secure checkout by Eventbrite. The selector shows live ticket types, fees and availability for {esc(date)}. Nothing is booked until you complete checkout.</p><p class="tickets-fallback">Selector not loading? <a href="{esc(fallback)}" rel="noopener">Open ticket checkout ↗</a></p></div><div class="ticket-widget" id="eventbrite-tickets" data-eventbrite-id="{esc(e['eventbriteId'])}" role="region" aria-label="Live ticket options for {esc(e['title'])}">{ticket_gate(d_short(e['start']))}</div></section>'''
     maps = 'https://www.google.com/maps/search/?api=1&query=' + quote(', '.join([e['venue']] + addr))
     addr_html = '<br>'.join(esc(x) for x in addr) if addr else 'Address on your ticket confirmation.'
     group_a = 'Group options vary by date. Open the ticket selector above to see what is on sale for this event. For a larger group, email ' + f'<a href="mailto:{EMAIL}">{EMAIL}</a> with the date and numbers.'
@@ -1613,6 +1621,7 @@ def northampton_christmas_ad(events):
                 group = event.get('groupTicket') or {}
                 group_text = (str(group.get('label', '')) + ' + booking fees') if group else 'See the checkout for current ticket options.'
                 replacement = replacement.replace('{{GROUP}}', esc(group_text))
+                replacement = replacement.replace('{{EBID}}', esc(event['eventbriteId'])).replace('{{GATE}}', ticket_gate(d_short(event['start'])))
             content = re.sub(pattern, lambda _: replacement, content, count=1, flags=re.S)
         if event is None:
             content = re.sub(rf'<a class="ad-change" href="#tickets-{day}">.*?</a>', '', content)
