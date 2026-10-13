@@ -28,6 +28,26 @@
     document.querySelectorAll('#tickets, .sticky-cta, .date-card .btn, .ev-hero .btn').forEach(el => el.remove());
   }
 
+  // Keep incoming campaign tags (utm_*) on internal links, so attribution survives the click from the
+  // homepage or a hub to an event page and on to the /tickets/ fallback. Reads only this page's own URL:
+  // no storage, no cookies, no new trackers, so it runs regardless of the consent choice.
+  const utmIn = new URLSearchParams(location.search);
+  const utmKeys = [...utmIn.keys()].filter(k => /^utm_[a-z_]{1,30}$/i.test(k));
+  if (utmKeys.length) {
+    const carry = e => {
+      const a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      let url;
+      try { url = new URL(a.getAttribute('href'), location.href); } catch (_) { return; }
+      if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return;
+      if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
+      utmKeys.forEach(k => { if (!url.searchParams.has(k)) url.searchParams.set(k, utmIn.get(k)); });
+      a.href = url.toString();
+    };
+    document.addEventListener('click', carry, true);
+    document.addEventListener('auxclick', carry, true);
+  }
+
   // Header disclosure menus (Locations, About): click or tap to open. Inline accordions inside the phone menu.
   const dds = Array.from(document.querySelectorAll('.dd'));
   const desktop = window.matchMedia('(min-width: 761px)');
