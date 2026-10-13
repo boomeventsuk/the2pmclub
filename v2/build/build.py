@@ -502,6 +502,22 @@ def dropdown(ident, label, items, footer_link='', is_active=False):
     return f'<div class="dd{" is-active" if is_active else ""}"><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-{ident}">{label}{CHEVRON}</button><div class="dd-panel" id="dd-{ident}" hidden><ul>{lis}</ul>{footer_link}</div></div>'
 
 
+XMAS_PATH = '/events/dec26-2pm-npton/'
+XMAS_CODES = ('051226-2PM-NPTON', '121226-2PM-NPTON')
+
+
+def npton_xmas():
+    """The Northampton Christmas landing exists while either of its dates is on sale."""
+    return [e for e in CURRENT_EVENTS.get('pm', []) if e['code'].upper() in XMAS_CODES and on_sale(e)]
+
+
+def npton_xmas_link(cls='text-link', label=None):
+    evs = npton_xmas()
+    if not evs: return ''
+    label = label or f'Christmas daytime disco, Northampton: {date_join(evs)}'
+    return f'<a class="{cls}" href="{XMAS_PATH}">{esc(label)} {ARROW}</a>'
+
+
 def nav(brand, active='', ticket_href='/whats-on/'):
     pm = brand == 'pm'; name = 'THE 2PM CLUB' if pm else 'Boombastic Events'
     cur = lambda u: f'{" aria-current=page" if active == u else ""}'
@@ -518,7 +534,7 @@ def nav(brand, active='', ticket_href='/whats-on/'):
                        ('THE 2PM CLUB blog', 'Daytime disco guides', PM_BASE + '/blog/', False, False)]
     about = dropdown('about', 'About', about_items, '', active in ('/about/', '/blog/'))
     if pm:
-        third = f'<a href="/what-to-expect/"{cur("/what-to-expect/")}>What to expect</a>'
+        third = (f'<a href="{XMAS_PATH}"{cur(XMAS_PATH)}>Christmas</a>' if npton_xmas() else '') + f'<a href="/what-to-expect/"{cur("/what-to-expect/")}>What to expect</a>'
     else:
         fmts = []
         for key, label, token in FORMAT_PAGES:
@@ -750,7 +766,7 @@ def home_city_finder(brand, events):
 def home(brand, events):
     pm = brand == 'pm'
     if pm:
-        h = hero(brand, 'YOUR BEST <br class="m-br">NIGHT OUT.<br>IN THE MIDDLE OF<br>THE AFTERNOON.', 'Sing Out Loud Anthems from the 80s, 90s and 00s. Home by 7-ish.', btn(f'See all <span data-live-total>{len(events)}</span> dates', '/events/', 'btn-hot') + f'<a class="hero-link" href="/what-to-expect/">First time? See what happens {ARROW}</a>' + home_city_finder(brand, events), 'pm-hero.webp', eyebrow='THE 2PM CLUB Daytime Disco', extra='<p class="hero-proof">Wham! to Whitney. Bon Jovi to Beyoncé. Doors at 2pm.</p>', h1cls='h1-long')
+        h = hero(brand, 'YOUR BEST <br class="m-br">NIGHT OUT.<br>IN THE MIDDLE OF<br>THE AFTERNOON.', 'Sing Out Loud Anthems from the 80s, 90s and 00s. Home by 7-ish.', btn(f'See all <span data-live-total>{len(events)}</span> dates', '/events/', 'btn-hot') + f'<a class="hero-link" href="/what-to-expect/">First time? See what happens {ARROW}</a>' + npton_xmas_link('hero-link') + home_city_finder(brand, events), 'pm-hero.webp', eyebrow='THE 2PM CLUB Daytime Disco', extra='<p class="hero-proof">Wham! to Whitney. Bon Jovi to Beyoncé. Doors at 2pm.</p>', h1cls='h1-long')
         rib = ribbon([('BIG CHORUSES', 'Sing Out Loud Anthems'), ('THIS SEASON', '80s Editions and Christmas specials'), ('SATURDAY NIGHT', 'Strictly on the sofa later') if STRICTLY_SEASON_2026 else ('AFTERNOON PLANS', 'Doors 2pm, home by 7-ish')])
         head = section_head('YOUR NEXT AFTERNOON', filters(events, 0, 'All editions'))
         music = pm_music_section(events)
@@ -804,7 +820,7 @@ def boom_parties_grid(cls=''):
 def listing(brand, events):
     pm = brand == 'pm'
     xmas_link = '' if pm or not christmas_events(events) else f' <a class="text-link" href="/christmas-parties/">Christmas parties {ARROW}</a>'
-    body = f'''<section class="page-band"><div class="container"><p class="eyebrow">What’s on</p><h1>{'YOUR NEXT AFTERNOON.' if pm else 'FIND YOUR NEXT PARTY.'}</h1><p>{'Every upcoming THE 2PM CLUB Daytime Disco. Pick a city, a date or an edition.' if pm else 'Your next daytime disco, silent disco, Decades Party or family party. Pick what sounds like you.'}{xmas_link}</p></div></section><section class="section container" id="upcoming">{section_head(f'<span data-live-total>{len(events)}</span> DATES ON SALE', filters(events, 0, 'All editions' if pm else 'All parties'))}{results(events)}</section>'''
+    body = f'''<section class="page-band"><div class="container"><p class="eyebrow">What’s on</p><h1>{'YOUR NEXT AFTERNOON.' if pm else 'FIND YOUR NEXT PARTY.'}</h1><p>{('Every upcoming THE 2PM CLUB Daytime Disco. Pick a city, a date or an edition. ' + npton_xmas_link()) if pm else 'Your next daytime disco, silent disco, Decades Party or family party. Pick what sounds like you.'}{xmas_link}</p></div></section><section class="section container" id="upcoming">{section_head(f'<span data-live-total>{len(events)}</span> DATES ON SALE', filters(events, 0, 'All editions' if pm else 'All parties'))}{results(events)}</section>'''
     description = ('Find upcoming THE 2PM CLUB daytime discos and day parties by city and date. See venues, event details and live tickets.' if pm
                    else 'Find upcoming Boombastic daytime discos, silent discos, Decades Parties and family events by city and date.')
     return page(brand, 'What’s on', body, description, '/whats-on/')
@@ -911,7 +927,9 @@ def details(brand, e):
     status = f'<p class="dc-status">{esc(e["status"])}</p>' if e.get('status') else ''
     date_card = f'''<aside class="date-card" aria-label="Booking summary"><h2>MAKE IT A DATE</h2><ul><li>{icon("calendar")}{esc(date.upper())}</li><li>{icon("clock")}{esc(tm.upper())}</li><li>{icon("pin")}{esc(e["venue"].upper())}</li></ul>{price}{group_price(e, True)}{status}<p class="dc-live">Check live availability in the ticket selector</p>{btn('Choose tickets', '#tickets', 'btn-block ' + book_cls)}<p class="dc-eb">Ticketing powered by <b>Eventbrite</b></p><a class="dc-share" href="{esc(share)}" target="_blank" rel="noopener noreferrer">{icon("share")}Share with your group {ARROW}</a></aside>'''
     sell = f'''<div class="sell"><p class="eyebrow">{esc(b)}</p><h2>{c['h2']}</h2><p class="lede">{esc(c['lede'])}</p><ul class="bullets">{bullets}</ul>{music}{quote_block(c['quote'])}</div>'''
-    main = f'<section class="ev-main container">{sell}{date_card}</section>'
+    compare = f'<p class="ev-xmas-link">{npton_xmas_link(label="Two Northampton Christmas Saturdays: compare both dates")}</p>' if brand == 'pm' and e['code'].upper() in XMAS_CODES and len(npton_xmas()) > 1 else ''
+    crumbs = f'<nav class="crumbs container" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/locations/">Locations</a> / <a href="{city_url("pm", e["city"])}">{esc(e["city"])}</a> / {esc(d_short(e["start"]))}</nav>' if brand == 'pm' else ''
+    main = f'<section class="ev-main container">{sell}{date_card}</section>' + (f'<div class="container">{compare}</div>' if compare else '')
     ph = PM_CITY_PHOTO.get(e['city'], c['photo']) if e['brand'] == 'pm' else c['photo']
     strip_html = f'<div class="ev-strip">{photo(ph, "strip-media")}</div>' if ph else ''
     fallback = f'/tickets/{e["code"].lower()}/'
@@ -945,8 +963,9 @@ def details(brand, e):
     if saints_fsd:
         related_codes = ('121226-FSD-NPTON', '311026-HHP-NPTON', '041226-SD-NPTON')
         others = [x for code in related_codes for x in CURRENT_EVENTS[brand] if x['code'] == code]
-    related = f'<section class="section container related">{section_head("MORE COMING UP", f"<a class=text-link href=/whats-on/>See all events {ARROW}</a>")}<div class="card-grid">{"".join(event_card(x) for x in others)}</div></section>'
-    body = hero_html + fact_rib + note_html + main + (tickets + strip_html if brand == 'pm' else strip_html + tickets) + visit + related
+    hub_more = f'<a class="text-link" href="{city_url("pm", e["city"])}">More in {esc(e["city"])} {ARROW}</a> ' if brand == 'pm' else ''
+    related = f'<section class="section container related">{section_head("MORE COMING UP", hub_more + f"<a class=text-link href={chr(34)}/whats-on/{chr(34)}>See all events {ARROW}</a>")}<div class="card-grid">{"".join(event_card(x) for x in others)}</div></section>'
+    body = crumbs + hero_html + fact_rib + note_html + main + (tickets + strip_html if brand == 'pm' else strip_html + tickets) + visit + related
     description = (f'THE 2PM CLUB daytime disco in {e["city"]} on {d_long(e["start"])}. {e["venue"]}, {tm}. Music, access information and live tickets.' if brand == 'pm'
                    else f'{clean_title(e)} on {d_long(e["start"])}. {e["venue"]}, {e["city"]}, {tm}. Event details and live tickets.')
     if is_disco_fever:
@@ -1905,8 +1924,12 @@ def northampton_christmas_ad(events):
             content = re.sub(rf'<a class="ad-change" href="#tickets-{day}">.*?</a>', '', content)
         elif str(event['eventbriteId']) != ('1995469647432' if day == '5' else '1995469668495'):
             raise ValueError('Christmas landing event identity changed: ' + day)
-    return page('pm', 'Northampton Christmas', content,
-                description='Christmas Daytime Disco in Northampton. Choose Sat 5th Dec or Sat 12th Dec 2026 at The Charles Bradlaugh, 2pm to 5:30pm. Book tickets here.',
+    live = [e for e in found.values() if e]
+    TITLES[('pm', XMAS_PATH)] = f'Christmas Daytime Disco Northampton | {date_join(live)}'
+    EXTRA_SCHEMA[('pm', XMAS_PATH)] = [{'@context': 'https://schema.org', '@type': 'ItemList', 'name': f'Christmas Daytime Disco Northampton {live[0]["start"][:4]}',
+                                        'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'url': PM_SITE + e['path'], 'item': {'@id': PM_SITE + e['path'] + '#event'}} for i, e in enumerate(live)]}]
+    return page('pm', 'Christmas Daytime Disco Northampton', content,
+                description=f'Two Saturday Christmas parties at The Charles Bradlaugh, Northampton. Mariah, Wham! and Slade, then 80s, 90s and 00s anthems. {times_to(live[0])}, 18+.' if len(live) > 1 else f'A Saturday Christmas party at The Charles Bradlaugh, Northampton, {d_short(live[0]["start"])}. Mariah, Wham! and Slade, then 80s, 90s and 00s anthems. {times_to(live[0])}, 18+.',
                 sticky_label='Choose your date', sticky_href='#dates', body_class='is-ad-landing')
 
 
