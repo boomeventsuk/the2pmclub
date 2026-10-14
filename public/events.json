@@ -21,7 +21,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:46.234Z",
+    "priceLastSync": "2026-10-14T14:54:55.010Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -51,7 +51,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:47.631Z",
+    "priceLastSync": "2026-10-14T14:54:56.325Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -81,7 +81,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:48.867Z",
+    "priceLastSync": "2026-10-14T14:54:57.669Z",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
       "addressLocality": "Bedford",
@@ -111,7 +111,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:50.121Z",
+    "priceLastSync": "2026-10-14T14:54:59.677Z",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
       "addressLocality": "Milton Keynes",
@@ -141,7 +141,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £7.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:51.262Z",
+    "priceLastSync": "2026-10-14T14:55:01.623Z",
     "venueAddress": {
       "streetAddress": "222 Kettering Road",
       "addressLocality": "Northampton",
@@ -171,7 +171,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £8.50",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:52.437Z",
+    "priceLastSync": "2026-10-14T14:55:03.376Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -202,7 +202,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:53.721Z",
+    "priceLastSync": "2026-10-14T14:55:04.750Z",
     "legacyLine": "Sold out at Franklin's Gardens last October.",
     "venueAddress": {
       "streetAddress": "Weedon Road",
@@ -234,7 +234,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:54.859Z",
+    "priceLastSync": "2026-10-14T14:55:06.121Z",
     "venueAddress": {
       "streetAddress": "65-67 Bute Street",
       "addressLocality": "Luton",
@@ -266,7 +266,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £9.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:56.014Z",
+    "priceLastSync": "2026-10-14T14:55:07.538Z",
     "legacyLine": "Two years of sellouts at Bedford Esquires.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -298,7 +298,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:57.650Z",
+    "priceLastSync": "2026-10-14T14:55:08.960Z",
     "venueAddress": {
       "streetAddress": "Aylestone Road",
       "addressLocality": "Leicester",
@@ -329,7 +329,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:17:58.940Z",
+    "priceLastSync": "2026-10-14T14:55:10.391Z",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
       "addressLocality": "Coventry",
@@ -365,7 +365,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:18:00.282Z",
+    "priceLastSync": "2026-10-14T14:55:11.632Z",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "1 Earl Street",
@@ -402,7 +402,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:18:01.480Z",
+    "priceLastSync": "2026-10-14T14:55:12.885Z",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "60A Bromham Road",
@@ -439,7 +439,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:18:02.746Z",
+    "priceLastSync": "2026-10-14T14:55:13.946Z",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "22 Hertford Street",
@@ -476,7 +476,7 @@
     "priceCurrency": "GBP",
     "priceLabel": "From £10.00",
     "availability": "https://schema.org/SoldOut",
-    "priceLastSync": "2026-10-14T09:18:04.227Z",
+    "priceLastSync": "2026-10-14T14:55:15.186Z",
     "legacyLine": "One afternoon only: 80s from start to finish.",
     "venueAddress": {
       "streetAddress": "Keller Close, Kiln Farm",
@@ -517,7 +517,7 @@
       "postalCode": "LE2 7TR",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-10-14T09:18:05.496Z",
+    "priceLastSync": "2026-10-14T14:55:16.349Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -556,7 +556,7 @@
       "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-10-14T09:18:06.837Z",
+    "priceLastSync": "2026-10-14T14:55:17.717Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -595,7 +595,7 @@
       "postalCode": "NN1 3AU",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-10-14T09:18:07.960Z",
+    "priceLastSync": "2026-10-14T14:55:18.852Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -634,7 +634,7 @@
       "postalCode": "CV1 1LF",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-10-14T09:18:09.030Z",
+    "priceLastSync": "2026-10-14T14:55:20.190Z",
     "groupTicket": {
       "size": 4,
       "price": 46,
@@ -673,7 +673,7 @@
       "postalCode": "MK40 2QG",
       "addressCountry": "GB"
     },
-    "priceLastSync": "2026-10-14T09:18:10.220Z",
+    "priceLastSync": "2026-10-14T14:55:21.435Z",
     "groupTicket": {
       "size": 4,
       "price": 42,
@@ -712,7 +712,7 @@
     "cityCode": "NPTON",
     "location": "The Charles Bradlaugh, Northampton",
     "bookUrl": "https://www.the2pmclub.co.uk/events/230127-2pmdf-npton/",
-    "priceLastSync": "2026-10-14T09:18:11.480Z"
+    "priceLastSync": "2026-10-14T14:55:22.517Z"
   },
   {
     "title": "THE 2PM CLUB Disco Fever: Bedford",
@@ -746,6 +746,6 @@
     "cityCode": "BED",
     "location": "Bedford Esquires, Bedford",
     "bookUrl": "https://www.the2pmclub.co.uk/events/060227-2pmdf-bed/",
-    "priceLastSync": "2026-10-14T09:18:12.719Z"
+    "priceLastSync": "2026-10-14T14:55:23.706Z"
   }
 ]
