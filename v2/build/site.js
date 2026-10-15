@@ -188,12 +188,13 @@
   });
 
   // From main (ae13050): preserve launch attribution on the Disco Fever owned ticket fallback link.
+  // UTM keys only: an email address is never copied into a link URL (JD, 15th Oct 2026).
   if (location.pathname.toLowerCase().includes('-2pmdf-')) {
     const fallback = document.querySelector('.tickets-fallback a');
     if (fallback) {
       const target = new URL(fallback.href);
       const current = new URLSearchParams(location.search);
-      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'email'].forEach(key => {
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(key => {
         if (current.has(key)) target.searchParams.set(key, current.get(key));
       });
       fallback.href = target.href;
