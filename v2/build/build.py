@@ -50,7 +50,7 @@ EMAIL = 'hello@boomevents.co.uk'
 INDEXNOW_KEY = '6f1c2b9e8d4a47b3a0e5c7d9f2b18e64'
 ORG_DESCRIPTION = {
     'boom': 'Boombastic Events has run parties across the Midlands since 2014: THE 2PM CLUB daytime disco, Silent Disco Greatest Hits, Decades Parties (Boombastic 90s and Footloose 80s) and Family Silent Disco.',
-    'pm': 'THE 2PM CLUB Daytime Disco: Saturday afternoon parties with Sing Out Loud Anthems from the 80s, 90s and 00s, doors at 2pm. Run by Boombastic Events.',
+    'pm': 'THE 2PM CLUB Daytime Disco: Saturday afternoon parties in indoor venues with a live DJ on a full sound system and Sing Out Loud Anthems from the 80s, 90s and 00s. Doors at 2pm. Run by Boombastic Events.',
 }
 # Route-specific descriptions where the page's own summary is too thin for search results.
 DESCRIPTIONS = {
@@ -62,18 +62,19 @@ DESCRIPTIONS = {
     ('boom', '/jobs/'): 'Paid DJ and Event Assistant roles with Boombastic Events and THE 2PM CLUB. Read the work and practical requirements, then introduce yourself.',
     ('boom', '/privacy/'): 'How Boombastic Events Ltd collects, uses and protects your information when you visit the website, book through Eventbrite or attend an event.',
     ('boom', '/silent-disco/'): 'Silent Disco Greatest Hits: three live DJs on three headphone channels, pop, indie and dance. Switch whenever you like. See dates, venues and tickets.',
-    ('pm', '/about/'): 'About THE 2PM CLUB Daytime Disco: a Saturday afternoon party with a DJ, a full sound system and 80s, 90s and 00s anthems. Doors at 2pm. Run by Boombastic Events.',
-    ('pm', '/blog/'): 'Guides from THE 2PM CLUB: what a daytime disco is, hen do and birthday ideas, and how an afternoon party works. Each event page has its own times and tickets.',
+    ('pm', '/about/'): 'About THE 2PM CLUB Daytime Disco: a Saturday afternoon party in indoor venues, with a live DJ and 80s, 90s and 00s anthems. Doors 2pm. Run by Boombastic Events.',
+    ('pm', '/blog/'): 'What a daytime disco is, how to plan a hen do or birthday around 2pm, and how the afternoon works. Straight answers from THE 2PM CLUB Daytime Disco.',
     ('pm', '/contact/'): 'Email THE 2PM CLUB team about tickets, access or an upcoming daytime disco. Include your event date, city and order reference so we can help.',
     ('pm', '/faqs/'): 'Straight answers before you book THE 2PM CLUB: tickets, start and finish times, access, coming on your own, what to wear and entry rules.',
     ('pm', '/for-ai/'): 'Public facts and machine-readable data for THE 2PM CLUB: the event feed, upcoming dates and where to find live times, venues and ticket details.',
-    ('pm', '/group-bookings/'): 'Birthdays, hen dos and work dos at THE 2PM CLUB. Share one date with the group chat; many dates have a group-of-four ticket. Email us about larger groups.',
+    ('pm', '/group-bookings/'): 'Birthdays, hen dos and Christmas get-togethers at THE 2PM CLUB Daytime Disco. Group of 4 tickets on most dates, one link for the group chat, doors 2pm.',
     ('pm', '/privacy/'): 'How Boombastic Events Ltd, which runs THE 2PM CLUB, collects and uses personal information, including consent-based analytics and advertising cookies.',
     ('pm', '/terms/'): 'Terms for THE 2PM CLUB tickets: sold through Eventbrite, valid for the named date, with refunds under the Eventbrite policy for each event.',
 }
 SOCIAL = {
     'boom': [('instagram', 'https://www.instagram.com/boombastic.eventsuk', 'Instagram'), ('facebook', 'https://www.facebook.com/boombastic.eventsuk', 'Facebook'), ('tiktok', 'https://www.tiktok.com/@boombastic.eventsuk', 'TikTok')],
-    'pm': [('instagram', 'https://www.instagram.com/the2pmclub', 'Instagram'), ('facebook', 'https://www.facebook.com/the2pmclub', 'Facebook')],
+    # TODO(JD): confirm which Instagram is primary (@the2pmclub or @the2pmclubdaytimedisco) before changing these links.
+    'pm': [('instagram', 'https://www.instagram.com/the2pmclub', 'Instagram'), ('facebook', 'https://www.facebook.com/the2pmclub', 'Facebook'), ('tiktok', 'https://www.tiktok.com/@the2pmclub', 'TikTok')],
 }
 
 # Attendee quotes carried from named sources. Verify original provenance before wider reuse.
@@ -88,6 +89,9 @@ QUOTES = {
     'bedford': ("Don't think I've danced and laughed so much in a long time. Thank you!", 'Attendee, Bedford'),  # live 2PM site
     'emma_r': ('The only Christmas night we book, best music, best crowd.', 'Emma R.'),  # Christmas Decades feed
     'fl80': ('Such a great mix of music. Now THAT was a proper 80s night!', 'Attendee, Northampton'),  # live Footloose page
+    'karen_leic': ('Daytime fun and madness with friends', 'Karen, Leicester'),  # feedback analysis, Leicester 2nd May 2026
+    'cov_like_minded': ('Daytime singing and dancing, with like minded people, just brilliant.', 'Attendee, Coventry'),  # feedback analysis
+    'mk_imagined': ('Just not what I expected so much more than we imagined.', 'Attendee, Milton Keynes'),  # feedback analysis, MK11 14th Mar 2026
 }
 
 # Real event photography. Caption = provenance shown on the page wherever a city could be misread.
@@ -128,7 +132,13 @@ PHOTOS = {
 }
 
 # 2PM event and city pages: a real photo from a 2PM date in that city.
-PM_CITY_PHOTO = {'Leicester': 'pm-leic.jpg', 'Coventry': 'pm-cov.jpg', 'Bedford': 'pm-bed.jpg', 'Milton Keynes': 'pm-mk.jpg', 'Northampton': 'pm-npton-feb.jpg'}
+PM_CITY_PHOTO = {'Leicester': 'pm-leic.jpg', 'Coventry': 'pm-cov.jpg', 'Bedford': 'pm-bed.jpg', 'Milton Keynes': 'pm-mk.jpg', 'Northampton': 'pm-three.jpg'}
+# Second photo actually taken in that town, for the hub's past-date proof. Towns without one show none.
+PM_CITY_PROOF_PHOTO = {'Northampton': 'pm-wide.jpg', 'Bedford': 'pm-friends.jpeg'}
+
+# Route-level overrides set by page builders, read by seo_enrich (title without the site suffix added later only when absent).
+TITLES = {}
+EXTRA_SCHEMA = {}
 
 ICONS = {
     'calendar': '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>',
@@ -242,7 +252,7 @@ def normalized():
     for raw in PM:
         if raw['start'][:10] < TODAY or raw.get('isCancelled'): continue
         code = raw['slug']
-        p.append(dict(code=code, title=raw['title'], city=CITY_CODE.get(raw['cityCode'], raw['cityCode']), venue=raw['location'].rsplit(', ', 1)[0], address=raw.get('venueAddress') or {}, start=raw['start'], end=raw['end'], image=raw['image'], eventbriteId=raw['eventbriteId'], price=raw.get('priceLabel'), groupTicket=raw.get('groupTicket'), status=raw.get('statusLabel'), description=raw.get('description') or '', subtitle=raw.get('subtitle') or '', full=raw.get('fullDescription') or '', highlights=raw.get('highlights') or '', soundtrack=raw.get('soundtrack') or '', brand='pm', path=f'/events/{code.lower()}/', owned=f'https://www.the2pmclub.co.uk/events/{code.lower()}/'))
+        p.append(dict(code=code, title=raw['title'], city=CITY_CODE.get(raw['cityCode'], raw['cityCode']), venue=raw['location'].rsplit(', ', 1)[0], address=raw.get('venueAddress') or {}, start=raw['start'], end=raw['end'], image=raw['image'], eventbriteId=raw['eventbriteId'], price=raw.get('priceLabel'), groupTicket=raw.get('groupTicket'), status=raw.get('statusLabel'), description=raw.get('description') or '', subtitle=raw.get('subtitle') or '', full=raw.get('fullDescription') or '', highlights=raw.get('highlights') or '', soundtrack=raw.get('soundtrack') or '', saleStartsAt=raw.get('saleStartsAt'), brand='pm', path=f'/events/{code.lower()}/', owned=f'https://www.the2pmclub.co.uk/events/{code.lower()}/'))
     p.sort(key=lambda e: e['start'])
     b = []
     for raw in BOOM:
@@ -277,6 +287,25 @@ def normalized():
 TOWN_COORDS = {'Northampton': (52.2405, -0.9027), 'Bedford': (52.1360, -0.4667), 'Milton Keynes': (52.0406, -0.7594), 'Leicester': (52.6369, -1.1398), 'Coventry': (52.4068, -1.5197), 'Luton': (51.8787, -0.4200)}
 
 
+# Ceremonial county for each 2PM town, for schema addressRegion.
+REGION = {'Northampton': 'Northamptonshire', 'Bedford': 'Bedfordshire', 'Luton': 'Bedfordshire', 'Milton Keynes': 'Buckinghamshire', 'Leicester': 'Leicestershire', 'Coventry': 'West Midlands'}
+PM_SITE = 'https://www.the2pmclub.co.uk'
+
+
+def place_id(city, venue): return f'{PM_SITE}/hubs/{slug(city)}/#venue-{slug(venue)}'
+
+
+def place_schema(city, venue, address):
+    """One Place node per venue, with a stable @id shared by the hub and every event held there."""
+    node = {'@type': 'Place', '@id': place_id(city, venue), 'name': venue}
+    a = {k: v for k, v in (address or {}).items() if k in ('streetAddress', 'addressLocality', 'postalCode', 'addressCountry') and v}
+    if a:
+        if city in REGION: a['addressRegion'] = REGION[city]
+        a.setdefault('addressCountry', 'GB')
+        node['address'] = {'@type': 'PostalAddress', **a}
+    return node
+
+
 def on_sale(e): return e['start'][:10] >= TODAY and not e.get('soldout')
 
 
@@ -308,6 +337,10 @@ def sitemap_city_slugs(brand):
 def verified_places(brand):
     raw = PM if brand == 'pm' else BOOM
     names = {CITY_CODE.get(r['cityCode'], r['cityCode']) if brand == 'pm' else r['city'] for r in raw}
+    # The live Boombastic feed is upcoming-only, so a town with no date on sale
+    # (Luton, Milton Keynes) has no record to name it. Known towns name themselves;
+    # an unknown sitemap slug still fails the build.
+    names |= {t for t in TOWN_COORDS if slug(t) in sitemap_city_slugs(brand)}
     by_slug = {slug(n): n for n in names}
     missing = sitemap_city_slugs(brand) - set(by_slug)
     if missing: raise SystemExit(f'{brand}: sitemap city routes with no feed city to name them: {sorted(missing)}')
@@ -473,6 +506,22 @@ def dropdown(ident, label, items, footer_link='', is_active=False):
     return f'<div class="dd{" is-active" if is_active else ""}"><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-{ident}">{label}{CHEVRON}</button><div class="dd-panel" id="dd-{ident}" hidden><ul>{lis}</ul>{footer_link}</div></div>'
 
 
+XMAS_PATH = '/events/dec26-2pm-npton/'
+XMAS_CODES = ('051226-2PM-NPTON', '121226-2PM-NPTON')
+
+
+def npton_xmas():
+    """The Northampton Christmas landing exists while either of its dates is on sale."""
+    return [e for e in CURRENT_EVENTS.get('pm', []) if e['code'].upper() in XMAS_CODES and on_sale(e)]
+
+
+def npton_xmas_link(cls='text-link', label=None):
+    evs = npton_xmas()
+    if not evs: return ''
+    label = label or f'Christmas daytime disco, Northampton: {date_join(evs)}'
+    return f'<a class="{cls}" href="{XMAS_PATH}">{esc(label)} {ARROW}</a>'
+
+
 def nav(brand, active='', ticket_href='/whats-on/'):
     pm = brand == 'pm'; name = 'THE 2PM CLUB' if pm else 'Boombastic Events'
     cur = lambda u: f'{" aria-current=page" if active == u else ""}'
@@ -489,7 +538,7 @@ def nav(brand, active='', ticket_href='/whats-on/'):
                        ('THE 2PM CLUB blog', 'Daytime disco guides', PM_BASE + '/blog/', False, False)]
     about = dropdown('about', 'About', about_items, '', active in ('/about/', '/blog/'))
     if pm:
-        third = f'<a href="/what-to-expect/"{cur("/what-to-expect/")}>What to expect</a>'
+        third = (f'<a href="{XMAS_PATH}"{cur(XMAS_PATH)}>Christmas</a>' if npton_xmas() else '') + f'<a href="/what-to-expect/"{cur("/what-to-expect/")}>What to expect</a>'
     else:
         fmts = []
         for key, label, token in FORMAT_PAGES:
@@ -551,6 +600,14 @@ def ribbon(items, cls=''):
 
 def btn(label, href, cls='btn-dark'):
     return f'<a class="btn {cls}" href="{href}">{label} {ARROW}</a>'
+
+
+def ticket_gate(when=''):
+    """Click-to-load gate for the Eventbrite checkout. site.js loads Eventbrite only after this is clicked."""
+    label = f'Show live tickets for {when}' if when else 'Show live tickets'
+    return (f'<div class="widget-gate"><button class="btn btn-hot" type="button" data-eb-load>{esc(label)} {ARROW}</button>'
+            '<p class="widget-note">Tickets are sold through Eventbrite. The live ticket selector loads from Eventbrite when you press the button, and Eventbrite may then set its own cookies.</p></div>'
+            '<p class="widget-loading" hidden>Loading live tickets…</p>')
 
 
 def price_label(value):
@@ -713,14 +770,24 @@ def home_city_finder(brand, events):
 def home(brand, events):
     pm = brand == 'pm'
     if pm:
-        h = hero(brand, 'YOUR BEST <br class="m-br">NIGHT OUT.<br>IN THE MIDDLE OF<br>THE AFTERNOON.', 'Sing Out Loud Anthems from the 80s, 90s and 00s. Home by 7-ish.', btn(f'See all <span data-live-total>{len(events)}</span> dates', '/events/', 'btn-hot') + f'<a class="hero-link" href="/what-to-expect/">First time? See what happens {ARROW}</a>' + home_city_finder(brand, events), 'pm-hero.webp', eyebrow='THE 2PM CLUB Daytime Disco', extra='<p class="hero-proof">Wham! to Whitney. Bon Jovi to Beyoncé. Doors at 2pm.</p>', h1cls='h1-long')
+        h = hero(brand, 'YOUR BEST <br class="m-br">NIGHT OUT.<br>IN THE MIDDLE OF<br>THE AFTERNOON.', 'Sing Out Loud Anthems from the 80s, 90s and 00s. Home by 7-ish.', btn(f'See all <span data-live-total>{len(events)}</span> dates', '/events/', 'btn-hot') + f'<a class="hero-link" href="/what-to-expect/">First time? See what happens {ARROW}</a>' + npton_xmas_link('hero-link') + home_city_finder(brand, events), 'pm-hero.webp', eyebrow='THE 2PM CLUB Daytime Disco', extra='<p class="hero-proof">Wham! to Whitney. Bon Jovi to Beyoncé. Doors at 2pm.</p>', h1cls='h1-long')
         rib = ribbon([('BIG CHORUSES', 'Sing Out Loud Anthems'), ('THIS SEASON', '80s Editions and Christmas specials'), ('SATURDAY NIGHT', 'Strictly on the sofa later') if STRICTLY_SEASON_2026 else ('AFTERNOON PLANS', 'Doors 2pm, home by 7-ish')])
         head = section_head('YOUR NEXT AFTERNOON', filters(events, 0, 'All editions'))
         music = pm_music_section(events)
         guide = f'''<section class="guide container" aria-labelledby="guide-h"><a class="guide-card" href="/blog/what-is-a-daytime-disco/">{photo('pm-arms.jpg', 'guide-media', caption=False)}<div class="guide-copy"><p class="eyebrow">The 2PM CLUB guide · New here?</p><h2 id="guide-h">WHAT IS A DAYTIME DISCO?</h2><p>The music, the timing, who goes and how to book, in one short read. Send it to whoever in the group chat is still asking.</p><span class="btn btn-hot">Read the guide {ARROW}</span></div></a></section>'''
         proof = f'''<section class="proof container"><div class="proof-lead">{quote_block(QUOTES['lorne'], 'quote-xl')}<p>Bring your group or come on your own. The songs give everyone something to sing about.</p></div><div class="proof-more">{quote_block(QUOTES['diane'])}{quote_block(QUOTES['lara'])}{quote_block(QUOTES['friends'])}</div></section>'''
-        body = h + rib + f'<section class="section container" id="upcoming">{head}{results(events)}</section>' + band(brand, 'pm-friends.jpeg', 'ALL THE CHORUSES.<br>ALL YOUR PEOPLE.', [('What to expect', '/what-to-expect/'), ('The music', '#music'), ('Bring your group', '/group-bookings/')]) + music + guide + proof + signup(brand, 'YOUR CITY. YOUR NEXT AFTERNOON.', 'Be first to hear when THE 2PM CLUB announces a date near you.', events=events)
-        return page(brand, 'Your best night out. In the middle of the afternoon.', body, 'THE 2PM CLUB Daytime Disco: Sing Out Loud Anthems from the 80s, 90s and 00s. Doors 2pm, home by 7-ish.', '/')
+        towns = sorted({e['city'] for e in events if on_sale(e)})
+        fin = sorted({t(e['end']) for e in events if on_sale(e)})
+        what = (f'<section class="section container home-what"><p class="eyebrow">What it is</p><p class="hub-answer-text">THE 2PM CLUB Daytime Disco is a Saturday afternoon party in indoor venues in {esc(join_words(towns))}. '
+                f'A live DJ plays Sing Out Loud Anthems from the 80s, 90s and 00s on a full sound system. Doors at 2pm, finishing at {esc(" or ".join(fin))}. 18+. Run by Boombastic Events.</p></section>') if towns else ''
+        body = h + rib + what + f'<section class="section container" id="upcoming">{head}{results(events)}</section>' + band(brand, 'pm-friends.jpeg', 'ALL THE CHORUSES.<br>ALL YOUR PEOPLE.', [('What to expect', '/what-to-expect/'), ('The music', '#music'), ('Bring your group', '/group-bookings/')]) + music + guide + proof + signup(brand, 'YOUR CITY. YOUR NEXT AFTERNOON.', 'Be first to hear when THE 2PM CLUB announces a date near you.', events=events)
+        order = sorted({e['city']: e['start'] for e in reversed(events) if on_sale(e)}.items(), key=lambda x: (x[0] != 'Northampton', x[1]))
+        town_title = f'Daytime Disco {", ".join(c for c, _ in order)} | THE 2PM CLUB'
+        # 60-character cap (CODEX-4): the 08 shorter alternative when the town list is too long.
+        TITLES[('pm', '/')] = town_title if order and len(town_title) <= 60 else 'Daytime Disco in the Midlands and Bedford | THE 2PM CLUB'
+        meta = ('THE 2PM CLUB Daytime Disco: Saturday afternoon parties with a DJ and Sing Out Loud Anthems from the 80s, 90s and 00s. Doors 2pm.'
+                + (' Christmas dates on sale now.' if any(e['fmt'] == 'pmxmas' and on_sale(e) for e in events) else ''))
+        return page(brand, 'Your best night out. In the middle of the afternoon.', body, meta, '/')
     h = hero(brand, 'THE MIDLANDS’<br>PARTY STARTERS<br>SINCE 2014.', 'THE 2PM CLUB in the afternoon. Silent Disco Greatest Hits and Decades Parties in the evening. Family Silent Disco too.', btn(f'See all <span data-live-total>{len(events)}</span> dates', '/whats-on/') + home_city_finder(brand, events), 'boom-hero.jpg', extra='<p class="hero-proof">TRUSTED BY THOUSANDS.</p>', h1cls='h1-boom')
     rib = ribbon([('DAYTIME', 'THE 2PM CLUB, doors at 2pm', PM_BASE + '/'), ('EVENING', 'Silent Disco and Decades Parties', '/about/#parties'), ('FAMILY', 'Family Silent Disco, ages 4+', '/family-silent-disco/')], cls='rib-short')
     head = section_head('WHAT’S COMING UP', filters(events, 0))
@@ -767,7 +834,7 @@ def boom_parties_grid(cls=''):
 def listing(brand, events):
     pm = brand == 'pm'
     xmas_link = '' if pm or not christmas_events(events) else f' <a class="text-link" href="/christmas-parties/">Christmas parties {ARROW}</a>'
-    body = f'''<section class="page-band"><div class="container"><p class="eyebrow">What’s on</p><h1>{'YOUR NEXT AFTERNOON.' if pm else 'FIND YOUR NEXT PARTY.'}</h1><p>{'Every upcoming THE 2PM CLUB Daytime Disco. Pick a city, a date or an edition.' if pm else 'Your next daytime disco, silent disco, Decades Party or family party. Pick what sounds like you.'}{xmas_link}</p></div></section><section class="section container" id="upcoming">{section_head(f'<span data-live-total>{len(events)}</span> DATES ON SALE', filters(events, 0, 'All editions' if pm else 'All parties'))}{results(events)}</section>'''
+    body = f'''<section class="page-band"><div class="container"><p class="eyebrow">What’s on</p><h1>{'YOUR NEXT AFTERNOON.' if pm else 'FIND YOUR NEXT PARTY.'}</h1><p>{('Every upcoming THE 2PM CLUB Daytime Disco. Pick a city, a date or an edition. ' + npton_xmas_link()) if pm else 'Your next daytime disco, silent disco, Decades Party or family party. Pick what sounds like you.'}{xmas_link}</p></div></section><section class="section container" id="upcoming">{section_head(f'<span data-live-total>{len(events)}</span> DATES ON SALE', filters(events, 0, 'All editions' if pm else 'All parties'))}{results(events)}</section>'''
     description = ('Find upcoming THE 2PM CLUB daytime discos and day parties by city and date. See venues, event details and live tickets.' if pm
                    else 'Find upcoming Boombastic daytime discos, silent discos, Decades Parties and family events by city and date.')
     return page(brand, 'What’s on', body, description, '/whats-on/')
@@ -873,12 +940,21 @@ def details(brand, e):
     price = f'<p class="dc-price">{esc(price_label(e["price"]))} + booking fee</p>' if e.get('price') else ''
     status = f'<p class="dc-status">{esc(e["status"])}</p>' if e.get('status') else ''
     date_card = f'''<aside class="date-card" aria-label="Booking summary"><h2>MAKE IT A DATE</h2><ul><li>{icon("calendar")}{esc(date.upper())}</li><li>{icon("clock")}{esc(tm.upper())}</li><li>{icon("pin")}{esc(e["venue"].upper())}</li></ul>{price}{group_price(e, True)}{status}<p class="dc-live">Check live availability in the ticket selector</p>{btn('Choose tickets', '#tickets', 'btn-block ' + book_cls)}<p class="dc-eb">Ticketing powered by <b>Eventbrite</b></p><a class="dc-share" href="{esc(share)}" target="_blank" rel="noopener noreferrer">{icon("share")}Share with your group {ARROW}</a></aside>'''
-    sell = f'''<div class="sell"><p class="eyebrow">{esc(b)}</p><h2>{c['h2']}</h2><p class="lede">{esc(c['lede'])}</p><ul class="bullets">{bullets}</ul>{music}{quote_block(c['quote'])}</div>'''
-    main = f'<section class="ev-main container">{sell}{date_card}</section>'
+    answer = ''
+    if brand == 'pm':
+        what = ('the biggest disco hits back to back' if is_disco_fever else 'festive classics, then the biggest 80s, 90s and 00s anthems' if e['fmt'] == 'pmxmas'
+                else 'four hours of 80s Sing Out Loud Anthems' if e['fmt'] == 'pm80' else 'the biggest 80s, 90s and 00s anthems')
+        name = 'THE 2PM CLUB Disco Fever' if is_disco_fever else f'THE 2PM CLUB {pre}' if e['fmt'] in ('pmxmas', 'pm80') else 'THE 2PM CLUB Daytime Disco'
+        answer = (f'<p class="hub-answer-text ev-answer">{esc(name)} is a Saturday afternoon party at {esc(e["venue"])}, {esc(e["city"])}, on {esc(d_short(e["start"]))}. '
+                  f'A live DJ plays {esc(what)} on a full sound system in an indoor venue. Doors 2pm, finishing at {esc(t(e["end"]))}. 18+. Run by Boombastic Events.</p>')
+    sell = f'''<div class="sell">{answer}<p class="eyebrow">{esc(b)}</p><h2>{c['h2']}</h2><p class="lede">{esc(c['lede'])}</p><ul class="bullets">{bullets}</ul>{music}{quote_block(c['quote'])}</div>'''
+    compare = f'<p class="ev-xmas-link">{npton_xmas_link(label="Two Northampton Christmas Saturdays: compare both dates")}</p>' if brand == 'pm' and e['code'].upper() in XMAS_CODES and len(npton_xmas()) > 1 else ''
+    crumbs = f'<nav class="crumbs container" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/locations/">Locations</a> / <a href="{city_url("pm", e["city"])}">{esc(e["city"])}</a> / {esc(d_short(e["start"]))}</nav>' if brand == 'pm' else ''
+    main = f'<section class="ev-main container">{sell}{date_card}</section>' + (f'<div class="container">{compare}</div>' if compare else '')
     ph = PM_CITY_PHOTO.get(e['city'], c['photo']) if e['brand'] == 'pm' else c['photo']
     strip_html = f'<div class="ev-strip">{photo(ph, "strip-media")}</div>' if ph else ''
     fallback = f'/tickets/{e["code"].lower()}/'
-    tickets = f'''<section class="tickets container" id="tickets"><div class="tickets-intro"><p class="eyebrow">Tickets</p><h2>CHOOSE YOUR TICKETS.</h2><p>Secure checkout by Eventbrite. The selector shows live ticket types, fees and availability for {esc(date)}. Nothing is booked until you complete checkout.</p><p class="tickets-fallback">Selector not loading? <a href="{esc(fallback)}" rel="noopener">Open ticket checkout ↗</a></p></div><div class="ticket-widget" id="eventbrite-tickets" data-eventbrite-id="{esc(e['eventbriteId'])}" role="region" aria-label="Live ticket options for {esc(e['title'])}"><p class="widget-loading">Loading live tickets…</p></div></section>'''
+    tickets = f'''<section class="tickets container" id="tickets"><div class="tickets-intro"><p class="eyebrow">Tickets</p><h2>CHOOSE YOUR TICKETS.</h2><p>Secure checkout by Eventbrite. The selector shows live ticket types, fees and availability for {esc(date)}. Nothing is booked until you complete checkout.</p><p class="tickets-fallback">Selector not loading? <a href="{esc(fallback)}" rel="noopener">Open ticket checkout ↗</a></p></div><div class="ticket-widget" id="eventbrite-tickets" data-eventbrite-id="{esc(e['eventbriteId'])}" role="region" aria-label="Live ticket options for {esc(e['title'])}">{ticket_gate(d_short(e['start']))}</div></section>'''
     maps = 'https://www.google.com/maps/search/?api=1&query=' + quote(', '.join([e['venue']] + addr))
     addr_html = '<br>'.join(esc(x) for x in addr) if addr else 'Address on your ticket confirmation.'
     group_a = 'Group options vary by date. Open the ticket selector above to see what is on sale for this event. For a larger group, email ' + f'<a href="mailto:{EMAIL}">{EMAIL}</a> with the date and numbers.'
@@ -908,12 +984,17 @@ def details(brand, e):
     if saints_fsd:
         related_codes = ('121226-FSD-NPTON', '311026-HHP-NPTON', '041226-SD-NPTON')
         others = [x for code in related_codes for x in CURRENT_EVENTS[brand] if x['code'] == code]
-    related = f'<section class="section container related">{section_head("MORE COMING UP", f"<a class=text-link href=/whats-on/>See all events {ARROW}</a>")}<div class="card-grid">{"".join(event_card(x) for x in others)}</div></section>'
-    body = hero_html + fact_rib + note_html + main + (tickets + strip_html if brand == 'pm' else strip_html + tickets) + visit + related
-    description = (f'THE 2PM CLUB daytime disco in {e["city"]} on {d_long(e["start"])}. {e["venue"]}, {tm}. Music, access information and live tickets.' if brand == 'pm'
+    hub_more = f'<a class="text-link" href="{city_url("pm", e["city"])}">More in {esc(e["city"])} {ARROW}</a> ' if brand == 'pm' else ''
+    related = f'<section class="section container related">{section_head("MORE COMING UP", hub_more + f"<a class=text-link href={chr(34)}/whats-on/{chr(34)}>See all events {ARROW}</a>")}<div class="card-grid">{"".join(event_card(x) for x in others)}</div></section>'
+    body = crumbs + hero_html + fact_rib + note_html + main + (tickets + strip_html if brand == 'pm' else strip_html + tickets) + visit + related
+    pm_desc = [f'THE 2PM CLUB {pre} at {e["venue"]}, {e["city"]}, {d_short(e["start"])}. {times_to(e)}. 18+.' + (f' {price_label(e["price"])} + booking fee.' if e.get('price') else ''),
+               f'THE 2PM CLUB {pre}, {e["venue"]}, {e["city"]}, {d_short(e["start"])}. {times_to(e)}. 18+.']
+    description = (next((x for x in pm_desc if len(x) <= 160), pm_desc[-1][:160]) if brand == 'pm'
                    else f'{clean_title(e)} on {d_long(e["start"])}. {e["venue"]}, {e["city"]}, {tm}. Event details and live tickets.')
     if is_disco_fever:
-        description = f'THE 2PM CLUB Disco Fever at {e["venue"]}, {e["city"]}. {d_short(e["start"])}, 2pm till 6pm. Four hours of the biggest disco hits: Chic, Donna Summer, Bee Gees, ABBA and more.'
+        # CODEX-4 lengths: keep venue, date, times, 18+ and price; the artist roll call only if it fits.
+        df_base = f'THE 2PM CLUB Disco Fever at {e["venue"]}, {e["city"]}, {d_short(e["start"])}. {times_to(e)}. 18+.' + (f' {price_label(e["price"])} + booking fee.' if e.get('price') else '')
+        description = next(x for x in (df_base + ' Chic, Donna Summer, Bee Gees and more.', df_base) if len(x) <= 160 or x == df_base)
     return page(brand, f"{clean_title(e)}, {e['city']}, {d_short(e['start'])}", body, description, image=base + e['poster'], sticky_label='Choose tickets', sticky_href='#tickets', body_class='is-event')
 
 
@@ -1002,6 +1083,253 @@ def city_page(brand, city, events):
     return page(brand, city, body, desc, city_url(brand, city))
 
 
+# ---------------------------------------------------------------- 2PM town hubs (08 section 4.6 template)
+
+VENUE_SHORT = {'Mattioli Woods Welford Road Stadium': 'Welford Road', 'Hat Factory': 'the Hat Factory', 'MK11 Music Venue': 'MK11'}
+HUB_QUOTES = {'Northampton': ['lorne', 'diane'], 'Bedford': ['bedford'], 'Leicester': ['karen_leic', 'emma_leic', 'lorne'], 'Coventry': ['cov_like_minded', 'julie'], 'Milton Keynes': ['mk_imagined'], 'Luton': []}
+# One season-agnostic line per town, written fresh (Voice Hub section 6: sister-city versions are never clones).
+HUB_ROOM = {
+    'Northampton': 'You already know how this goes. Doors at 2pm, a drink in hand by five past, and a room that knows every word by the second chorus.',
+    'Bedford': 'Bedford Esquires with the lights down and the sound up, at the hour you would normally be doing the big shop.',
+    'Leicester': 'Welford Road is better known for rugby. For one Saturday afternoon, the only scrum is on the dancefloor.',
+    'Coventry': 'hmv Empire is a proper music venue on Hertford Street. The DJ brings the choruses; Coventry does the rest.',
+    'Luton': 'Same plan every time we come to town: doors at 2pm, the biggest 80s, 90s and 00s anthems back to back, and home by 7.',
+    'Milton Keynes': 'MK11 is a live music venue out at Kiln Farm, which turns out to be a very good place to hear Whitney at 3 in the afternoon.',
+}
+BOOM_KIND = {'sd': 'evening parties', 'sdxmas': 'evening parties', 'b90': 'Decades Parties', 'dec': 'Decades Parties', 'hhp': 'Halloween House Party', 'fsd': 'family parties'}
+
+
+def hub_raw_events(city):
+    return [r for r in PM if CITY_CODE.get(r['cityCode'], r['cityCode']) == city and not r.get('isCancelled')]
+
+
+def hub_past(city):
+    past = [r for r in hub_raw_events(city) if r['start'][:10] < TODAY]
+    return sorted(past, key=lambda r: r['start'], reverse=True)
+
+
+def times_to(e): return f"{t(e['start'])} to {t(e['end'])}"
+
+
+def date_join(evs):
+    """Sat 5th & 12th Dec when the month matches, otherwise Sat 5th Dec and Sat 9th Jan."""
+    ds = [dt(e['start']) for e in evs]
+    if len(ds) == 2 and ds[0].month == ds[1].month:
+        return f"Sat {ordinal(ds[0].day)} & {ordinal(ds[1].day)} {MONTHS[ds[0].month]}"
+    return join_words([d_short(e['start']) for e in evs])
+
+
+def by_times(evs):
+    """Group dates that share the same hours: [('2pm to 5:30pm', 'Sat 5th & 12th Dec'), ...]."""
+    groups = {}
+    for e in evs: groups.setdefault(times_to(e), []).append(e)
+    return [(k, date_join(v)) for k, v in groups.items()]
+
+
+def finish_phrase(evs):
+    groups = {}
+    for e in evs: groups.setdefault(t(e['end']), []).append(e)
+    return join_words([f'{k} on {date_join(v)}' for k, v in groups.items()])
+
+
+# Boombastic format labels by event-code token. Silent disco formats are named generically on 2PM pages
+# (live-DJ brand: no headphone or silent disco vocabulary), but only where that format has run in the town.
+BOOM_FORMAT_LABEL = [('-B90-', 'Boombastic 90s'), ('-FL80-', 'Footloose 80s'), ('-DEC-', 'Christmas Decades Party'), ('-HHP-', 'Halloween House Party'),
+                     ('-FSD-', 'family parties'), ('-SD-', 'evening parties')]
+# Retired brands never appear as a current format (COPY-FIX-2): GET READY, and The Picturedrome venue.
+RETIRED_TOKENS = ('-GR-',)
+RETIRED_VENUE = 'Picturedrome'
+BOOM_TOWN_CODE = {v: k for k, v in CITY_CODE.items()}
+
+
+def boom_history():
+    """{town: [format labels]} for non-2PM Boombastic formats from the Boom feed (it carries venues).
+    A format counts in a town only if it has a non-cancelled record there at a venue other than the retired
+    Picturedrome; retired brands (GET READY) never count. Nothing is listed for a town without such a record."""
+    out = {}
+    for r in BOOM:
+        code = str(r.get('eventCode') or '').upper()
+        if r.get('isCancelled') or '2PM' in r['title'].upper() or '-2PM-' in code: continue
+        if any(tok in code for tok in RETIRED_TOKENS) or RETIRED_VENUE.lower() in str(r.get('venue') or '').lower(): continue
+        town = CITY_CODE.get(code.rsplit('-', 1)[-1])
+        label = next((l for tok, l in BOOM_FORMAT_LABEL if tok in code), None)
+        if town and label and label not in out.setdefault(town, []): out[town].append(label)
+    order = [l for _, l in BOOM_FORMAT_LABEL]
+    return {t: sorted(v, key=order.index) for t, v in sorted(out.items())}
+
+
+def boom_town_link(city):
+    """Cross-domain line, generated from Boombastic's real event history (COPY-FIX, 13th Oct 2026)."""
+    hist = boom_history()
+    head = '<section class="section container hub-boom"><h2>MORE FROM THE SAME TEAM</h2><p>'
+    if city in hist:
+        url = f'{BOOM_BASE}/locations/{slug(city)}/'
+        return head + f'THE 2PM CLUB Daytime Disco is run by Boombastic Events, who also run <a href="{esc(url)}">{esc(join_words(hist[city]) + " in " + city)}</a>.</p></section>'
+    towns = sorted(hist, key=lambda t: (t != 'Northampton', t))
+    shared = [l for l in (hist[towns[0]] if towns else []) if all(l in hist[t] for t in towns)]
+    detail = f', including {join_words(shared)}' if shared else ''
+    return head + (f'THE 2PM CLUB Daytime Disco is run by <a href="{esc(BOOM_BASE)}/">Boombastic Events</a>, who also run other party formats in {esc(join_words(towns))}{esc(detail)}.' if towns
+                   else f'THE 2PM CLUB Daytime Disco is run by <a href="{esc(BOOM_BASE)}/">Boombastic Events</a>.') + '</p></section>'
+
+
+def hub_page(city, events):
+    rel = [e for e in events if e['city'] == city and on_sale(e)]
+    past = hub_past(city)
+    live = bool(rel)
+    venues = list(dict.fromkeys(e['venue'] for e in rel)) if live else list(dict.fromkeys(r['location'].rsplit(', ', 1)[0] for r in past))
+    venue = venues[0] if venues else ''
+    short = VENUE_SHORT.get(venue, venue)
+    near = nearest_live('pm', city) if not live else []
+    # Nearest town first, then by date within each town.
+    nearby = sorted([e for e in events if on_sale(e) and e['city'] in near], key=lambda e: (near.index(e['city']), e['start']))[:4] if near else []
+    finishes = sorted({t(e['end']) for e in rel})
+    nxt = rel[0] if rel else None
+    raw_addr = (nxt or {}).get('address') or next((r.get('venueAddress') for r in past if r.get('venueAddress')), {}) or {}
+    addr_line = ', '.join(x for x in [raw_addr.get('streetAddress'), raw_addr.get('addressLocality'), raw_addr.get('postalCode')] if x)
+    datestr = date_join(rel) if live else ''
+    full_datestr = datestr
+    if live and len(datestr) > 20:  # several dates (e.g. Christmas plus Disco Fever): lead with the next one
+        datestr = f'next {d_short(rel[0]["start"])}'
+
+    # Title, meta and H1 (08 section 4.2), generated from the feed so they move with the inventory.
+    if city == 'Northampton' and live:
+        title = f'Daytime Disco Northampton | THE 2PM CLUB, {full_datestr}'
+        if len(title) > 60: title = f'Daytime Disco Northampton | THE 2PM CLUB, from {d_short(rel[0]["start"])}'
+        if len(title) > 60: title = 'Daytime Disco Northampton | THE 2PM CLUB'
+    else:
+        title = f'Daytime Disco {city} | THE 2PM CLUB at {short}'
+    if live:
+        h1 = {'Northampton': 'Daytime disco in Northampton.<br>You already know.',
+              'Leicester': f'Daytime disco in Leicester.<br>Back at Welford Road, {esc(datestr)}.'}.get(city, f'Daytime disco in {esc(city)}.<br>{esc(short)}, {esc(datestr)}.' if city == 'Coventry' else f'Daytime disco in {esc(city)}.<br>{esc(datestr[:1].upper() + datestr[1:])}, {esc(short)}.')
+    else:
+        h1 = f'Daytime disco in {esc(city)}.<br>Last seen at {esc(short)}.'
+    xmas = bool(nxt and nxt['fmt'] == 'pmxmas')
+    if live:
+        meta = {
+            'Northampton': f'Saturday afternoon disco at {venue}, Northampton. Live DJ, full sound system, 80s, 90s and 00s anthems. Doors 2pm, done by {" or ".join(finishes)}. 18+.',
+            'Bedford': f'THE 2PM CLUB Daytime Disco at Bedford Esquires, {datestr}. A live DJ and the biggest 80s, 90s and 00s anthems, {times_to(nxt)}. 18+.' + (' Final release on sale.' if (nxt.get('status') or '') == 'Final release' else ''),
+            'Leicester': f'THE 2PM CLUB Daytime Disco at {venue}, {datestr}. ' + ('Festive classics, then 80s, 90s and 00s anthems. ' if xmas else 'A live DJ and 80s, 90s and 00s anthems. ') + f'{times_to(nxt)}, 18+.',
+            'Coventry': f'THE 2PM CLUB Daytime Disco at hmv Empire, Coventry, {datestr}. A live DJ, a full sound system and the 80s, 90s and 00s choruses everyone knows. {times_to(nxt)}.',
+        }.get(city, f'THE 2PM CLUB Daytime Disco at {venue}, {city}, {datestr}. A live DJ and the biggest 80s, 90s and 00s anthems. {times_to(nxt)}, 18+.')
+    else:
+        first_near = nearby[0] if nearby else None
+        town_short = 'MK' if city == 'Milton Keynes' else city
+        meta = (f'THE 2PM CLUB Daytime Disco has played {short if short.startswith("the ") else venue}, {city}. No {town_short} date on sale yet'
+                + (f'; {first_near["city"]} is on {d_short(first_near["start"])}' if first_near else '') + '. Doors 2pm, 80s, 90s and 00s anthems.')
+    if len(meta) > 160: meta = meta.replace(' Final release on sale.', '')
+    TITLES[('pm', city_url('pm', city))] = title
+
+    # Answer-first block (40 to 60 words, the AI-quotable paragraph).
+    if live:
+        music_what = 'the biggest 80s, 90s and 00s anthems' + (' (all disco at Disco Fever)' if any(e['fmt'] == 'pmdf' for e in rel) else '')
+        answer = (f'THE 2PM CLUB Daytime Disco is a Saturday afternoon party at {venue}, {city}. A live DJ plays {music_what} on a full sound system in an indoor venue. '
+                  f'Doors 2pm, finishing at {finish_phrase(rel)}. 18+. Run by Boombastic Events.')
+        if len(answer.split()) > 60: answer = answer.replace(' Run by Boombastic Events.', '')
+    else:
+        first_near = nearby[0] if nearby else None
+        answer = (f'THE 2PM CLUB Daytime Disco is a Saturday afternoon party with a live DJ, a full sound system and the biggest 80s, 90s and 00s anthems, in an indoor venue. '
+                  f'In {city} we have played {short if short.startswith("the ") else venue}. No {city} date is on sale right now'
+                  + (f'; the nearest is {first_near["city"]}, {d_short(first_near["start"])}.' if first_near else '.') + ' Doors at 2pm. 18+.')
+
+    cap = PHOTOS[PM_CITY_PHOTO.get(city, 'pm-packed.jpg')][1]
+    hero_photo = PM_CITY_PHOTO.get(city, 'pm-packed.jpg')
+    sub = (f'{esc(datestr)} at {esc(venue)}. Doors 2pm.' if live else f'No {esc(city)} date is on sale right now. Here is what has happened here, and the nearest dates you can book.')
+    cta = btn(f'See {esc(city)} dates' if live else 'See the nearest dates', '#city-dates' if live else '#nearby', 'btn-hot')
+    h = hero('pm', h1, sub, cta, hero_photo, eyebrow='THE 2PM CLUB Daytime Disco', cls='city-hero', cap=cap)
+    crumbs = f'<nav class="crumbs container" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/locations/">Locations</a> / {esc(city)}</nav>'
+    answer_html = f'<section class="section container hub-answer"><p class="hub-answer-text">{esc(answer)}</p></section>'
+
+    if live:
+        dates_html = f'<section class="section container" id="city-dates">{section_head("COMING UP IN " + esc(city.upper()), "")}{results(rel, "rows")}</section>'
+        if city == 'Northampton' and len([e for e in rel if e['fmt'] == 'pmxmas']) > 1:
+            dates_html = dates_html.replace('</section>', f'<p class="hub-xmas-link"><a class="text-link" href="/events/dec26-2pm-npton/">Christmas daytime disco, Northampton: compare both Saturdays {ARROW}</a></p></section>', 1)
+    else:
+        rows = ''.join(event_row(e) for e in nearby)
+        dates_html = (f'<section class="section container" id="nearby">{section_head("NO " + esc(city.upper()) + " DATE ON SALE", f"<a class=text-link href=/whats-on/>All dates {ARROW}</a>")}'
+                      f'<p class="nearby-lead">Nothing is on sale in {esc(city)} right now. The closest THE 2PM CLUB dates you can book are in {esc(join_words(near))}.</p><div class="rows">{rows}</div></section>')
+
+    # What happens on the day: facts from the feed, one fresh line per town.
+    finish_txt = (finish_phrase(rel) if live else join_words(sorted({t(r['end']) for r in past[:3]})) + ' at recent dates')
+    facts = [f'<li><b>Indoor venue.</b> {esc(venue)}{", " + esc(addr_line) if addr_line else ""}.</li>',
+             '<li><b>Live DJ, full sound system.</b> One DJ, one room, everyone singing the same chorus.</li>',
+             f'<li><b>Doors 2pm.</b> Finishing at {esc(finish_txt)}.</li>',
+             '<li><b>18+.</b> Current THE 2PM CLUB dates are for over 18s.</li>',
+             '<li><b>Just the party.</b> No sit-down meal: straight to the dancefloor with a drink in hand.</li>']
+    if nxt and nxt.get('price'):
+        grp = price_label((nxt.get('groupTicket') or {}).get('label', '')).replace(' for £', ': £')
+        facts.append(f'<li><b>Tickets.</b> {esc(price_label(nxt["price"]))} + booking fee{"; " + esc(grp) + " while available" if grp else ""}. Fees are shown at checkout.</li>')
+    src = nxt or (dict(soundtrack='', full=past[0].get('fullDescription') or '', description=past[0].get('description') or '') if past else None)
+    groups = artist_groups(src) if src else []
+    roll = chips(groups[:2]) if groups else ''
+    season = ''
+    if xmas:
+        fest = next((g for g in groups if g[0] == 'Christmas hits'), None)
+        if fest: season = f' Christmas dates start festive, with {esc(join_words([x.title() if x.isupper() else x for x in fest[2][:3]]))} first.'
+    day = (f'<section class="section container hub-day"><div class="about-grid"><div><p class="eyebrow">What happens on the day</p><h2>A PROPER PARTY. JUST EARLIER.</h2>'
+           f'<p>{esc(HUB_ROOM.get(city, ""))}{season}</p><ul class="hub-facts">{"".join(facts)}</ul></div><div>{(f'<h3 class=mini-h>{"THE SOUNDTRACK" if live else "THE SOUNDTRACK LAST TIME"}</h3>' + roll) if roll else ''}</div></div></section>')
+
+    # Past-date proof: dates from the feed, captioned photos taken in this town, verbatim quotes from this town.
+    past_venue = lambda r: f'a previous {city} venue' if RETIRED_VENUE in r['location'] else r['location'].rsplit(', ', 1)[0]
+    past_rows = ''.join(f'<li><b>{esc(d_mid(r["start"]))}</b> {esc(past_venue(r))}{", " + esc(r["editionLabel"]) if r.get("editionLabel") else (", Christmas" if "Christmas" in r["title"] else "")}</li>' for r in past)
+    proof_photo = PM_CITY_PROOF_PHOTO.get(city)
+    quotes = ''.join(quote_block(QUOTES[k]) for k in HUB_QUOTES.get(city, []))
+    if past:
+        lead = ('Recent THE 2PM CLUB dates here:' if live else f'We have brought THE 2PM CLUB to {esc(city)} {"twice" if len(past) == 2 else str(len(past)) + " times"} in our recent listings:')
+        no_photo = '' if proof_photo or city in PM_CITY_PHOTO else f'<p class="fine">We do not have a photo from a {esc(city)} date on the site yet, so the photo above is from another town and captioned as such.</p>'
+        proof = (f'<section class="section container hub-past"><div class="about-grid"><div><p class="eyebrow">Been here before</p><h2>{esc(city.upper())} SO FAR.</h2><p>{lead}</p><ul class="hub-past-list">{past_rows}</ul>{no_photo}{quotes}</div>'
+                 f'<div>{photo(proof_photo, "about-photo") if proof_photo else ""}</div></div></section>')
+    else:
+        proof = f'<section class="section container hub-past">{quotes}</section>' if quotes else ''
+
+    # Venue.
+    maps = 'https://www.google.com/maps/search/?api=1&query=' + quote(', '.join([venue] + ([addr_line] if addr_line else [])))
+    access = ''
+    if any('Upstairs event, accessed by steps' in e['full'] for e in rel):
+        access = '<p><strong>Access:</strong> current dates here run upstairs, reached by steps. Food is available downstairs and booked separately.</p>'
+    venue_html = (f'<section class="kb container"><div class="kb-intro"><h2>THE VENUE</h2><p class="kb-lead">{esc(venue)}</p><p>{"Every date on sale here is at this venue. " if live else "Where our recent " + esc(city) + " dates were held. "}Check your event page before travelling.</p></div>'
+                  f'<div class="kb-venues"><div class="venue-card"><h3>{esc(venue)}</h3><p>{icon("pin")}<span>{esc(addr_line) or "Address on your ticket"}</span></p><a href="{esc(maps)}" target="_blank" rel="noopener noreferrer">{icon("nav")}Directions {ARROW}</a></div></div>'
+                  f'<div class="kb-notes">{access}<p class="kb-access">{icon("access")}<span>Access questions? <a href="mailto:{EMAIL}">{EMAIL}</a></span></p></div></section>')
+
+    # Making a day of it.
+    links = [('/group-bookings/', 'Group bookings: group-of-4 tickets and bigger groups'), ('/blog/hen-do-daytime-disco/', 'A hen do that starts at 2pm')]
+    if city == 'Northampton':
+        links += [('/blog/hen-party-ideas-northampton/', 'Hen party ideas in Northampton'), ('/blog/birthday-party-ideas-northampton-adults/', 'Birthday ideas for grown-ups in Northampton')]
+        if any(e['fmt'] == 'pmxmas' for e in rel): links.append(('/events/dec26-2pm-npton/', 'Christmas daytime disco in Northampton: both Saturdays'))
+    else:
+        links.append(('/blog/birthday-party-ideas-northampton-adults/', 'Birthday ideas for grown-ups (our Northampton guide works anywhere)'))
+    day_out = (f'<section class="section container hub-links"><p class="eyebrow">Making a day of it</p><h2>BRING THE GROUP CHAT.</h2><p>Lunch before doors, pub dinner after if the afternoon gets ambitious. Birthdays, hen dos and Christmas catch-ups all fit around a 2pm start.</p>'
+               f'<ul class="hub-link-list">{"".join(f"<li><a href={chr(34)}{u}{chr(34)}>{esc(x)} {ARROW}</a></li>" for u, x in links)}</ul></section>')
+
+    # FAQs (visible, so FAQPage markup is allowed).
+    faqs = []
+    if live:
+        faqs.append((f'What time is THE 2PM CLUB in {city}?', f'Doors are at 2pm. ' + '; '.join(f'{d} runs {tm}' for tm, d in by_times(rel)) + '. Each event page shows its exact times.'))
+        faqs.append((f'Where is the {city} daytime disco?', f'At {esc(venue)}{", " + esc(addr_line) if addr_line else ""}. It is an indoor venue, with a live DJ on a full sound system.'))
+    else:
+        faqs.append((f'Is there a {city} date on sale?', f'Not right now. No THE 2PM CLUB date in {esc(city)} is on sale.' + (f' The nearest date on sale is {esc(nearby[0]["city"])}: {esc(d_short(nearby[0]["start"]))} at {esc(nearby[0]["venue"])}, {esc(times_to(nearby[0]))}.' if nearby else '')))
+        faqs.append((f'Where have the {city} dates been?', f'At {esc(venue)}{", " + esc(addr_line) if addr_line else ""}, an indoor venue. Recent dates: ' + esc('; '.join(d_mid(r['start']) for r in past)) + '.'))
+    faqs.append(('How old do you have to be?', 'Current THE 2PM CLUB dates are for over 18s.'))
+    g = next((e for e in rel if (e.get('groupTicket') or {}).get('label')), None)
+    faqs.append(('Can we come as a group, or on my own?', 'Both work. Book together or separately through the event page.' + (f' {esc(d_short(g["start"]))} has a {esc(price_label(g["groupTicket"]["label"]).lower().replace(" for ", " ticket for "))} plus booking fee, while available.' if g else ' Many dates have a group-of-4 ticket.') + f' For a bigger group, email <a href="mailto:{EMAIL}">{EMAIL}</a>.'))
+    if city == 'Northampton' and access:
+        faqs.append(('Is the venue accessible, and can we eat there?', 'Current Northampton dates run upstairs at The Charles Bradlaugh, reached by steps. Food is available downstairs and booked separately.'))
+    if city == 'Leicester':
+        faqs.append(('Is it at the rugby stadium?', f'Yes. {esc(venue)} on Aylestone Road, the home of Leicester Tigers. The party is indoors.'))
+        if past and live:
+            faqs.append(('Has THE 2PM CLUB been to Leicester before?', f'Yes. Our first Leicester date was {esc(d_mid(past[-1]["start"]))} at {esc(past[-1]["location"].rsplit(", ", 1)[0])}. {esc(d_short(nxt["start"]))} is the {"Christmas one" if xmas else "next one"}.'))
+    if not live:
+        faqs.append((f'How will I hear about the next {city} date?', f'New dates are listed on this page and on <a href="/events/">What\u2019s on</a> when they go on sale, and announced on <a href="{SOCIAL["pm"][0][1]}" rel="noopener">Instagram</a> and <a href="{SOCIAL["pm"][1][1]}" rel="noopener">Facebook</a>.'))
+    if len(faqs) > 5:  # 3 to 5 town questions; age is already in the answer block and the facts list.
+        faqs = [f for f in faqs if f[0] != 'How old do you have to be?'][:5]
+    faq_html = f'<section class="section container faq-list hub-faq"><h2>{esc(city.upper())} QUESTIONS</h2>{"".join(acc(q, a) for q, a in faqs)}</section>'
+
+    # Schema: Place for each venue, shared by event pages via the same @id.
+    EXTRA_SCHEMA[('pm', city_url('pm', city))] = [{'@context': 'https://schema.org', **place_schema(city, v, next((e.get('address') for e in rel if e['venue'] == v), None) or next((r.get('venueAddress') for r in past if r['location'].rsplit(', ', 1)[0] == v), None))} for v in venues]
+
+    body = crumbs + h + answer_html + dates_html + day + proof + venue_html + day_out + faq_html + boom_town_link(city)
+    return page('pm', city, body, meta, city_url('pm', city), sticky_label='See dates' if live else 'See nearest dates', sticky_href='#city-dates' if live else '#nearby')
+
+
 def boom_format(key, events):
     F = BOOM_FORMATS[key]
     rel = [e for e in events if e['fmt'] in F['fmts'] and not e.get('soldout')]
@@ -1077,7 +1405,7 @@ def pm_what_to_expect(events):
     finishes = sorted({t(e['end']) for e in events})
     h = hero('pm', 'KNOW THE WORDS?<br>YOU’RE IN.', 'Sing Out Loud Anthems. Home by 7-ish.', btn('Find your afternoon', '#first-dates', 'btn-hot'), 'pm-arms.jpg', eyebrow='Your first 2PM CLUB')
     rib = ribbon([('BIG CHORUSES', 'Sing Out Loud Anthems'), ('GOOD COMPANY', 'Friends, or come on your own'), ('SATURDAY NIGHT', 'Strictly on the sofa later') if STRICTLY_SEASON_2026 else ('AFTERNOON PLANS', 'Doors 2pm, home by 7-ish')])
-    how = f'''<section class="section container how">{section_head('HERE’S HOW IT FEELS')}{steps([('2pm: doors open', 'Meet your friends or come on your own. Get a drink, find your spot and let the first song pull you in.'), ('The afternoon: sing it back', 'A DJ, a full sound system and choruses the whole room knows.'), ('5:30pm or 6pm: last song', 'The finish depends on the date. Leave with your evening ahead, or make a dinner plan if the afternoon gets ambitious.')])}{pill_cards([('pm-mic.jpg', 'The music', 'pink', 'Madonna, Whitney, Wham!, Take That, Spice Girls, Oasis, Beyoncé. If the whole room can’t sing it, it doesn’t get played.'), ('pm-group.jpg', 'The crowd', 'lilac', 'Bring your group or come on your own. Everyone has the songs in common.'), ('pm-hug.jpg', 'The timing', 'pink', f'Doors at 2pm. This season’s dates finish at {" or ".join(finishes)}. Check your event.')])}</section>'''
+    how = f'''<section class="section container how">{section_head('HERE’S HOW IT FEELS')}{steps([('2pm: doors open', 'Meet your friends or come on your own. Get a drink, find your spot and let the first song pull you in.'), ('The afternoon: sing it back', 'A live DJ on a full sound system in an indoor venue, and choruses the whole room knows.'), ('5:30pm or 6pm: last song', 'The finish depends on the date. Leave with your evening ahead, or make a dinner plan if the afternoon gets ambitious.')])}{pill_cards([('pm-mic.jpg', 'The music', 'pink', 'Madonna, Whitney, Wham!, Take That, Spice Girls, Oasis, Beyoncé. If the whole room can’t sing it, it doesn’t get played.'), ('pm-group.jpg', 'The crowd', 'lilac', 'Bring your group or come on your own. Everyone has the songs in common.'), ('pm-hug.jpg', 'The timing', 'pink', f'Doors at 2pm. This season’s dates finish at {" or ".join(finishes)}. Check your event.')])}</section>'''
     editions = f'''<section class="editions container"><div class="ed-card"><span class="badge b-pink">80s Edition</span><h3>80s ONLY, START TO FINISH.</h3><p>Your best 80s night out. In the middle of the afternoon. Madonna, Michael Jackson, Wham!, Whitney, Prince, Bon Jovi, Duran Duran, A-ha, Tina Turner.</p></div><div class="ed-card"><span class="badge b-hot">Christmas</span><h3>FESTIVE, THEN EVERYTHING.</h3><p>Mariah, Wham!, Slade and Shakin’ Stevens, then the biggest 80s, 90s and 00s anthems. Doors at 2pm, with a proper dancefloor waiting.</p></div><div class="ed-card ed-quote">{quote_block(QUOTES['lara'])}</div></section>'''
     dates = f'<section class="section container" id="first-dates">{section_head("FIND YOUR FIRST AFTERNOON", f"<a class=text-link href=/whats-on/>All dates {ARROW}</a>")}<div class="date-rows">{"".join(date_row(e) for e in x)}</div></section>'
     qa = qa_cta('pm', [('Can I come on my own?', 'Yes. The music gives everyone something to join in with, whether you arrive with friends or on your own.'), ('What should I wear?', 'No dress code. Wear what you can dance in all afternoon.'), ('What time does it finish?', f'Doors are at 2pm. This season’s dates finish at {" or ".join(finishes)}; each event page shows its own times.'), ('Do I need to know the songs?', 'You’ll know most of them. That’s rather the point.')], 'ALL THE CHORUSES.<br>ALL YOUR PEOPLE.', 'Find your first 2PM CLUB.', 'Find your afternoon', '/whats-on/')
@@ -1085,13 +1413,33 @@ def pm_what_to_expect(events):
     return page('pm', 'What to expect', body, 'Your first THE 2PM CLUB Daytime Disco: the music, the crowd and the timing.', '/what-to-expect/')
 
 
+def pm_about_faqs():
+    """08 section 4.3 answers, built only from the live feed and facts already on the site."""
+    evs = [e for e in CURRENT_EVENTS['pm'] if e['brand'] == 'pm' and on_sale(e)]
+    fin = sorted({t(e['end']) for e in evs})
+    venues = list(dict.fromkeys(f"{e['venue']} in {e['city']}" for e in evs))
+    out = [('What is THE 2PM CLUB?', 'THE 2PM CLUB Daytime Disco is a Saturday afternoon party run by Boombastic Events. A live DJ plays the biggest 80s, 90s and 00s anthems on a full sound system in an indoor venue. Doors open at 2pm' + (f', and current dates finish at {" or ".join(fin)}.' if fin else '.')),
+           ('Is it indoors, with a live DJ?', 'Yes. One live DJ plays through the venue’s full sound system, so the whole room hears the same song at the same time.' + (f' Current dates are in indoor venues: {esc(join_words(venues))}.' if venues else '')),
+           ('What music do they play?', 'Sing Out Loud Anthems from the 80s, 90s and 00s: Madonna, Whitney, Wham!, Take That, Spice Girls, Oasis, Bon Jovi and Beyoncé. 80s Editions play the 80s from start to finish, and the Christmas dates start with Mariah, Wham! and Slade.')]
+    if evs:
+        out.append(('Where and when are the next dates?', esc('; '.join(f"{e['city']}, {d_short(e['start'])}, {e['venue']}, {times_to(e)}" for e in evs)) + '. Each event page has the live details.'))
+        prices = {}
+        for e in evs:
+            if e.get('price'): prices.setdefault(price_label(e['price']).replace('From ', 'from '), []).append(e['city'])
+        groups = sorted({price_label(e['groupTicket']['label']).split('£')[-1] for e in evs if (e.get('groupTicket') or {}).get('label')})
+        if prices:
+            out.append(('How much are tickets?', 'Tickets start ' + esc('; '.join(f'{k} plus an Eventbrite booking fee in {join_words(list(dict.fromkeys(v)))}' for k, v in prices.items())) + '.'
+                        + (f' Most dates have a group-of-4 ticket ({esc(join_words(["£" + g for g in groups]))} face value) while available.' if groups else '') + ' The ticket selector shows live prices and fees.'))
+    return out
+
+
 def faq_page(brand):
     pm = brand == 'pm'
-    sections = [
+    sections = ([('about', 'music', 'About', 'What it is and the music', 'ABOUT THE 2PM CLUB', pm_about_faqs())] if pm else []) + [
         ('tickets', 'ticket', 'Tickets', 'Booking and your tickets', 'TICKETS & BOOKING', [
             ('Where are my tickets?', f'Check the email address you used at checkout for your Eventbrite confirmation. Still stuck? <a href="mailto:{EMAIL}">Get in touch</a> with your name, event date, city and order reference.'),
             ('How do I book?', 'Choose a date on this site and use the live ticket selector on its event page. It shows the ticket types, fees and availability for that event.'),
-            ('Can we book as a group?', 'Group options vary by event. Check the live selector on your chosen date. For a larger group, email us with the city, date and rough numbers.'),
+            ('Can we book as a group?', (f'Yes. Many dates have a group-of-4 ticket, and everyone books through the same event page. For a larger group or to ask about an area, email <a href="mailto:{EMAIL}">{EMAIL}</a> with the date and numbers.' if pm else 'Group options vary by event. Check the live selector on your chosen date. For a larger group, email us with the city, date and rough numbers.')),
             ('Are tickets refundable?', ('Current THE 2PM CLUB ticket listings say tickets are non-refundable unless the event is cancelled. Check the policy for your chosen date before paying. Our <a href="/terms/">terms</a> explain how we handle event changes.' if pm else 'Refund conditions vary by event. Check the policy shown with your chosen tickets before paying. Our <a href="/terms/">terms</a> explain where to find it.')),
             ('What if an event is changed or cancelled?', 'We update the event page and email ticket holders. If you need help with a change, email us with your booking details.'),
         ]),
@@ -1106,7 +1454,7 @@ def faq_page(brand):
         ]),
         ('day', 'info', 'On the day', 'Entry, what to wear and what to expect', 'ON THE DAY', ([
             ('Can I come on my own?', 'Yes. Come for the music; you can join in whether you arrive with friends or on your own.'),
-            ('What should I wear?', 'No dress code. Wear what you can dance in.'),
+            ('What should I wear?', 'No dress code. Wear what you can dance in. For hen dos there is no compulsory costume.'),
             ('Do I need to know the songs?', 'You’ll know most of them. That’s rather the point.'),
             ('Are there entry rules?', 'Current THE 2PM CLUB dates are for over 18s. Check your chosen event page for its venue and entry details before you book.'),
         ] if pm else [
@@ -1127,14 +1475,34 @@ def faq_page(brand):
 
 def groups_page(brand, events):
     pm = brand == 'pm'
-    h = hero(brand, 'ONE DATE.<br>ALL YOUR PEOPLE.' if pm else 'BRING THE<br>WHOLE CREW.', 'Birthdays. Hen dos. Just because.' if pm else 'Birthdays. Christmas parties. Nights you’ll talk about.', btn('Find your group’s afternoon' if pm else 'Find your group’s party', '/whats-on/', 'btn-hot' if pm else 'btn-dark'), 'pm-group.jpg' if pm else 'b90-group.jpg')
+    h = hero(brand, 'ONE DATE.<br>ALL YOUR PEOPLE.' if pm else 'BRING THE<br>WHOLE CREW.', 'Birthdays. Hen dos. Just because.' if pm else 'Birthdays. Christmas parties. Nights you’ll talk about.', btn('Find your group’s afternoon' if pm else 'Find your group’s party', '/whats-on/', 'btn-hot' if pm else 'btn-dark'), 'pm-group.jpg' if pm else 'b90-group.jpg', eyebrow='Group bookings: birthdays, hen dos, Christmas' if pm else '')
     rib = ribbon([('BIRTHDAYS', '', None, 'gift'), ('HEN DOS' if pm else 'CHRISTMAS PARTIES', '', None, 'people'), ('WORK DOS' if pm else 'NIGHTS OUT', '', None, 'glass')], cls='occasions')
     plan = f'''<section class="section container plan">{section_head('MAKE A PLAN TOGETHER.')}<p class="plan-sub">Choose your event, share it with your friends and make a plan.</p>{steps([('Pick your city', 'Browse our events and find a date that works for your group.'), ('Choose your date', 'Check the times and venue, then share the event link in the group chat.'), ('Get your tickets', 'Everyone can book through the live selector, or one person can book for all.')], 'steps-display')}<div class="group-strip"><span class="gs-ico">{icon('people')}</span><div><h3>GROUP TICKETS</h3><p>Many dates have a group-of-4 ticket. Check your date for the price and live availability.</p></div>{btn('Find an event', '/whats-on/')}<a class="gs-mail" href="mailto:{EMAIL}">{icon('mail')}<span>Larger group or a question?<br><u>Email us {ARROW}</u></span></a></div></section>'''
     proof = quote_block(QUOTES['friends'] if pm else QUOTES['emma_r'], 'quote-center')
     qa = f'''<section class="container group-qa">{acc('Can we arrive together?', 'Yes. Book together or separately; everyone uses the same event and venue. Arriving around doors gives the group time to find a spot.')}{acc('Are there group tickets?', 'Many dates have a group-of-4 ticket. Where one is listed, the event page shows its price; the ticket selector shows live availability and fees.')}{acc('What time does it finish?', ('Doors at 2pm. This season’s dates finish at 5:30pm or 6pm. Your event page has the exact times.' if pm else 'Times vary by party. Your event page has the exact start and finish.'))}{acc('Can you reserve an area for us?', f'Email <a href="mailto:{EMAIL}">{EMAIL}</a> with the date and numbers and we’ll tell you what the venue can do.')}</section>'''
     final = f'<section class="final-band"><div class="container final-in"><h2>{"THAT PLAN YOU KEEP TALKING ABOUT." if pm else "THE NIGHT EVERYONE ACTUALLY MAKES."}</h2>{btn("Make it happen", "/whats-on/")}</div></section>'
-    body = h + rib + plan + strip('pm-three.jpg' if pm else 'fl-portrait.jpg') + proof + qa + final
+    extra = ''
+    if pm:
+        gt = [e for e in events if e['brand'] == 'pm' and on_sale(e) and (e.get('groupTicket') or {}).get('label')]
+        rows = ''.join(f'<li><a href="{esc(e["path"])}"><b>{esc(d_short(e["start"]))}, {esc(e["city"])}</b> {esc(e["venue"])}: {esc(price_label(e["groupTicket"]["label"]))} + booking fee</a></li>' for e in gt)
+        guides = [('/blog/hen-do-daytime-disco/', 'A hen do that starts at 2pm'), ('/blog/hen-party-ideas-northampton/', 'Hen party ideas in Northampton'),
+                  ('/blog/birthday-party-ideas-northampton-adults/', 'Birthday ideas for grown-ups in Northampton')]
+        if npton_xmas(): guides.append((XMAS_PATH, f'Christmas daytime disco, Northampton: {date_join(npton_xmas())}'))
+        extra = (f'<section class="section container hub-links">{section_head("GROUP-OF-4 TICKETS ON SALE NOW")}<p>Where a date has a group-of-4 ticket, it is one booking for four people. These are the face prices listed today; the ticket selector shows live availability and fees.</p><ul class="hub-link-list">{rows}</ul>'
+                 f'<h3 class="mini-h">PLANNING SOMETHING SPECIFIC?</h3><ul class="hub-link-list">{"".join(f"<li><a href={chr(34)}{u}{chr(34)}>{esc(x)} {ARROW}</a></li>" for u, x in guides)}</ul></section>') if rows else ''
+        TITLES[('pm', '/group-bookings/')] = 'Group Tickets: Birthdays, Hens, Christmas | THE 2PM CLUB'
+    body = h + rib + plan + extra + strip('pm-three.jpg' if pm else 'fl-portrait.jpg') + proof + qa + final
     return page(brand, 'Groups and celebrations', body, 'Birthdays, hen dos and group plans.', '/group-bookings/')
+
+
+def about_venues(events):
+    """Venue line from the feed: dates on sale now, then indoor venues used for recent past dates."""
+    now = list(dict.fromkeys(f"{e['venue']} in {e['city']}" for e in events if e['brand'] == 'pm' and on_sale(e)))
+    used = set(e['venue'] for e in events if e['brand'] == 'pm' and on_sale(e))
+    before = list(dict.fromkeys(f"{r['location'].rsplit(', ', 1)[0]} in {CITY_CODE.get(r['cityCode'], r['cityCode'])}" for r in sorted(PM, key=lambda r: r['start'], reverse=True)
+                                if r['start'][:10] < TODAY and not r.get('isCancelled') and r['location'].rsplit(', ', 1)[0] not in used and 'Picturedrome' not in r['location']))
+    out = (f'Dates on sale now, all in indoor venues: {join_words(now)}. ' if now else '') + (f'Recent dates have also been at {join_words(before)}.' if before else '')
+    return esc(out.strip())
 
 
 def about_page(brand, events):
@@ -1143,9 +1511,9 @@ def about_page(brand, events):
         cities = sorted({e['city'] for e in events})
         h = hero('pm', 'A SATURDAY<br>AFTERNOON DISCO.<br>DONE PROPERLY.', 'THE 2PM CLUB Daytime Disco. Your best night out. In the middle of the afternoon.', btn('Find your afternoon', '/whats-on/', 'btn-hot'), 'pm-three.jpg', eyebrow='About THE 2PM CLUB')
         rib = ribbon([('DOORS AT 2PM', 'An afternoon on the dancefloor'), ('SING OUT LOUD', '80s, 90s and 00s anthems'), ('HOME BY 7-ISH', 'Sunday not written off')])
-        what = f'''<section class="section container about-grid"><div><p class="eyebrow">What it is</p><h2>A PROPER PARTY. JUST EARLIER.</h2><p>A DJ, a full sound system and the biggest 80s, 90s and 00s anthems back to back, the kind the whole room knows every word to. Doors at 2pm. You can keep Saturday evening for dinner, the sofa or whatever happens next.</p><p>Some dates go 80s only. At Christmas it’s festive classics first, then everything. Every event page lists its own soundtrack, venue and finish time.</p></div><div><p class="eyebrow">Who it’s for</p><h2>YOUR PEOPLE. OR NEW ONES.</h2><p>Bring your group or come on your own. Either way, there’s a roomful of people who know the same choruses.</p>{quote_block(QUOTES['emma_leic'])}</div></section>'''
-        where = f'<section class="section container">{section_head("WHERE WE PARTY", f"<a class=text-link href=/locations/>All locations {ARROW}</a>")}<ul class="city-chips">{"".join(f"<li><a href=/hubs/{slug(c)}/>{esc(c)}</a></li>" for c in cities)}</ul><p class="fine">This season: MK11 in Milton Keynes, The Charles Bradlaugh in Northampton, Mattioli Woods Welford Road Stadium in Leicester, hmv Empire in Coventry and Bedford Esquires.</p></section>'
-        rel = f'<section class="relation container"><div class="relation-copy"><p class="eyebrow">Who runs it</p><h2>BY BOOMBASTIC EVENTS.</h2><p>THE 2PM CLUB is run by Boombastic Events, who have been putting on singalong parties across the Midlands since 2014: Silent Disco Greatest Hits, Decades Parties and family events among them. THE 2PM CLUB is the afternoon one.</p>{btn("Meet Boombastic Events", BOOM_BASE + "/about/")}</div><div class="relation-quotes">{quote_block(QUOTES["lorne"])}{quote_block(QUOTES["lara"])}</div></section>'
+        what = f'''<section class="section container about-grid"><div><p class="eyebrow">What it is</p><h2>A PROPER PARTY. JUST EARLIER.</h2><p>A live DJ on a full sound system, in a proper indoor venue, playing the biggest 80s, 90s and 00s anthems back to back, the kind the whole room knows every word to. Doors at 2pm. You can keep Saturday evening for dinner, the sofa or whatever happens next.</p><p>Some dates go 80s only. At Christmas it’s festive classics first, then everything. Every event page lists its own soundtrack, venue and finish time.</p></div><div><p class="eyebrow">Who it’s for</p><h2>YOUR PEOPLE. OR NEW ONES.</h2><p>Bring your group or come on your own. Either way, there’s a roomful of people who know the same choruses.</p>{quote_block(QUOTES['emma_leic'])}</div></section>'''
+        where = f'<section class="section container">{section_head("WHERE WE PARTY", f"<a class=text-link href=/locations/>All locations {ARROW}</a>")}<ul class="city-chips">{"".join(f"<li><a href=/hubs/{slug(c)}/>{esc(c)}</a></li>" for c in cities)}</ul><p class="fine">{about_venues(events)}</p></section>'
+        rel = f'<section class="relation container"><div class="relation-copy"><p class="eyebrow">Who runs it</p><h2>BY BOOMBASTIC EVENTS.</h2><p>THE 2PM CLUB is run by Boombastic Events, who have been putting on singalong parties across the Midlands since 2014, evening parties and family events among them. THE 2PM CLUB is the afternoon one.</p>{btn("Meet Boombastic Events", BOOM_BASE + "/about/")}</div><div class="relation-quotes">{quote_block(QUOTES["lorne"])}{quote_block(QUOTES["lara"])}</div></section>'
         body = h + rib + what + strip('pm-wide.jpg') + where + rel + signup('pm', 'YOUR CITY. YOUR NEXT AFTERNOON.', 'Be first to hear about new dates.', events=events)
         return page('pm', 'About', body, 'About THE 2PM CLUB Daytime Disco, by Boombastic Events.', '/about/')
     h = hero('boom', 'IT STARTED WITH<br>ONE 90s NIGHT.', 'Since 2014, tens of thousands of people have joined us for Silent Disco, Decades Parties, Family Silent Disco and THE 2PM CLUB.', btn('Find your next party', '/whats-on/'), 'b90-crowd.jpg', eyebrow='About Boombastic Events')
@@ -1168,6 +1536,27 @@ def ported_page(brand, route, record):
     note = '<div class="archive-note">This story describes the format. Times, venues, age rules, prices and group options vary by event. <a href="/whats-on/">Check the current events →</a></div>'
     body = f'<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a></div></section><article class="prose container">{note}{content}</article>'
     return page(brand, record['title'].split(' | ')[0], body, active='/blog/')
+
+
+# Published = first commit that added the post's URL to this repo; modified = the 23rd Sept 2026 V2 rewrite
+# that introduced the current text (git log -S on each post's headings). Real dates only.
+BLOG_DATES = {
+    '/blog/what-is-a-daytime-disco/': ('2026-03-20', '2026-09-23'),
+    '/blog/hen-do-daytime-disco/': ('2026-03-20', '2026-09-23'),
+    '/blog/hen-party-ideas-northampton/': ('2026-03-23', '2026-09-23'),
+    '/blog/birthday-party-ideas-northampton-adults/': ('2026-03-23', '2026-09-23'),
+    '/blog/why-daytime-discos-are-popular/': ('2025-09-20', '2026-09-23'),
+}
+
+
+def human_date(iso):
+    d = datetime.fromisoformat(iso); return f'{ordinal(d.day)} {MONTHS[d.month]} {d.year}'
+
+
+def post_dates(route):
+    pub, mod = BLOG_DATES[route]
+    upd = f' · Updated <time datetime="{mod}">{human_date(mod)}</time>' if mod != pub else ''
+    return f'<p class="post-date">Published <time datetime="{pub}">{human_date(pub)}</time>{upd}</p>'
 
 
 def fresh_blog_page(route):
@@ -1215,7 +1604,7 @@ def fresh_blog_page(route):
     }
     title, lede, image_name, sections, description = articles[route]
     blocks = ''.join(f'<h2>{esc(heading)}</h2><p>{body}</p>' for heading, body in sections)
-    body = f'''<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a><p class="eyebrow">THE 2PM CLUB guide</p><h1>{esc(title.upper())}</h1></div></section><article class="prose container"><p class="lede">{esc(lede)}</p>{photo(image_name, 'prose-media')}{blocks}<div class="article-actions">{btn('See dates and tickets', '/whats-on/', 'btn-hot')}<a class="text-link" href="/group-bookings/">Planning for a group {ARROW}</a></div></article>'''
+    body = f'''<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a><p class="eyebrow">THE 2PM CLUB guide</p><h1>{esc(title.upper())}</h1>{post_dates(route)}</div></section><article class="prose container"><p class="lede">{esc(lede)}</p>{photo(image_name, 'prose-media')}{blocks}<div class="article-actions">{btn('See dates and tickets', '/whats-on/', 'btn-hot')}<a class="text-link" href="/group-bookings/">Planning for a group {ARROW}</a></div></article>'''
     return page('pm', title, body, description, '/blog/')
 
 
@@ -1227,13 +1616,17 @@ def blog_index():
         ('Birthday ideas for grown-ups', 'A few ways to mark a birthday together, including a daytime dancefloor.', '/blog/birthday-party-ideas-northampton-adults/', 'pm-hug.jpg'),
         ('Why a daytime disco works', 'Familiar songs, an afternoon dancefloor and time left for dinner.', '/blog/why-daytime-discos-are-popular/', 'pm-wide.jpg'),
     ]
+    xmas = npton_xmas()
+    if xmas:
+        articles.insert(1, ('Christmas daytime disco, Northampton', f'Two Christmas Saturdays at The Charles Bradlaugh, {date_join(xmas)}. Pick yours.', XMAS_PATH, 'pm-smile.jpg'))
     cards = ''.join(f'<a class="post-card" href="{u}">{photo(img, "post-media", caption=False)}<h2>{esc(t_)}</h2><p>{esc(c)}</p><b>Read {ARROW}</b></a>' for t_, c, u, img in articles)
-    body = f'<section class="page-band"><div class="container"><p class="eyebrow">The blog</p><h1>YOUR NEXT AFTERNOON, PLANNED.</h1><p>Guides and ideas for your next afternoon. Each event page has its own time, venue and tickets.</p></div></section><section class="section container"><div class="post-grid">{cards}</div></section>'
-    return page('pm', 'Blog', body, 'Guides and ideas for your next THE 2PM CLUB afternoon.', '/blog/')
+    body = f'<section class="page-band"><div class="container"><p class="eyebrow">The blog</p><h1>PLANS THAT START AT 2PM.</h1><p>Hen dos, birthdays, Christmas and what actually happens at a daytime disco. Each event page has its own time, venue and tickets.</p></div></section><section class="section container"><div class="post-grid">{cards}</div></section>'
+    TITLES[('pm', '/blog/')] = 'Daytime Disco Guides: Hens and Birthdays | THE 2PM CLUB'
+    return page('pm', 'Blog', body, 'What a daytime disco is, how to plan a hen do or birthday around 2pm, and how the afternoon works. Straight answers from THE 2PM CLUB Daytime Disco.', '/blog/')
 
 
 def blog_daytime_guide():
-    body = f'''<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a><p class="eyebrow">THE 2PM CLUB guide</p><h1>WHAT IS A DAYTIME DISCO?</h1></div></section><article class="prose container"><p class="lede">A proper party, in the afternoon. A DJ, a full dancefloor and the songs you love singing with other people. Then an evening that’s still yours.</p>{photo('pm-arms.jpg', 'prose-media')}<h2>WHAT ACTUALLY HAPPENS?</h2><p>Doors open at 2pm. Meet your friends or come on your own, and let the music pull you in. THE 2PM CLUB plays Sing Out Loud Anthems from the 80s, 90s and 00s: Wham!, Whitney, Madonna, Take That, Spice Girls, Oasis, Bon Jovi, Beyoncé. An 80s Edition is 80s from start to finish; the Christmas dates add Mariah, Wham! and Slade.</p><h2>WHY THE AFTERNOON?</h2><p>All the energy of going out, with timing that leaves the rest of the weekend free. This season’s dates finish at 5:30pm or 6pm, so you’re home by 7-ish, or on to dinner if the afternoon gets ambitious.</p>{quote_block(QUOTES['diane'])}<h2>IS IT FOR ME?</h2><p>If you want to dance, sing along and spend time with good people, yes. Come with a group or come solo. There’s no dress code.</p><h2>HOW DO I BOOK?</h2><p>Pick your city and edition. Each event page shows the venue, times and access details, with live ticket types and fees from Eventbrite. Group tickets vary by event.</p><div class="article-actions">{btn('Find your afternoon', '/whats-on/', 'btn-hot')}<a class="text-link" href="/what-to-expect/">What to expect {ARROW}</a></div></article>'''
+    body = f'''<section class="page-band"><div class="container"><a class="back" href="/blog/">← All stories</a><p class="eyebrow">THE 2PM CLUB guide</p><h1>WHAT IS A DAYTIME DISCO?</h1>{post_dates('/blog/what-is-a-daytime-disco/')}</div></section><article class="prose container"><p class="lede">A proper party, in the afternoon. A DJ, a full dancefloor and the songs you love singing with other people. Then an evening that’s still yours.</p>{photo('pm-arms.jpg', 'prose-media')}<h2>WHAT ACTUALLY HAPPENS?</h2><p>Doors open at 2pm. Meet your friends or come on your own, and let the music pull you in. THE 2PM CLUB plays Sing Out Loud Anthems from the 80s, 90s and 00s: Wham!, Whitney, Madonna, Take That, Spice Girls, Oasis, Bon Jovi, Beyoncé. An 80s Edition is 80s from start to finish; the Christmas dates add Mariah, Wham! and Slade.</p><h2>WHY THE AFTERNOON?</h2><p>All the energy of going out, with timing that leaves the rest of the weekend free. This season’s dates finish at 5:30pm or 6pm, so you’re home by 7-ish, or on to dinner if the afternoon gets ambitious.</p>{quote_block(QUOTES['diane'])}<h2>IS IT FOR ME?</h2><p>If you want to dance, sing along and spend time with good people, yes. Come with a group or come solo. There’s no dress code.</p><h2>HOW DO I BOOK?</h2><p>Pick your city and edition. Each event page shows the venue, times and access details, with live ticket types and fees from Eventbrite. Group tickets vary by event.</p><div class="article-actions">{btn('Find your afternoon', '/whats-on/', 'btn-hot')}<a class="text-link" href="/what-to-expect/">What to expect {ARROW}</a></div></article>'''
     return page('pm', 'What is a Daytime Disco?', body, 'A daytime disco is a proper party in the afternoon. See the music, timing, crowd and how to book a THE 2PM CLUB day party.', '/blog/', image=PM_BASE + '/assets/pm-arms.jpg')
 
 
@@ -1265,8 +1658,8 @@ def official_content_page(brand, key):
             return page(brand, label, body, 'Contact Boombastic Events about event work.')
         if key == 'for-ai':
             name = 'THE 2PM CLUB' if brand == 'pm' else 'Boombastic Events'
-            feed = '/events.json' if brand == 'pm' else '/events-boombastic.json'
-            body = f'''<article class="prose container legal-page"><h1>Public information about {esc(name)}</h1><p>{esc(name)} is operated by Boombastic Events Ltd. The <a href="{feed}">public event feed</a> lists event-specific dates, venues and links. The <a href="/whats-on/">What’s on page</a> is the current visitor-facing listing; each event page links to its live Eventbrite ticket selector.</p><p>Check the individual event page for the current time, access details and ticket options. Questions: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></article>'''
+            feed = '/upcoming-events.json' if brand == 'pm' else '/events-boombastic.json'
+            body = f'''<article class="prose container legal-page"><h1>Public information about {esc(name)}</h1><p>{esc(name)} is operated by Boombastic Events Ltd. The <a href="{feed}">public event feed</a> lists {'the dates on sale now, with' if brand == 'pm' else 'event-specific dates,'} venues and links. The <a href="/whats-on/">What’s on page</a> is the current visitor-facing listing; each event page links to its live Eventbrite ticket selector.</p><p>Check the individual event page for the current time, access details and ticket options. Questions: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></article>'''
             return page(brand, label, body, f'Public event information and data feed for {name}.')
         raise SystemExit(f'{brand}/{key}: no production content source')
     body = f'<section class="page-band"><div class="container"><p class="eyebrow">Current information</p><h1>{esc(label.upper())}.</h1><p>This preview keeps the current {esc(label.lower())} on the official website while the new site is reviewed.</p>{btn("Read the current " + esc(label.lower()) + " ↗", f"{live}/{key}/")}</div></section>'
@@ -1286,7 +1679,8 @@ def not_found(brand):
 
 
 def plain_text(fragment):
-    return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', fragment or ''))).strip()
+    fragment = re.sub(r'<span class="lc">s</span>', 's', fragment or '')  # 80s/90s/00s display wrapper, not a word break
+    return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', fragment))).strip()
 
 
 def price_amount(label):
@@ -1307,8 +1701,20 @@ def seo_enrich(brand, path, content):
     short_title = (html.unescape(title_match.group(1)).removesuffix(f' | {site} preview').removesuffix(f' | {site}') if title_match else site)
     description = html.unescape(desc_match.group(1)) if desc_match else short_title
     event = next((e for e in CURRENT_EVENTS[brand] if e['path'].lower() == route.lower()), None)
-    if event:
+    if (brand, route) in TITLES:
+        title = TITLES[(brand, route)]
+    elif event:
         title = (f'{clean_title(event)} {event["city"]} | {d_short(event["start"])} | {event["venue"]}' if event['fmt'] == 'pmdf' else f'{clean_title(event)} | {d_short(event["start"])}')
+        if brand == 'pm' and len(title) > 60:  # CODEX-4: keep town and date, drop the weekday, then the date
+            d = dt(event['start'])
+            if event['fmt'] == 'pmdf':
+                cands = (f'Disco Fever {event["city"]}, {d_short(event["start"])} | THE 2PM CLUB', f'Disco Fever {event["city"]}, {ordinal(d.day)} {MONTHS[d.month]} | THE 2PM CLUB', f'Disco Fever {event["city"]} | THE 2PM CLUB')
+            else:
+                pre = FORMAT[event['fmt']][3] if event['fmt'] in FORMAT else 'Daytime Disco'
+                pre = pre if 'Daytime Disco' in pre else f'{pre} Daytime Disco'
+                cands = (f'{pre} {event["city"]}, {ordinal(d.day)} {MONTHS[d.month]} | THE 2PM CLUB', f'{pre} {event["city"]} | THE 2PM CLUB')
+            for cand in cands:
+                if len(cand) <= 60: title = cand; break
     elif route == '/':
         title = ('THE 2PM CLUB | Daytime Disco and Day Parties' if brand == 'pm'
                  else 'Boombastic Events | Daytime Disco, Silent Disco and Decades Parties')
@@ -1343,8 +1749,11 @@ def seo_enrich(brand, path, content):
                'areaServed': [{'@type': 'City', 'name': c} for c in sorted({e['city'] for e in CURRENT_EVENTS[brand]})],
                'sameAs': [url for _, url, _ in SOCIAL[brand]]}
         if brand == 'pm':
+            org['alternateName'] = ['THE 2PM CLUB Daytime Disco', 'The 2PM Club']
+            org['logo'] = {'@type': 'ImageObject', 'url': base + '/assets/pm-logo.png', 'width': 300, 'height': 200}
+            org['areaServed'] = [{'@type': 'City', 'name': c} for c in verified_places('pm')]
             org['parentOrganization'] = {'@type': 'Organization', '@id': 'https://www.boomevents.co.uk/#organization',
-                                         'name': 'Boombastic Events', 'url': 'https://www.boomevents.co.uk/'}
+                                         'name': 'Boombastic Events', 'legalName': 'Boombastic Events Ltd', 'url': 'https://www.boomevents.co.uk/'}
         else:
             org['foundingDate'] = '2014'
             org['subOrganization'] = {'@type': 'Organization', '@id': 'https://www.the2pmclub.co.uk/#organization',
@@ -1352,7 +1761,44 @@ def seo_enrich(brand, path, content):
         schema.append(org)
         schema.append({'@context': 'https://schema.org', '@type': 'WebSite', '@id': site_url + '#website', 'name': site,
                        'url': site_url, 'inLanguage': 'en-GB', 'publisher': {'@id': org_id}})
-    if event:
+        if brand == 'pm':
+            schema.append({'@context': 'https://schema.org', '@type': 'EventSeries', '@id': site_url + '#series',
+                           'name': 'THE 2PM CLUB Daytime Disco',
+                           'description': 'Saturday afternoon daytime disco in indoor venues, with a live DJ on a full sound system and Sing Out Loud Anthems from the 80s, 90s and 00s. Doors at 2pm. 18+.',
+                           'url': base + '/events/', 'image': base + '/assets/pm-hero.webp',
+                           'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode', 'typicalAgeRange': '18-',
+                           'organizer': {'@id': org_id},
+                           'subEvent': [{'@id': PM_SITE + e['path'] + '#event'} for e in CURRENT_EVENTS['pm'] if e['brand'] == 'pm' and on_sale(e)]})
+    if event and brand == 'pm':
+        item = {'@context': 'https://schema.org', '@type': 'Event', '@id': page_url + '#event',
+                'name': event['title'], 'description': description, 'url': page_url,
+                'startDate': schema_time(event['start']), 'endDate': schema_time(event['end']), 'doorTime': schema_time(event['start']),
+                'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+                'eventStatus': 'https://schema.org/EventScheduled', 'typicalAgeRange': '18-', 'inLanguage': 'en-GB',
+                'superEvent': {'@id': site_url + '#series'},
+                'location': place_schema(event['city'], event['venue'], event.get('address')), 'image': [base + event['poster']],
+                'organizer': {'@id': org_id}}
+        # performer omitted: no named DJ is in the event data (08 fix 8; add only when JD confirms a real name).
+        amount = price_amount(event.get('price'))
+        offers = []
+        availability = 'https://schema.org/SoldOut' if event.get('soldout') else 'https://schema.org/InStock'
+        if amount:
+            # The page's own "from" price. Booking fees are added at Eventbrite checkout, as the page states (fee-inclusive price pending JD).
+            offers.append({'@type': 'Offer', 'name': 'General admission', 'url': page_url, 'price': amount, 'priceCurrency': 'GBP', 'availability': availability})
+        group = event.get('groupTicket') or {}
+        if group.get('price') and group.get('size') and not event.get('soldout'):
+            offers.append({'@type': 'Offer', 'name': f"Group of {group['size']}", 'url': page_url, 'price': f"{float(group['price']):.2f}", 'priceCurrency': 'GBP',
+                           'availability': availability, 'eligibleQuantity': {'@type': 'QuantitativeValue', 'value': int(group['size'])}})
+        for o in offers:
+            if event.get('saleStartsAt'): o['validFrom'] = event['saleStartsAt']
+        if offers: item['offers'] = offers
+        schema.append(item)
+        schema.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': site_url},
+            {'@type': 'ListItem', 'position': 2, 'name': 'Locations', 'item': base + '/hubs/'},
+            {'@type': 'ListItem', 'position': 3, 'name': event['city'], 'item': base + city_url('pm', event['city'])},
+            {'@type': 'ListItem', 'position': 4, 'name': clean_title(event), 'item': page_url}]})
+    elif event:
         address = event.get('address') or {}
         place = {'@type': 'Place', 'name': event['venue']}
         if address:
@@ -1384,12 +1830,14 @@ def seo_enrich(brand, path, content):
             schema.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
                            'itemListElement': [
                                {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': base + '/'},
-                               {'@type': 'ListItem', 'position': 2, 'name': parts[0].replace('-', ' ').title(), 'item': base + parent},
+                               {'@type': 'ListItem', 'position': 2, 'name': {'hubs': 'Locations'}.get(parts[0], parts[0].replace('-', ' ').title()), 'item': base + parent},
                                {'@type': 'ListItem', 'position': 3, 'name': short_title, 'item': base + route}]})
     if route.startswith('/blog/') and route != '/blog/':
         h1 = re.search(r'<h1[^>]*>(.*?)</h1>', content, re.S)
         img = re.search(r'<meta property="og:image" content="([^"]+)"', content)
-        schema.append({'@context': 'https://schema.org', '@type': 'Article', 'headline': plain_text(h1.group(1)) if h1 else short_title,
+        dates = BLOG_DATES.get(route) if brand == 'pm' else None
+        schema.append({'@context': 'https://schema.org', '@type': 'BlogPosting' if dates else 'Article', 'headline': plain_text(h1.group(1)) if h1 else short_title,
+                       **({'datePublished': dates[0], 'dateModified': dates[1]} if dates else {}),
                        'description': description, 'mainEntityOfPage': page_url, 'inLanguage': 'en-GB',
                        **({'image': [img.group(1)]} if img else {}),
                        'author': {'@type': 'Organization', '@id': org_id, 'name': site},
@@ -1404,6 +1852,7 @@ def seo_enrich(brand, path, content):
         if hrefs:
             schema.append({'@context': 'https://schema.org', '@type': 'ItemList', 'name': short_title,
                            'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'url': u} for i, u in enumerate(hrefs)]})
+    schema += EXTRA_SCHEMA.get((brand, route), [])
     faqs = re.findall(r'<details class="acc"[^>]*><summary>(.*?)</summary><div class="acc-body"><p>(.*?)</p></div></details>', content, re.S)
     if faqs:
         schema.append({'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
@@ -1418,6 +1867,53 @@ def seo_enrich(brand, path, content):
     content = re.sub(r'<title>.*?</title>', f'<title>{esc(title)}</title>', content, count=1)
     content = re.sub(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{esc(title)}">', content, count=1)
     return content.replace('</head>', extra + '</head>', 1)
+
+
+def pm_feed_clean(records):
+    """THE 2PM CLUB is a live-DJ daytime disco: drop the headphones emoji from feed text fields."""
+    out = []
+    for r in records:
+        r = dict(r)
+        for k in ('fullDescription', 'highlights', 'description', 'subtitle'):
+            if isinstance(r.get(k), str):
+                r[k] = r[k].replace('\U0001F3A7\u2728 ', '').replace(' \u2728\U0001F3A7', '').replace('\U0001F3A7', '')
+        out.append(r)
+    return out
+
+
+# /events.json consumers: the live Boombastic production build (crashes without cityCode on any record; reads
+# slug, eventbriteId, title, start, end, cityCode, location, isCancelled), boom-mailing-list/
+# sync_eventbrite_to_mailjet.py (eventbriteId, slug, end) and automation/scripts/check_website_freshness.py
+# (slug, eventbriteId). REQUIRED fields stay on every record; ended records lose only sales data and copy (CODEX-1).
+FEED_REQUIRED = ('start', 'end', 'isCancelled', 'slug', 'cityCode', 'city', 'eventbriteId', 'title')
+PAST_STRIP = ('price', 'priceLabel', 'priceFrom', 'availability', 'status', 'statusLabel', 'isSoldOut', 'urgencyLabel', 'urgency',
+              'description', 'subtitle', 'fullDescription', 'highlights', 'heroSubtitle', 'legacyLine', 'musicDescription', 'soundtrackLine',
+              'groupTicket', 'image', 'infoUrl', 'bookUrl', 'priceCurrency', 'priceLastSync')  # last two: CODEX-5
+
+
+def pm_public_history(records):
+    """/events.json at the same URL for existing consumers. Every record keeps FEED_REQUIRED (city and isCancelled
+    are added where the source omits them) and its bookUrl becomes the owned page. Ended records drop PAST_STRIP,
+    and a Picturedrome location becomes 'Northampton' (its street address is dropped)."""
+    out = []
+    for r in pm_feed_clean(records):
+        city = CITY_CODE.get(r.get('cityCode'), r.get('cityCode'))
+        canonical = PM_SITE + '/events/' + str(r.get('slug') or '').lower() + '/'
+        item = dict(r)
+        item.setdefault('city', city)
+        item.setdefault('isCancelled', False)
+        if r['start'][:10] < TODAY or r.get('isCancelled'):
+            item = {k: v for k, v in item.items() if k not in PAST_STRIP}
+            if RETIRED_VENUE.lower() in str(item.get('location') or '').lower():
+                item['location'] = city
+                item.pop('venueAddress', None)
+            item['ended'] = True
+        item['canonicalUrl'] = canonical
+        item['bookUrl'] = canonical
+        missing = [k for k in FEED_REQUIRED if k not in item]
+        if missing: raise SystemExit(f'events.json {r.get("slug")}: required consumer fields missing {missing}')
+        out.append(item)
+    return out
 
 
 def write_page(dist, path, content):
@@ -1448,13 +1944,13 @@ def release_redirects(brand, events):
     if brand == 'pm':
         rows += ['/whats-on/ /events/ 301!', '/locations/ /hubs/ 301!',
                  '/developers /for-ai/ 301!', '/developers/* /for-ai/ 301!',
-                 '/events/250726-2pm-npton /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2pm-npton/ /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2pm-npton/* /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2PM-NPTON /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2PM-NPTON/ /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2PM-NPTON/* /events/031026-2pm-npton/ 301!',
-                 '/events/250726-2PM-NPTON-80S/* /events/031026-2pm-npton/ 301!',
+                 '/events/250726-2pm-npton /hubs/northampton/ 301!',
+                 '/events/250726-2pm-npton/ /hubs/northampton/ 301!',
+                 '/events/250726-2pm-npton/* /hubs/northampton/ 301!',
+                 '/events/250726-2PM-NPTON /hubs/northampton/ 301!',
+                 '/events/250726-2PM-NPTON/ /hubs/northampton/ 301!',
+                 '/events/250726-2PM-NPTON/* /hubs/northampton/ 301!',
+                 '/events/250726-2PM-NPTON-80S/* /hubs/northampton/ 301!',
                  '/events/031026-2pm-lut /hubs/luton/ 301!',
                  '/events/031026-2pm-lut/ /hubs/luton/ 301!',
                  '/events/031026-2pm-lut/* /hubs/luton/ 301!',
@@ -1558,10 +2054,10 @@ def llms_txt(brand, events):
                 f'- [Boombastic 90s]({base}/boombastic-90s/)', f'- [Footloose 80s]({base}/footloose-80s/)', f'- [Group bookings]({base}/group-bookings/)',
                 *([f'- [Christmas parties]({base}/christmas-parties/)'] if christmas_events(events) else []),
                 f'- [THE 2PM CLUB daytime disco]({PM_BASE}/)']
-    out += ['', '## Data', '', f'- [Event feed (JSON)]({base}/{"events.json" if pm else "events-boombastic.json"})']
     if pm:
-        out.append(f'- [Upcoming event feed (JSON)]({base}/upcoming-events.json)')
+        out += ['', '## Data', '', f'- [Upcoming event feed (JSON)]({base}/upcoming-events.json): the public feed of dates on sale']
     else:
+        out += ['', '## Data', '', f'- [Event feed (JSON)]({base}/events-boombastic.json)']
         out.append(f'- [Venues (JSON)]({base}/venues.json)')
     out += [f'- [Sitemap]({base}/sitemap.xml)', '', '## Contact', '', f'- {EMAIL}', '']
     return '\n'.join(out)
@@ -1569,7 +2065,7 @@ def llms_txt(brand, events):
 
 def past_event_redirects(brand, existing):
     """Finished or cancelled dates: send their old URLs somewhere useful instead of a dead page."""
-    seen = {r.split()[0].lower() for r in existing if r.strip()}
+    seen_exact = {r.split()[0] for r in existing if r.strip()}
     current = {e['path'].lower() for e in CURRENT_EVENTS[brand] if e['brand'] == brand}
     hubs = set(verified_places('pm')) if brand == 'pm' else set()
     rows = []
@@ -1587,10 +2083,13 @@ def past_event_redirects(brand, existing):
             dest = city_url('pm', city) if city in hubs else '/events/'
         else:
             dest = next((f'/{key}/' for key, _, token in FORMAT_PAGES if token in code.upper()), '/whats-on/')
-        for src in (path, path.rstrip('/')):
-            if src.lower() not in seen:
+        # One hop to the hub. Venue sites and press links use the uppercase event code, and Netlify
+        # matches paths case-sensitively, so emit the feed's own casing as well as lowercase.
+        upper = path.replace(code.lower(), code)
+        for src in dict.fromkeys((path, path.rstrip('/'), upper, upper.rstrip('/'))):
+            if src not in seen_exact:
                 rows.append(f'{src} {dest} 301!')
-                seen.add(src.lower())
+                seen_exact.add(src)
     return rows
 
 
@@ -1613,13 +2112,18 @@ def northampton_christmas_ad(events):
                 group = event.get('groupTicket') or {}
                 group_text = (str(group.get('label', '')) + ' + booking fees') if group else 'See the checkout for current ticket options.'
                 replacement = replacement.replace('{{GROUP}}', esc(group_text))
+                replacement = replacement.replace('{{EBID}}', esc(event['eventbriteId'])).replace('{{GATE}}', ticket_gate(d_short(event['start'])))
             content = re.sub(pattern, lambda _: replacement, content, count=1, flags=re.S)
         if event is None:
             content = re.sub(rf'<a class="ad-change" href="#tickets-{day}">.*?</a>', '', content)
         elif str(event['eventbriteId']) != ('1995469647432' if day == '5' else '1995469668495'):
             raise ValueError('Christmas landing event identity changed: ' + day)
-    return page('pm', 'Northampton Christmas', content,
-                description='Christmas Daytime Disco in Northampton. Choose Sat 5th Dec or Sat 12th Dec 2026 at The Charles Bradlaugh, 2pm to 5:30pm. Book tickets here.',
+    live = [e for e in found.values() if e]
+    TITLES[('pm', XMAS_PATH)] = f'Christmas Daytime Disco Northampton | {date_join(live)}'
+    EXTRA_SCHEMA[('pm', XMAS_PATH)] = [{'@context': 'https://schema.org', '@type': 'ItemList', 'name': f'Christmas Daytime Disco Northampton {live[0]["start"][:4]}',
+                                        'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'url': PM_SITE + e['path'], 'item': {'@id': PM_SITE + e['path'] + '#event'}} for i, e in enumerate(live)]}]
+    return page('pm', 'Christmas Daytime Disco Northampton', content,
+                description=f'Two Saturday Christmas parties at The Charles Bradlaugh, Northampton. Mariah, Wham! and Slade, then 80s, 90s and 00s anthems. {times_to(live[0])}, 18+.' if len(live) > 1 else f'A Saturday Christmas party at The Charles Bradlaugh, Northampton, {d_short(live[0]["start"])}. Mariah, Wham! and Slade, then 80s, 90s and 00s anthems. {times_to(live[0])}, 18+.',
                 sticky_label='Choose your date', sticky_href='#dates', body_class='is-ad-landing')
 
 
@@ -1656,7 +2160,7 @@ def build():
             write_page(dist, 'hubs', locations(brand, events))
         write_page(dist, 'locations', locations(brand, events))
         for city in sorted(set(verified_places(brand)) | {c for c, _ in live_cities(brand)}):
-            write_page(dist, city_url(brand, city), city_page(brand, city, events))
+            write_page(dist, city_url(brand, city), hub_page(city, events) if brand == 'pm' else city_page(brand, city, events))
         for e in events:
             if e['brand'] == brand: write_page(dist, e['path'], details(brand, e))
         if brand == 'pm':
@@ -1683,7 +2187,9 @@ def build():
             write_page(dist, 'blog/what-is-a-daytime-disco', blog_daytime_guide())
         for key in (['privacy', 'terms', 'for-ai'] if brand == 'pm' else ['privacy', 'terms', 'jobs', 'for-ai']):
             write_page(dist, key, official_content_page(brand, key))
-        if brand == 'pm': shutil.copyfile(PM_FEED, dist / 'events.json')
+        if brand == 'pm':
+            # Published copy of the feed without the headphones emoji Eventbrite copy carries (08 fix 2, site side).
+            (dist / 'events.json').write_text(json.dumps(pm_public_history(PM), ensure_ascii=False, indent=2) + '\n')
         else:
             shutil.copyfile(BOOM_FEED, dist / 'events-boombastic.json')
             shutil.copyfile(TWIN / 'source-snapshots/venues.json', dist / 'venues.json')
@@ -1695,7 +2201,7 @@ def build():
                 for raw in PM:
                     code = str(raw.get('slug') or '').lower()
                     if code not in current_codes: continue
-                    item = dict(raw)
+                    item = pm_feed_clean([raw])[0]
                     item['canonicalUrl'] = base + '/events/' + code + '/'
                     item['bookUrl'] = item['canonicalUrl']
                     upcoming.append(item)
