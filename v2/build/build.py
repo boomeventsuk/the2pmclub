@@ -936,7 +936,14 @@ def details(brand, e):
     price = f'<p class="dc-price">{esc(price_label(e["price"]))} + booking fee</p>' if e.get('price') else ''
     status = f'<p class="dc-status">{esc(e["status"])}</p>' if e.get('status') else ''
     date_card = f'''<aside class="date-card" aria-label="Booking summary"><h2>MAKE IT A DATE</h2><ul><li>{icon("calendar")}{esc(date.upper())}</li><li>{icon("clock")}{esc(tm.upper())}</li><li>{icon("pin")}{esc(e["venue"].upper())}</li></ul>{price}{group_price(e, True)}{status}<p class="dc-live">Check live availability in the ticket selector</p>{btn('Choose tickets', '#tickets', 'btn-block ' + book_cls)}<p class="dc-eb">Ticketing powered by <b>Eventbrite</b></p><a class="dc-share" href="{esc(share)}" target="_blank" rel="noopener noreferrer">{icon("share")}Share with your group {ARROW}</a></aside>'''
-    sell = f'''<div class="sell"><p class="eyebrow">{esc(b)}</p><h2>{c['h2']}</h2><p class="lede">{esc(c['lede'])}</p><ul class="bullets">{bullets}</ul>{music}{quote_block(c['quote'])}</div>'''
+    answer = ''
+    if brand == 'pm':
+        what = ('the biggest disco hits back to back' if is_disco_fever else 'festive classics, then the biggest 80s, 90s and 00s anthems' if e['fmt'] == 'pmxmas'
+                else 'four hours of 80s Sing Out Loud Anthems' if e['fmt'] == 'pm80' else 'the biggest 80s, 90s and 00s anthems')
+        name = 'THE 2PM CLUB Disco Fever' if is_disco_fever else f'THE 2PM CLUB {pre}' if e['fmt'] in ('pmxmas', 'pm80') else 'THE 2PM CLUB Daytime Disco'
+        answer = (f'<p class="hub-answer-text ev-answer">{esc(name)} is a Saturday afternoon party at {esc(e["venue"])}, {esc(e["city"])}, on {esc(d_short(e["start"]))}. '
+                  f'A live DJ plays {esc(what)} on a full sound system in an indoor venue. Doors 2pm, finishing at {esc(t(e["end"]))}. 18+. Run by Boombastic Events.</p>')
+    sell = f'''<div class="sell">{answer}<p class="eyebrow">{esc(b)}</p><h2>{c['h2']}</h2><p class="lede">{esc(c['lede'])}</p><ul class="bullets">{bullets}</ul>{music}{quote_block(c['quote'])}</div>'''
     compare = f'<p class="ev-xmas-link">{npton_xmas_link(label="Two Northampton Christmas Saturdays: compare both dates")}</p>' if brand == 'pm' and e['code'].upper() in XMAS_CODES and len(npton_xmas()) > 1 else ''
     crumbs = f'<nav class="crumbs container" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/locations/">Locations</a> / <a href="{city_url("pm", e["city"])}">{esc(e["city"])}</a> / {esc(d_short(e["start"]))}</nav>' if brand == 'pm' else ''
     main = f'<section class="ev-main container">{sell}{date_card}</section>' + (f'<div class="container">{compare}</div>' if compare else '')
@@ -981,7 +988,9 @@ def details(brand, e):
     description = (next((x for x in pm_desc if len(x) <= 160), pm_desc[-1][:160]) if brand == 'pm'
                    else f'{clean_title(e)} on {d_long(e["start"])}. {e["venue"]}, {e["city"]}, {tm}. Event details and live tickets.')
     if is_disco_fever:
-        description = f'THE 2PM CLUB Disco Fever at {e["venue"]}, {e["city"]}. {d_short(e["start"])}, 2pm till 6pm. Four hours of the biggest disco hits: Chic, Donna Summer, Bee Gees, ABBA and more.'
+        # CODEX-4 lengths: keep venue, date, times, 18+ and price; the artist roll call only if it fits.
+        df_base = f'THE 2PM CLUB Disco Fever at {e["venue"]}, {e["city"]}, {d_short(e["start"])}. {times_to(e)}. 18+.' + (f' {price_label(e["price"])} + booking fee.' if e.get('price') else '')
+        description = next(x for x in (df_base + ' Chic, Donna Summer, Bee Gees and more.', df_base) if len(x) <= 160 or x == df_base)
     return page(brand, f"{clean_title(e)}, {e['city']}, {d_short(e['start'])}", body, description, image=base + e['poster'], sticky_label='Choose tickets', sticky_href='#tickets', body_class='is-event')
 
 
@@ -1174,15 +1183,20 @@ def hub_page(city, events):
     raw_addr = (nxt or {}).get('address') or next((r.get('venueAddress') for r in past if r.get('venueAddress')), {}) or {}
     addr_line = ', '.join(x for x in [raw_addr.get('streetAddress'), raw_addr.get('addressLocality'), raw_addr.get('postalCode')] if x)
     datestr = date_join(rel) if live else ''
+    full_datestr = datestr
+    if live and len(datestr) > 20:  # several dates (e.g. Christmas plus Disco Fever): lead with the next one
+        datestr = f'next {d_short(rel[0]["start"])}'
 
     # Title, meta and H1 (08 section 4.2), generated from the feed so they move with the inventory.
     if city == 'Northampton' and live:
-        title = f'Daytime Disco Northampton | THE 2PM CLUB, {datestr}'
+        title = f'Daytime Disco Northampton | THE 2PM CLUB, {full_datestr}'
+        if len(title) > 60: title = f'Daytime Disco Northampton | THE 2PM CLUB, from {d_short(rel[0]["start"])}'
+        if len(title) > 60: title = 'Daytime Disco Northampton | THE 2PM CLUB'
     else:
         title = f'Daytime Disco {city} | THE 2PM CLUB at {short}'
     if live:
         h1 = {'Northampton': 'Daytime disco in Northampton.<br>You already know.',
-              'Leicester': f'Daytime disco in Leicester.<br>Back at Welford Road, {esc(datestr)}.'}.get(city, f'Daytime disco in {esc(city)}.<br>{esc(short)}, {esc(datestr)}.' if city == 'Coventry' else f'Daytime disco in {esc(city)}.<br>{esc(datestr)}, {esc(short)}.')
+              'Leicester': f'Daytime disco in Leicester.<br>Back at Welford Road, {esc(datestr)}.'}.get(city, f'Daytime disco in {esc(city)}.<br>{esc(short)}, {esc(datestr)}.' if city == 'Coventry' else f'Daytime disco in {esc(city)}.<br>{esc(datestr[:1].upper() + datestr[1:])}, {esc(short)}.')
     else:
         h1 = f'Daytime disco in {esc(city)}.<br>Last seen at {esc(short)}.'
     xmas = bool(nxt and nxt['fmt'] == 'pmxmas')
@@ -1198,12 +1212,15 @@ def hub_page(city, events):
         town_short = 'MK' if city == 'Milton Keynes' else city
         meta = (f'THE 2PM CLUB Daytime Disco has played {short if short.startswith("the ") else venue}, {city}. No {town_short} date on sale yet'
                 + (f'; {first_near["city"]} is on {d_short(first_near["start"])}' if first_near else '') + '. Doors 2pm, 80s, 90s and 00s anthems.')
+    if len(meta) > 160: meta = meta.replace(' Final release on sale.', '')
     TITLES[('pm', city_url('pm', city))] = title
 
     # Answer-first block (40 to 60 words, the AI-quotable paragraph).
     if live:
-        answer = (f'THE 2PM CLUB Daytime Disco is a Saturday afternoon party at {venue}, {city}. A live DJ plays the biggest 80s, 90s and 00s anthems on a full sound system in an indoor venue. '
+        music_what = 'the biggest 80s, 90s and 00s anthems' + (' (all disco at Disco Fever)' if any(e['fmt'] == 'pmdf' for e in rel) else '')
+        answer = (f'THE 2PM CLUB Daytime Disco is a Saturday afternoon party at {venue}, {city}. A live DJ plays {music_what} on a full sound system in an indoor venue. '
                   f'Doors 2pm, finishing at {finish_phrase(rel)}. 18+. Run by Boombastic Events.')
+        if len(answer.split()) > 60: answer = answer.replace(' Run by Boombastic Events.', '')
     else:
         first_near = nearby[0] if nearby else None
         answer = (f'THE 2PM CLUB Daytime Disco is a Saturday afternoon party with a live DJ, a full sound system and the biggest 80s, 90s and 00s anthems, in an indoor venue. '
