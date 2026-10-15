@@ -337,6 +337,10 @@ def sitemap_city_slugs(brand):
 def verified_places(brand):
     raw = PM if brand == 'pm' else BOOM
     names = {CITY_CODE.get(r['cityCode'], r['cityCode']) if brand == 'pm' else r['city'] for r in raw}
+    # The live Boombastic feed is upcoming-only, so a town with no date on sale
+    # (Luton, Milton Keynes) has no record to name it. Known towns name themselves;
+    # an unknown sitemap slug still fails the build.
+    names |= {t for t in TOWN_COORDS if slug(t) in sitemap_city_slugs(brand)}
     by_slug = {slug(n): n for n in names}
     missing = sitemap_city_slugs(brand) - set(by_slug)
     if missing: raise SystemExit(f'{brand}: sitemap city routes with no feed city to name them: {sorted(missing)}')
