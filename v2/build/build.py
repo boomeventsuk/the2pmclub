@@ -1774,15 +1774,15 @@ def seo_enrich(brand, path, content):
                            'description': 'Saturday afternoon daytime disco in indoor venues, with a live DJ on a full sound system and Sing Out Loud Anthems from the 80s, 90s and 00s. Doors at 2pm. 18+.',
                            'url': base + '/events/', 'image': base + '/assets/pm-hero.webp',
                            'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode', 'typicalAgeRange': '18-',
-                           'organizer': {'@id': org_id},
-                           'subEvent': [{'@id': PM_SITE + e['path'] + '#event'} for e in CURRENT_EVENTS['pm'] if e['brand'] == 'pm' and on_sale(e)]})
+                           'organizer': {'@id': org_id}})
+            # No subEvent or superEvent links: Google reads @id-only Event references as
+            # separate Events missing name, startDate and location (Search Console, 16th October 2026).
     if event and brand == 'pm':
         item = {'@context': 'https://schema.org', '@type': 'Event', '@id': page_url + '#event',
                 'name': event['title'], 'description': description, 'url': page_url,
                 'startDate': schema_time(event['start']), 'endDate': schema_time(event['end']), 'doorTime': schema_time(event['start']),
                 'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
                 'eventStatus': 'https://schema.org/EventScheduled', 'typicalAgeRange': '18-', 'inLanguage': 'en-GB',
-                'superEvent': {'@id': site_url + '#series'},
                 'location': place_schema(event['city'], event['venue'], event.get('address')), 'image': [base + event['poster']],
                 'organizer': {'@id': org_id}}
         # performer omitted: no named DJ is in the event data (08 fix 8; add only when JD confirms a real name).
