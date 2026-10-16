@@ -705,3 +705,10 @@ a.rib-item:hover b{text-decoration:underline;text-decoration-color:var(--accent)
 .hub-answer-text{font-size:clamp(18px,2vw,22px);line-height:1.45;max-width:62ch;margin:0;border-left:5px solid var(--accent);padding-left:18px}.hub-facts{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}.hub-facts li{padding-left:0}.hub-past-list,.hub-link-list{list-style:none;padding:0;margin:14px 0 18px;display:grid;gap:8px}.hub-past-list b{display:inline-block;min-width:11ch;margin-right:6px}.hub-link-list a{font-weight:700;color:inherit}.hub-xmas-link{margin-top:16px}.hub-boom p{max-width:70ch}.hub-boom a{font-weight:700;color:#a00055}
 .post-date{font-size:14px;margin:10px 0 0;opacity:.8}
 .ev-answer{margin:0 0 26px}
+
+/* Group photographs on location pages keep the full width of the group. */
+.pm .city-hero-group .hero-media{aspect-ratio:3/2;min-height:0;height:auto;align-self:center;width:100%}
+.pm .city-hero-group .hero-media img{object-fit:cover;object-position:50% 50%}
+
+/* Keep the two-date Christmas comparison link within a phone screen. */
+.pm .hub-xmas-link .text-link{white-space:normal}

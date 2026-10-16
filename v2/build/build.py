@@ -96,6 +96,10 @@ QUOTES = {
 
 # Real event photography. Caption = provenance shown on the page wherever a city could be misread.
 PHOTOS = {
+    'pm-friends-bradlaugh-oct.jpg': ('Friends with their arms around one another at a previous THE 2PM CLUB event', 'At a previous THE 2PM CLUB event in Northampton, 3rd October 2026', '031026-2PM-NPTON Charles Bradlaugh/PHOTO-REVIEW-031026-2PM-NPTON/clean/031026-2PM-NPTON-024-clean.jpeg'),
+    'pm-leicester-friends-may.jpg': ('A large group of friends smiling together on the colourful Leicester dancefloor', 'THE 2PM CLUB, Leicester, 2nd May 2026', '020526-2PM-LEIC PHOTOS/photos/event photos no logo/020526-2PM-LEIC-event-photo-no-logo-040.jpeg'),
+    'pm-mk-friends-sept.jpg': ('A group of friends smiling together under colourful stage lights', 'THE 2PM CLUB, Milton Keynes, 26th September 2026', '80s Day Party Milton Keynes 26th Sept 2026/PHOTO-REVIEW-260926-2PM-MK/clean/260926-2PM-MK-011-clean.jpeg'),
+    'pm-northampton-friends-oct.jpg': ('A large group of friends smiling together with colourful inflatable microphones', 'THE 2PM CLUB, The Charles Bradlaugh, Northampton, 3rd October 2026', '031026-2PM-NPTON Charles Bradlaugh/PHOTO-REVIEW-031026-2PM-NPTON/clean/031026-2PM-NPTON-091-clean.jpeg'),
     'pm-hero.webp': ('THE 2PM CLUB crowd under confetti and stage lights', 'THE 2PM CLUB', 'https://www.the2pmclub.co.uk/img/hero-confetti-1280.webp'),
     'pm-friends.jpeg': ('Three friends laughing together on the dancefloor', 'THE 2PM CLUB, Bedford, June 2026', 'reports/website-research-2026-09-22/page-designs/assets/2pm-friends.jpeg'),
     'pm-group.jpg': ('A group of friends posing together, drinks in hand', 'THE 2PM CLUB, Northampton, June 2026', '060626-2PM-NPTON processed no-logo 055'),
@@ -139,6 +143,9 @@ PM_CITY_PROOF_PHOTO = {'Northampton': 'pm-wide.jpg', 'Bedford': 'pm-friends.jpeg
 # Route-level overrides set by page builders, read by seo_enrich (title without the site suffix added later only when absent).
 TITLES = {}
 EXTRA_SCHEMA = {}
+
+# Location-only choices: dated event supporting photos keep their established mapping.
+PM_LOCATION_HERO = {**PM_CITY_PHOTO, 'Northampton': 'pm-northampton-friends-oct.jpg', 'Milton Keynes': 'pm-mk-friends-sept.jpg', 'Leicester': 'pm-leicester-friends-may.jpg', 'Luton': 'pm-friends-bradlaugh-oct.jpg'}
 
 ICONS = {
     'calendar': '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>',
@@ -1231,11 +1238,11 @@ def hub_page(city, events):
                   f'In {city} we have played {short if short.startswith("the ") else venue}. No {city} date is on sale right now'
                   + (f'; the nearest is {first_near["city"]}, {d_short(first_near["start"])}.' if first_near else '.') + ' Doors at 2pm. 18+.')
 
-    cap = PHOTOS[PM_CITY_PHOTO.get(city, 'pm-packed.jpg')][1]
-    hero_photo = PM_CITY_PHOTO.get(city, 'pm-packed.jpg')
+    cap = PHOTOS[PM_LOCATION_HERO.get(city, 'pm-packed.jpg')][1]
+    hero_photo = PM_LOCATION_HERO.get(city, 'pm-packed.jpg')
     sub = (f'{esc(datestr)} at {esc(venue)}. Doors 2pm.' if live else f'No {esc(city)} date is on sale right now. Here is what has happened here, and the nearest dates you can book.')
     cta = btn(f'See {esc(city)} dates' if live else 'See the nearest dates', '#city-dates' if live else '#nearby', 'btn-hot')
-    h = hero('pm', h1, sub, cta, hero_photo, eyebrow='THE 2PM CLUB Daytime Disco', cls='city-hero', cap=cap)
+    h = hero('pm', h1, sub, cta, hero_photo, eyebrow='THE 2PM CLUB Daytime Disco', cls='city-hero city-hero-group', cap=cap)
     crumbs = f'<nav class="crumbs container" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/locations/">Locations</a> / {esc(city)}</nav>'
     answer_html = f'<section class="section container hub-answer"><p class="hub-answer-text">{esc(answer)}</p></section>'
 
